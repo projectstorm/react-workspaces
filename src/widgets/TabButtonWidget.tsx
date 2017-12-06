@@ -4,6 +4,7 @@ import {WorkspacePanelModel} from "../models/WorkspacePanelModel";
 import {WorkspaceTabbedModel} from "../models/WorkspaceTabbedModel";
 import {WorkspaceEngine} from "../WorkspaceEngine";
 import {DropZoneWidget} from "./DropZoneWidget";
+import {AbstractWorkspaceCollectionModel} from "../models/AbstractWorkspaceCollectionModel";
 
 export interface TabButtonWidgetProps {
 	model: WorkspacePanelModel;
@@ -52,12 +53,28 @@ export class TabButtonWidget extends React.Component<TabButtonWidgetProps, TabBu
 					this.props.engine.draggingNode && this.props.engine.draggingNode.id !== this.props.model.id &&
 						<>
 							<DropZoneWidget dropped={(model) => {
-								this.props.model.parent.addModelBefore(this.props.model, model);
+								if(model instanceof AbstractWorkspaceCollectionModel){
+									model.getFlattened().forEach((child) => {
+										parent.addModelBefore(this.props.model, child);
+										parent.setSelected(child);
+									})
+								}else if(model instanceof WorkspacePanelModel){
+									parent.addModelBefore(this.props.model, model);
+									parent.setSelected(model);
+								}
 							}} engine={this.props.engine} hover={(entered) => {
 								this.setState({shiftLeft: entered});
 							}} baseClass="srw-tab__dropzone" className="srw-tab--left"/>
 							<DropZoneWidget dropped={(model) => {
-								this.props.model.parent.addModelAfter(this.props.model, model);
+								if(model instanceof AbstractWorkspaceCollectionModel){
+									model.getFlattened().forEach((child) => {
+										parent.addModelAfter(this.props.model, child);
+										parent.setSelected(child);
+									})
+								}else if(model instanceof WorkspacePanelModel){
+									parent.addModelAfter(this.props.model, model);
+									parent.setSelected(model);
+								}
 							}} engine={this.props.engine} hover={(entered) => {
 								this.setState({shiftRight: entered});
 							}} baseClass="srw-tab__dropzone" className="srw-tab--right" />
