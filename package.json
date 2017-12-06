@@ -1,6 +1,6 @@
 {
 	"name": "storm-react-workspaces",
-	"version": "0.1.3",
+	"version": "0.1.4",
 	"main": "./dist/main.js",
 	"typings": "./dist/@types/main",
 	"repository": {
