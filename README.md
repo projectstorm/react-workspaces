@@ -1,4 +1,4 @@
-# STORM React Forms
+# STORM React Workspaces
 
 __DEMO__: http://www.projectstorm.io/react-workspaces
 
