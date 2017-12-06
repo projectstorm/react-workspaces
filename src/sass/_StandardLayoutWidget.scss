@@ -1,0 +1,28 @@
+.srw-standard-layout{
+  display: flex;
+  flex-grow: 1;
+
+  &--vertical {
+	flex-direction: column;
+
+	> * {
+	  margin-bottom: 2px;
+
+	  &:last-child {
+		margin-bottom: 0px;
+	  }
+	}
+  }
+
+  &--horizontal {
+	flex-direction: row;
+
+	> * {
+	  margin-right: 2px;
+
+	  &:last-child {
+		margin-right: 0px;
+	  }
+	}
+  }
+}

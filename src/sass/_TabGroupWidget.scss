@@ -1,0 +1,24 @@
+.srw-tabgroup{
+  display: flex;
+  flex-direction: column;
+  position: relative;
+
+  &--expand {
+	flex-grow: 1;
+  }
+
+  &__tabs{
+	display: flex;
+	flex-wrap: wrap;
+	flex-grow: 0;
+  }
+
+  &__divider{
+	width: 50px;
+  }
+
+  &__content{
+	flex-grow: 1;
+	display: flex;
+  }
+}

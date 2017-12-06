@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../react-forms/.idea/react-forms.iml" filepath="$PROJECT_DIR$/../react-forms/.idea/react-forms.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/react-workspace.iml" filepath="$PROJECT_DIR$/.idea/react-workspace.iml" />
+    </modules>
+  </component>
+</project>

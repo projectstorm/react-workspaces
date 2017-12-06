@@ -1,0 +1,9 @@
+.srw-drop-zone {
+  transition: opacity 0.2s;
+  pointer-events: all;
+  opacity: 0;
+
+  &--active {
+	opacity: 1;
+  }
+}

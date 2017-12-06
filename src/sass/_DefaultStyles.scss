@@ -1,0 +1,59 @@
+.srw-default {
+
+  &--selected {
+	background-color: rgb(0,192,255) !important;
+	background-image: linear-gradient(rgba(black,0), rgba(black,0.2)) !important;
+  }
+
+  &__micro{
+	width: 45px;
+	height: 45px;
+	background-color: black;
+	display: flex;
+	justify-content: center;
+
+	.fa{
+	  color: white;
+	  align-self: center;
+	}
+  }
+
+  &__title {
+	user-select: none;
+	background: rgba(black, 0.5);
+	padding: 5px 10px;
+	font-size: 13px;
+	color: white;
+	cursor: move;
+
+	&:hover {
+	  background: black;
+	}
+  }
+
+  &__tab {
+	user-select: none;
+	background: rgba(black, 0.5);
+	padding: 5px 10px;
+	font-size: 13px;
+	color: white;
+	cursor: move;
+	min-width: 100px;
+	margin-right: 2px;
+	margin-top: 2px;
+	transform: perspective(4px) rotateX(1deg);
+	transform-origin: bottom left;
+
+	&:hover {
+	  background: black;
+	}
+  }
+
+  &__content {
+	background: rgba(black, 0.3);
+	padding: 10px;
+	color: rgba(white, 0.4);
+	font-size: 13px;
+	flex-grow: 1;
+  }
+}
