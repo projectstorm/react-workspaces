@@ -1,10 +1,10 @@
 {
- "name": "storm-react-workspace",
+ "name": "storm-react-workspaces",
  "main": "./dist/main.js",
  "typings": "./dist/@types/main",
  "repository": {
   "type": "git",
-  "url": "https://github.com/projectstorm/react-workspace.git"
+  "url": "https://github.com/projectstorm/react-workspaces.git"
  },
  "keywords": [
   "web",
