@@ -24,7 +24,7 @@ export class TrayWidget extends React.Component<TrayWidgetProps, TrayWidgetState
 
 	render() {
 		return (
-			<div className={"srw-tray srw-tray--" + (this.props.node.expand ? 'expand' : 'collapse')}>
+			<div className={"srw-tray srw-tray--" + (this.props.node.expand && this.props.node.mode === 'expand' ? 'expand' : 'collapse')}>
 				{
 					!this.props.root &&
 						<DraggableWidget model={this.props.node} engine={this.props.engine} className="srw-tray__title" {...{onDoubleClick: () => {

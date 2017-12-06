@@ -30,6 +30,13 @@ export class AbstractWorkspaceCollectionModel<T extends AbstractWorkspaceModel =
 		return children;
 	}
 
+	replaceModel(oldModel: T, newModel): this{
+		let index = this.children.indexOf(oldModel);
+		this.removeModel(oldModel);
+		this.addModel(newModel, index);
+		return this;
+	}
+
 	removeModel(model: T): this {
 		let index = this.children.indexOf(model);
 		if (index === -1) {

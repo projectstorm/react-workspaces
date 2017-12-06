@@ -60,6 +60,7 @@ export class WorkspaceWidget extends React.Component<WorkspaceWidgetProps, Works
 	}
 
 	render() {
+		console.log(this.props.model);
 		return (
 			<div className="srw-workspace">
 				{

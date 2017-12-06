@@ -31,11 +31,55 @@ export class ContainerWidget extends React.Component<ContainerWidgetProps, Conta
 				engine={this.props.engine}
 				className={"srw-container__" + position}
 				dropped={(model) => {
-					if(position === 'top' || position == 'left'){
-						this.props.model.parent.addModelBefore(this.props.model, model);
-					}
-					else{
-						this.props.model.parent.addModelAfter(this.props.model, model);
+					if(this.props.model.parent instanceof WorkspaceNodeModel){
+						if(!this.props.model.parent.vertical){
+							if (position === 'left') {
+								this.props.model.parent.addModelBefore(this.props.model, model);
+							}
+							else if (position === 'right') {
+								this.props.model.parent.addModelAfter(this.props.model, model);
+							}
+							else if(position === 'top'){
+								this.props.model.parent.replaceModel(this.props.model, (new WorkspaceNodeModel())
+									.setVertical(true)
+									.addModel(model)
+									.addModel(this.props.model)
+								)
+							}else{
+								this.props.model.parent.replaceModel(this.props.model, (new WorkspaceNodeModel())
+									.setVertical(true)
+									.addModel(this.props.model)
+									.addModel(model)
+								)
+							}
+						}else{
+							if (position === 'top') {
+								this.props.model.parent.addModelBefore(this.props.model, model);
+							}
+							else if (position === 'bottom') {
+								this.props.model.parent.addModelAfter(this.props.model, model);
+							}
+							else if(position === 'left'){
+								this.props.model.parent.replaceModel(this.props.model, (new WorkspaceNodeModel())
+									.setHorizontal(true)
+									.addModel(model)
+									.addModel(this.props.model)
+								)
+							}else{
+								this.props.model.parent.replaceModel(this.props.model, (new WorkspaceNodeModel())
+									.setHorizontal(true)
+									.addModel(this.props.model)
+									.addModel(model)
+								)
+							}
+						}
+					}else {
+						if (position === 'top' || position == 'left') {
+							this.props.model.parent.addModelBefore(this.props.model, model);
+						}
+						else {
+							this.props.model.parent.addModelAfter(this.props.model, model);
+						}
 					}
 				}}
 			/>
