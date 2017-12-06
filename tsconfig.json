@@ -1,18 +1,18 @@
 {
-	"compileOnSave": false,
-	"name": "storm-react-forms",
-	"compilerOptions": {
-		"baseUrl": "./src",
-		"suppressExcessPropertyErrors": true,
-		"declarationDir": "./dist/@types",
-		"declaration": true,
-		"target": "es5",
-		"sourceMap": true,
-		"skipLibCheck": true,
-	  	"jsx": "react"
-	},
-	"exclude": [
-		"node_modules",
-		"./dist"
-	]
+  "compileOnSave": false,
+  "name": "storm-react-forms",
+  "compilerOptions": {
+	"baseUrl": "./src",
+	"suppressExcessPropertyErrors": true,
+	"declarationDir": "./dist/@types",
+	"declaration": true,
+	"target": "es5",
+	"sourceMap": true,
+	"skipLibCheck": true,
+	"jsx": "react"
+  },
+  "exclude": [
+	"node_modules",
+	"./dist"
+  ]
 }

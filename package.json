@@ -2,7 +2,7 @@
 	"name": "storm-react-workspaces",
 	"version": "0.1.4",
 	"main": "./dist/main.js",
-	"typings": "./dist/@types/main",
+	"typings": "./dist/@types/src/main",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/projectstorm/react-workspaces.git"
