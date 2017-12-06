@@ -1,6 +1,6 @@
 {
 	"name": "storm-react-workspaces",
-  	"version": "0.1.0",
+	"version": "0.1.1",
 	"main": "./dist/main.js",
 	"typings": "./dist/@types/main",
 	"repository": {
@@ -21,7 +21,7 @@
 	],
 	"author": "dylanvorster",
 	"scripts": {
-	  "prepublishOnly": "export NODE_ENV=production && webpack && ./node_modules/node-sass/bin/node-sass --output-style compressed ./src/sass/main.scss > ./dist/style.min.css",
+		"prepublishOnly": "export NODE_ENV=production && webpack && ./node_modules/node-sass/bin/node-sass --output-style compressed ./src/sass/main.scss > ./dist/style.min.css",
 		"storybook": "start-storybook -p 10000 -c .storybook",
 		"storybook:build": "build-storybook -c .storybook -o .out",
 		"storybook:github": "storybook-to-ghpages"
@@ -30,25 +30,25 @@
 		"lodash": "^4.17.4",
 		"react": "^16.2.0"
 	},
-  	"devDependencies":{
-	  "@storybook/react": "^3.2.17",
-	  "@storybook/storybook-deployer": "^2.0.0",
-	  "@types/lodash": "^4.14.87",
-	  "@types/node": "^8.0.55",
-	  "@types/prop-types": "^15.5.2",
-	  "@types/react": "^16.0.27",
-	  "awesome-typescript-loader": "^3.4.1",
-	  "css-loader": "^0.28.7",
-	  "extract-text-webpack-plugin": "^3.0.2",
-	  "file-loader": "^1.1.5",
-	  "font-awesome": "^4.7.0",
-	  "node-sass": "^4.7.2",
-	  "react-dom": "^16.2.0",
-	  "sass-loader": "^6.0.6",
-	  "source-map-loader": "^0.2.3",
-	  "storybook-host": "^4.1.4",
-	  "style-loader": "^0.19.0",
-	  "typescript": "^2.6.2",
-	  "webpack": "^3.10.0"
+	"devDependencies": {
+		"@storybook/react": "^3.2.17",
+		"@storybook/storybook-deployer": "^2.0.0",
+		"@types/lodash": "^4.14.87",
+		"@types/node": "^8.0.55",
+		"@types/prop-types": "^15.5.2",
+		"@types/react": "^16.0.27",
+		"awesome-typescript-loader": "^3.4.1",
+		"css-loader": "^0.28.7",
+		"extract-text-webpack-plugin": "^3.0.2",
+		"file-loader": "^1.1.5",
+		"font-awesome": "^4.7.0",
+		"node-sass": "^4.7.2",
+		"react-dom": "^16.2.0",
+		"sass-loader": "^6.0.6",
+		"source-map-loader": "^0.2.3",
+		"storybook-host": "^4.1.4",
+		"style-loader": "^0.19.0",
+		"typescript": "^2.6.2",
+		"webpack": "^3.10.0"
 	}
 }
