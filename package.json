@@ -1,51 +1,54 @@
 {
-  "name": "storm-react-workspaces",
-  "main": "./dist/main.js",
-  "typings": "./dist/@types/main",
-  "repository": {
-	"type": "git",
-	"url": "https://github.com/projectstorm/react-workspaces.git"
-  },
-  "keywords": [
-	"web",
-	"workspace",
-	"windows",
-	"panels",
-	"drag",
-	"layout",
-	"split",
-	"react",
-	"typescript",
-	"simple"
-  ],
-  "author": "dylanvorster",
-  "scripts": {
-	"prepublishOnly": "export NODE_ENV=production && webpack",
-	"storybook": "start-storybook -p 10000 -c .storybook",
-	"storybook:build": "build-storybook -c .storybook -o .out",
-	"storybook:github": "storybook-to-ghpages"
-  },
-  "dependencies": {
-	"@storybook/react": "^3.2.17",
-	"@storybook/storybook-deployer": "^2.0.0",
-	"@types/lodash": "^4.14.87",
-	"@types/node": "^8.0.55",
-	"@types/prop-types": "^15.5.2",
-	"@types/react": "^16.0.27",
-	"awesome-typescript-loader": "^3.4.1",
-	"css-loader": "^0.28.7",
-	"file-loader": "^1.1.5",
-	"font-awesome": "^4.7.0",
-	"lodash": "^4.17.4",
-	"node-sass": "^4.7.2",
-	"react": "^16.2.0",
-	"react-dom": "^16.2.0",
-	"sass-loader": "^6.0.6",
-	"source-map-loader": "^0.2.3",
-	"storybook-host": "^4.1.4",
-	"style-loader": "^0.19.0",
-	"typescript": "^2.6.2",
-	"webpack": "^3.10.0"
-  },
-  "version": "0.1.0"
+	"name": "storm-react-workspaces",
+  	"version": "0.1.0",
+	"main": "./dist/main.js",
+	"typings": "./dist/@types/main",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/projectstorm/react-workspaces.git"
+	},
+	"keywords": [
+		"web",
+		"workspace",
+		"windows",
+		"panels",
+		"drag",
+		"layout",
+		"split",
+		"react",
+		"typescript",
+		"simple"
+	],
+	"author": "dylanvorster",
+	"scripts": {
+		"prepublishOnly": "export NODE_ENV=production && webpack",
+		"storybook": "start-storybook -p 10000 -c .storybook",
+		"storybook:build": "build-storybook -c .storybook -o .out",
+		"storybook:github": "storybook-to-ghpages"
+	},
+	"dependencies": {
+		"lodash": "^4.17.4",
+		"react": "^16.2.0"
+	},
+  	"devDependencies":{
+	  "@storybook/react": "^3.2.17",
+	  "@storybook/storybook-deployer": "^2.0.0",
+	  "@types/lodash": "^4.14.87",
+	  "@types/node": "^8.0.55",
+	  "@types/prop-types": "^15.5.2",
+	  "@types/react": "^16.0.27",
+	  "awesome-typescript-loader": "^3.4.1",
+	  "css-loader": "^0.28.7",
+	  "extract-text-webpack-plugin": "^3.0.2",
+	  "file-loader": "^1.1.5",
+	  "font-awesome": "^4.7.0",
+	  "node-sass": "^4.7.2",
+	  "react-dom": "^16.2.0",
+	  "sass-loader": "^6.0.6",
+	  "source-map-loader": "^0.2.3",
+	  "storybook-host": "^4.1.4",
+	  "style-loader": "^0.19.0",
+	  "typescript": "^2.6.2",
+	  "webpack": "^3.10.0"
+	}
 }
