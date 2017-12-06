@@ -16,3 +16,6 @@ export * from "./models/AbstractWorkspaceCollectionModel";
 export * from "./models/WorkspaceNodeModel";
 export * from "./models/WorkspacePanelModel";
 export * from "./models/WorkspaceTabbedModel";
+
+export * from "./WorkspaceEngine";
+export * from "./WorkspacePanelFactory";
