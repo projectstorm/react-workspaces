@@ -30,7 +30,12 @@ export class TrayWidget extends React.Component<TrayWidgetProps, TrayWidgetState
 						<DraggableWidget model={this.props.node} engine={this.props.engine} className="srw-tray__title" {...{onDoubleClick: () => {
 							this.props.node.setMode(this.props.node.mode === 'micro' ? 'expand' : 'micro');
 							this.props.engine.fireRepaintListeners();
-						}}} />
+						}}}>
+							<div className="srw-tray__toggle fa fa-bars" onClick={() => {
+								this.props.node.setMode(this.props.node.mode === 'micro' ? 'expand' : 'micro');
+								this.props.engine.fireRepaintListeners();
+							}} />
+						</DraggableWidget>
 				}
 				{
 					this.props.node.mode === 'micro' ?
