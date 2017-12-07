@@ -19,3 +19,6 @@ export * from "./models/WorkspaceTabbedModel";
 
 export * from "./WorkspaceEngine";
 export * from "./WorkspacePanelFactory";
+
+export * from "./defaults/DefaultWorkspacePanelModel";
+export * from "./defaults/DefaultWorkspacePanelFactory";
