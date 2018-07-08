@@ -3,10 +3,11 @@ import {DropZoneWidget} from "./DropZoneWidget";
 import {WorkspaceEngine} from "../WorkspaceEngine";
 import {AbstractWorkspaceModel} from "../models/AbstractWorkspaceModel";
 import {WorkspaceNodeModel} from "../models/WorkspaceNodeModel";
+import {BaseWidget, BaseWidgetProps} from "@projectstorm/react-core";
 
 export type ContainerWidgetPositions = 'top'|'left'|'bottom'|'right';
 
-export interface ContainerWidgetProps {
+export interface ContainerWidgetProps extends BaseWidgetProps{
 	engine: WorkspaceEngine;
 	model: AbstractWorkspaceModel;
 	hide?: string[];
@@ -15,7 +16,7 @@ export interface ContainerWidgetProps {
 export interface ContainerWidgetState {
 }
 
-export class ContainerWidget extends React.Component<ContainerWidgetProps, ContainerWidgetState> {
+export class ContainerWidget extends BaseWidget<ContainerWidgetProps, ContainerWidgetState> {
 
 	constructor(props: ContainerWidgetProps) {
 		super(props);

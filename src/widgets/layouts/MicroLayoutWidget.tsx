@@ -5,8 +5,9 @@ import {WorkspaceEngine} from "../../WorkspaceEngine";
 import {DraggableWidget} from "../DraggableWidget";
 import {FloatingPanelWidget} from "../FloatingPanelWidget";
 import * as PropTypes from "prop-types";
+import {BaseWidget, BaseWidgetProps} from "@projectstorm/react-core";
 
-export interface MicroLayoutWidgetProps {
+export interface MicroLayoutWidgetProps extends BaseWidgetProps{
 	node: WorkspaceNodeModel;
 	engine: WorkspaceEngine;
 }
@@ -14,7 +15,7 @@ export interface MicroLayoutWidgetProps {
 export interface MicroLayoutWidgetState {
 }
 
-export class MicroLayoutWidget extends React.Component<MicroLayoutWidgetProps, MicroLayoutWidgetState> {
+export class MicroLayoutWidget extends BaseWidget<MicroLayoutWidgetProps, MicroLayoutWidgetState> {
 
 	div: HTMLDivElement;
 	buttons: { [id: string]: HTMLDivElement };
@@ -24,7 +25,7 @@ export class MicroLayoutWidget extends React.Component<MicroLayoutWidgetProps, M
 	};
 
 	constructor(props: MicroLayoutWidgetProps) {
-		super(props);
+		super('srw-micro-layout',props);
 		this.state = {};
 		this.buttons = {};
 	}
@@ -47,7 +48,7 @@ export class MicroLayoutWidget extends React.Component<MicroLayoutWidgetProps, M
 
 	render() {
 		return (
-			<div className="srw-micro-layout" ref={(ref) => {
+			<div {...this.getProps()} ref={(ref) => {
 				this.div = ref;
 			}}>
 				{

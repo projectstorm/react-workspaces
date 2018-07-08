@@ -8,8 +8,9 @@ import {TabGroupWidget} from "../TabGroupWidget";
 import {WorkspaceEngine} from "../../WorkspaceEngine";
 import {TrayWidget} from "../TrayWidget";
 import {AbstractWorkspaceModel} from "../../models/AbstractWorkspaceModel";
+import {BaseWidget, BaseWidgetProps} from "@projectstorm/react-core";
 
-export interface StandardLayoutWidgetProps {
+export interface StandardLayoutWidgetProps extends BaseWidgetProps{
 	node: WorkspaceNodeModel;
 	engine: WorkspaceEngine;
 }
@@ -17,10 +18,10 @@ export interface StandardLayoutWidgetProps {
 export interface StandardLayoutWidgetState {
 }
 
-export class StandardLayoutWidget extends React.Component<StandardLayoutWidgetProps, StandardLayoutWidgetState> {
+export class StandardLayoutWidget extends BaseWidget<StandardLayoutWidgetProps, StandardLayoutWidgetState> {
 
 	constructor(props: StandardLayoutWidgetProps) {
-		super(props);
+		super('srw-standard-layout',props);
 		this.state = {}
 	}
 
@@ -36,12 +37,13 @@ export class StandardLayoutWidget extends React.Component<StandardLayoutWidgetPr
 		}
 	}
 
+	getClassName(){
+		return super.getClassName() +' '+ this.bem(this.props.node.vertical ? '--vertical' : '--horizontal');
+	}
+
 	render() {
 		return (
-			<div className={
-				"srw-standard-layout " +
-				"srw-standard-layout--" + (this.props.node.vertical ? 'vertical' : 'horizontal')}
-			>
+			<div {...this.getProps()}>
 				{_.map(this.props.node.children, (model) => {
 					return (
 						this.generateElement(model)
