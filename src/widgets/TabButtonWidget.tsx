@@ -5,8 +5,9 @@ import {WorkspaceTabbedModel} from "../models/WorkspaceTabbedModel";
 import {WorkspaceEngine} from "../WorkspaceEngine";
 import {DropZoneWidget} from "./DropZoneWidget";
 import {AbstractWorkspaceCollectionModel} from "../models/AbstractWorkspaceCollectionModel";
+import {BaseWidget, BaseWidgetProps} from "@projectstorm/react-core";
 
-export interface TabButtonWidgetProps {
+export interface TabButtonWidgetProps extends BaseWidgetProps{
 	model: WorkspacePanelModel;
 	engine: WorkspaceEngine;
 }
@@ -16,10 +17,10 @@ export interface TabButtonWidgetState {
 	shiftRight: boolean;
 }
 
-export class TabButtonWidget extends React.Component<TabButtonWidgetProps, TabButtonWidgetState> {
+export class TabButtonWidget extends BaseWidget<TabButtonWidgetProps, TabButtonWidgetState> {
 
 	constructor(props: TabButtonWidgetProps) {
-		super(props);
+		super('srw-tab',props);
 		this.state = {
 			shiftLeft: false,
 			shiftRight: false
@@ -31,11 +32,10 @@ export class TabButtonWidget extends React.Component<TabButtonWidgetProps, TabBu
 
 		return (
 			<DraggableWidget
-				className={
-					"srw-tab " +
-					(this.state.shiftLeft ? "srw-tab--shift-left " : '') +
-					(!parent.isLastModel(this.props.model) && this.state.shiftRight ? "srw-tab--shift-right " : '')
-				}
+				{...this.getProps({
+					'--shift-left': this.state.shiftLeft,
+					'--shift-right': !parent.isLastModel(this.props.model) && this.state.shiftRight
+				})}
 				onClick={() => {
 					(this.props.model.parent as WorkspaceTabbedModel).setSelected(this.props.model)
 					this.props.engine.fireRepaintListeners();
@@ -64,7 +64,7 @@ export class TabButtonWidget extends React.Component<TabButtonWidgetProps, TabBu
 								}
 							}} engine={this.props.engine} hover={(entered) => {
 								this.setState({shiftLeft: entered});
-							}} baseClass="srw-tab__dropzone" className="srw-tab--left"/>
+							}} baseClass={this.bem(['__dropzone','--left'])}/>
 							<DropZoneWidget dropped={(model) => {
 								if(model instanceof AbstractWorkspaceCollectionModel){
 									model.getFlattened().forEach((child) => {
@@ -77,7 +77,7 @@ export class TabButtonWidget extends React.Component<TabButtonWidgetProps, TabBu
 								}
 							}} engine={this.props.engine} hover={(entered) => {
 								this.setState({shiftRight: entered});
-							}} baseClass="srw-tab__dropzone" className="srw-tab--right" />
+							}} baseClass={this.bem(['__dropzone','--right'])} />
 						</>
 				}
 			</DraggableWidget>

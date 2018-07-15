@@ -38,6 +38,7 @@
 		"@types/node": "^10.5.1",
 		"@types/prop-types": "^15.5.3",
 		"@types/react": "^16.4.6",
+		"@types/react-dom": "^16.0.6",
 		"awesome-typescript-loader": "^5.2.0",
 		"css-loader": "^0.28.11",
 		"extract-text-webpack-plugin": "^3.0.2",

@@ -2,13 +2,11 @@ import * as React from "react";
 import * as _ from "lodash";
 import {WorkspaceTabbedModel} from "../models/WorkspaceTabbedModel";
 import {WorkspaceEngine} from "../WorkspaceEngine";
-import {DraggableWidget} from "./DraggableWidget";
 import {ContainerWidget} from "./ContainerWidget";
-import {WorkspacePanelModel} from "../models/WorkspacePanelModel";
-import {DropZoneWidget} from "./DropZoneWidget";
+import {BaseWidget, BaseWidgetProps} from "@projectstorm/react-core";
 import {TabButtonWidget} from "./TabButtonWidget";
 
-export interface TabGroupWidgetProps {
+export interface TabGroupWidgetProps extends BaseWidgetProps{
 	model: WorkspaceTabbedModel;
 	engine: WorkspaceEngine;
 }
@@ -16,10 +14,10 @@ export interface TabGroupWidgetProps {
 export interface TabGroupWidgetState {
 }
 
-export class TabGroupWidget extends React.Component<TabGroupWidgetProps, TabGroupWidgetState> {
+export class TabGroupWidget extends BaseWidget<TabGroupWidgetProps, TabGroupWidgetState> {
 
 	constructor(props: TabGroupWidgetProps) {
-		super(props);
+		super('srw-tabgroup',props);
 		this.state = {}
 	}
 
@@ -28,8 +26,13 @@ export class TabGroupWidget extends React.Component<TabGroupWidgetProps, TabGrou
 		let selectedFactory = this.props.engine.getFactory(selected);
 
 		return (
-			<div className={"srw-tabgroup srw-tabgroup--" + (this.props.model.expand ? 'expand' : 'contract')}>
-				<div className="srw-tabgroup__tabs">
+			<div {
+				...this.getProps({
+					'--expand': this.props.model.expand,
+					'--contract': !this.props.model.expand
+				})}
+			>
+				<div className={this.bem('__tabs')}>
 					{
 						_.map(this.props.model.children, (child) => {
 							return (
@@ -38,7 +41,7 @@ export class TabGroupWidget extends React.Component<TabGroupWidgetProps, TabGrou
 						})
 					}
 				</div>
-				<div className="srw-tabgroup__content">
+				<div className={this.bem('__content')}>
 					{
 						selectedFactory.generatePanelContent(selected)
 					}

@@ -4,8 +4,9 @@ import {WorkspacePanelModel} from "../models/WorkspacePanelModel";
 import {PanelWidget} from "./PanelWidget";
 import {WorkspaceEngine} from "../WorkspaceEngine";
 import * as PropTypes from 'prop-types';
+import {BaseWidget, BaseWidgetProps} from "@projectstorm/react-core";
 
-export interface FloatingPanelWidgetProps {
+export interface FloatingPanelWidgetProps extends BaseWidgetProps{
 	model: WorkspacePanelModel;
 	engine: WorkspaceEngine;
 	relativeElement: HTMLDivElement;
@@ -15,14 +16,14 @@ export interface FloatingPanelWidgetState {
 	mustRepaint: boolean;
 }
 
-export class FloatingPanelWidget extends React.Component<FloatingPanelWidgetProps, FloatingPanelWidgetState> {
+export class FloatingPanelWidget extends BaseWidget<FloatingPanelWidgetProps, FloatingPanelWidgetState> {
 
 	static contextTypes = {
 		workspace: PropTypes.any
 	};
 
 	constructor(props: FloatingPanelWidgetProps) {
-		super(props);
+		super('srw-floating-panel',props);
 		this.state = {
 			mustRepaint: false
 		}
@@ -42,7 +43,7 @@ export class FloatingPanelWidget extends React.Component<FloatingPanelWidgetProp
 		}
 
 		return (
-			<div style={style} className="srw-floating-panel">
+			<div {...this.getProps()} style={style}>
 				<PanelWidget model={this.props.model} engine={this.props.engine}/>
 			</div>
 		);

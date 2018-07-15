@@ -2,8 +2,9 @@ import * as React from "react";
 import {WorkspaceEngine} from "../WorkspaceEngine";
 import {AbstractWorkspaceModel} from "../models/AbstractWorkspaceModel";
 import {WorkspacePanelModel} from "../models/WorkspacePanelModel";
+import {BaseWidget, BaseWidgetProps} from "@projectstorm/react-core";
 
-export interface DraggableWidgetProps {
+export interface DraggableWidgetProps extends BaseWidgetProps{
 	engine: WorkspaceEngine;
 	model: AbstractWorkspaceModel;
 	className?: string;
@@ -14,18 +15,17 @@ export interface DraggableWidgetProps {
 export interface DraggableWidgetState {
 }
 
-export class DraggableWidget extends React.Component<DraggableWidgetProps, DraggableWidgetState> {
+export class DraggableWidget extends BaseWidget<DraggableWidgetProps, DraggableWidgetState> {
 
 	static WORKSPACE_MIME = 'srw/panel';
 
 	constructor(props: DraggableWidgetProps) {
-		super(props);
+		super('srw-draggable-widget',props);
 		this.state = {
 		};
 	}
 
 	render() {
-
 		return (
 			<div
 				draggable={true}
@@ -49,9 +49,7 @@ export class DraggableWidget extends React.Component<DraggableWidgetProps, Dragg
 				}}
 				{...this.props}
 			>
-				{
-					this.props.children
-				}
+				{this.props.children}
 			</div>
 		);
 	}

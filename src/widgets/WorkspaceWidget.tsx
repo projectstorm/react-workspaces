@@ -4,8 +4,9 @@ import {WorkspaceEngine} from "../WorkspaceEngine";
 import {PanelWidget} from "./PanelWidget";
 import {TrayWidget} from "./TrayWidget";
 import * as PropTypes from 'prop-types';
+import {BaseWidget, BaseWidgetProps} from "@projectstorm/react-core";
 
-export interface WorkspaceWidgetProps {
+export interface WorkspaceWidgetProps extends BaseWidgetProps{
 	model: WorkspaceNodeModel;
 	engine: WorkspaceEngine;
 }
@@ -17,7 +18,7 @@ export interface WorkspaceWidgetContext {
 	workspace: WorkspaceWidget;
 }
 
-export class WorkspaceWidget extends React.Component<WorkspaceWidgetProps, WorkspaceWidgetState> {
+export class WorkspaceWidget extends BaseWidget<WorkspaceWidgetProps, WorkspaceWidgetState> {
 
 	listener: string;
 	floatingContainer: HTMLDivElement;
@@ -27,7 +28,7 @@ export class WorkspaceWidget extends React.Component<WorkspaceWidgetProps, Works
 	};
 
 	constructor(props: WorkspaceWidgetProps) {
-		super(props);
+		super('srw-workspace',props);
 		this.state = {}
 	}
 
@@ -60,15 +61,14 @@ export class WorkspaceWidget extends React.Component<WorkspaceWidgetProps, Works
 	}
 
 	render() {
-		console.log(this.props.model);
 		return (
-			<div className="srw-workspace">
+			<div {...this.getProps()}>
 				{
 					this.props.engine.fullscreenModel ?
 						<PanelWidget model={this.props.engine.fullscreenModel} engine={this.props.engine}/>
 						: <TrayWidget root={true} node={this.props.model} engine={this.props.engine}/>
 				}
-				<div className="srw-workspace__floating" ref={(ref) => {
+				<div className={this.bem('__floating')} ref={(ref) => {
 					this.floatingContainer = ref;
 				}}>
 				</div>

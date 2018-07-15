@@ -3,8 +3,9 @@ import {WorkspacePanelModel} from "../models/WorkspacePanelModel";
 import {WorkspaceEngine} from "../WorkspaceEngine";
 import {ContainerWidget} from "./ContainerWidget";
 import {DraggableWidget} from "./DraggableWidget";
+import {BaseWidget, BaseWidgetProps} from "@projectstorm/react-core";
 
-export interface PanelWidgetProps {
+export interface PanelWidgetProps extends BaseWidgetProps{
 	model: WorkspacePanelModel;
 	engine: WorkspaceEngine;
 }
@@ -12,27 +13,30 @@ export interface PanelWidgetProps {
 export interface PanelWidgetState {
 }
 
-export class PanelWidget extends React.Component<PanelWidgetProps, PanelWidgetState> {
+export class PanelWidget extends BaseWidget<PanelWidgetProps, PanelWidgetState> {
 
 	constructor(props: PanelWidgetProps) {
-		super(props);
+		super('srw-panel',props);
 		this.state = {}
 	}
 
 	render() {
-
 		let factory = this.props.engine.getFactory(this.props.model);
-
 		return (
-			<div className={"srw-panel srw-panel--" + (this.props.model.expand ? 'expand' : 'contract')}>
+			<div {...this.getProps({
+				'--expand': this.props.model.expand,
+				'--contract': !this.props.model.expand,
+			})}>
 				<DraggableWidget
-					className="srw-panel__title"
+					className={this.bem('__title')}
 					model={this.props.model}
 					engine={this.props.engine}
 				>
 					{factory.generatePanelTitle(this.props.model)}
 				</DraggableWidget>
-				<div className="srw-panel__content">{factory.generatePanelContent(this.props.model)}</div>
+				<div className={this.bem('__content')}>
+					{factory.generatePanelContent(this.props.model)}
+				</div>
 				<ContainerWidget engine={this.props.engine} model={this.props.model} />
 			</div>
 		);
