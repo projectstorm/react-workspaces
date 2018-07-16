@@ -55,7 +55,7 @@ export class MicroLayoutWidget extends BaseWidget<MicroLayoutWidgetProps, MicroL
 					_.map(this.props.node.getFlattened(), (child) => {
 						let selected = this.props.node.floatingModel && this.props.node.floatingModel.id === child.id;
 						return (
-							<div key={child.id} className="srw-micro-layout__button" ref={(ref) => {
+							<div key={child.id} className={this.bem('__button')} ref={(ref) => {
 								this.buttons[child.id] = ref;
 							}}>
 								<DraggableWidget fullscreenEnabled={false} onClick={() => {

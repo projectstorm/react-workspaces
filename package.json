@@ -32,7 +32,9 @@
 		"react": "^16.4.1"
 	},
 	"devDependencies": {
-		"@storybook/react": "^3.4.8",
+		"@storybook/addon-actions": "^3.4.8",
+		"@storybook/addon-options": "^4.0.0-alpha.11",
+		"@storybook/react": "^4.0.0-alpha.11",
 		"@storybook/storybook-deployer": "^2.3.0",
 		"@types/lodash": "^4.14.110",
 		"@types/node": "^10.5.1",
@@ -50,7 +52,10 @@
 		"source-map-loader": "^0.2.3",
 		"storybook-host": "^5.0.0",
 		"style-loader": "^0.21.0",
+		"ts-loader": "^4.4.2",
 		"typescript": "^2.9.2",
-		"webpack": "^4.14.0"
+		"uglifyjs-webpack-plugin": "^1.2.7",
+		"webpack": "^4.14.0",
+		"webpack-node-externals": "^1.7.2"
 	}
 }

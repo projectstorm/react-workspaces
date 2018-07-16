@@ -28,6 +28,7 @@ export class DraggableWidget extends BaseWidget<DraggableWidgetProps, DraggableW
 	render() {
 		return (
 			<div
+				{...this.getProps()}
 				draggable={true}
 				onDoubleClick={() => {
 					if(this.props.fullscreenEnabled !== false) {
@@ -47,7 +48,6 @@ export class DraggableWidget extends BaseWidget<DraggableWidgetProps, DraggableW
 					this.setState({dragging: false});
 					this.props.engine.setDraggingNode(null);
 				}}
-				{...this.props}
 			>
 				{this.props.children}
 			</div>

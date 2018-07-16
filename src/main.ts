@@ -1,6 +1,5 @@
 export * from "./widgets/PanelWidget";
 export * from "./widgets/WorkspaceWidget";
-export * from "./widgets/BemWidget";
 export * from "./widgets/ContainerWidget";
 export * from "./widgets/DraggableWidget";
 export * from "./widgets/FloatingPanelWidget";
