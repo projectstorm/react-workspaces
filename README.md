@@ -7,7 +7,7 @@ applications that have window management similar to Adobe / Jetbrains and Netbea
 
 [![Join the chat at https://gitter.im/projectstorm/react-workspaces](https://badges.gitter.im/projectstorm/react-workspaces.svg)](https://gitter.im/projectstorm/react-workspaces?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![NPM](https://img.shields.io/npm/v/storm-react-workspaces.svg)](https://npmjs.org/package/storm-react-workspaces)
-[![NPM](https://img.shields.io/npm/dt/storm-react-workspaces.svg)](https://npmjs.org/package/storm-react-workspaces)
+[![NPM](https://img.shields.io/npm/dt/storm-react-workspaces.svg)](https://npmjs.org/package/storm-react-workspaces) [![Greenkeeper badge](https://badges.greenkeeper.io/projectstorm/react-workspaces.svg)](https://greenkeeper.io/)
 
 ![Demo1](./images/screenshot1.png)
 
