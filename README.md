@@ -1,6 +1,6 @@
 # STORM React Workspaces
 
-__DEMO__: http://www.projectstorm.io/react-workspaces/
+__DEMO__: http://projectstorm.cloud/react-workspaces/
 
 The ultimate workspace management system to help you build super-modern desktop-grade
 applications that have window management similar to Adobe / Jetbrains and Netbeans
