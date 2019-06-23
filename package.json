@@ -21,7 +21,7 @@
 		"simple"
 	],
 	"scripts": {
-		"prepublishOnly": "export NODE_ENV=production && webpack && ./node_modules/node-sass/bin/node-sass --output-style compressed ./src/sass/main.scss > ./dist/style.min.css",
+		"prepublishOnly": "rm -rf ./dist && export NODE_ENV=production && yarn build",
 		"storybook": "start-storybook -p 10000 -c .storybook",
 		"storybook:build": "build-storybook -c .storybook -o .out",
 		"storybook:github": "storybook-to-ghpages",
