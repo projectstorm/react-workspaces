@@ -2,7 +2,7 @@ import * as React from "react";
 import {DropZoneWidget} from "./DropZoneWidget";
 import {WorkspaceEngine} from "../WorkspaceEngine";
 import {AbstractWorkspaceModel} from "../models/AbstractWorkspaceModel";
-import {WorkspaceNodeModel} from "../models/WorkspaceNodeModel";
+import {WorkspaceNodeModel} from "../models/WorkspaceNodeModel"
 import {BaseWidget, BaseWidgetProps} from "@projectstorm/react-core";
 
 export type ContainerWidgetPositions = 'top'|'left'|'bottom'|'right';
@@ -19,7 +19,7 @@ export interface ContainerWidgetState {
 export class ContainerWidget extends BaseWidget<ContainerWidgetProps, ContainerWidgetState> {
 
 	constructor(props: ContainerWidgetProps) {
-		super(props);
+		super('srw-container',props);
 		this.state = {}
 	}
 
@@ -30,7 +30,7 @@ export class ContainerWidget extends BaseWidget<ContainerWidgetProps, ContainerW
 		return (
 			<DropZoneWidget
 				engine={this.props.engine}
-				className={"srw-container__" + position}
+				className={this.bem('__'+position)}
 				dropped={(model) => {
 					if(this.props.model.parent instanceof WorkspaceNodeModel){
 						if(!this.props.model.parent.vertical){
@@ -90,7 +90,7 @@ export class ContainerWidget extends BaseWidget<ContainerWidgetProps, ContainerW
 	render() {
 		return (
 			this.props.engine.draggingNode && this.props.engine.draggingNode.id !== this.props.model.id ?
-				<div className="srw-container">
+				<div {...this.getProps()}>
 					{this.renderDropZone('left')}
 					{this.renderDropZone('right')}
 					{this.renderDropZone('top')}

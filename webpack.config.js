@@ -1,30 +1,17 @@
-var webpack = require("webpack");
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
-var CheckerPlugin = require('awesome-typescript-loader').CheckerPlugin;
+const webpack = require("webpack");
+const TerserPlugin = require('terser-webpack-plugin');
+const nodeExternals = require('webpack-node-externals');
+const production = process.env.NODE_ENV === 'production';
 
 var plugins = [];
 
-//do we minify it all
-if(process.env.NODE_ENV === 'production'){
+if(production){
 	console.log("creating production build");
-	new CheckerPlugin(),
-	plugins.push(new webpack.optimize.UglifyJsPlugin({
-		mangle: {
-			keep_fnames: true
-		},
-		compress: {
-			keep_fnames: true,
-			warnings: false,
-		}
-	}));
 	plugins.push(new webpack.DefinePlugin({
 		'process.env.NODE_ENV': JSON.stringify('production')
 	}));
 }
 
-/**
- * @author Dylan Vorster
- */
 module.exports = {
 	entry: './src/main.ts',
 	output: {
@@ -33,38 +20,36 @@ module.exports = {
 		libraryTarget: 'umd',
 		library: 'SRW'
 	},
-	externals: {
-		react: {
-			root: 'React',
-			commonjs2: 'react',
-			commonjs: 'react',
-			amd: 'react'
-		},
-		"lodash": {
-			commonjs: 'lodash',
-			commonjs2: 'lodash',
-			amd: '_',
-			root: '_'
-		}
-	},
+	externals: [
+		nodeExternals(),
+	],
 	plugins:plugins,
 	module: {
 		rules: [
 			{
 				test: /\.scss$/,
-				use: ExtractTextPlugin.extract({
-					fallback: 'style-loader',
-					use: ['css-loader', 'sass-loader']
-				})
+				loaders: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader']
 			},
 			{
 				test: /\.tsx?$/,
-				loader: 'awesome-typescript-loader'
+				loader: 'ts-loader'
 			},
+		]
+	},
+	devtool: production ? 'source-map' : 'cheap-module-source-map',
+	mode: production ? 'production' : 'development',
+	optimization: {
+		minimizer: [
+			new TerserPlugin({
+				parallel: true,
+				terserOptions: {
+					safari10: true,
+					ecma: 6
+				}
+			})
 		]
 	},
 	resolve: {
 		extensions: [".tsx", ".ts", ".js"]
-	},
-	devtool: process.env.NODE_ENV === 'production'?false:'cheap-module-source-map'
-}
+	}
+};

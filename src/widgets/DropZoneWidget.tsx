@@ -1,10 +1,10 @@
 import * as React from "react";
 import {DraggableWidget} from "./DraggableWidget";
 import {AbstractWorkspaceModel} from "../models/AbstractWorkspaceModel";
-import {BemWidget, BemWidgetProps} from "./BemWidget";
 import {WorkspaceEngine} from "../WorkspaceEngine";
+import { BaseWidget, BaseWidgetProps } from '@projectstorm/react-core';
 
-export interface DropZoneWidgetProps extends BemWidgetProps{
+export interface DropZoneWidgetProps extends BaseWidgetProps{
 	dropped?: (model: AbstractWorkspaceModel) => any;
 	hover?: (entered: boolean) => any;
 	engine: WorkspaceEngine;
@@ -14,13 +14,10 @@ export interface DropZoneWidgetState {
 	hoverActive: boolean;
 }
 
-/**
- * @author Dylan Vorster
- */
-export class DropZoneWidget extends BemWidget<DropZoneWidgetProps, DropZoneWidgetState> {
+export class DropZoneWidget extends BaseWidget<DropZoneWidgetProps, DropZoneWidgetState> {
 
 	constructor(props: DropZoneWidgetProps) {
-		super(props, 'srw-drop-zone');
+		super('srw-drop-zone',props);
 		this.state = {
 			hoverActive: false
 		}
@@ -29,7 +26,9 @@ export class DropZoneWidget extends BemWidget<DropZoneWidgetProps, DropZoneWidge
 	render() {
 		return (
 			<div
-				className={this.bem() + (this.state.hoverActive ? this.bem('--active') : '')}
+				{...this.getProps({
+					'--active': this.state.hoverActive
+				})}
 				onDrop={(event) => {
 					var data = event.dataTransfer.getData(DraggableWidget.WORKSPACE_MIME);
 					try{
