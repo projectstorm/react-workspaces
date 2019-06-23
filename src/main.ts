@@ -1,3 +1,5 @@
+import "./sass/main.scss";
+
 export * from "./widgets/PanelWidget";
 export * from "./widgets/WorkspaceWidget";
 export * from "./widgets/ContainerWidget";

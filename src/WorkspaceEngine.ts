@@ -2,10 +2,14 @@ import {WorkspacePanelFactory} from "./WorkspacePanelFactory";
 import {WorkspacePanelModel} from "./models/WorkspacePanelModel";
 import {AbstractWorkspaceModel} from "./models/AbstractWorkspaceModel";
 
+export interface WorkspaceEngineListener {
+	repaint();
+}
+
 export class WorkspaceEngine {
 
 	factories: { [type: string]: WorkspacePanelFactory };
-	listeners: {[id: string]: () => any};
+	listeners: {[id: string]: WorkspaceEngineListener};
 	draggingNode: AbstractWorkspaceModel;
 	fullscreenModel: WorkspacePanelModel;
 
@@ -21,19 +25,17 @@ export class WorkspaceEngine {
 		this.fireRepaintListeners();
 	}
 
-	registerRepaintListener(listener: () => any): string{
+	registerListener(listener: WorkspaceEngineListener): () => any{
 		let id = WorkspaceEngine.generateID();
 		this.listeners[id] = listener;
-		return id;
-	}
-
-	removeRepaintListener(id: string){
-		delete this.listeners[id];
+		return () => {
+			delete this.listeners[id];
+		};
 	}
 
 	fireRepaintListeners(){
 		for(let i in this.listeners){
-			this.listeners[i]();
+			this.listeners[i].repaint();
 		}
 	}
 

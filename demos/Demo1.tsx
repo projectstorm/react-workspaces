@@ -17,7 +17,6 @@ export interface Demo1State {
 
 export class Demo1 extends React.Component<Demo1Props, Demo1State> {
 
-
 	constructor(props: Demo1Props) {
 		super(props);
 		let engine = new WorkspaceEngine();
@@ -78,7 +77,7 @@ export class Demo1 extends React.Component<Demo1Props, Demo1State> {
 						return <PlaceholderContentWidget />;
 					})
 				)
-			)
+			);
 
 		this.state = {
 			engine: engine,
