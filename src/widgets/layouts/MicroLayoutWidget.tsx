@@ -12,10 +12,7 @@ export interface MicroLayoutWidgetProps extends BaseWidgetProps{
 	engine: WorkspaceEngine;
 }
 
-export interface MicroLayoutWidgetState {
-}
-
-export class MicroLayoutWidget extends BaseWidget<MicroLayoutWidgetProps, MicroLayoutWidgetState> {
+export class MicroLayoutWidget extends BaseWidget<MicroLayoutWidgetProps> {
 
 	div: HTMLDivElement;
 	buttons: { [id: string]: HTMLDivElement };
@@ -26,7 +23,6 @@ export class MicroLayoutWidget extends BaseWidget<MicroLayoutWidgetProps, MicroL
 
 	constructor(props: MicroLayoutWidgetProps) {
 		super('srw-micro-layout',props);
-		this.state = {};
 		this.buttons = {};
 	}
 
@@ -66,7 +62,11 @@ export class MicroLayoutWidget extends BaseWidget<MicroLayoutWidgetProps, MicroL
 									}
 									this.props.engine.fireRepaintListeners();
 								}} engine={this.props.engine} model={child}>
-									{this.props.engine.getFactory(child).generateMicroButton(child, selected)}
+									{this.props.engine.getFactory(child).generateMicroButton({
+										model: child,
+										selected: selected,
+										engine: this.props.engine
+									})}
 								</DraggableWidget>
 							</div>
 						);

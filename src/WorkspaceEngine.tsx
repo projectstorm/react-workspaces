@@ -1,9 +1,12 @@
+import * as React from "react";
 import {WorkspacePanelFactory} from "./WorkspacePanelFactory";
 import {WorkspacePanelModel} from "./models/WorkspacePanelModel";
 import {AbstractWorkspaceModel} from "./models/AbstractWorkspaceModel";
+import { WorkspaceNodeModel } from './models/WorkspaceNodeModel';
 
 export interface WorkspaceEngineListener {
-	repaint();
+	repaint?: () => any;
+	generateTrayHeader?: (model: WorkspaceNodeModel) => JSX.Element;
 }
 
 export class WorkspaceEngine {
@@ -33,9 +36,21 @@ export class WorkspaceEngine {
 		};
 	}
 
+	getTrayHeader(model: WorkspaceNodeModel): JSX.Element{
+		for(let i in this.listeners){
+			if(this.listeners[i].generateTrayHeader){
+				let element = this.listeners[i].generateTrayHeader(model);
+				if(element){
+					return element
+				}
+			}
+		}
+		return null;
+	}
+
 	fireRepaintListeners(){
 		for(let i in this.listeners){
-			this.listeners[i].repaint();
+			this.listeners[i].repaint && this.listeners[i].repaint();
 		}
 	}
 

@@ -44,10 +44,11 @@ export class TabButtonWidget extends React.Component<TabButtonWidgetProps, TabBu
 				model={this.props.model}
 			>
 				{
-					this.props.engine.getFactory(this.props.model).generatePanelTab(
-						this.props.model,
-						this.props.model.id === parent.getSelected().id
-					)
+					this.props.engine.getFactory(this.props.model).generatePanelTab({
+						engine: this.props.engine,
+						model: this.props.model,
+						selected: this.props.model.id === parent.getSelected().id
+					})
 				}
 				{
 					this.props.engine.draggingNode && this.props.engine.draggingNode.id !== this.props.model.id &&

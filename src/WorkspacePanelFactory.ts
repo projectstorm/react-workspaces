@@ -1,4 +1,10 @@
 import {WorkspacePanelModel} from "./models/WorkspacePanelModel";
+import { WorkspaceEngine } from './WorkspaceEngine';
+
+export interface GenerateEvent<T extends WorkspacePanelModel> {
+	engine: WorkspaceEngine;
+	model: T;
+}
 
 export abstract class WorkspacePanelFactory<T extends WorkspacePanelModel = WorkspacePanelModel>{
 
@@ -8,11 +14,11 @@ export abstract class WorkspacePanelFactory<T extends WorkspacePanelModel = Work
 		this.type = type;
 	}
 
-	abstract generatePanelContent(model: T): JSX.Element;
+	abstract generatePanelContent(event: GenerateEvent<T>): JSX.Element;
 
-	abstract generatePanelTitle(model: T): JSX.Element;
+	abstract generatePanelTitle(event: GenerateEvent<T>): JSX.Element;
 
-	abstract generateMicroButton(model: T, selected: boolean): JSX.Element;
+	abstract generateMicroButton(event: GenerateEvent<T> & {selected: boolean}): JSX.Element;
 
-	abstract generatePanelTab(model: T, selected: boolean): JSX.Element;
+	abstract generatePanelTab(event: GenerateEvent<T> & {selected: boolean}): JSX.Element;
 }

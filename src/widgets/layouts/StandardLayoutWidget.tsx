@@ -15,10 +15,8 @@ export interface StandardLayoutWidgetProps extends BaseWidgetProps{
 	engine: WorkspaceEngine;
 }
 
-export interface StandardLayoutWidgetState {
-}
 
-export class StandardLayoutWidget extends BaseWidget<StandardLayoutWidgetProps, StandardLayoutWidgetState> {
+export class StandardLayoutWidget extends BaseWidget<StandardLayoutWidgetProps> {
 
 	constructor(props: StandardLayoutWidgetProps) {
 		super('srw-standard-layout',props);

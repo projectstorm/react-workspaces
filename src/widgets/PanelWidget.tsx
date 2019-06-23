@@ -30,9 +30,15 @@ export class PanelWidget extends React.Component<PanelWidgetProps, PanelWidgetSt
 					model={this.props.model}
 					engine={this.props.engine}
 				>
-					{factory.generatePanelTitle(this.props.model)}
+					{factory.generatePanelTitle({
+						model: this.props.model,
+						engine: this.props.engine
+					})}
 				</DraggableWidget>
-				<div className="srw-panel__content">{factory.generatePanelContent(this.props.model)}</div>
+				<div className="srw-panel__content">{factory.generatePanelContent({
+					model: this.props.model,
+					engine: this.props.engine
+				})}</div>
 				<ContainerWidget engine={this.props.engine} model={this.props.model} />
 			</div>
 		);

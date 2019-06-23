@@ -21,6 +21,17 @@ export class Demo1 extends React.Component<Demo1Props, Demo1State> {
 		super(props);
 		let engine = new WorkspaceEngine();
 		engine.registerFactory(new DefaultWorkspacePanelFactory());
+		engine.registerListener({
+			generateTrayHeader: (model) => {
+				return (
+					<div className="demo-tray-header" onDoubleClick={() => {
+						model.setMode(model.mode === 'micro' ? 'expand' : 'micro');
+						engine.fireRepaintListeners();
+					}}>
+					</div>
+				)
+			}
+		});
 
 		let model = new WorkspaceNodeModel();
 		model
@@ -87,7 +98,7 @@ export class Demo1 extends React.Component<Demo1Props, Demo1State> {
 
 	render() {
 		return (
-			<WorkspaceWidget engine={this.state.engine} model={this.state.model}/>
+			<WorkspaceWidget className="demo" engine={this.state.engine} model={this.state.model}/>
 		)
 	}
 }

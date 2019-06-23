@@ -8,28 +8,28 @@ export class DefaultWorkspacePanelFactory extends WorkspacePanelFactory<DefaultW
 		super('default');
 	}
 
-	generatePanelTitle(model: DefaultWorkspacePanelModel): JSX.Element {
+	generatePanelTitle(event): JSX.Element {
 		return (
-			<div className="srw-default__title">{model.displayName}</div>
+			<div className="srw-default__title">{event.model.displayName}</div>
 		);
 	}
 
-	generatePanelContent(model: DefaultWorkspacePanelModel): JSX.Element {
+	generatePanelContent(event): JSX.Element {
 		return (
-			<div className="srw-default__content">{model.getContent()}</div>
+			<div className="srw-default__content">{event.model.getContent()}</div>
 		);
 	}
 
-	generatePanelTab(model: DefaultWorkspacePanelModel, selected: boolean): JSX.Element {
+	generatePanelTab(event): JSX.Element {
 		return (
-			<div className={"srw-default__tab " + (selected ? "srw-default--selected" : '')}>{model.displayName}</div>
+			<div className={"srw-default__tab " + (event.selected ? "srw-default--selected" : '')}>{event.model.displayName}</div>
 		);
 	}
 
-	generateMicroButton(model: DefaultWorkspacePanelModel, selected: boolean): JSX.Element {
+	generateMicroButton(event): JSX.Element {
 		return (
-			<div className={"srw-default__micro"+(selected?' srw-default--selected':'')}>
-				<div className={"fa "+model.icon} />
+			<div className={"srw-default__micro"+(event.selected?' srw-default--selected':'')}>
+				<div className={"fa "+event.model.icon} />
 			</div>
 		)
 	}
