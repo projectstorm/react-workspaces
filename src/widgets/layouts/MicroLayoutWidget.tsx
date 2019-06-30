@@ -1,11 +1,12 @@
 import * as React from 'react';
 import * as _ from 'lodash';
-import { WorkspaceNodeModel } from '../../models/WorkspaceNodeModel';
+import { WorkspaceNodeModel } from '../../models/node/WorkspaceNodeModel';
 import { WorkspaceEngine } from '../../WorkspaceEngine';
 import { DraggableWidget } from '../DraggableWidget';
 import { FloatingPanelWidget } from '../FloatingPanelWidget';
 import * as PropTypes from 'prop-types';
 import { BaseWidget, BaseWidgetProps } from '@projectstorm/react-core';
+import { WorkspacePanelFactory } from '../../WorkspacePanelFactory';
 
 export interface MicroLayoutWidgetProps extends BaseWidgetProps {
 	node: WorkspaceNodeModel;
@@ -69,7 +70,7 @@ export class MicroLayoutWidget extends BaseWidget<MicroLayoutWidgetProps> {
 								}}
 								engine={this.props.engine}
 								model={child}>
-								{this.props.engine.getFactory(child).generateMicroButton({
+								{this.props.engine.getFactory<WorkspacePanelFactory>(child).generateMicroButton({
 									model: child,
 									selected: selected,
 									engine: this.props.engine

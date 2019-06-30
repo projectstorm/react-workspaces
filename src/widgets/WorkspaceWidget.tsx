@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { WorkspaceNodeModel } from '../models/WorkspaceNodeModel';
+import { WorkspaceNodeModel } from '../models/node/WorkspaceNodeModel';
 import { WorkspaceEngine } from '../WorkspaceEngine';
 import { PanelWidget } from './PanelWidget';
 import { TrayWidget } from './TrayWidget';

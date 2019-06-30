@@ -1,34 +1,40 @@
 import * as React from 'react';
-import { WorkspacePanelFactory } from './WorkspacePanelFactory';
-import { WorkspacePanelModel } from './models/WorkspacePanelModel';
-import { WorkspaceNodeModel } from './models/WorkspaceNodeModel';
+import { WorkspaceNodeModel } from './models/node/WorkspaceNodeModel';
 import { DragEvent } from 'react';
+import { WorkspaceFactory } from './WorkspaceFactory';
+import { WorkspaceModel } from './models/WorkspaceModel';
+import { WorkspaceNodeFactory } from './models/node/WorkspaceNodeFactory';
+import { WorkspaceTabbedFactory } from './models/tabs/WorkspaceTabbedFactory';
+import { WorkspaceEngineInterface } from './WorkspaceEngineInterface';
+import { uuid } from './tools';
 
 export interface WorkspaceEngineListener {
 	repaint?: () => any;
 	generateTrayHeader?: (model: WorkspaceNodeModel) => JSX.Element;
 }
 
-export class WorkspaceEngine {
-	factories: { [type: string]: WorkspacePanelFactory };
+export class WorkspaceEngine implements WorkspaceEngineInterface {
+	factories: { [type: string]: WorkspaceFactory };
 	listeners: { [id: string]: WorkspaceEngineListener };
 	draggingID: string;
-	fullscreenModel: WorkspacePanelModel;
+	fullscreenModel: WorkspaceModel;
 
 	constructor() {
 		this.factories = {};
 		this.listeners = {};
 		this.draggingID = null;
 		this.fullscreenModel = null;
+		this.registerFactory(new WorkspaceNodeFactory());
+		this.registerFactory(new WorkspaceTabbedFactory());
 	}
 
-	setFullscreenModel(model: WorkspacePanelModel | null) {
+	setFullscreenModel(model: WorkspaceModel | null) {
 		this.fullscreenModel = model;
 		this.fireRepaintListeners();
 	}
 
 	registerListener(listener: WorkspaceEngineListener): () => any {
-		let id = WorkspaceEngine.generateID();
+		let id = uuid();
 		this.listeners[id] = listener;
 		return () => {
 			delete this.listeners[id];
@@ -66,18 +72,18 @@ export class WorkspaceEngine {
 		}
 	}
 
-	registerFactory(factory: WorkspacePanelFactory) {
+	registerFactory(factory: WorkspaceFactory) {
 		this.factories[factory.type] = factory;
 	}
 
-	getFactory(model: WorkspacePanelModel | string): WorkspacePanelFactory {
+	getFactory<T extends WorkspaceFactory>(model: WorkspaceModel | string): T {
 		if (typeof model !== 'string') {
 			model = model.type;
 		}
 		if (!this.factories[model]) {
 			throw 'Cannot find Workspace factory for model with type: [' + model + ']';
 		}
-		return this.factories[model];
+		return this.factories[model] as T;
 	}
 
 	setDraggingNode(id: string) {
@@ -85,13 +91,5 @@ export class WorkspaceEngine {
 			this.draggingID = id;
 			this.fireRepaintListeners();
 		}
-	}
-
-	static generateID() {
-		return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-			var r = (Math.random() * 16) | 0,
-				v = c == 'x' ? r : (r & 0x3) | 0x8;
-			return v.toString(16);
-		});
 	}
 }

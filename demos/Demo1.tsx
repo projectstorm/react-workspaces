@@ -1,10 +1,10 @@
 import * as React from "react";
 import {DefaultWorkspacePanelFactory} from "./defaults/DefaultWorkspacePanelFactory";
-import {WorkspaceNodeModel} from "../src/models/WorkspaceNodeModel";
+import {WorkspaceNodeModel} from "../src/models/node/WorkspaceNodeModel";
 import {DefaultWorkspacePanelModel} from "./defaults/DefaultWorkspacePanelModel";
 import {WorkspaceEngine} from "../src/WorkspaceEngine";
 import {WorkspaceWidget} from "../src/widgets/WorkspaceWidget";
-import {WorkspaceTabbedModel} from "../src/models/WorkspaceTabbedModel";
+import {WorkspaceTabbedModel} from "../src/models/tabs/WorkspaceTabbedModel";
 
 export interface Demo1Props {
 }

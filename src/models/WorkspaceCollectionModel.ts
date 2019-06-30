@@ -1,20 +1,40 @@
-import { AbstractWorkspaceModel } from './AbstractWorkspaceModel';
-import { WorkspacePanelModel } from './WorkspacePanelModel';
+import { WorkspaceModel, SerializedModel } from './WorkspaceModel';
+import { WorkspaceEngine } from '../WorkspaceEngine';
 
-export class AbstractWorkspaceCollectionModel<
-	T extends AbstractWorkspaceModel = AbstractWorkspaceModel
-> extends AbstractWorkspaceModel {
+export interface SerializedCollectionModel extends SerializedModel {
+	children: SerializedModel[];
+	type: string;
+}
+
+export class WorkspaceCollectionModel<
+	T extends WorkspaceModel<SerializedModel> = WorkspaceModel<SerializedModel>,
+	S extends SerializedCollectionModel = SerializedCollectionModel
+> extends WorkspaceModel<S> {
 	children: T[];
 
-	constructor() {
-		super();
+	constructor(type: string) {
+		super(type);
 		this.children = [];
 	}
 
-	fromArray(payload: any) {
-		super.fromArray(payload);
-		for (let child of payload) {
+	fromArray(payload: S, engine: WorkspaceEngine) {
+		super.fromArray(payload, engine);
+		for (let child of payload.children) {
+			engine
+				.getFactory(child.type)
+				.generateModel()
+				.fromArray(child, engine);
 		}
+	}
+
+	toArray(): S {
+		return {
+			...super.toArray(),
+			type: 'srw-node',
+			children: this.children.map(child => {
+				return child.toArray();
+			})
+		} as S;
 	}
 
 	isFirstModel(model: T): boolean {
@@ -25,10 +45,10 @@ export class AbstractWorkspaceCollectionModel<
 		return this.children[this.children.length - 1].id === model.id;
 	}
 
-	getFlattened(): WorkspacePanelModel[] {
+	getFlattened(): WorkspaceModel[] {
 		let children = [];
 		for (let child of this.children) {
-			if (child instanceof AbstractWorkspaceCollectionModel) {
+			if (child instanceof WorkspaceCollectionModel) {
 				children = children.concat(child.getFlattened());
 			} else {
 				children.push(child);

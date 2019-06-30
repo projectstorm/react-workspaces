@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { WorkspaceEngine } from '../WorkspaceEngine';
-import { AbstractWorkspaceModel } from '../models/AbstractWorkspaceModel';
+import { WorkspaceModel } from '../models/WorkspaceModel';
 
 export interface DraggableWidgetProps {
 	engine: WorkspaceEngine;
-	model: AbstractWorkspaceModel;
+	model: WorkspaceModel;
 	className?: string;
 	onClick?: () => any;
 	fullscreenEnabled?: boolean;
@@ -29,6 +29,7 @@ export class DraggableWidget extends React.Component<DraggableWidgetProps> {
 						this.props.model.parent.removeModel(this.props.model);
 					}
 					this.props.engine.setDraggingNode(null);
+					this.props.engine.fireRepaintListeners();
 				}}
 				{...this.props}>
 				{this.props.children}

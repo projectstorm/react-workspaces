@@ -1,15 +1,16 @@
 import * as React from 'react';
 import { DraggableWidget } from './DraggableWidget';
-import { AbstractWorkspaceModel } from '../models/AbstractWorkspaceModel';
 import { WorkspaceEngine } from '../WorkspaceEngine';
 import { BaseWidget, BaseWidgetProps } from '@projectstorm/react-core';
+import { WorkspaceModel } from '../models/WorkspaceModel';
 
 export interface DropZoneWidgetProps extends BaseWidgetProps {
-	dropped?: (model: AbstractWorkspaceModel) => any;
+	dropped?: (model: WorkspaceModel) => any;
 	hover?: (entered: boolean) => any;
 	engine: WorkspaceEngine;
-	parent: AbstractWorkspaceModel;
+	parent: WorkspaceModel;
 	disallow?: boolean;
+	vertical: boolean;
 }
 
 export interface DropZoneWidgetState {
@@ -32,21 +33,24 @@ export class DropZoneWidget extends BaseWidget<DropZoneWidgetProps, DropZoneWidg
 			<div
 				className={this.bem({
 					__floating: true,
-					'--floating-active': this.state.hoverActive
+					'--floating-active': this.state.hoverActive,
+					'--floating-vertical': this.props.vertical,
+					'--floating-horizontal': !this.props.vertical
 				})}
 				onDrop={event => {
 					let data = event.dataTransfer.getData(WorkspaceEngine.namespaceMime(DraggableWidget.WORKSPACE_MIME));
 					try {
 						let object = JSON.parse(data);
 						const factory = this.props.engine.getFactory(object.type);
-						const draggingNode = factory.generateModel(object);
-						draggingNode.fromArray(object);
+						const draggingNode = factory.generateModel();
+						draggingNode.fromArray(object, this.props.engine);
 						this.props.dropped && this.props.dropped(draggingNode);
 					} catch (ex) {
 						console.log('could not restore draggable payload', ex);
 					}
 					this.setState({ hoverActive: false });
 					this.props.hover && this.props.hover(false);
+					this.props.engine.setDraggingNode(null);
 				}}
 				onDragOver={event => {
 					let found = false;
@@ -79,6 +83,9 @@ export class DropZoneWidget extends BaseWidget<DropZoneWidgetProps, DropZoneWidg
 	render() {
 		return (
 			<div
+				style={{
+					animationDelay: `${parseInt(`${Math.random() * 500}`)}ms`
+				}}
 				{...this.getProps({
 					'--hint': !this.props.disallow && !this.state.hoverActive && !!this.props.engine.draggingID,
 					'--active': !this.props.disallow && this.state.hoverActive

@@ -1,13 +1,14 @@
 import * as React from 'react';
 import { DraggableWidget } from '../DraggableWidget';
-import { WorkspacePanelModel } from '../../models/WorkspacePanelModel';
-import { WorkspaceTabbedModel } from '../../models/WorkspaceTabbedModel';
+import { WorkspaceTabbedModel } from '../../models/tabs/WorkspaceTabbedModel';
 import { WorkspaceEngine } from '../../WorkspaceEngine';
 import { DropZoneWidget } from '../DropZoneWidget';
-import { AbstractWorkspaceCollectionModel } from '../../models/AbstractWorkspaceCollectionModel';
+import { WorkspaceCollectionModel } from '../../models/WorkspaceCollectionModel';
+import { WorkspacePanelFactory } from '../../WorkspacePanelFactory';
+import { WorkspaceModel } from '../../models/WorkspaceModel';
 
 export interface TabButtonWidgetProps {
-	model: WorkspacePanelModel;
+	model: WorkspaceModel;
 	engine: WorkspaceEngine;
 }
 
@@ -41,7 +42,7 @@ export class TabButtonWidget extends React.Component<TabButtonWidgetProps, TabBu
 				}}
 				engine={this.props.engine}
 				model={this.props.model}>
-				{this.props.engine.getFactory(this.props.model).generatePanelTab({
+				{this.props.engine.getFactory<WorkspacePanelFactory>(this.props.model).generatePanelTab({
 					engine: this.props.engine,
 					model: this.props.model,
 					selected: this.props.model.id === parent.getSelected().id
@@ -49,14 +50,15 @@ export class TabButtonWidget extends React.Component<TabButtonWidgetProps, TabBu
 				{this.props.engine.draggingID && (
 					<>
 						<DropZoneWidget
+							vertical={false}
 							parent={this.props.model}
 							dropped={model => {
-								if (model instanceof AbstractWorkspaceCollectionModel) {
+								if (model instanceof WorkspaceCollectionModel) {
 									model.getFlattened().forEach(child => {
 										parent.addModelBefore(this.props.model, child);
 										parent.setSelected(child);
 									});
-								} else if (model instanceof WorkspacePanelModel) {
+								} else if (model instanceof WorkspaceModel) {
 									parent.addModelBefore(this.props.model, model);
 									parent.setSelected(model);
 								}
@@ -69,14 +71,15 @@ export class TabButtonWidget extends React.Component<TabButtonWidgetProps, TabBu
 							className="srw-tab--left"
 						/>
 						<DropZoneWidget
+							vertical={false}
 							parent={this.props.model}
 							dropped={model => {
-								if (model instanceof AbstractWorkspaceCollectionModel) {
+								if (model instanceof WorkspaceCollectionModel) {
 									model.getFlattened().forEach(child => {
 										parent.addModelAfter(this.props.model, child);
 										parent.setSelected(child);
 									});
-								} else if (model instanceof WorkspacePanelModel) {
+								} else if (model instanceof WorkspaceModel) {
 									parent.addModelAfter(this.props.model, model);
 									parent.setSelected(model);
 								}

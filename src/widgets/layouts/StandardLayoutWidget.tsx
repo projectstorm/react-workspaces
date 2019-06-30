@@ -1,15 +1,14 @@
 import * as React from 'react';
 import * as _ from 'lodash';
-import { WorkspacePanelModel } from '../../models/WorkspacePanelModel';
-import { WorkspaceNodeModel } from '../../models/WorkspaceNodeModel';
-import { WorkspaceTabbedModel } from '../../models/WorkspaceTabbedModel';
+import { WorkspaceNodeModel } from '../../models/node/WorkspaceNodeModel';
+import { WorkspaceTabbedModel } from '../../models/tabs/WorkspaceTabbedModel';
 import { PanelWidget } from '../PanelWidget';
 import { TabGroupWidget } from '../tabs/TabGroupWidget';
 import { WorkspaceEngine } from '../../WorkspaceEngine';
 import { TrayWidget } from '../TrayWidget';
-import { AbstractWorkspaceModel } from '../../models/AbstractWorkspaceModel';
 import { BaseWidget, BaseWidgetProps } from '@projectstorm/react-core';
 import { DropZoneWidget } from '../DropZoneWidget';
+import { WorkspaceModel } from '../../models/WorkspaceModel';
 
 export interface StandardLayoutWidgetProps extends BaseWidgetProps {
 	node: WorkspaceNodeModel;
@@ -22,15 +21,13 @@ export class StandardLayoutWidget extends BaseWidget<StandardLayoutWidgetProps> 
 		this.state = {};
 	}
 
-	generateElement(model: AbstractWorkspaceModel) {
-		if (model instanceof WorkspacePanelModel) {
-			return <PanelWidget key={model.id} engine={this.props.engine} model={model} />;
-		} else if (model instanceof WorkspaceNodeModel) {
+	generateElement(model: WorkspaceModel) {
+		if (model instanceof WorkspaceNodeModel) {
 			return <TrayWidget key={model.id} node={model} engine={this.props.engine} />;
 		} else if (model instanceof WorkspaceTabbedModel) {
 			return <TabGroupWidget key={model.id} model={model} engine={this.props.engine} />;
 		} else {
-			return;
+			return <PanelWidget key={model.id} engine={this.props.engine} model={model} />;
 		}
 	}
 
@@ -42,12 +39,17 @@ export class StandardLayoutWidget extends BaseWidget<StandardLayoutWidgetProps> 
 		return (
 			<div {...this.getProps()}>
 				<DropZoneWidget
-					disallow={this.props.node.children[0].id === this.props.engine.draggingID}
+					vertical={!this.props.node.vertical}
+					disallow={
+						this.props.node.children[0].id === this.props.engine.draggingID ||
+						this.props.node.children[0].hasParentID(this.props.engine.draggingID)
+					}
 					dropped={model => {
 						this.props.node.addModel(model, 0);
 					}}
 					parent={this.props.node}
 					engine={this.props.engine}
+					key="drop-first"
 				/>
 				{_.map(this.props.node.children, (model, index) => {
 					let disallow = false;
@@ -65,7 +67,9 @@ export class StandardLayoutWidget extends BaseWidget<StandardLayoutWidgetProps> 
 						<>
 							{this.generateElement(model)}
 							<DropZoneWidget
-								disallow={disallow}
+								key={`drop-${model.id}`}
+								vertical={!this.props.node.vertical}
+								disallow={disallow || model.hasParentID(this.props.engine.draggingID)}
 								dropped={droppedModel => {
 									this.props.node.addModel(droppedModel, index + 1);
 								}}

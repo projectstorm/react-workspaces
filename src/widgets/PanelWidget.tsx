@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { WorkspacePanelModel } from '../models/WorkspacePanelModel';
 import { WorkspaceEngine } from '../WorkspaceEngine';
-import { ContainerWidget } from './ContainerWidget';
 import { DraggableWidget } from './DraggableWidget';
+import { WorkspacePanelFactory } from '../WorkspacePanelFactory';
+import { WorkspaceModel } from '../models/WorkspaceModel';
 
 export interface PanelWidgetProps {
-	model: WorkspacePanelModel;
+	model: WorkspaceModel;
 	engine: WorkspaceEngine;
 }
 
@@ -18,7 +18,7 @@ export class PanelWidget extends React.Component<PanelWidgetProps, PanelWidgetSt
 	}
 
 	render() {
-		let factory = this.props.engine.getFactory(this.props.model);
+		let factory = this.props.engine.getFactory<WorkspacePanelFactory>(this.props.model);
 		return (
 			<div className={'srw-panel srw-panel--' + (this.props.model.expand ? 'expand' : 'contract')}>
 				<DraggableWidget className="srw-panel__title" model={this.props.model} engine={this.props.engine}>

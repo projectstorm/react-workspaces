@@ -1,12 +1,12 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { WorkspacePanelModel } from '../models/WorkspacePanelModel';
 import { PanelWidget } from './PanelWidget';
 import { WorkspaceEngine } from '../WorkspaceEngine';
 import * as PropTypes from 'prop-types';
+import { WorkspaceModel } from '../models/WorkspaceModel';
 
 export interface FloatingPanelWidgetProps {
-	model: WorkspacePanelModel;
+	model: WorkspaceModel;
 	engine: WorkspaceEngine;
 	relativeElement: HTMLDivElement;
 }

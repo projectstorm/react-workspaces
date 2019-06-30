@@ -1,9 +1,9 @@
 import * as React from 'react';
 import * as _ from 'lodash';
-import { WorkspaceTabbedModel } from '../../models/WorkspaceTabbedModel';
+import { WorkspaceTabbedModel } from '../../models/tabs/WorkspaceTabbedModel';
 import { WorkspaceEngine } from '../../WorkspaceEngine';
-import { ContainerWidget } from '../ContainerWidget';
 import { TabButtonWidget } from './TabButtonWidget';
+import { WorkspacePanelFactory } from '../../WorkspacePanelFactory';
 
 export interface TabGroupWidgetProps {
 	model: WorkspaceTabbedModel;
@@ -20,7 +20,7 @@ export class TabGroupWidget extends React.Component<TabGroupWidgetProps, TabGrou
 
 	render() {
 		let selected = this.props.model.getSelected();
-		let selectedFactory = this.props.engine.getFactory(selected);
+		let selectedFactory = this.props.engine.getFactory<WorkspacePanelFactory>(selected);
 
 		return (
 			<div className={'srw-tabgroup srw-tabgroup--' + (this.props.model.expand ? 'expand' : 'contract')}>
@@ -35,7 +35,6 @@ export class TabGroupWidget extends React.Component<TabGroupWidgetProps, TabGrou
 						engine: this.props.engine
 					})}
 				</div>
-				{/*<ContainerWidget engine={this.props.engine} model={this.props.model} hide={['top']} />*/}
 			</div>
 		);
 	}

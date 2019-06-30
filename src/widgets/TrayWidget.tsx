@@ -1,9 +1,8 @@
 import * as React from 'react';
-import { WorkspaceNodeModel } from '../models/WorkspaceNodeModel';
+import { WorkspaceNodeModel } from '../models/node/WorkspaceNodeModel';
 import { WorkspaceEngine } from '../WorkspaceEngine';
 import { StandardLayoutWidget } from './layouts/StandardLayoutWidget';
 import { MicroLayoutWidget } from './layouts/MicroLayoutWidget';
-import { ContainerWidget } from './ContainerWidget';
 import { DraggableWidget } from './DraggableWidget';
 import { BaseWidget, BaseWidgetProps } from '@projectstorm/react-core';
 
@@ -47,12 +46,6 @@ export class TrayWidget extends BaseWidget<TrayWidgetProps, TrayWidgetState> {
 				) : (
 					<StandardLayoutWidget node={this.props.node} engine={this.props.engine} />
 				)}
-				{/*{!this.props.root &&*/}
-				{/*	(this.props.node.vertical ? (*/}
-				{/*		<ContainerWidget engine={this.props.engine} model={this.props.node} hide={['top', 'bottom']} />*/}
-				{/*	) : (*/}
-				{/*		<ContainerWidget engine={this.props.engine} model={this.props.node} hide={['left', 'right']} />*/}
-				{/*	))}*/}
 			</div>
 		);
 	}

@@ -36,7 +36,7 @@ export class DefaultWorkspacePanelFactory extends WorkspacePanelFactory<DefaultW
 		)
 	}
 
-	generateModel(data: any): DefaultWorkspacePanelModel {
+	generateModel(): DefaultWorkspacePanelModel {
 		return new DefaultWorkspacePanelModel("Test");
 	}
 }

@@ -1,6 +1,7 @@
-import {WorkspacePanelModel} from "../../src/models/WorkspacePanelModel";
+import { WorkspaceModel } from '../../src/models/WorkspaceModel';
+import { WorkspaceEngine } from '../../src/WorkspaceEngine';
 
-export class DefaultWorkspacePanelModel extends WorkspacePanelModel{
+export class DefaultWorkspacePanelModel extends WorkspaceModel{
 
 	displayName: string;
 	icon: string;
@@ -19,8 +20,8 @@ export class DefaultWorkspacePanelModel extends WorkspacePanelModel{
 		}
 	}
 
-	fromArray(payload: any) {
-		super.fromArray(payload);
+	fromArray(payload: any, engine: WorkspaceEngine) {
+		super.fromArray(payload, engine);
 		this.displayName = payload['displayName'];
 		this.icon = payload['icon'];
 	}
