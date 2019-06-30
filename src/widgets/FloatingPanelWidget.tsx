@@ -1,8 +1,8 @@
-import * as React from "react";
-import * as ReactDOM from "react-dom";
-import {WorkspacePanelModel} from "../models/WorkspacePanelModel";
-import {PanelWidget} from "./PanelWidget";
-import {WorkspaceEngine} from "../WorkspaceEngine";
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
+import { WorkspacePanelModel } from '../models/WorkspacePanelModel';
+import { PanelWidget } from './PanelWidget';
+import { WorkspaceEngine } from '../WorkspaceEngine';
 import * as PropTypes from 'prop-types';
 
 export interface FloatingPanelWidgetProps {
@@ -16,7 +16,6 @@ export interface FloatingPanelWidgetState {
 }
 
 export class FloatingPanelWidget extends React.Component<FloatingPanelWidgetProps, FloatingPanelWidgetState> {
-
 	static contextTypes = {
 		workspace: PropTypes.any
 	};
@@ -25,31 +24,31 @@ export class FloatingPanelWidget extends React.Component<FloatingPanelWidgetProp
 		super(props);
 		this.state = {
 			mustRepaint: false
-		}
+		};
 	}
 
 	getContent() {
-
 		let relativePosition = this.context.workspace.getRelativePosition(this.props.relativeElement);
 
 		let style: any = {
-			top: relativePosition.top,
+			top: relativePosition.top
 		};
 		if (this.context.workspace.isRight(this.props.relativeElement)) {
-			style['right'] = this.context.workspace.floatingContainer.offsetWidth - relativePosition.left
+			style['right'] = this.context.workspace.floatingContainer.offsetWidth - relativePosition.left;
 		} else {
-			style['left'] = relativePosition.left + this.props.relativeElement.offsetWidth
+			style['left'] = relativePosition.left + this.props.relativeElement.offsetWidth;
 		}
 
 		return (
 			<div style={style} className="srw-floating-panel">
-				<PanelWidget model={this.props.model} engine={this.props.engine}/>
+				<PanelWidget model={this.props.model} engine={this.props.engine} />
 			</div>
 		);
 	}
 
 	render() {
-		return (this.props.relativeElement && this.context.workspace) ?
-			ReactDOM.createPortal(this.getContent(), this.context.workspace.floatingContainer) : null
+		return this.props.relativeElement && this.context.workspace
+			? ReactDOM.createPortal(this.getContent(), this.context.workspace.floatingContainer)
+			: null;
 	}
 }

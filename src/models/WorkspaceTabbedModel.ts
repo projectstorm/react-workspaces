@@ -1,9 +1,8 @@
-import {AbstractWorkspaceCollectionModel} from "./AbstractWorkspaceCollectionModel";
-import {WorkspacePanelModel} from "./WorkspacePanelModel";
-import * as _ from "lodash";
+import { AbstractWorkspaceCollectionModel } from './AbstractWorkspaceCollectionModel';
+import { WorkspacePanelModel } from './WorkspacePanelModel';
+import * as _ from 'lodash';
 
 export class WorkspaceTabbedModel extends AbstractWorkspaceCollectionModel<WorkspacePanelModel> {
-
 	selected: string;
 
 	constructor() {
@@ -17,19 +16,19 @@ export class WorkspaceTabbedModel extends AbstractWorkspaceCollectionModel<Works
 		return this;
 	}
 
-	removeModel(model: WorkspacePanelModel): this{
+	removeModel(model: WorkspacePanelModel): this {
 		super.removeModel(model);
-		if(this.selected === model.id && this.children.length > 0){
+		if (this.selected === model.id && this.children.length > 0) {
 			this.selected = this.children[0].id;
 		}
 		return this;
 	}
 
 	getSelected(): WorkspacePanelModel {
-		return _.find(this.children, {id: this.selected});
+		return _.find(this.children, { id: this.selected });
 	}
 
-	setSelected(model: WorkspacePanelModel): this{
+	setSelected(model: WorkspacePanelModel): this {
 		this.selected = model.id;
 		return this;
 	}

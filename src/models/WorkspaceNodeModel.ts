@@ -1,11 +1,10 @@
-import {AbstractWorkspaceCollectionModel} from "./AbstractWorkspaceCollectionModel";
-import {WorkspacePanelModel} from "./WorkspacePanelModel";
-import {AbstractWorkspaceModel} from "./AbstractWorkspaceModel";
+import { AbstractWorkspaceCollectionModel } from './AbstractWorkspaceCollectionModel';
+import { WorkspacePanelModel } from './WorkspacePanelModel';
+import { AbstractWorkspaceModel } from './AbstractWorkspaceModel';
 
 export type WorkspaceNodeModelMode = 'expand' | 'micro';
 
 export class WorkspaceNodeModel extends AbstractWorkspaceCollectionModel {
-
 	vertical: boolean;
 	mode: WorkspaceNodeModelMode;
 	floatingModel: WorkspacePanelModel;
@@ -17,9 +16,9 @@ export class WorkspaceNodeModel extends AbstractWorkspaceCollectionModel {
 		this.floatingModel = null;
 	}
 
-	removeModel(model: AbstractWorkspaceModel): this{
+	removeModel(model: AbstractWorkspaceModel): this {
 		super.removeModel(model);
-		if(this.floatingModel && this.floatingModel === model){
+		if (this.floatingModel && this.floatingModel === model) {
 			this.floatingModel = null;
 		}
 		return this;

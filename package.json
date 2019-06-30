@@ -25,7 +25,8 @@
 		"storybook": "start-storybook -p 10000 -c .storybook",
 		"storybook:build": "build-storybook -c .storybook -o .out",
 		"storybook:github": "storybook-to-ghpages",
-		"build": "./node_modules/.bin/webpack"
+		"build": "./node_modules/.bin/webpack",
+		"pretty": "prettier --use-tabs --write \"src/**/*.{ts,tsx,scss}\""
 	},
 	"peerDependencies": {
 		"@projectstorm/react-core": "^1.2.11",
@@ -50,6 +51,7 @@
 		"font-awesome": "^4.7.0",
 		"lodash": "^4.17.11",
 		"node-sass": "^4.12.0",
+		"prettier": "^1.18.2",
 		"react": "^16.8.6",
 		"react-dom": "^16.8.6",
 		"sass-loader": "^7.1.0",

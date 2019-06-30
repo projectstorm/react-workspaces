@@ -1,11 +1,17 @@
-import {AbstractWorkspaceModel} from "./AbstractWorkspaceModel";
+import { AbstractWorkspaceModel } from './AbstractWorkspaceModel';
 
-export class WorkspacePanelModel extends AbstractWorkspaceModel{
+export class WorkspacePanelModel extends AbstractWorkspaceModel {
+	type: string;
 
-	factory: string;
-
-	constructor(factory: string){
+	constructor(type: string) {
 		super();
-		this.factory = factory;
+		this.type = type;
+	}
+
+	toArray() {
+		return {
+			...super.toArray(),
+			type: this.type
+		};
 	}
 }

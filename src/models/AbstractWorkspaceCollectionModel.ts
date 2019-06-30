@@ -1,8 +1,9 @@
-import {AbstractWorkspaceModel} from "./AbstractWorkspaceModel";
-import {WorkspacePanelModel} from "./WorkspacePanelModel";
+import { AbstractWorkspaceModel } from './AbstractWorkspaceModel';
+import { WorkspacePanelModel } from './WorkspacePanelModel';
 
-export class AbstractWorkspaceCollectionModel<T extends AbstractWorkspaceModel = AbstractWorkspaceModel> extends AbstractWorkspaceModel {
-
+export class AbstractWorkspaceCollectionModel<
+	T extends AbstractWorkspaceModel = AbstractWorkspaceModel
+> extends AbstractWorkspaceModel {
 	children: T[];
 
 	constructor() {
@@ -10,8 +11,14 @@ export class AbstractWorkspaceCollectionModel<T extends AbstractWorkspaceModel =
 		this.children = [];
 	}
 
+	fromArray(payload: any) {
+		super.fromArray(payload);
+		for (let child of payload) {
+		}
+	}
+
 	isFirstModel(model: T): boolean {
-		return this.children[0].id === model.id
+		return this.children[0].id === model.id;
 	}
 
 	isLastModel(model: T): boolean {
@@ -30,7 +37,7 @@ export class AbstractWorkspaceCollectionModel<T extends AbstractWorkspaceModel =
 		return children;
 	}
 
-	replaceModel(oldModel: T, newModel): this{
+	replaceModel(oldModel: T, newModel): this {
 		let index = this.children.indexOf(oldModel);
 		this.removeModel(oldModel);
 		this.addModel(newModel, index);
@@ -40,7 +47,7 @@ export class AbstractWorkspaceCollectionModel<T extends AbstractWorkspaceModel =
 	removeModel(model: T): this {
 		let index = this.children.indexOf(model);
 		if (index === -1) {
-			console.log("could not find model");
+			console.log('could not find model');
 			return this;
 		}
 		this.children.splice(index, 1);
@@ -68,6 +75,6 @@ export class AbstractWorkspaceCollectionModel<T extends AbstractWorkspaceModel =
 
 	addModelAfter(relativeModel: T, model: T) {
 		let index = this.children.indexOf(relativeModel);
-		this.addModel(model, index+1);
+		this.addModel(model, index + 1);
 	}
 }

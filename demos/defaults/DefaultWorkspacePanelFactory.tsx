@@ -1,4 +1,4 @@
-import {WorkspacePanelFactory} from "../WorkspacePanelFactory";
+import {WorkspacePanelFactory} from "../../src/WorkspacePanelFactory";
 import {DefaultWorkspacePanelModel} from "./DefaultWorkspacePanelModel";
 import * as React from "react";
 
@@ -16,7 +16,9 @@ export class DefaultWorkspacePanelFactory extends WorkspacePanelFactory<DefaultW
 
 	generatePanelContent(event): JSX.Element {
 		return (
-			<div className="srw-default__content">{event.model.getContent()}</div>
+			<div className="srw-default__content">
+				Content
+			</div>
 		);
 	}
 
@@ -32,5 +34,9 @@ export class DefaultWorkspacePanelFactory extends WorkspacePanelFactory<DefaultW
 				<div className={"fa "+event.model.icon} />
 			</div>
 		)
+	}
+
+	generateModel(data: any): DefaultWorkspacePanelModel {
+		return new DefaultWorkspacePanelModel("Test");
 	}
 }

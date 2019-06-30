@@ -1,19 +1,20 @@
 .srw-panel {
-  display: flex;
-  flex-direction: column;
-  position: relative;
-
-  &--expand {
-	flex-grow: 1;
-  }
-
-  &__title {
-	flex-grow: 0;
-	flex-shrink: 0;
-  }
-
-  &__content {
-	flex-grow: 1;
 	display: flex;
-  }
+	flex-direction: column;
+	position: relative;
+	flex-shrink: 0;
+
+	&--expand {
+		flex-grow: 1;
+	}
+
+	&__title {
+		flex-grow: 0;
+		flex-shrink: 0;
+	}
+
+	&__content {
+		flex-grow: 1;
+		display: flex;
+	}
 }

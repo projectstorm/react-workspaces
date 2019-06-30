@@ -1,38 +1,34 @@
-import {WorkspaceEngine} from "../WorkspaceEngine";
-import {AbstractWorkspaceCollectionModel} from "./AbstractWorkspaceCollectionModel";
+import { WorkspaceEngine } from '../WorkspaceEngine';
+import { AbstractWorkspaceCollectionModel } from './AbstractWorkspaceCollectionModel';
 
-export class AbstractWorkspaceModel{
-
+export class AbstractWorkspaceModel {
 	id: string;
 	parent: AbstractWorkspaceCollectionModel;
 	expand: boolean;
-	classname: string;
 
-	constructor(){
+	constructor() {
 		this.id = WorkspaceEngine.generateID();
 		this.parent = null;
 		this.expand = true;
-		this.classname = (this.constructor as any).name;
 	}
 
-	setParent(parent: AbstractWorkspaceCollectionModel){
+	setParent(parent: AbstractWorkspaceCollectionModel) {
 		this.parent = parent;
 	}
 
-	setExpand(expand: boolean = true): this{
+	setExpand(expand: boolean = true): this {
 		this.expand = expand;
 		return this;
 	}
 
-	toArray(){
+	toArray() {
 		return {
-			classname: this.classname,
 			id: this.id,
 			expand: this.expand
-		}
+		};
 	}
 
-	fromArray(payload: any){
+	fromArray(payload: any) {
 		this.id = payload.id;
 		this.expand = payload.expand;
 	}

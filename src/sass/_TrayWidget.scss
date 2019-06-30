@@ -1,24 +1,24 @@
 .srw-tray {
-  display: flex;
-  flex-direction: column;
-  position: relative;
-
-  &__title {
-	flex-grow: 0;
-	flex-shrink: 0;
-	height: 13px;
-	background-color: gray;
-	font-size: 13px;
-	color: white;
 	display: flex;
-	user-select: none;
-  }
+	flex-direction: column;
+	position: relative;
 
-  &--collapse {
-	flex-grow: 0;
-  }
+	&__title {
+		flex-grow: 0;
+		flex-shrink: 0;
+		height: 13px;
+		background-color: gray;
+		font-size: 13px;
+		color: white;
+		display: flex;
+		user-select: none;
+	}
 
-  &--expand {
-	flex-grow: 1;
-  }
+	&--collapse {
+		flex-grow: 0;
+	}
+
+	&--expand {
+		flex-grow: 1;
+	}
 }

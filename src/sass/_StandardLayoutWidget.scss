@@ -1,28 +1,28 @@
-.srw-standard-layout{
-  display: flex;
-  flex-grow: 1;
+.srw-standard-layout {
+	display: flex;
+	flex-grow: 1;
 
-  &--vertical {
-	flex-direction: column;
+	&--vertical {
+		flex-direction: column;
 
-	> * {
-	  margin-bottom: 2px;
+		> * {
+			margin-bottom: 2px;
 
-	  &:last-child {
-		margin-bottom: 0px;
-	  }
+			&:last-child {
+				margin-bottom: 0px;
+			}
+		}
 	}
-  }
 
-  &--horizontal {
-	flex-direction: row;
+	&--horizontal {
+		flex-direction: row;
 
-	> * {
-	  margin-right: 2px;
+		> * {
+			margin-right: 2px;
 
-	  &:last-child {
-		margin-right: 0px;
-	  }
+			&:last-child {
+				margin-right: 0px;
+			}
+		}
 	}
-  }
 }
