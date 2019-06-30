@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { WorkspacePanelFactory } from './WorkspacePanelFactory';
 import { WorkspacePanelModel } from './models/WorkspacePanelModel';
-import { AbstractWorkspaceModel } from './models/AbstractWorkspaceModel';
 import { WorkspaceNodeModel } from './models/WorkspaceNodeModel';
+import { DragEvent } from 'react';
 
 export interface WorkspaceEngineListener {
 	repaint?: () => any;
@@ -12,13 +12,13 @@ export interface WorkspaceEngineListener {
 export class WorkspaceEngine {
 	factories: { [type: string]: WorkspacePanelFactory };
 	listeners: { [id: string]: WorkspaceEngineListener };
-	draggingNode: boolean;
+	draggingID: string;
 	fullscreenModel: WorkspacePanelModel;
 
 	constructor() {
 		this.factories = {};
 		this.listeners = {};
-		this.draggingNode = false;
+		this.draggingID = null;
 		this.fullscreenModel = null;
 	}
 
@@ -35,6 +35,10 @@ export class WorkspaceEngine {
 		};
 	}
 
+	static namespaceMime(data: string) {
+		return `srw/${data}`;
+	}
+
 	getTrayHeader(model: WorkspaceNodeModel): JSX.Element {
 		for (let i in this.listeners) {
 			if (this.listeners[i].generateTrayHeader) {
@@ -45,6 +49,15 @@ export class WorkspaceEngine {
 			}
 		}
 		return null;
+	}
+
+	getDropEventModelID(event: DragEvent): string {
+		for (var i = 0; i < event.dataTransfer.types.length; ++i) {
+			const mime = event.dataTransfer.types[i];
+			if (mime.startsWith('srw/id/')) {
+				return mime.substr('srw/id/'.length);
+			}
+		}
 	}
 
 	fireRepaintListeners() {
@@ -67,9 +80,11 @@ export class WorkspaceEngine {
 		return this.factories[model];
 	}
 
-	setDraggingNode(dragging: boolean = true) {
-		this.draggingNode = dragging;
-		this.fireRepaintListeners();
+	setDraggingNode(id: string) {
+		if (this.draggingID !== id) {
+			this.draggingID = id;
+			this.fireRepaintListeners();
+		}
 	}
 
 	static generateID() {

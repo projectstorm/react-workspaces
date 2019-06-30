@@ -1,8 +1,8 @@
 import * as React from 'react';
 import * as _ from 'lodash';
-import { WorkspaceTabbedModel } from '../models/WorkspaceTabbedModel';
-import { WorkspaceEngine } from '../WorkspaceEngine';
-import { ContainerWidget } from './ContainerWidget';
+import { WorkspaceTabbedModel } from '../../models/WorkspaceTabbedModel';
+import { WorkspaceEngine } from '../../WorkspaceEngine';
+import { ContainerWidget } from '../ContainerWidget';
 import { TabButtonWidget } from './TabButtonWidget';
 
 export interface TabGroupWidgetProps {
@@ -35,7 +35,7 @@ export class TabGroupWidget extends React.Component<TabGroupWidgetProps, TabGrou
 						engine: this.props.engine
 					})}
 				</div>
-				<ContainerWidget engine={this.props.engine} model={this.props.model} hide={['top']} />
+				{/*<ContainerWidget engine={this.props.engine} model={this.props.model} hide={['top']} />*/}
 			</div>
 		);
 	}

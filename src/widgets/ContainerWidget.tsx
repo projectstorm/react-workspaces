@@ -28,11 +28,9 @@ export class ContainerWidget extends BaseWidget<ContainerWidgetProps, ContainerW
 		return (
 			<DropZoneWidget
 				engine={this.props.engine}
+				parent={this.props.model}
 				className={this.bem('__' + position)}
 				dropped={model => {
-					if (model.id === this.props.model.id) {
-						return;
-					}
 					if (this.props.model.parent instanceof WorkspaceNodeModel) {
 						if (!this.props.model.parent.vertical) {
 							if (position === 'left') {
@@ -93,7 +91,7 @@ export class ContainerWidget extends BaseWidget<ContainerWidgetProps, ContainerW
 	}
 
 	render() {
-		return this.props.engine.draggingNode ? (
+		return this.props.engine.draggingID ? (
 			<div {...this.getProps()}>
 				{this.renderDropZone('left')}
 				{this.renderDropZone('right')}

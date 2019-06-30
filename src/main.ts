@@ -6,8 +6,8 @@ export * from './widgets/ContainerWidget';
 export * from './widgets/DraggableWidget';
 export * from './widgets/FloatingPanelWidget';
 export * from './widgets/DropZoneWidget';
-export * from './widgets/TabButtonWidget';
-export * from './widgets/TabGroupWidget';
+export * from './widgets/tabs/TabButtonWidget';
+export * from './widgets/tabs/TabGroupWidget';
 
 export * from './widgets/layouts/MicroLayoutWidget';
 export * from './widgets/layouts/StandardLayoutWidget';

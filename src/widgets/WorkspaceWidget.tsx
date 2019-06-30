@@ -18,6 +18,7 @@ export interface WorkspaceWidgetContext {
 
 export class WorkspaceWidget extends BaseWidget<WorkspaceWidgetProps> {
 	listener: () => any;
+	timerListener: any;
 	floatingContainer: HTMLDivElement;
 
 	static childContextTypes = {
@@ -63,17 +64,17 @@ export class WorkspaceWidget extends BaseWidget<WorkspaceWidgetProps> {
 		return (
 			<div
 				{...this.getProps()}
-				onDragEnd={() => {
-					this.props.engine.setDraggingNode(false);
-				}}
-				onDragEnter={event => {
-					for (var i = 0; i < event.dataTransfer.types.length; ++i) {
-						if (event.dataTransfer.types[i] === DraggableWidget.WORKSPACE_MIME) {
-							event.preventDefault();
-							this.props.engine.setDraggingNode(true);
-							event.dataTransfer.dropEffect = 'move';
-						}
+				onDragOver={event => {
+					event.persist();
+					if (this.timerListener) {
+						clearTimeout(this.timerListener);
 					}
+					this.timerListener = setTimeout(() => {
+						this.props.engine.setDraggingNode(null);
+					}, 1000);
+
+					let id = this.props.engine.getDropEventModelID(event);
+					this.props.engine.setDraggingNode(id);
 				}}>
 				{this.props.engine.fullscreenModel ? (
 					<PanelWidget model={this.props.engine.fullscreenModel} engine={this.props.engine} />
@@ -84,7 +85,8 @@ export class WorkspaceWidget extends BaseWidget<WorkspaceWidgetProps> {
 					className={this.bem('__floating')}
 					ref={ref => {
 						this.floatingContainer = ref;
-					}}></div>
+					}}
+				/>
 			</div>
 		);
 	}

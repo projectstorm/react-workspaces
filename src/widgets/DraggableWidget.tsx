@@ -10,31 +10,25 @@ export interface DraggableWidgetProps {
 	fullscreenEnabled?: boolean;
 }
 
-export interface DraggableWidgetState {}
-
-export class DraggableWidget extends React.Component<DraggableWidgetProps, DraggableWidgetState> {
-	static WORKSPACE_MIME = 'srw/panel';
-
-	constructor(props: DraggableWidgetProps) {
-		super(props);
-		this.state = {};
-	}
+export class DraggableWidget extends React.Component<DraggableWidgetProps> {
+	static WORKSPACE_MIME = 'panel';
 
 	render() {
 		return (
 			<div
 				draggable={true}
 				onDragStart={event => {
-					this.setState({ dragging: true });
-					event.dataTransfer.setData(DraggableWidget.WORKSPACE_MIME, JSON.stringify(this.props.model.toArray()));
-					this.props.engine.setDraggingNode();
+					event.dataTransfer.setData(
+						WorkspaceEngine.namespaceMime(DraggableWidget.WORKSPACE_MIME),
+						JSON.stringify(this.props.model.toArray())
+					);
+					event.dataTransfer.setData(WorkspaceEngine.namespaceMime(`id/${this.props.model.id}`), '');
 				}}
 				onDragEnd={event => {
 					if (event.dataTransfer.dropEffect !== 'none') {
 						this.props.model.parent.removeModel(this.props.model);
 					}
-					this.setState({ dragging: false });
-					this.props.engine.setDraggingNode(false);
+					this.props.engine.setDraggingNode(null);
 				}}
 				{...this.props}>
 				{this.props.children}

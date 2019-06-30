@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { DraggableWidget } from './DraggableWidget';
-import { WorkspacePanelModel } from '../models/WorkspacePanelModel';
-import { WorkspaceTabbedModel } from '../models/WorkspaceTabbedModel';
-import { WorkspaceEngine } from '../WorkspaceEngine';
-import { DropZoneWidget } from './DropZoneWidget';
-import { AbstractWorkspaceCollectionModel } from '../models/AbstractWorkspaceCollectionModel';
+import { DraggableWidget } from '../DraggableWidget';
+import { WorkspacePanelModel } from '../../models/WorkspacePanelModel';
+import { WorkspaceTabbedModel } from '../../models/WorkspaceTabbedModel';
+import { WorkspaceEngine } from '../../WorkspaceEngine';
+import { DropZoneWidget } from '../DropZoneWidget';
+import { AbstractWorkspaceCollectionModel } from '../../models/AbstractWorkspaceCollectionModel';
 
 export interface TabButtonWidgetProps {
 	model: WorkspacePanelModel;
@@ -46,9 +46,10 @@ export class TabButtonWidget extends React.Component<TabButtonWidgetProps, TabBu
 					model: this.props.model,
 					selected: this.props.model.id === parent.getSelected().id
 				})}
-				{this.props.engine.draggingNode && (
+				{this.props.engine.draggingID && (
 					<>
 						<DropZoneWidget
+							parent={this.props.model}
 							dropped={model => {
 								if (model instanceof AbstractWorkspaceCollectionModel) {
 									model.getFlattened().forEach(child => {
@@ -68,6 +69,7 @@ export class TabButtonWidget extends React.Component<TabButtonWidgetProps, TabBu
 							className="srw-tab--left"
 						/>
 						<DropZoneWidget
+							parent={this.props.model}
 							dropped={model => {
 								if (model instanceof AbstractWorkspaceCollectionModel) {
 									model.getFlattened().forEach(child => {

@@ -47,12 +47,12 @@ export class TrayWidget extends BaseWidget<TrayWidgetProps, TrayWidgetState> {
 				) : (
 					<StandardLayoutWidget node={this.props.node} engine={this.props.engine} />
 				)}
-				{!this.props.root &&
-					(this.props.node.vertical ? (
-						<ContainerWidget engine={this.props.engine} model={this.props.node} hide={['top', 'bottom']} />
-					) : (
-						<ContainerWidget engine={this.props.engine} model={this.props.node} hide={['left', 'right']} />
-					))}
+				{/*{!this.props.root &&*/}
+				{/*	(this.props.node.vertical ? (*/}
+				{/*		<ContainerWidget engine={this.props.engine} model={this.props.node} hide={['top', 'bottom']} />*/}
+				{/*	) : (*/}
+				{/*		<ContainerWidget engine={this.props.engine} model={this.props.node} hide={['left', 'right']} />*/}
+				{/*	))}*/}
 			</div>
 		);
 	}

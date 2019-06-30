@@ -8,6 +8,8 @@ export interface DropZoneWidgetProps extends BaseWidgetProps {
 	dropped?: (model: AbstractWorkspaceModel) => any;
 	hover?: (entered: boolean) => any;
 	engine: WorkspaceEngine;
+	parent: AbstractWorkspaceModel;
+	disallow?: boolean;
 }
 
 export interface DropZoneWidgetState {
@@ -22,18 +24,23 @@ export class DropZoneWidget extends BaseWidget<DropZoneWidgetProps, DropZoneWidg
 		};
 	}
 
-	render() {
+	getHover() {
+		if (this.props.disallow) {
+			return null;
+		}
 		return (
 			<div
-				{...this.getProps({
-					'--active': this.state.hoverActive
+				className={this.bem({
+					__floating: true,
+					'--floating-active': this.state.hoverActive
 				})}
 				onDrop={event => {
-					var data = event.dataTransfer.getData(DraggableWidget.WORKSPACE_MIME);
+					let data = event.dataTransfer.getData(WorkspaceEngine.namespaceMime(DraggableWidget.WORKSPACE_MIME));
 					try {
 						let object = JSON.parse(data);
 						const factory = this.props.engine.getFactory(object.type);
 						const draggingNode = factory.generateModel(object);
+						draggingNode.fromArray(object);
 						this.props.dropped && this.props.dropped(draggingNode);
 					} catch (ex) {
 						console.log('could not restore draggable payload', ex);
@@ -42,22 +49,42 @@ export class DropZoneWidget extends BaseWidget<DropZoneWidgetProps, DropZoneWidg
 					this.props.hover && this.props.hover(false);
 				}}
 				onDragOver={event => {
+					let found = false;
 					for (var i = 0; i < event.dataTransfer.types.length; ++i) {
-						if (event.dataTransfer.types[i] === DraggableWidget.WORKSPACE_MIME) {
-							event.preventDefault();
-							event.dataTransfer.dropEffect = 'move';
+						// same ID, dont allow
+						if (event.dataTransfer.types[i] === WorkspaceEngine.namespaceMime(this.props.parent.id)) {
+							return;
 						}
+						// allow the effect
+						if (event.dataTransfer.types[i] === WorkspaceEngine.namespaceMime(DraggableWidget.WORKSPACE_MIME)) {
+							found = true;
+						}
+					}
+
+					if (found) {
+						event.preventDefault();
+						event.dataTransfer.dropEffect = 'move';
+						this.setState({ hoverActive: true });
+						this.props.hover && this.props.hover(true);
 					}
 				}}
 				onDragLeave={() => {
 					this.setState({ hoverActive: false });
 					this.props.hover && this.props.hover(false);
 				}}
-				onDragEnter={event => {
-					this.setState({ hoverActive: true });
-					this.props.hover && this.props.hover(true);
-				}}
 			/>
+		);
+	}
+
+	render() {
+		return (
+			<div
+				{...this.getProps({
+					'--hint': !this.props.disallow && !this.state.hoverActive && !!this.props.engine.draggingID,
+					'--active': !this.props.disallow && this.state.hoverActive
+				})}>
+				{this.getHover()}
+			</div>
 		);
 	}
 }

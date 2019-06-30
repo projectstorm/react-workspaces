@@ -1,9 +1,46 @@
 .srw-drop-zone {
 	transition: opacity 0.2s;
 	pointer-events: all;
-	opacity: 0;
+	min-width: $threshold;
+	min-height: $threshold;
+	background: rgba(mediumpurple, 0);
+	position: relative;
+
+	@keyframes srw_drop_zone_pulsate {
+		0% {
+			background: mediumpurple;
+		}
+
+		100% {
+			background: rgba(mediumpurple, 0);
+		}
+	}
+
+	&--hint {
+		animation-name: srw_drop_zone_pulsate;
+		animation-duration: 0.5s;
+		animation-iteration-count: infinite;
+		animation-direction: alternate-reverse;
+	}
 
 	&--active {
 		opacity: 1;
+		background: rgb(0, 192, 255);
+	}
+
+	&__floating {
+		position: absolute;
+		opacity: 0;
+		width: 20px;
+		background: rgb(0, 192, 255);
+		height: 100%;
+		transform: translateX(-50%);
+		margin-left: $threshold / 2;
+		z-index: 2;
+	}
+
+	&--floating-active {
+		transition: opacity 0.2s;
+		opacity: 0.5;
 	}
 }

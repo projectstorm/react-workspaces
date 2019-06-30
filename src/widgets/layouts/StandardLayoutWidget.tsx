@@ -4,11 +4,12 @@ import { WorkspacePanelModel } from '../../models/WorkspacePanelModel';
 import { WorkspaceNodeModel } from '../../models/WorkspaceNodeModel';
 import { WorkspaceTabbedModel } from '../../models/WorkspaceTabbedModel';
 import { PanelWidget } from '../PanelWidget';
-import { TabGroupWidget } from '../TabGroupWidget';
+import { TabGroupWidget } from '../tabs/TabGroupWidget';
 import { WorkspaceEngine } from '../../WorkspaceEngine';
 import { TrayWidget } from '../TrayWidget';
 import { AbstractWorkspaceModel } from '../../models/AbstractWorkspaceModel';
 import { BaseWidget, BaseWidgetProps } from '@projectstorm/react-core';
+import { DropZoneWidget } from '../DropZoneWidget';
 
 export interface StandardLayoutWidgetProps extends BaseWidgetProps {
 	node: WorkspaceNodeModel;
@@ -40,8 +41,39 @@ export class StandardLayoutWidget extends BaseWidget<StandardLayoutWidgetProps> 
 	render() {
 		return (
 			<div {...this.getProps()}>
-				{_.map(this.props.node.children, model => {
-					return this.generateElement(model);
+				<DropZoneWidget
+					disallow={this.props.node.children[0].id === this.props.engine.draggingID}
+					dropped={model => {
+						this.props.node.addModel(model, 0);
+					}}
+					parent={this.props.node}
+					engine={this.props.engine}
+				/>
+				{_.map(this.props.node.children, (model, index) => {
+					let disallow = false;
+
+					if (model.id === this.props.engine.draggingID) {
+						disallow = true;
+					}
+					if (
+						index < this.props.node.children.length - 2 &&
+						this.props.node.children[index + 1].id === this.props.engine.draggingID
+					) {
+						disallow = true;
+					}
+					return (
+						<>
+							{this.generateElement(model)}
+							<DropZoneWidget
+								disallow={disallow}
+								dropped={droppedModel => {
+									this.props.node.addModel(droppedModel, index + 1);
+								}}
+								parent={this.props.node}
+								engine={this.props.engine}
+							/>
+						</>
+					);
 				})}
 			</div>
 		);
