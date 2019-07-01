@@ -8,6 +8,7 @@ import { BaseWidget, BaseWidgetProps } from '@projectstorm/react-core';
 export interface PanelWidgetProps extends BaseWidgetProps {
 	model: WorkspaceModel;
 	engine: WorkspaceEngine;
+	expand?: boolean;
 }
 
 export class PanelWidget extends BaseWidget<PanelWidgetProps> {
@@ -15,13 +16,21 @@ export class PanelWidget extends BaseWidget<PanelWidgetProps> {
 		super('srw-panel', props);
 	}
 
+	expand() {
+		if (this.props.expand != null) {
+			return this.props.expand;
+		}
+		return this.props.model.expand;
+	}
+
 	render() {
 		let factory = this.props.engine.getFactory<WorkspacePanelFactory>(this.props.model);
+		const expand = this.expand();
 		return (
 			<div
 				{...this.getProps({
-					'--expand': this.props.model.expand,
-					'--contract': !this.props.model.expand
+					'--expand': expand,
+					'--contract': !expand
 				})}>
 				<DraggableWidget model={this.props.model} engine={this.props.engine}>
 					{factory.generatePanelTitle({

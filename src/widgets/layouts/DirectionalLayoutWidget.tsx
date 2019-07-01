@@ -7,6 +7,7 @@ import { WorkspaceEngine } from '../../WorkspaceEngine';
 
 export interface DirectionalLayoutWidgetProps extends BaseWidgetProps {
 	vertical: boolean;
+	expand: boolean;
 	dropZoneAllowed: (index: number) => boolean;
 	dropped: (index: number, model: WorkspaceModel) => any;
 	engine: WorkspaceEngine;
@@ -22,6 +23,7 @@ export class DirectionalLayoutWidget extends BaseWidget<DirectionalLayoutWidgetP
 		return (
 			<div
 				{...this.getProps({
+					'--expand': this.props.expand,
 					'--vertical': this.props.vertical,
 					'--horizontal': !this.props.vertical
 				})}>

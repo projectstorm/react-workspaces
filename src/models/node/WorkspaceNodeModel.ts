@@ -34,6 +34,10 @@ export class WorkspaceNodeModel extends WorkspaceCollectionModel {
 
 	removeModel(model: WorkspaceModel): this {
 		super.removeModel(model);
+		//if empty remove this from the parent
+		if (this.children.length === 1) {
+			(this.parent as WorkspaceCollectionModel).replaceModel(this, this.children[0]);
+		}
 		if (this.floatingModel && this.floatingModel === model) {
 			this.floatingModel = null;
 		}

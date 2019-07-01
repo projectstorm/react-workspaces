@@ -29,6 +29,7 @@ export class StandardLayoutWidget extends BaseWidget<StandardLayoutWidgetProps> 
 		} else if (!this.props.node.parent) {
 			return (
 				<DirectionalLayoutWidget
+					expand={model.expand}
 					engine={this.props.engine}
 					vertical={!this.props.node.vertical}
 					key={model.id}
@@ -44,7 +45,7 @@ export class StandardLayoutWidget extends BaseWidget<StandardLayoutWidgetProps> 
 					dropZoneAllowed={() => {
 						return true;
 					}}>
-					<PanelWidget engine={this.props.engine} model={model} />
+					<PanelWidget engine={this.props.engine} model={model} expand={true} />
 				</DirectionalLayoutWidget>
 			);
 		} else {
@@ -55,6 +56,7 @@ export class StandardLayoutWidget extends BaseWidget<StandardLayoutWidgetProps> 
 	render() {
 		return (
 			<DirectionalLayoutWidget
+				expand={this.props.node.expand}
 				dropZoneAllowed={index => {
 					return true;
 				}}

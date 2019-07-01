@@ -1,6 +1,10 @@
 .srw-directional-layout {
 	display: flex;
-	flex-grow: 1;
+	flex-grow: 0;
+
+	&--expand {
+		flex-grow: 1;
+	}
 
 	&--vertical {
 		flex-direction: column;
