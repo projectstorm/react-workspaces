@@ -4,7 +4,8 @@ import { WorkspaceCollectionInterface } from './WorkspaceCollectionInterface';
 
 export interface SerializedModel {
 	id: string;
-	expand: boolean;
+	expandVertical: boolean;
+	expandHorizontal: boolean;
 	type: string;
 }
 
@@ -17,7 +18,8 @@ export class WorkspaceModel<
 	L extends WorkspaceModelListener = WorkspaceModelListener
 > {
 	id: string;
-	expand: boolean;
+	expandVertical: boolean;
+	expandHorizontal: boolean;
 	parent: WorkspaceCollectionInterface & WorkspaceModel;
 	type: string;
 
@@ -27,7 +29,8 @@ export class WorkspaceModel<
 		this.type = type;
 		this.id = uuid();
 		this.parent = null;
-		this.expand = true;
+		this.expandHorizontal = true;
+		this.expandVertical = true;
 		this.listeners = {};
 	}
 
@@ -63,21 +66,24 @@ export class WorkspaceModel<
 		this.parent = parent;
 	}
 
-	setExpand(expand: boolean = true): this {
-		this.expand = expand;
+	setExpand(horizontal: boolean = true, vertical: boolean = true): this {
+		this.expandHorizontal = horizontal;
+		this.expandVertical = vertical;
 		return this;
 	}
 
 	toArray(): T {
 		return {
 			id: this.id,
-			expand: this.expand,
+			expandHorizontal: this.expandHorizontal,
+			expandVertical: this.expandVertical,
 			type: this.type
 		} as T;
 	}
 
 	fromArray(payload: T, engine: WorkspaceEngineInterface) {
 		this.id = payload.id;
-		this.expand = payload.expand;
+		this.expandHorizontal = payload.expandHorizontal;
+		this.expandVertical = payload.expandVertical;
 	}
 }

@@ -29,14 +29,14 @@ export class StandardLayoutWidget extends BaseWidget<StandardLayoutWidgetProps> 
 		} else if (!this.props.node.parent) {
 			return (
 				<DirectionalLayoutWidget
-					expand={model.expand}
+					expand={model.expandHorizontal}
 					engine={this.props.engine}
 					vertical={!this.props.node.vertical}
 					key={model.id}
 					dropped={(index, dropped) => {
 						let node = new WorkspaceNodeModel();
 						node.setVertical(true);
-						node.setExpand(model.expand);
+						node.setExpand(model.expandHorizontal, true);
 						node.addModel(model);
 						node.addModel(dropped, index);
 
@@ -49,14 +49,20 @@ export class StandardLayoutWidget extends BaseWidget<StandardLayoutWidgetProps> 
 				</DirectionalLayoutWidget>
 			);
 		} else {
-			return <PanelWidget engine={this.props.engine} model={model} />;
+			return (
+				<PanelWidget
+					engine={this.props.engine}
+					model={model}
+					expand={this.props.node.vertical ? model.expandVertical : model.expandHorizontal} />
+					);
 		}
 	}
 
 	render() {
 		return (
 			<DirectionalLayoutWidget
-				expand={this.props.node.expand}
+				{...this.getProps()}
+				expand={this.props.node.shouldExpand()}
 				dropZoneAllowed={index => {
 					return true;
 				}}

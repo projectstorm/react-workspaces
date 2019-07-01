@@ -23,7 +23,7 @@ export class TabGroupWidget extends React.Component<TabGroupWidgetProps, TabGrou
 		let selectedFactory = this.props.engine.getFactory<WorkspacePanelFactory>(selected);
 
 		return (
-			<div className={'srw-tabgroup srw-tabgroup--' + (this.props.model.expand ? 'expand' : 'contract')}>
+			<div className={'srw-tabgroup'}>
 				<div className="srw-tabgroup__tabs">
 					{_.map(this.props.model.children, child => {
 						return <TabButtonWidget model={child} engine={this.props.engine} key={child.id} />;

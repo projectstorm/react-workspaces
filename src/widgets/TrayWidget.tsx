@@ -32,7 +32,7 @@ export class TrayWidget extends BaseWidget<TrayWidgetProps, TrayWidgetState> {
 	}
 
 	render() {
-		const expand = this.props.node.expand && this.props.node.mode === 'expand';
+		const expand = this.props.node.shouldExpand() && this.props.node.mode === 'expand';
 		return (
 			<div
 				{...this.getProps({
@@ -41,9 +41,9 @@ export class TrayWidget extends BaseWidget<TrayWidgetProps, TrayWidgetState> {
 				})}>
 				{this.getHeader()}
 				{this.props.node.mode === 'micro' ? (
-					<MicroLayoutWidget node={this.props.node} engine={this.props.engine} />
+					<MicroLayoutWidget  className={this.bem('__content')} node={this.props.node} engine={this.props.engine} />
 				) : (
-					<StandardLayoutWidget node={this.props.node} engine={this.props.engine} />
+					<StandardLayoutWidget className={this.bem('__content')} node={this.props.node} engine={this.props.engine} />
 				)}
 			</div>
 		);

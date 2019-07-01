@@ -10,6 +10,7 @@ export class DefaultWorkspacePanelModel extends WorkspaceModel{
 		super("default");
 		this.displayName = displayName;
 		this.icon = icon;
+		this.setExpand(false, true)
 	}
 
 	toArray(){

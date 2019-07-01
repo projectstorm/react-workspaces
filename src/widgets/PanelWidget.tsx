@@ -16,21 +16,13 @@ export class PanelWidget extends BaseWidget<PanelWidgetProps> {
 		super('srw-panel', props);
 	}
 
-	expand() {
-		if (this.props.expand != null) {
-			return this.props.expand;
-		}
-		return this.props.model.expand;
-	}
-
 	render() {
 		let factory = this.props.engine.getFactory<WorkspacePanelFactory>(this.props.model);
-		const expand = this.expand();
 		return (
 			<div
 				{...this.getProps({
-					'--expand': expand,
-					'--contract': !expand
+					'--expand': this.props.expand,
+					'--contract': !this.props.expand
 				})}>
 				<DraggableWidget model={this.props.model} engine={this.props.engine}>
 					{factory.generatePanelTitle({
