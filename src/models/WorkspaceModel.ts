@@ -1,5 +1,6 @@
 import { WorkspaceEngineInterface } from '../WorkspaceEngineInterface';
 import { uuid } from '../tools';
+import { WorkspaceCollectionInterface } from './WorkspaceCollectionInterface';
 
 export interface SerializedModel {
 	id: string;
@@ -7,17 +8,45 @@ export interface SerializedModel {
 	type: string;
 }
 
-export class WorkspaceModel<T extends SerializedModel = SerializedModel> {
+export interface WorkspaceModelListener {
+	removed: (node: WorkspaceModel) => any;
+}
+
+export class WorkspaceModel<
+	T extends SerializedModel = SerializedModel,
+	L extends WorkspaceModelListener = WorkspaceModelListener
+> {
 	id: string;
 	expand: boolean;
-	parent: any;
+	parent: WorkspaceCollectionInterface & WorkspaceModel;
 	type: string;
+
+	listeners: { [id: string]: L };
 
 	constructor(type: string) {
 		this.type = type;
 		this.id = uuid();
 		this.parent = null;
 		this.expand = true;
+		this.listeners = {};
+	}
+
+	fireNodeRemoved(node: WorkspaceModel) {
+		for (let id in this.listeners) {
+			this.listeners[id].removed && this.listeners[id].removed(node);
+		}
+	}
+
+	registerListener(listener: L) {
+		const id = uuid();
+		this.listeners[id] = listener;
+		return () => {
+			delete this.listeners[id];
+		};
+	}
+
+	delete() {
+		this.fireNodeRemoved(this);
 	}
 
 	hasParentID(parentID: string): boolean {

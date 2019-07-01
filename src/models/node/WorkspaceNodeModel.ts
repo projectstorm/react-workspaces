@@ -29,7 +29,7 @@ export class WorkspaceNodeModel extends WorkspaceCollectionModel {
 	fromArray(payload: any, engine: WorkspaceEngine) {
 		super.fromArray(payload, engine);
 		this.vertical = payload['vertical'];
-		this.mode = payload['expand'];
+		this.mode = payload['mode'];
 	}
 
 	removeModel(model: WorkspaceModel): this {

@@ -7,8 +7,8 @@ import { TabGroupWidget } from '../tabs/TabGroupWidget';
 import { WorkspaceEngine } from '../../WorkspaceEngine';
 import { TrayWidget } from '../TrayWidget';
 import { BaseWidget, BaseWidgetProps } from '@projectstorm/react-core';
-import { DropZoneWidget } from '../DropZoneWidget';
 import { WorkspaceModel } from '../../models/WorkspaceModel';
+import { DirectionalLayoutWidget } from './DirectionalLayoutWidget';
 
 export interface StandardLayoutWidgetProps extends BaseWidgetProps {
 	node: WorkspaceNodeModel;
@@ -26,60 +26,47 @@ export class StandardLayoutWidget extends BaseWidget<StandardLayoutWidgetProps> 
 			return <TrayWidget key={model.id} node={model} engine={this.props.engine} />;
 		} else if (model instanceof WorkspaceTabbedModel) {
 			return <TabGroupWidget key={model.id} model={model} engine={this.props.engine} />;
-		} else {
-			return <PanelWidget key={model.id} engine={this.props.engine} model={model} />;
-		}
-	}
+		} else if (!this.props.node.parent) {
+			return (
+				<DirectionalLayoutWidget
+					engine={this.props.engine}
+					vertical={!this.props.node.vertical}
+					key={model.id}
+					dropped={(index, dropped) => {
+						let node = new WorkspaceNodeModel();
+						node.setVertical(true);
+						node.setExpand(model.expand);
+						node.addModel(model);
+						node.addModel(dropped, index);
 
-	getClassName() {
-		return super.getClassName() + ' ' + this.bem(this.props.node.vertical ? '--vertical' : '--horizontal');
+						this.props.node.replaceModel(model, node);
+					}}
+					dropZoneAllowed={() => {
+						return true;
+					}}>
+					<PanelWidget engine={this.props.engine} model={model} />
+				</DirectionalLayoutWidget>
+			);
+		} else {
+			return <PanelWidget engine={this.props.engine} model={model} />;
+		}
 	}
 
 	render() {
 		return (
-			<div {...this.getProps()}>
-				<DropZoneWidget
-					vertical={!this.props.node.vertical}
-					disallow={
-						this.props.node.children[0].id === this.props.engine.draggingID ||
-						this.props.node.children[0].hasParentID(this.props.engine.draggingID)
-					}
-					dropped={model => {
-						this.props.node.addModel(model, 0);
-					}}
-					parent={this.props.node}
-					engine={this.props.engine}
-					key="drop-first"
-				/>
+			<DirectionalLayoutWidget
+				dropZoneAllowed={index => {
+					return true;
+				}}
+				dropped={(index, model: WorkspaceModel) => {
+					this.props.node.addModel(model, index);
+				}}
+				vertical={this.props.node.vertical}
+				engine={this.props.engine}>
 				{_.map(this.props.node.children, (model, index) => {
-					let disallow = false;
-
-					if (model.id === this.props.engine.draggingID) {
-						disallow = true;
-					}
-					if (
-						index < this.props.node.children.length - 2 &&
-						this.props.node.children[index + 1].id === this.props.engine.draggingID
-					) {
-						disallow = true;
-					}
-					return (
-						<>
-							{this.generateElement(model)}
-							<DropZoneWidget
-								key={`drop-${model.id}`}
-								vertical={!this.props.node.vertical}
-								disallow={disallow || model.hasParentID(this.props.engine.draggingID)}
-								dropped={droppedModel => {
-									this.props.node.addModel(droppedModel, index + 1);
-								}}
-								parent={this.props.node}
-								engine={this.props.engine}
-							/>
-						</>
-					);
+					return this.generateElement(model);
 				})}
-			</div>
+			</DirectionalLayoutWidget>
 		);
 	}
 }

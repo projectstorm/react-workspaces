@@ -8,7 +8,6 @@ export interface DropZoneWidgetProps extends BaseWidgetProps {
 	dropped?: (model: WorkspaceModel) => any;
 	hover?: (entered: boolean) => any;
 	engine: WorkspaceEngine;
-	parent: WorkspaceModel;
 	disallow?: boolean;
 	vertical: boolean;
 }
@@ -26,7 +25,7 @@ export class DropZoneWidget extends BaseWidget<DropZoneWidgetProps, DropZoneWidg
 	}
 
 	getHover() {
-		if (this.props.disallow) {
+		if (!this.props.engine.draggingID || this.props.disallow) {
 			return null;
 		}
 		return (
@@ -50,15 +49,14 @@ export class DropZoneWidget extends BaseWidget<DropZoneWidgetProps, DropZoneWidg
 					}
 					this.setState({ hoverActive: false });
 					this.props.hover && this.props.hover(false);
-					this.props.engine.setDraggingNode(null);
 				}}
 				onDragOver={event => {
 					let found = false;
 					for (var i = 0; i < event.dataTransfer.types.length; ++i) {
-						// same ID, dont allow
-						if (event.dataTransfer.types[i] === WorkspaceEngine.namespaceMime(this.props.parent.id)) {
-							return;
-						}
+						// // same ID, dont allow
+						// if (event.dataTransfer.types[i] === WorkspaceEngine.namespaceMime(this.props.parent.id)) {
+						// 	return;
+						// }
 						// allow the effect
 						if (event.dataTransfer.types[i] === WorkspaceEngine.namespaceMime(DraggableWidget.WORKSPACE_MIME)) {
 							found = true;

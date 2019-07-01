@@ -5,7 +5,7 @@ import { PanelWidget } from './PanelWidget';
 import { TrayWidget } from './TrayWidget';
 import * as PropTypes from 'prop-types';
 import { BaseWidget, BaseWidgetProps } from '@projectstorm/react-core';
-import { DraggableWidget } from './DraggableWidget';
+import { StandardLayoutWidget } from './layouts/StandardLayoutWidget';
 
 export interface WorkspaceWidgetProps extends BaseWidgetProps {
 	model: WorkspaceNodeModel;
@@ -43,16 +43,18 @@ export class WorkspaceWidget extends BaseWidget<WorkspaceWidgetProps> {
 	}
 
 	isRight(element: HTMLDivElement) {
+		console.log(this.getRelativePosition(element), this.floatingContainer.offsetWidth);
 		return this.getRelativePosition(element).left > this.floatingContainer.offsetWidth / 2;
 	}
 
-	getRelativePosition(element: HTMLElement): { top: number; left: number; right: number } {
+	getRelativePosition(element: HTMLElement): Partial<ClientRect> {
 		let rect = element.getBoundingClientRect();
 		let rect2 = this.floatingContainer.getBoundingClientRect();
 		return {
 			top: rect.top - rect2.top,
 			left: rect.left - rect2.left,
-			right: rect.right - rect2.right
+			right: rect.right - rect2.right,
+			bottom: rect.bottom - rect2.bottom
 		};
 	}
 
@@ -71,7 +73,7 @@ export class WorkspaceWidget extends BaseWidget<WorkspaceWidgetProps> {
 					}
 					this.timerListener = setTimeout(() => {
 						this.props.engine.setDraggingNode(null);
-					}, 1000);
+					}, 200);
 
 					let id = this.props.engine.getDropEventModelID(event);
 					this.props.engine.setDraggingNode(id);
@@ -79,7 +81,7 @@ export class WorkspaceWidget extends BaseWidget<WorkspaceWidgetProps> {
 				{this.props.engine.fullscreenModel ? (
 					<PanelWidget model={this.props.engine.fullscreenModel} engine={this.props.engine} />
 				) : (
-					<TrayWidget root={true} node={this.props.model} engine={this.props.engine} />
+					<StandardLayoutWidget node={this.props.model} engine={this.props.engine} />
 				)}
 				<div
 					className={this.bem('__floating')}

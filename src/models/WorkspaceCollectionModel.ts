@@ -1,5 +1,6 @@
-import { WorkspaceModel, SerializedModel } from './WorkspaceModel';
+import { WorkspaceModel, SerializedModel, WorkspaceModelListener } from './WorkspaceModel';
 import { WorkspaceEngine } from '../WorkspaceEngine';
+import { WorkspaceCollectionInterface } from './WorkspaceCollectionInterface';
 
 export interface SerializedCollectionModel extends SerializedModel {
 	children: SerializedModel[];
@@ -9,28 +10,29 @@ export interface SerializedCollectionModel extends SerializedModel {
 export class WorkspaceCollectionModel<
 	T extends WorkspaceModel<SerializedModel> = WorkspaceModel<SerializedModel>,
 	S extends SerializedCollectionModel = SerializedCollectionModel
-> extends WorkspaceModel<S> {
+> extends WorkspaceModel<S> implements WorkspaceCollectionInterface {
 	children: T[];
+	childrenListeners: { [id: string]: () => any };
 
 	constructor(type: string) {
 		super(type);
 		this.children = [];
+		this.childrenListeners = {};
 	}
 
 	fromArray(payload: S, engine: WorkspaceEngine) {
 		super.fromArray(payload, engine);
 		for (let child of payload.children) {
-			engine
-				.getFactory(child.type)
-				.generateModel()
-				.fromArray(child, engine);
+			let model: any = engine.getFactory(child.type).generateModel();
+
+			model.fromArray(child, engine);
+			this.addModel(model);
 		}
 	}
 
 	toArray(): S {
 		return {
 			...super.toArray(),
-			type: 'srw-node',
 			children: this.children.map(child => {
 				return child.toArray();
 			})
@@ -64,6 +66,14 @@ export class WorkspaceCollectionModel<
 		return this;
 	}
 
+	delete() {
+		// delete all the children
+		for (let child of this.children) {
+			child.delete();
+		}
+		super.delete();
+	}
+
 	removeModel(model: T): this {
 		let index = this.children.indexOf(model);
 		if (index === -1) {
@@ -80,6 +90,14 @@ export class WorkspaceCollectionModel<
 
 	addModel(model: T, position: number = null): this {
 		model.setParent(this);
+
+		// allow a child to remove itself
+		this.childrenListeners[model.id] = model.registerListener({
+			removed: () => {
+				this.removeModel(model);
+			}
+		});
+
 		if (position === null) {
 			this.children.push(model);
 		} else {

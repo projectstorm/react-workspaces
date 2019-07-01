@@ -90,6 +90,8 @@ export class WorkspaceEngine implements WorkspaceEngineInterface {
 		if (this.draggingID !== id) {
 			this.draggingID = id;
 			this.fireRepaintListeners();
+		} else if (id === null) {
+			this.fireRepaintListeners();
 		}
 	}
 }

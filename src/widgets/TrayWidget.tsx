@@ -9,7 +9,6 @@ import { BaseWidget, BaseWidgetProps } from '@projectstorm/react-core';
 export interface TrayWidgetProps extends BaseWidgetProps {
 	node: WorkspaceNodeModel;
 	engine: WorkspaceEngine;
-	root?: boolean;
 }
 
 export interface TrayWidgetState {}
@@ -40,7 +39,7 @@ export class TrayWidget extends BaseWidget<TrayWidgetProps, TrayWidgetState> {
 					'--expand': expand,
 					'--collapse': !expand
 				})}>
-				{!this.props.root && this.getHeader()}
+				{this.getHeader()}
 				{this.props.node.mode === 'micro' ? (
 					<MicroLayoutWidget node={this.props.node} engine={this.props.engine} />
 				) : (
