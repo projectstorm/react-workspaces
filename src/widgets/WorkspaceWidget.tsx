@@ -79,7 +79,7 @@ export class WorkspaceWidget extends BaseWidget<WorkspaceWidgetProps> {
 					this.props.engine.setDraggingNode(id);
 				}}>
 				{this.props.engine.fullscreenModel ? (
-					<PanelWidget model={this.props.engine.fullscreenModel} engine={this.props.engine} />
+					<PanelWidget expand={true} model={this.props.engine.fullscreenModel} engine={this.props.engine} />
 				) : (
 					<StandardLayoutWidget node={this.props.model} engine={this.props.engine} />
 				)}
