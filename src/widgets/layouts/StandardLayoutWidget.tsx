@@ -53,8 +53,9 @@ export class StandardLayoutWidget extends BaseWidget<StandardLayoutWidgetProps> 
 				<PanelWidget
 					engine={this.props.engine}
 					model={model}
-					expand={this.props.node.vertical ? model.expandVertical : model.expandHorizontal} />
-					);
+					expand={this.props.node.vertical ? model.expandVertical : model.expandHorizontal}
+				/>
+			);
 		}
 	}
 

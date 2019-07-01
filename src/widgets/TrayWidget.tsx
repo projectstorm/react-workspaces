@@ -41,7 +41,7 @@ export class TrayWidget extends BaseWidget<TrayWidgetProps, TrayWidgetState> {
 				})}>
 				{this.getHeader()}
 				{this.props.node.mode === 'micro' ? (
-					<MicroLayoutWidget  className={this.bem('__content')} node={this.props.node} engine={this.props.engine} />
+					<MicroLayoutWidget className={this.bem('__content')} node={this.props.node} engine={this.props.engine} />
 				) : (
 					<StandardLayoutWidget className={this.bem('__content')} node={this.props.node} engine={this.props.engine} />
 				)}

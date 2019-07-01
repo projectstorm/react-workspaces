@@ -45,8 +45,8 @@ export class WorkspaceNodeModel extends WorkspaceCollectionModel {
 		return this;
 	}
 
-	shouldExpand(){
-		if(!this.vertical){
+	shouldExpand() {
+		if (!this.vertical) {
 			return this.expandVertical;
 		}
 		return this.expandHorizontal;
