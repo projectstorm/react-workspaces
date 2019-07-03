@@ -11,20 +11,25 @@ export interface FloatingPanelWidgetProps {
 	relativeElement: HTMLDivElement;
 }
 
-export interface FloatingPanelWidgetState {
-	mustRepaint: boolean;
-}
 
-export class FloatingPanelWidget extends React.Component<FloatingPanelWidgetProps, FloatingPanelWidgetState> {
+export class FloatingPanelWidget extends React.Component<FloatingPanelWidgetProps> {
 	static contextTypes = {
 		workspace: PropTypes.any
 	};
 
-	constructor(props: FloatingPanelWidgetProps) {
-		super(props);
-		this.state = {
-			mustRepaint: false
+	listener: any;
+
+	componentWillUnmount(): void {
+		if(this.listener){
+			window.removeEventListener('resize', this.listener);
+		}
+	}
+
+	componentDidMount(): void {
+		this.listener = () => {
+			this.forceUpdate()
 		};
+		window.addEventListener('resize', this.listener);
 	}
 
 	getContent() {

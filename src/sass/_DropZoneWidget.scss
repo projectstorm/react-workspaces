@@ -31,7 +31,6 @@
 	&__floating {
 		position: absolute;
 		opacity: 0;
-		background: rgb(0, 192, 255);
 		z-index: 2;
 	}
 
@@ -40,6 +39,7 @@
 		width: 20px;
 		transform: translateX(-50%);
 		margin-left: $threshold / 2;
+		background: linear-gradient(90deg, rgba(0,192,255,0.2) 0%, rgba(0,192,255,1) 50%, rgba(0,192,255,0.2) 100%);
 	}
 
 	&--floating-horizontal {
@@ -47,10 +47,11 @@
 		height: 20px;
 		transform: translateY(-50%);
 		margin-top: $threshold / 2;
+		background: linear-gradient(180deg, rgba(0,192,255,0.2) 0%, rgba(0,192,255,1) 50%, rgba(0,192,255,0.2) 100%);
 	}
 
 	&--floating-active {
-		transition: opacity 0.2s;
+		transition: opacity 0.5s;
 		opacity: 0.5;
 	}
 }

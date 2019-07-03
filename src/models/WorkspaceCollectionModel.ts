@@ -69,6 +69,8 @@ export class WorkspaceCollectionModel<
 	delete() {
 		// delete all the children
 		for (let child of this.children) {
+			// remove the listener
+			this.childrenListeners[child.id]();
 			child.delete();
 		}
 		super.delete();
