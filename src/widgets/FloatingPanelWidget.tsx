@@ -11,7 +11,6 @@ export interface FloatingPanelWidgetProps {
 	relativeElement: HTMLDivElement;
 }
 
-
 export class FloatingPanelWidget extends React.Component<FloatingPanelWidgetProps> {
 	static contextTypes = {
 		workspace: PropTypes.any
@@ -20,14 +19,14 @@ export class FloatingPanelWidget extends React.Component<FloatingPanelWidgetProp
 	listener: any;
 
 	componentWillUnmount(): void {
-		if(this.listener){
+		if (this.listener) {
 			window.removeEventListener('resize', this.listener);
 		}
 	}
 
 	componentDidMount(): void {
 		this.listener = () => {
-			this.forceUpdate()
+			this.forceUpdate();
 		};
 		window.addEventListener('resize', this.listener);
 	}

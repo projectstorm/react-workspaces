@@ -10,6 +10,7 @@ import { uuid } from './tools';
 
 export interface WorkspaceEngineListener {
 	repaint?: () => any;
+	draggingElement?: (model: WorkspaceModel, dragging: boolean) => any;
 	generateTrayHeader?: (model: WorkspaceNodeModel) => JSX.Element;
 }
 
@@ -45,6 +46,12 @@ export class WorkspaceEngine implements WorkspaceEngineInterface {
 		return `srw/${data}`;
 	}
 
+	itterateListeners(cb: (listener: WorkspaceEngineListener) => any) {
+		for (let i in this.listeners) {
+			cb(this.listeners[i]);
+		}
+	}
+
 	getTrayHeader(model: WorkspaceNodeModel): JSX.Element {
 		for (let i in this.listeners) {
 			if (this.listeners[i].generateTrayHeader) {
@@ -67,9 +74,9 @@ export class WorkspaceEngine implements WorkspaceEngineInterface {
 	}
 
 	fireRepaintListeners() {
-		for (let i in this.listeners) {
-			this.listeners[i].repaint && this.listeners[i].repaint();
-		}
+		this.itterateListeners(list => {
+			list.repaint && list.repaint();
+		});
 	}
 
 	registerFactory(factory: WorkspaceFactory) {

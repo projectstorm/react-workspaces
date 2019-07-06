@@ -2,7 +2,6 @@ import * as React from 'react';
 import { WorkspaceNodeModel } from '../models/node/WorkspaceNodeModel';
 import { WorkspaceEngine } from '../WorkspaceEngine';
 import { PanelWidget } from './PanelWidget';
-import { TrayWidget } from './TrayWidget';
 import * as PropTypes from 'prop-types';
 import { BaseWidget, BaseWidgetProps } from '@projectstorm/react-core';
 import { StandardLayoutWidget } from './layouts/StandardLayoutWidget';

@@ -24,6 +24,9 @@ export class DraggableWidget extends BaseWidget<DraggableWidgetProps> {
 				{...this.getProps()}
 				draggable={true}
 				onDragStart={event => {
+					this.props.engine.itterateListeners(list => {
+						list.draggingElement && list.draggingElement(this.props.model, true);
+					});
 					event.dataTransfer.setData(
 						WorkspaceEngine.namespaceMime(DraggableWidget.WORKSPACE_MIME),
 						JSON.stringify(this.props.model.toArray())
@@ -35,6 +38,9 @@ export class DraggableWidget extends BaseWidget<DraggableWidgetProps> {
 						this.props.model.delete();
 					}
 					this.props.engine.setDraggingNode(null);
+					this.props.engine.itterateListeners(list => {
+						list.draggingElement && list.draggingElement(this.props.model, false);
+					});
 				}}
 				{...this.props}>
 				{this.props.children}
