@@ -70,6 +70,9 @@ export class WorkspaceWidget extends BaseWidget<WorkspaceWidgetProps> {
 					if (this.timerListener) {
 						clearTimeout(this.timerListener);
 					}
+					// if(this.props.engine.draggingID){
+					// 	return;
+					// }
 					this.timerListener = setTimeout(() => {
 						this.props.engine.setDraggingNode(null);
 					}, 200);

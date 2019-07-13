@@ -51,6 +51,9 @@ export class DropZoneWidget extends BaseWidget<DropZoneWidgetProps, DropZoneWidg
 					this.props.hover && this.props.hover(false);
 				}}
 				onDragOver={event => {
+					if(this.state.hoverActive){
+						return ;
+					}
 					let found = false;
 					for (var i = 0; i < event.dataTransfer.types.length; ++i) {
 						// allow the effect

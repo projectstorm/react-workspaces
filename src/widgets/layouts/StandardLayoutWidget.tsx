@@ -41,6 +41,7 @@ export class StandardLayoutWidget extends BaseWidget<StandardLayoutWidgetProps> 
 						node.addModel(dropped, index);
 
 						this.props.node.replaceModel(model, node);
+						this.props.engine.fireModelUpdated();
 					}}
 					dropZoneAllowed={() => {
 						return true;
@@ -69,6 +70,7 @@ export class StandardLayoutWidget extends BaseWidget<StandardLayoutWidgetProps> 
 				}}
 				dropped={(index, model: WorkspaceModel) => {
 					this.props.node.addModel(model, index);
+					this.props.engine.fireModelUpdated();
 				}}
 				vertical={this.props.node.vertical}
 				engine={this.props.engine}>

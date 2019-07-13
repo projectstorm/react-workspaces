@@ -12,6 +12,7 @@ export interface WorkspaceEngineListener {
 	repaint?: () => any;
 	draggingElement?: (model: WorkspaceModel, dragging: boolean) => any;
 	generateTrayHeader?: (model: WorkspaceNodeModel) => JSX.Element;
+	modelUpdated?: () => any;
 }
 
 export class WorkspaceEngine implements WorkspaceEngineInterface {
@@ -44,6 +45,12 @@ export class WorkspaceEngine implements WorkspaceEngineInterface {
 
 	static namespaceMime(data: string) {
 		return `srw/${data}`;
+	}
+
+	fireModelUpdated(){
+		this.itterateListeners((listener) => {
+			listener.modelUpdated && listener.modelUpdated();
+		})
 	}
 
 	itterateListeners(cb: (listener: WorkspaceEngineListener) => any) {

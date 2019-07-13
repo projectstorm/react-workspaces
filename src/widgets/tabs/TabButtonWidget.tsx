@@ -57,10 +57,12 @@ export class TabButtonWidget extends React.Component<TabButtonWidgetProps, TabBu
 									model.getFlattened().forEach(child => {
 										parent.addModelBefore(this.props.model, child);
 										parent.setSelected(child);
+										this.props.engine.fireModelUpdated();
 									});
 								} else if (model instanceof WorkspaceModel) {
 									parent.addModelBefore(this.props.model, model);
 									parent.setSelected(model);
+									this.props.engine.fireModelUpdated();
 								}
 							}}
 							engine={this.props.engine}
@@ -78,10 +80,12 @@ export class TabButtonWidget extends React.Component<TabButtonWidgetProps, TabBu
 									model.getFlattened().forEach(child => {
 										parent.addModelAfter(this.props.model, child);
 										parent.setSelected(child);
+										this.props.engine.fireModelUpdated();
 									});
 								} else if (model instanceof WorkspaceModel) {
 									parent.addModelAfter(this.props.model, model);
 									parent.setSelected(model);
+									this.props.engine.fireModelUpdated();
 								}
 							}}
 							engine={this.props.engine}

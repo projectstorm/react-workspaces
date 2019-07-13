@@ -36,6 +36,7 @@ export class DraggableWidget extends BaseWidget<DraggableWidgetProps> {
 				onDragEnd={event => {
 					if (event.dataTransfer.dropEffect !== 'none') {
 						this.props.model.delete();
+						this.props.engine.fireModelUpdated();
 					}
 					this.props.engine.setDraggingNode(null);
 					this.props.engine.itterateListeners(list => {
