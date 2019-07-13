@@ -52,6 +52,8 @@ export class DropZoneWidget extends BaseWidget<DropZoneWidgetProps, DropZoneWidg
 				}}
 				onDragOver={event => {
 					if(this.state.hoverActive){
+						event.preventDefault();
+						event.dataTransfer.dropEffect = 'move';
 						return ;
 					}
 					let found = false;
