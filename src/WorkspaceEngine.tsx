@@ -47,10 +47,10 @@ export class WorkspaceEngine implements WorkspaceEngineInterface {
 		return `srw/${data}`;
 	}
 
-	fireModelUpdated(){
-		this.itterateListeners((listener) => {
+	fireModelUpdated() {
+		this.itterateListeners(listener => {
 			listener.modelUpdated && listener.modelUpdated();
-		})
+		});
 	}
 
 	itterateListeners(cb: (listener: WorkspaceEngineListener) => any) {

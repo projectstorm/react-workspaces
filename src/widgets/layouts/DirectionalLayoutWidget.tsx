@@ -36,12 +36,11 @@ export class DirectionalLayoutWidget extends BaseWidget<DirectionalLayoutWidgetP
 					engine={this.props.engine}
 					key="drop-first"
 				/>
-				{_.map(children, (model, index) => {
+				{_.map(children, (model: JSX.Element, index) => {
 					return (
-						<>
+						<React.Fragment key={index}>
 							{model}
 							<DropZoneWidget
-								key={`dropzone-${index}`}
 								vertical={!this.props.vertical}
 								disallow={!this.props.dropZoneAllowed(index + 1)}
 								dropped={droppedModel => {
@@ -49,7 +48,7 @@ export class DirectionalLayoutWidget extends BaseWidget<DirectionalLayoutWidgetP
 								}}
 								engine={this.props.engine}
 							/>
-						</>
+						</React.Fragment>
 					);
 				})}
 			</div>

@@ -8,7 +8,6 @@ export interface DraggableWidgetProps extends BaseWidgetProps {
 	model: WorkspaceModel;
 	className?: string;
 	onClick?: () => any;
-	fullscreenEnabled?: boolean;
 }
 
 export class DraggableWidget extends BaseWidget<DraggableWidgetProps> {

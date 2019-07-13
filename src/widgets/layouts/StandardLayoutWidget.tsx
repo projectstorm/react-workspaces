@@ -75,7 +75,7 @@ export class StandardLayoutWidget extends BaseWidget<StandardLayoutWidgetProps> 
 				vertical={this.props.node.vertical}
 				engine={this.props.engine}>
 				{_.map(this.props.node.children, (model, index) => {
-					return this.generateElement(model);
+					return React.cloneElement(this.generateElement(model), { key: model.id });
 				})}
 			</DirectionalLayoutWidget>
 		);

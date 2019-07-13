@@ -42,7 +42,6 @@ export class WorkspaceWidget extends BaseWidget<WorkspaceWidgetProps> {
 	}
 
 	isRight(element: HTMLDivElement) {
-		console.log(this.getRelativePosition(element), this.floatingContainer.offsetWidth);
 		return this.getRelativePosition(element).left > this.floatingContainer.offsetWidth / 2;
 	}
 
@@ -66,17 +65,17 @@ export class WorkspaceWidget extends BaseWidget<WorkspaceWidgetProps> {
 			<div
 				{...this.getProps()}
 				onDragOver={event => {
-					event.persist();
 					if (this.timerListener) {
 						clearTimeout(this.timerListener);
-					}
-					if(this.props.engine.draggingID){
-						return;
+						this.timerListener = null;
 					}
 					this.timerListener = setTimeout(() => {
 						this.props.engine.setDraggingNode(null);
 					}, 200);
-
+					if (this.props.engine.draggingID) {
+						return;
+					}
+					event.persist();
 					let id = this.props.engine.getDropEventModelID(event);
 					this.props.engine.setDraggingNode(id);
 				}}>

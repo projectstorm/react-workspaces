@@ -59,7 +59,6 @@ export class MicroLayoutWidget extends BaseWidget<MicroLayoutWidgetProps> {
 								this.buttons[child.id] = ref;
 							}}>
 							<DraggableWidget
-								fullscreenEnabled={false}
 								onClick={() => {
 									if (selected) {
 										this.props.node.setFloatingModel(null);
