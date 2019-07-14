@@ -11,6 +11,8 @@ export interface DirectionalLayoutWidgetProps extends BaseWidgetProps {
 	dropZoneAllowed: (index: number) => boolean;
 	dropped: (index: number, model: WorkspaceModel) => any;
 	engine: WorkspaceEngine;
+	data: WorkspaceModel[];
+	generateElement: (model: WorkspaceModel) => JSX.Element;
 }
 
 export class DirectionalLayoutWidget extends BaseWidget<DirectionalLayoutWidgetProps> {
@@ -18,8 +20,11 @@ export class DirectionalLayoutWidget extends BaseWidget<DirectionalLayoutWidgetP
 		super('srw-directional-layout', props);
 	}
 
+	componentWillUnmount(): void {
+		console.log('unmount layout');
+	}
+
 	render() {
-		const children = React.Children.toArray(this.props.children);
 		return (
 			<div
 				{...this.getProps({
@@ -36,10 +41,10 @@ export class DirectionalLayoutWidget extends BaseWidget<DirectionalLayoutWidgetP
 					engine={this.props.engine}
 					key="drop-first"
 				/>
-				{_.map(children, (model: JSX.Element, index) => {
+				{_.map(this.props.data, (model: WorkspaceModel, index) => {
 					return (
-						<React.Fragment key={index}>
-							{model}
+						<React.Fragment key={model.id}>
+							{this.props.generateElement(model)}
 							<DropZoneWidget
 								vertical={!this.props.vertical}
 								disallow={!this.props.dropZoneAllowed(index + 1)}

@@ -20,6 +20,7 @@ export class WorkspaceEngine implements WorkspaceEngineInterface {
 	listeners: { [id: string]: WorkspaceEngineListener };
 	draggingID: string;
 	fullscreenModel: WorkspaceModel;
+	fireModelUpdateEvent: boolean;
 
 	constructor() {
 		this.factories = {};
@@ -48,6 +49,11 @@ export class WorkspaceEngine implements WorkspaceEngineInterface {
 	}
 
 	fireModelUpdated() {
+		this.fireModelUpdateEvent = true;
+	}
+
+	_fireModelUpdated() {
+		this.fireModelUpdateEvent = false;
 		this.itterateListeners(listener => {
 			listener.modelUpdated && listener.modelUpdated();
 		});

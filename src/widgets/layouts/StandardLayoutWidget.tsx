@@ -1,5 +1,4 @@
 import * as React from 'react';
-import * as _ from 'lodash';
 import { WorkspaceNodeModel } from '../../models/node/WorkspaceNodeModel';
 import { WorkspaceTabbedModel } from '../../models/tabs/WorkspaceTabbedModel';
 import { PanelWidget } from '../PanelWidget';
@@ -29,6 +28,10 @@ export class StandardLayoutWidget extends BaseWidget<StandardLayoutWidgetProps> 
 		} else if (!this.props.node.parent) {
 			return (
 				<DirectionalLayoutWidget
+					data={[model]}
+					generateElement={model => {
+						return <PanelWidget engine={this.props.engine} model={model} expand={true} />;
+					}}
 					expand={model.expandHorizontal}
 					engine={this.props.engine}
 					vertical={!this.props.node.vertical}
@@ -45,13 +48,13 @@ export class StandardLayoutWidget extends BaseWidget<StandardLayoutWidgetProps> 
 					}}
 					dropZoneAllowed={() => {
 						return true;
-					}}>
-					<PanelWidget engine={this.props.engine} model={model} expand={true} />
-				</DirectionalLayoutWidget>
+					}}
+				/>
 			);
 		} else {
 			return (
 				<PanelWidget
+					key={model.id}
 					engine={this.props.engine}
 					model={model}
 					expand={this.props.node.vertical ? model.expandVertical : model.expandHorizontal}
@@ -64,6 +67,10 @@ export class StandardLayoutWidget extends BaseWidget<StandardLayoutWidgetProps> 
 		return (
 			<DirectionalLayoutWidget
 				{...this.getProps()}
+				data={this.props.node.children}
+				generateElement={model => {
+					return this.generateElement(model);
+				}}
 				expand={this.props.node.shouldExpand()}
 				dropZoneAllowed={index => {
 					return true;
@@ -73,11 +80,8 @@ export class StandardLayoutWidget extends BaseWidget<StandardLayoutWidgetProps> 
 					this.props.engine.fireModelUpdated();
 				}}
 				vertical={this.props.node.vertical}
-				engine={this.props.engine}>
-				{_.map(this.props.node.children, (model, index) => {
-					return React.cloneElement(this.generateElement(model), { key: model.id });
-				})}
-			</DirectionalLayoutWidget>
+				engine={this.props.engine}
+			/>
 		);
 	}
 }

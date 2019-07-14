@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as _ from 'lodash';
 import { DraggableWidget } from './DraggableWidget';
 import { WorkspaceEngine } from '../WorkspaceEngine';
 import { BaseWidget, BaseWidgetProps } from '@projectstorm/react-core';
@@ -37,6 +38,7 @@ export class DropZoneWidget extends BaseWidget<DropZoneWidgetProps, DropZoneWidg
 					'--floating-horizontal': !this.props.vertical
 				})}
 				onDrop={event => {
+					event.persist();
 					let data = event.dataTransfer.getData(WorkspaceEngine.namespaceMime(DraggableWidget.WORKSPACE_MIME));
 					try {
 						let object = JSON.parse(data);
@@ -51,11 +53,6 @@ export class DropZoneWidget extends BaseWidget<DropZoneWidgetProps, DropZoneWidg
 					this.props.hover && this.props.hover(false);
 				}}
 				onDragOver={event => {
-					if (this.state.hoverActive) {
-						event.preventDefault();
-						event.dataTransfer.dropEffect = 'move';
-						return;
-					}
 					let found = false;
 					for (var i = 0; i < event.dataTransfer.types.length; ++i) {
 						// allow the effect
@@ -64,9 +61,14 @@ export class DropZoneWidget extends BaseWidget<DropZoneWidgetProps, DropZoneWidg
 						}
 					}
 
-					if (found) {
-						event.preventDefault();
-						event.dataTransfer.dropEffect = 'move';
+					if (!found) {
+						return;
+					}
+
+					event.preventDefault();
+					event.dataTransfer.dropEffect = 'move';
+
+					if (!this.state.hoverActive) {
 						this.setState({ hoverActive: true });
 						this.props.hover && this.props.hover(true);
 					}

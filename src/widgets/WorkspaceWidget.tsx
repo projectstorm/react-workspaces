@@ -37,6 +37,12 @@ export class WorkspaceWidget extends BaseWidget<WorkspaceWidgetProps> {
 		});
 	}
 
+	componentDidUpdate(prevProps: Readonly<WorkspaceWidgetProps>, prevState: Readonly<any>, snapshot?: any): void {
+		if (this.props.engine.fireModelUpdateEvent) {
+			this.props.engine._fireModelUpdated();
+		}
+	}
+
 	componentWillUnmount() {
 		this.listener && this.listener();
 	}
@@ -69,13 +75,14 @@ export class WorkspaceWidget extends BaseWidget<WorkspaceWidgetProps> {
 						clearTimeout(this.timerListener);
 						this.timerListener = null;
 					}
+
 					this.timerListener = setTimeout(() => {
 						this.props.engine.setDraggingNode(null);
 					}, 200);
+
 					if (this.props.engine.draggingID) {
 						return;
 					}
-					event.persist();
 					let id = this.props.engine.getDropEventModelID(event);
 					this.props.engine.setDraggingNode(id);
 				}}>
