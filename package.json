@@ -1,6 +1,6 @@
 {
 	"name": "@projectstorm/react-workspaces",
-	"version": "2.0.6",
+	"version": "2.0.7",
 	"main": "./dist/main.js",
 	"typings": "./dist/@types/src/main",
 	"author": "dylanvorster",
@@ -32,12 +32,12 @@
 		"@projectstorm/react-core": "^1.2.11",
 		"lodash": "^4.17.11",
 		"react": "^16.8.6",
-    "@emotion/core": "^10.0.15",
-    "@emotion/styled": "^10.0.15"
+		"@emotion/core": "^10.0.15",
+		"@emotion/styled": "^10.0.15"
 	},
 	"devDependencies": {
-    "@emotion/core": "^10.0.15",
-    "@emotion/styled": "^10.0.15",
+		"@emotion/core": "^10.0.15",
+		"@emotion/styled": "^10.0.15",
 		"@babel/core": "^7.4.5",
 		"@projectstorm/react-core": "^1.2.11",
 		"@storybook/addon-actions": "^5.1.9",
