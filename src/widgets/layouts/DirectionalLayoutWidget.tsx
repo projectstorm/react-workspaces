@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { DropZoneWidget } from '../DropZoneWidget';
 import * as _ from 'lodash';
-import { BaseWidget, BaseWidgetProps } from '@projectstorm/react-core';
 import { WorkspaceModel } from '../../models/WorkspaceModel';
 import { WorkspaceEngine } from '../../WorkspaceEngine';
+import styled from "@emotion/styled";
 
-export interface DirectionalLayoutWidgetProps extends BaseWidgetProps {
+export interface DirectionalLayoutWidgetProps {
 	vertical: boolean;
 	expand: boolean;
 	dropZoneAllowed: (index: number) => boolean;
@@ -13,25 +13,26 @@ export interface DirectionalLayoutWidgetProps extends BaseWidgetProps {
 	engine: WorkspaceEngine;
 	data: WorkspaceModel[];
 	generateElement: (model: WorkspaceModel) => JSX.Element;
+	className?;
 }
 
-export class DirectionalLayoutWidget extends BaseWidget<DirectionalLayoutWidgetProps> {
-	constructor(props: DirectionalLayoutWidgetProps) {
-		super('srw-directional-layout', props);
-	}
+namespace S{
+	export const Container = styled.div<{expand: boolean, vertical: boolean}>`
+		display: flex;
+		flex-grow: ${p => p.expand ? 1 : 0};
+		flex-direction: ${p => p.vertical ? 'column': 'row'};
+	`;
+}
 
-	componentWillUnmount(): void {
-		console.log('unmount layout');
-	}
+export class DirectionalLayoutWidget extends React.Component<DirectionalLayoutWidgetProps> {
 
 	render() {
 		return (
-			<div
-				{...this.getProps({
-					'--expand': this.props.expand,
-					'--vertical': this.props.vertical,
-					'--horizontal': !this.props.vertical
-				})}>
+			<S.Container
+				className={this.props.className}
+				expand={this.props.expand}
+				vertical={this.props.vertical}
+				>
 				<DropZoneWidget
 					vertical={!this.props.vertical}
 					disallow={!this.props.dropZoneAllowed(0)}
@@ -56,7 +57,7 @@ export class DirectionalLayoutWidget extends BaseWidget<DirectionalLayoutWidgetP
 						</React.Fragment>
 					);
 				})}
-			</div>
+			</S.Container>
 		);
 	}
 }

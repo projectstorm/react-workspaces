@@ -5,15 +5,24 @@ import { WorkspaceEngine } from '../../WorkspaceEngine';
 import { DraggableWidget } from '../DraggableWidget';
 import { FloatingPanelWidget } from '../FloatingPanelWidget';
 import * as PropTypes from 'prop-types';
-import { BaseWidget, BaseWidgetProps } from '@projectstorm/react-core';
 import { WorkspacePanelFactory } from '../../WorkspacePanelFactory';
+import styled from "@emotion/styled";
 
-export interface MicroLayoutWidgetProps extends BaseWidgetProps {
+export interface MicroLayoutWidgetProps {
 	node: WorkspaceNodeModel;
 	engine: WorkspaceEngine;
+	className?;
 }
 
-export class MicroLayoutWidget extends BaseWidget<MicroLayoutWidgetProps> {
+namespace S{
+	export const MicroLayout = styled.div`
+		display: flex;
+		flex-direction: column;
+		flex-grow: 1;
+	`
+}
+
+export class MicroLayoutWidget extends React.Component<MicroLayoutWidgetProps> {
 	div: HTMLDivElement;
 	buttons: { [id: string]: HTMLDivElement };
 
@@ -22,7 +31,7 @@ export class MicroLayoutWidget extends BaseWidget<MicroLayoutWidgetProps> {
 	};
 
 	constructor(props: MicroLayoutWidgetProps) {
-		super('srw-micro-layout', props);
+		super(props);
 		this.buttons = {};
 	}
 
@@ -44,8 +53,8 @@ export class MicroLayoutWidget extends BaseWidget<MicroLayoutWidgetProps> {
 
 	render() {
 		return (
-			<div
-				{...this.getProps()}
+			<S.MicroLayout
+				className={this.props.className}
 				ref={ref => {
 					this.div = ref;
 				}}>
@@ -54,7 +63,6 @@ export class MicroLayoutWidget extends BaseWidget<MicroLayoutWidgetProps> {
 					return (
 						<div
 							key={child.id}
-							className="srw-micro-layout__button"
 							ref={ref => {
 								this.buttons[child.id] = ref;
 							}}>
@@ -80,7 +88,7 @@ export class MicroLayoutWidget extends BaseWidget<MicroLayoutWidgetProps> {
 				})}
 				{// is rendered into a react portal
 				this.props.node.floatingModel && this.getFloatingModel()}
-			</div>
+			</S.MicroLayout>
 		);
 	}
 }

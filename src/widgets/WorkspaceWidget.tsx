@@ -5,6 +5,7 @@ import { PanelWidget } from './PanelWidget';
 import * as PropTypes from 'prop-types';
 import { BaseWidget, BaseWidgetProps } from '@projectstorm/react-core';
 import { StandardLayoutWidget } from './layouts/StandardLayoutWidget';
+import styled from "@emotion/styled";
 
 export interface WorkspaceWidgetProps extends BaseWidgetProps {
 	model: WorkspaceNodeModel;
@@ -13,6 +14,21 @@ export interface WorkspaceWidgetProps extends BaseWidgetProps {
 
 export interface WorkspaceWidgetContext {
 	workspace: WorkspaceWidget;
+}
+
+namespace S{
+	export const Container = styled.div`
+		display: flex;
+		height: 100%;
+		position: relative;
+	`;
+
+	export const Floating = styled.div`
+		position: absolute;
+		pointer-events: none;
+		width: 100%;
+		height: 100%;
+	`;
 }
 
 export class WorkspaceWidget extends BaseWidget<WorkspaceWidgetProps> {
@@ -38,6 +54,9 @@ export class WorkspaceWidget extends BaseWidget<WorkspaceWidgetProps> {
 	}
 
 	componentDidUpdate(prevProps: Readonly<WorkspaceWidgetProps>, prevState: Readonly<any>, snapshot?: any): void {
+		if(this.props.engine.repainting){
+			this.props.engine.repainting = false;
+		}
 		if (this.props.engine.fireModelUpdateEvent) {
 			this.props.engine._fireModelUpdated();
 		}
@@ -68,7 +87,7 @@ export class WorkspaceWidget extends BaseWidget<WorkspaceWidgetProps> {
 
 	render() {
 		return (
-			<div
+			<S.Container
 				{...this.getProps()}
 				onDragOver={event => {
 					if (this.timerListener) {
@@ -91,13 +110,12 @@ export class WorkspaceWidget extends BaseWidget<WorkspaceWidgetProps> {
 				) : (
 					<StandardLayoutWidget node={this.props.model} engine={this.props.engine} />
 				)}
-				<div
-					className={this.bem('__floating')}
+				<S.Floating
 					ref={ref => {
 						this.floatingContainer = ref;
 					}}
 				/>
-			</div>
+			</S.Container>
 		);
 	}
 }

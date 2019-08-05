@@ -61,7 +61,7 @@ export class WorkspaceCollectionModel<
 
 	replaceModel(oldModel: T, newModel): this {
 		let index = this.children.indexOf(oldModel);
-		this.removeModel(oldModel);
+		this.removeModel(oldModel, false);
 		this.addModel(newModel, index);
 		return this;
 	}
@@ -76,14 +76,14 @@ export class WorkspaceCollectionModel<
 		super.delete();
 	}
 
-	removeModel(model: T): this {
+	removeModel(model: T, fire: boolean = true): this {
 		let index = this.children.indexOf(model);
 		if (index === -1) {
 			console.log('could not find model');
 			return this;
 		}
 		this.children.splice(index, 1);
-		if (this.children.length === 0) {
+		if (fire && this.children.length === 0) {
 			this.parent.removeModel(this);
 		}
 		return this;

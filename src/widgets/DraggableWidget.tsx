@@ -1,26 +1,28 @@
 import * as React from 'react';
-import { WorkspaceEngine } from '../WorkspaceEngine';
-import { WorkspaceModel } from '../models/WorkspaceModel';
-import { BaseWidget, BaseWidgetProps } from '@projectstorm/react-core';
+import {WorkspaceEngine} from '../WorkspaceEngine';
+import {WorkspaceModel} from '../models/WorkspaceModel';
+import styled from "@emotion/styled";
 
-export interface DraggableWidgetProps extends BaseWidgetProps {
+export interface DraggableWidgetProps {
 	engine: WorkspaceEngine;
 	model: WorkspaceModel;
 	className?: string;
 	onClick?: () => any;
 }
 
-export class DraggableWidget extends BaseWidget<DraggableWidgetProps> {
+namespace S {
+	export const Draggable = styled.div`
+		cursor: move;
+	`
+}
+
+export class DraggableWidget extends React.Component<DraggableWidgetProps> {
+	
 	static WORKSPACE_MIME = 'panel';
-
-	constructor(props) {
-		super('srw-draggable', props);
-	}
-
+	
 	render() {
 		return (
-			<div
-				{...this.getProps()}
+			<S.Draggable
 				draggable={true}
 				onDragStart={event => {
 					this.props.engine.itterateListeners(list => {
@@ -44,7 +46,7 @@ export class DraggableWidget extends BaseWidget<DraggableWidgetProps> {
 				}}
 				{...this.props}>
 				{this.props.children}
-			</div>
+			</S.Draggable>
 		);
 	}
 }

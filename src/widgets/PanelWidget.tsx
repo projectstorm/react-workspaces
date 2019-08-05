@@ -3,40 +3,54 @@ import { WorkspaceEngine } from '../WorkspaceEngine';
 import { DraggableWidget } from './DraggableWidget';
 import { WorkspacePanelFactory } from '../WorkspacePanelFactory';
 import { WorkspaceModel } from '../models/WorkspaceModel';
-import { BaseWidget, BaseWidgetProps } from '@projectstorm/react-core';
+import styled from "@emotion/styled";
+import {PerformanceWidget} from "./PerformanceWidget";
 
-export interface PanelWidgetProps extends BaseWidgetProps {
+export interface PanelWidgetProps {
 	model: WorkspaceModel;
 	engine: WorkspaceEngine;
 	expand?: boolean;
 }
 
-export class PanelWidget extends BaseWidget<PanelWidgetProps> {
+namespace S{
+	export const Container = styled.div<{expand: boolean}>`
+		display: flex;
+		flex-direction: column;
+		position: relative;
+		flex-shrink: 0;
+		flex-grow: ${p => p.expand ? 1: 0};
+	`;
+
+	export const Content = styled.div`
+		flex-grow: 1;
+		display: flex;
+	`;
+}
+
+export class PanelWidget extends React.Component<PanelWidgetProps> {
 	constructor(props: PanelWidgetProps) {
-		super('srw-panel', props);
+		super(props);
 	}
 
 	render() {
 		let factory = this.props.engine.getFactory<WorkspacePanelFactory>(this.props.model);
 		return (
-			<div
-				{...this.getProps({
-					'--expand': this.props.expand,
-					'--contract': !this.props.expand
-				})}>
+			<S.Container expand={this.props.expand} >
 				<DraggableWidget model={this.props.model} engine={this.props.engine}>
 					{factory.generatePanelTitle({
 						model: this.props.model,
 						engine: this.props.engine
 					})}
 				</DraggableWidget>
-				<div className={this.bem('__content')}>
-					{factory.generatePanelContent({
-						model: this.props.model,
-						engine: this.props.engine
-					})}
-				</div>
-			</div>
+				<S.Content>
+					<PerformanceWidget engine={this.props.engine} data={this.props.model.toArray()} children={() => {
+						return factory.generatePanelContent({
+							model: this.props.model,
+							engine: this.props.engine
+						})
+					}}/>
+				</S.Content>
+			</S.Container>
 		);
 	}
 }

@@ -4,11 +4,22 @@ import { PanelWidget } from './PanelWidget';
 import { WorkspaceEngine } from '../WorkspaceEngine';
 import * as PropTypes from 'prop-types';
 import { WorkspaceModel } from '../models/WorkspaceModel';
+import styled from "@emotion/styled";
 
 export interface FloatingPanelWidgetProps {
 	model: WorkspaceModel;
 	engine: WorkspaceEngine;
 	relativeElement: HTMLDivElement;
+}
+
+namespace S{
+	export const Container = styled.div`
+		position: absolute;
+		background-color: black;
+		pointer-events: all;
+		box-shadow: 0 0 10px rgba(0,0,0, 0.5);
+		transition: top 0.3s, left 0.3s;
+	`;
 }
 
 export class FloatingPanelWidget extends React.Component<FloatingPanelWidgetProps> {
@@ -44,9 +55,9 @@ export class FloatingPanelWidget extends React.Component<FloatingPanelWidgetProp
 		}
 
 		return (
-			<div style={style} className="srw-floating-panel">
+			<S.Container style={style}>
 				<PanelWidget model={this.props.model} engine={this.props.engine} />
-			</div>
+			</S.Container>
 		);
 	}
 

@@ -21,6 +21,7 @@ export class WorkspaceEngine implements WorkspaceEngineInterface {
 	draggingID: string;
 	fullscreenModel: WorkspaceModel;
 	fireModelUpdateEvent: boolean;
+	repainting: boolean;
 
 	constructor() {
 		this.factories = {};
@@ -87,6 +88,7 @@ export class WorkspaceEngine implements WorkspaceEngineInterface {
 	}
 
 	fireRepaintListeners() {
+		this.repainting = true;
 		this.itterateListeners(list => {
 			list.repaint && list.repaint();
 		});

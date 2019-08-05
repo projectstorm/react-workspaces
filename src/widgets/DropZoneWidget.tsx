@@ -1,11 +1,11 @@
 import * as React from 'react';
-import * as _ from 'lodash';
 import { DraggableWidget } from './DraggableWidget';
 import { WorkspaceEngine } from '../WorkspaceEngine';
-import { BaseWidget, BaseWidgetProps } from '@projectstorm/react-core';
 import { WorkspaceModel } from '../models/WorkspaceModel';
+import styled from "@emotion/styled";
+import {css, keyframes} from "@emotion/core";
 
-export interface DropZoneWidgetProps extends BaseWidgetProps {
+export interface DropZoneWidgetProps {
 	dropped?: (model: WorkspaceModel) => any;
 	hover?: (entered: boolean) => any;
 	engine: WorkspaceEngine;
@@ -17,9 +17,86 @@ export interface DropZoneWidgetState {
 	hoverActive: boolean;
 }
 
-export class DropZoneWidget extends BaseWidget<DropZoneWidgetProps, DropZoneWidgetState> {
+const threshold = 2;
+
+namespace S{
+	const fade = keyframes`
+		0% {
+			background: mediumpurple;
+		}
+
+		100% {
+			background: rgba(mediumpurple, 0);
+		}
+	`;
+
+	const hint = css`
+		animation-name: ${fade};
+		animation-duration: 0.5s;
+		animation-iteration-count: infinite;
+		animation-direction: alternate-reverse;
+	`;
+
+	const active = css`
+		opacity: 1;
+		background: rgb(0, 192, 255);
+	`;
+
+	const floatingActive = css`
+		transition: opacity 0.5s;
+		opacity: 0.5;
+	`;
+
+	const floatingVertical = css`
+		height: 100%;
+		width: 20px;
+		transform: translateX(-50%);
+		margin-left: ${threshold/2}px;
+		background: linear-gradient(
+			90deg,
+			rgba(0, 192, 255, 0.2) 0%,
+			rgba(0, 192, 255, 1) 50%,
+			rgba(0, 192, 255, 0.2) 100%
+		);
+	`;
+
+	const floatingHorizontal = css`
+		width: 100%;
+		height: 20px;
+		transform: translateY(-50%);
+		margin-top: ${threshold/2}px;
+		background: linear-gradient(
+			180deg,
+			rgba(0, 192, 255, 0.2) 0%,
+			rgba(0, 192, 255, 1) 50%,
+			rgba(0, 192, 255, 0.2) 100%
+		);
+	`;
+
+	export const Floating = styled.div<{active: boolean, vertical: boolean}>`
+		position: absolute;
+		opacity: 0;
+		z-index: 2;
+		${p => p.active && floatingActive};
+		${p => p.vertical ? floatingVertical : floatingHorizontal};
+	`;
+
+	export const DropZone = styled.div<{hint: boolean, active: boolean}>`
+		transition: opacity 0.2s;
+		pointer-events: all;
+		min-width: ${threshold}px;
+		min-height: ${threshold}px;
+		background: rgba(mediumpurple, 0);
+		position: relative;
+		${p => p.active && active};
+		${p => p.hint && hint};
+	`
+}
+
+
+export class DropZoneWidget extends React.Component<DropZoneWidgetProps, DropZoneWidgetState> {
 	constructor(props: DropZoneWidgetProps) {
-		super('srw-drop-zone', props);
+		super(props);
 		this.state = {
 			hoverActive: false
 		};
@@ -30,13 +107,9 @@ export class DropZoneWidget extends BaseWidget<DropZoneWidgetProps, DropZoneWidg
 			return null;
 		}
 		return (
-			<div
-				className={this.bem({
-					__floating: true,
-					'--floating-active': this.state.hoverActive,
-					'--floating-vertical': this.props.vertical,
-					'--floating-horizontal': !this.props.vertical
-				})}
+			<S.Floating
+				active={this.state.hoverActive}
+				vertical={this.props.vertical}
 				onDrop={event => {
 					event.persist();
 					let data = event.dataTransfer.getData(WorkspaceEngine.namespaceMime(DraggableWidget.WORKSPACE_MIME));
@@ -83,16 +156,15 @@ export class DropZoneWidget extends BaseWidget<DropZoneWidgetProps, DropZoneWidg
 
 	render() {
 		return (
-			<div
+			<S.DropZone
+				active={!this.props.disallow && this.state.hoverActive}
+				hint={!this.props.disallow && !this.state.hoverActive && !!this.props.engine.draggingID}
 				style={{
 					animationDelay: `${parseInt(`${Math.random() * 500}`)}ms`
 				}}
-				{...this.getProps({
-					'--hint': !this.props.disallow && !this.state.hoverActive && !!this.props.engine.draggingID,
-					'--active': !this.props.disallow && this.state.hoverActive
-				})}>
+			>
 				{this.getHover()}
-			</div>
+			</S.DropZone>
 		);
 	}
 }

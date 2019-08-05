@@ -5,20 +5,16 @@ import { PanelWidget } from '../PanelWidget';
 import { TabGroupWidget } from '../tabs/TabGroupWidget';
 import { WorkspaceEngine } from '../../WorkspaceEngine';
 import { TrayWidget } from '../TrayWidget';
-import { BaseWidget, BaseWidgetProps } from '@projectstorm/react-core';
 import { WorkspaceModel } from '../../models/WorkspaceModel';
 import { DirectionalLayoutWidget } from './DirectionalLayoutWidget';
 
-export interface StandardLayoutWidgetProps extends BaseWidgetProps {
+export interface StandardLayoutWidgetProps {
 	node: WorkspaceNodeModel;
 	engine: WorkspaceEngine;
+	className?;
 }
 
-export class StandardLayoutWidget extends BaseWidget<StandardLayoutWidgetProps> {
-	constructor(props: StandardLayoutWidgetProps) {
-		super('srw-standard-layout', props);
-		this.state = {};
-	}
+export class StandardLayoutWidget extends React.Component<StandardLayoutWidgetProps> {
 
 	generateElement(model: WorkspaceModel) {
 		if (model instanceof WorkspaceNodeModel) {
@@ -64,9 +60,12 @@ export class StandardLayoutWidget extends BaseWidget<StandardLayoutWidgetProps> 
 	}
 
 	render() {
+		if(!this.props.node){
+			return null;
+		}
 		return (
 			<DirectionalLayoutWidget
-				{...this.getProps()}
+				className={this.props.className}
 				data={this.props.node.children}
 				generateElement={model => {
 					return this.generateElement(model);
