@@ -5,7 +5,7 @@ import styled from '@emotion/styled';
 import { css } from '@emotion/core';
 import { WorkspaceModel } from '../../models/WorkspaceModel';
 import { WorkspaceEngine } from '../../WorkspaceEngine';
-import { DropzoneLogicWidget } from './DropzoneLogicWidget';
+import { DropzoneLogicWidget } from '../primitives/DropzoneLogicWidget';
 
 export interface DropzoneDividerWidgetProps {
 	size?: number;

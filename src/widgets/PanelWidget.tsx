@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { WorkspaceEngine } from '../WorkspaceEngine';
-import { DraggableWidget } from './DraggableWidget';
+import { DraggableWidget } from './primitives/DraggableWidget';
 import { WorkspacePanelFactory } from '../WorkspacePanelFactory';
 import { WorkspaceModel } from '../models/WorkspaceModel';
 import styled from '@emotion/styled';

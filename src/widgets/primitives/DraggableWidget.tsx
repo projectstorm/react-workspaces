@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { WorkspaceEngine } from '../WorkspaceEngine';
-import { WorkspaceModel } from '../models/WorkspaceModel';
+import { WorkspaceEngine } from '../../WorkspaceEngine';
+import { WorkspaceModel } from '../../models/WorkspaceModel';
 import styled from '@emotion/styled';
 
 export interface DraggableWidgetProps {

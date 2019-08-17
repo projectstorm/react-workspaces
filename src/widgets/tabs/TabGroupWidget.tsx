@@ -7,9 +7,9 @@ import { WorkspaceEngine } from '../../WorkspaceEngine';
 import { TabButtonWidget } from './TabButtonWidget';
 import { WorkspacePanelFactory } from '../../WorkspacePanelFactory';
 import styled from '@emotion/styled';
-import { DraggableWidget } from '../DraggableWidget';
+import { DraggableWidget } from '../primitives/DraggableWidget';
 import { css } from '@emotion/core';
-import { DropZoneOrderWidget } from '../dropzone/DropZoneOrderWidget';
+import { DropzoneOrderWidget } from '../dropzone/DropzoneOrderWidget';
 
 export interface TabGroupWidgetProps {
 	model: WorkspaceTabbedModel;
@@ -44,7 +44,7 @@ export class TabGroupWidget extends React.Component<TabGroupWidgetProps> {
 		return (
 			<S.Container>
 				<DraggableWidget css={S.Tabs} engine={this.props.engine} model={this.props.model}>
-					<DropZoneOrderWidget
+					<DropzoneOrderWidget
 						size={50}
 						engine={this.props.engine}
 						vertical={false}
@@ -54,7 +54,7 @@ export class TabGroupWidget extends React.Component<TabGroupWidgetProps> {
 						{_.map(this.props.model.children, child => {
 							return <TabButtonWidget model={child} engine={this.props.engine} key={child.id} />;
 						})}
-					</DropZoneOrderWidget>
+					</DropzoneOrderWidget>
 				</DraggableWidget>
 				<S.Content>
 					{selectedFactory.generatePanelContent({

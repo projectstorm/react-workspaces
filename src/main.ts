@@ -1,8 +1,8 @@
 export * from './widgets/PanelWidget';
 export * from './widgets/WorkspaceWidget';
-export * from './widgets/DraggableWidget';
+export * from './widgets/primitives/DraggableWidget';
 export * from './widgets/FloatingPanelWidget';
-export * from './widgets/dropzone/DropZoneWidget';
+export * from './widgets/dropzone/DropZoneLayoutDividerWidget';
 export * from './widgets/tabs/TabButtonWidget';
 export * from './widgets/tabs/TabGroupWidget';
 

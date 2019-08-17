@@ -3,7 +3,7 @@ import { WorkspaceNodeModel } from '../models/node/WorkspaceNodeModel';
 import { WorkspaceEngine } from '../WorkspaceEngine';
 import { StandardLayoutWidget } from './layouts/StandardLayoutWidget';
 import { MicroLayoutWidget } from './layouts/MicroLayoutWidget';
-import { DraggableWidget } from './DraggableWidget';
+import { DraggableWidget } from './primitives/DraggableWidget';
 import styled from '@emotion/styled';
 import { css } from '@emotion/core';
 

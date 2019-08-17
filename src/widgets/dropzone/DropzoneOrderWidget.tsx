@@ -5,7 +5,7 @@ import { DropzoneDividerWidget } from './DropzoneDividerWidget';
 import { WorkspaceEngine } from '../../WorkspaceEngine';
 import { WorkspaceModel } from '../../models/WorkspaceModel';
 
-export interface DropZoneOrderWidgetProps {
+export interface DropzoneOrderWidgetProps {
 	vertical: boolean;
 	className?;
 	size?: number;
@@ -13,7 +13,7 @@ export interface DropZoneOrderWidgetProps {
 	dropped: (model: WorkspaceModel, index: number) => any;
 }
 
-export interface DropZoneOrderWidgetState {
+export interface DropzoneOrderWidgetState {
 	dragging: boolean;
 	draggingChild: { [index: string]: boolean };
 }
@@ -34,10 +34,10 @@ namespace S {
 	`;
 }
 
-export class DropZoneOrderWidget extends React.Component<DropZoneOrderWidgetProps, DropZoneOrderWidgetState> {
+export class DropzoneOrderWidget extends React.Component<DropzoneOrderWidgetProps, DropzoneOrderWidgetState> {
 	listener: any;
 
-	constructor(props: DropZoneOrderWidgetProps) {
+	constructor(props: DropzoneOrderWidgetProps) {
 		super(props);
 		this.state = {
 			dragging: false,

@@ -5,9 +5,9 @@ import { WorkspaceEngine } from '../../WorkspaceEngine';
 import { WorkspaceModel } from '../../models/WorkspaceModel';
 import styled from '@emotion/styled';
 import { css, keyframes } from '@emotion/core';
-import { DropzoneLogicWidget } from './DropzoneLogicWidget';
+import { DropzoneLogicWidget } from '../primitives/DropzoneLogicWidget';
 
-export interface DropZoneWidgetProps {
+export interface DropZoneLayoutDividerWidgetProps {
 	dropped?: (model: WorkspaceModel) => any;
 	hover?: (entered: boolean) => any;
 	engine: WorkspaceEngine;
@@ -15,7 +15,7 @@ export interface DropZoneWidgetProps {
 	vertical: boolean;
 }
 
-export interface DropZoneWidgetState {
+export interface DropZoneLayoutDividerWidgetState {
 	hoverActive: boolean;
 }
 
@@ -100,8 +100,8 @@ namespace S {
 	`;
 }
 
-export class DropZoneWidget extends React.Component<DropZoneWidgetProps, DropZoneWidgetState> {
-	constructor(props: DropZoneWidgetProps) {
+export class DropZoneLayoutDividerWidget extends React.Component<DropZoneLayoutDividerWidgetProps, DropZoneLayoutDividerWidgetState> {
+	constructor(props: DropZoneLayoutDividerWidgetProps) {
 		super(props);
 		this.state = {
 			hoverActive: false

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { DropZoneWidget } from '../dropzone/DropZoneWidget';
+import { DropZoneLayoutDividerWidget } from '../dropzone/DropZoneLayoutDividerWidget';
 import * as _ from 'lodash';
 import { WorkspaceModel } from '../../models/WorkspaceModel';
 import { WorkspaceEngine } from '../../WorkspaceEngine';
@@ -28,7 +28,7 @@ export class DirectionalLayoutWidget extends React.Component<DirectionalLayoutWi
 	render() {
 		return (
 			<S.Container className={this.props.className} expand={this.props.expand} vertical={this.props.vertical}>
-				<DropZoneWidget
+				<DropZoneLayoutDividerWidget
 					vertical={!this.props.vertical}
 					disallow={!this.props.dropZoneAllowed(0)}
 					dropped={model => {
@@ -41,7 +41,7 @@ export class DirectionalLayoutWidget extends React.Component<DirectionalLayoutWi
 					return (
 						<React.Fragment key={model.id}>
 							{this.props.generateElement(model)}
-							<DropZoneWidget
+							<DropZoneLayoutDividerWidget
 								vertical={!this.props.vertical}
 								disallow={!this.props.dropZoneAllowed(index + 1)}
 								dropped={droppedModel => {

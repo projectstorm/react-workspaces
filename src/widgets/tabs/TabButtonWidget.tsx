@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { DraggableWidget } from '../DraggableWidget';
+import { DraggableWidget } from '../primitives/DraggableWidget';
 import { WorkspaceTabbedModel } from '../../models/tabs/WorkspaceTabbedModel';
 import { WorkspaceEngine } from '../../WorkspaceEngine';
 import { WorkspacePanelFactory } from '../../WorkspacePanelFactory';
