@@ -1,9 +1,11 @@
+/** @jsx jsx */
+import { jsx } from '@emotion/core';
 import * as React from 'react';
-import { DraggableWidget } from './DraggableWidget';
-import { WorkspaceEngine } from '../WorkspaceEngine';
-import { WorkspaceModel } from '../models/WorkspaceModel';
-import styled from "@emotion/styled";
-import {css, keyframes} from "@emotion/core";
+import { WorkspaceEngine } from '../../WorkspaceEngine';
+import { WorkspaceModel } from '../../models/WorkspaceModel';
+import styled from '@emotion/styled';
+import { css, keyframes } from '@emotion/core';
+import { DropzoneLogicWidget } from './DropzoneLogicWidget';
 
 export interface DropZoneWidgetProps {
 	dropped?: (model: WorkspaceModel) => any;
@@ -19,7 +21,7 @@ export interface DropZoneWidgetState {
 
 const threshold = 2;
 
-namespace S{
+namespace S {
 	const fade = keyframes`
 		0% {
 			background: mediumpurple;
@@ -51,7 +53,7 @@ namespace S{
 		height: 100%;
 		width: 20px;
 		transform: translateX(-50%);
-		margin-left: ${threshold/2}px;
+		margin-left: ${threshold / 2}px;
 		background: linear-gradient(
 			90deg,
 			rgba(0, 192, 255, 0.2) 0%,
@@ -64,7 +66,7 @@ namespace S{
 		width: 100%;
 		height: 20px;
 		transform: translateY(-50%);
-		margin-top: ${threshold/2}px;
+		margin-top: ${threshold / 2}px;
 		background: linear-gradient(
 			180deg,
 			rgba(0, 192, 255, 0.2) 0%,
@@ -73,26 +75,30 @@ namespace S{
 		);
 	`;
 
-	export const Floating = styled.div<{active: boolean, vertical: boolean}>`
+	export const Floating = styled.div<{ active: boolean; vertical: boolean }>`
 		position: absolute;
 		opacity: 0;
 		z-index: 2;
 		${p => p.active && floatingActive};
-		${p => p.vertical ? floatingVertical : floatingHorizontal};
+		${p => (p.vertical ? floatingVertical : floatingHorizontal)};
 	`;
 
-	export const DropZone = styled.div<{hint: boolean, active: boolean}>`
+	export const Drop = css`
+		height: 100%;
+		width: 100%;
+	`;
+
+	export const DropZone = styled.div<{ hint: boolean; active: boolean }>`
 		transition: opacity 0.2s;
 		pointer-events: all;
 		min-width: ${threshold}px;
 		min-height: ${threshold}px;
-		background: rgba(mediumpurple, 0);
+		background: transparent;
 		position: relative;
 		${p => p.active && active};
 		${p => p.hint && hint};
-	`
+	`;
 }
-
 
 export class DropZoneWidget extends React.Component<DropZoneWidgetProps, DropZoneWidgetState> {
 	constructor(props: DropZoneWidgetProps) {
@@ -110,47 +116,26 @@ export class DropZoneWidget extends React.Component<DropZoneWidgetProps, DropZon
 			<S.Floating
 				active={this.state.hoverActive}
 				vertical={this.props.vertical}
-				onDrop={event => {
-					event.persist();
-					let data = event.dataTransfer.getData(WorkspaceEngine.namespaceMime(DraggableWidget.WORKSPACE_MIME));
-					try {
-						let object = JSON.parse(data);
-						const factory = this.props.engine.getFactory(object.type);
-						const draggingNode = factory.generateModel();
-						draggingNode.fromArray(object, this.props.engine);
-						this.props.dropped && this.props.dropped(draggingNode);
-					} catch (ex) {
-						console.log('could not restore draggable payload', ex);
-					}
-					this.setState({ hoverActive: false });
-					this.props.hover && this.props.hover(false);
-				}}
-				onDragOver={event => {
-					let found = false;
-					for (var i = 0; i < event.dataTransfer.types.length; ++i) {
-						// allow the effect
-						if (event.dataTransfer.types[i] === WorkspaceEngine.namespaceMime(DraggableWidget.WORKSPACE_MIME)) {
-							found = true;
-						}
-					}
-
-					if (!found) {
-						return;
-					}
-
-					event.preventDefault();
-					event.dataTransfer.dropEffect = 'move';
-
-					if (!this.state.hoverActive) {
-						this.setState({ hoverActive: true });
-						this.props.hover && this.props.hover(true);
-					}
-				}}
 				onDragLeave={() => {
 					this.setState({ hoverActive: false });
 					this.props.hover && this.props.hover(false);
-				}}
-			/>
+				}}>
+				<DropzoneLogicWidget
+					css={S.Drop}
+					engine={this.props.engine}
+					onDrop={model => {
+						this.props.dropped(model);
+						this.setState({
+							hoverActive: false
+						});
+					}}
+					onDragEnter={entered => {
+						this.setState({
+							hoverActive: entered
+						});
+					}}
+				/>
+			</S.Floating>
 		);
 	}
 
@@ -161,8 +146,7 @@ export class DropZoneWidget extends React.Component<DropZoneWidgetProps, DropZon
 				hint={!this.props.disallow && !this.state.hoverActive && !!this.props.engine.draggingID}
 				style={{
 					animationDelay: `${parseInt(`${Math.random() * 500}`)}ms`
-				}}
-			>
+				}}>
 				{this.getHover()}
 			</S.DropZone>
 		);

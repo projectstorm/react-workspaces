@@ -1,10 +1,8 @@
-import './sass/main.scss';
-
 export * from './widgets/PanelWidget';
 export * from './widgets/WorkspaceWidget';
 export * from './widgets/DraggableWidget';
 export * from './widgets/FloatingPanelWidget';
-export * from './widgets/DropZoneWidget';
+export * from './widgets/dropzone/DropZoneWidget';
 export * from './widgets/tabs/TabButtonWidget';
 export * from './widgets/tabs/TabGroupWidget';
 

@@ -1,16 +1,6 @@
-const webpack = require("webpack");
 const TerserPlugin = require('terser-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
 const production = process.env.NODE_ENV === 'production';
-
-var plugins = [];
-
-if(production){
-	console.log("creating production build");
-	plugins.push(new webpack.DefinePlugin({
-		'process.env.NODE_ENV': JSON.stringify('production')
-	}));
-}
 
 module.exports = {
 	entry: './src/main.ts',
@@ -23,12 +13,12 @@ module.exports = {
 	externals: [
 		nodeExternals(),
 	],
-	plugins:plugins,
 	module: {
 		rules: [
 			{
-				test: /\.scss$/,
-				loaders: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader']
+				enforce: "pre",
+				test: /\.js$/,
+				loader: "source-map-loader"
 			},
 			{
 				test: /\.tsx?$/,

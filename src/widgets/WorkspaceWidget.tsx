@@ -3,11 +3,10 @@ import { WorkspaceNodeModel } from '../models/node/WorkspaceNodeModel';
 import { WorkspaceEngine } from '../WorkspaceEngine';
 import { PanelWidget } from './PanelWidget';
 import * as PropTypes from 'prop-types';
-import { BaseWidget, BaseWidgetProps } from '@projectstorm/react-core';
 import { StandardLayoutWidget } from './layouts/StandardLayoutWidget';
-import styled from "@emotion/styled";
+import styled from '@emotion/styled';
 
-export interface WorkspaceWidgetProps extends BaseWidgetProps {
+export interface WorkspaceWidgetProps {
 	model: WorkspaceNodeModel;
 	engine: WorkspaceEngine;
 }
@@ -16,7 +15,7 @@ export interface WorkspaceWidgetContext {
 	workspace: WorkspaceWidget;
 }
 
-namespace S{
+namespace S {
 	export const Container = styled.div`
 		display: flex;
 		height: 100%;
@@ -31,7 +30,7 @@ namespace S{
 	`;
 }
 
-export class WorkspaceWidget extends BaseWidget<WorkspaceWidgetProps> {
+export class WorkspaceWidget extends React.Component<WorkspaceWidgetProps> {
 	listener: () => any;
 	timerListener: any;
 	floatingContainer: HTMLDivElement;
@@ -39,11 +38,6 @@ export class WorkspaceWidget extends BaseWidget<WorkspaceWidgetProps> {
 	static childContextTypes = {
 		workspace: PropTypes.any
 	};
-
-	constructor(props: WorkspaceWidgetProps) {
-		super('srw-workspace', props);
-		this.state = {};
-	}
 
 	componentDidMount() {
 		this.listener = this.props.engine.registerListener({
@@ -54,7 +48,7 @@ export class WorkspaceWidget extends BaseWidget<WorkspaceWidgetProps> {
 	}
 
 	componentDidUpdate(prevProps: Readonly<WorkspaceWidgetProps>, prevState: Readonly<any>, snapshot?: any): void {
-		if(this.props.engine.repainting){
+		if (this.props.engine.repainting) {
 			this.props.engine.repainting = false;
 		}
 		if (this.props.engine.fireModelUpdateEvent) {
@@ -88,7 +82,6 @@ export class WorkspaceWidget extends BaseWidget<WorkspaceWidgetProps> {
 	render() {
 		return (
 			<S.Container
-				{...this.getProps()}
 				onDragOver={event => {
 					if (this.timerListener) {
 						clearTimeout(this.timerListener);

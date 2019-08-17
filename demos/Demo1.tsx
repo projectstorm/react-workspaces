@@ -5,18 +5,23 @@ import {DefaultWorkspacePanelModel} from "./defaults/DefaultWorkspacePanelModel"
 import {WorkspaceEngine} from "../src/WorkspaceEngine";
 import {WorkspaceWidget} from "../src/widgets/WorkspaceWidget";
 import {WorkspaceTabbedModel} from "../src/models/tabs/WorkspaceTabbedModel";
-
-export interface Demo1Props {
-}
+import styled from "@emotion/styled";
 
 export interface Demo1State {
 	engine: WorkspaceEngine;
 	model: WorkspaceNodeModel;
 }
 
-export class Demo1 extends React.Component<Demo1Props, Demo1State> {
+namespace S{
+	export const Container = styled.div`
+		background: rgb(70,70,70);
+		height: 100%;
+	`;
+}
 
-	constructor(props: Demo1Props) {
+export class Demo1 extends React.Component<any,Demo1State> {
+
+	constructor(props) {
 		super(props);
 		let engine = new WorkspaceEngine();
 		engine.registerFactory(new DefaultWorkspacePanelFactory());
@@ -69,7 +74,9 @@ export class Demo1 extends React.Component<Demo1Props, Demo1State> {
 
 	render() {
 		return (
-			<WorkspaceWidget className="demo" engine={this.state.engine} model={this.state.model}/>
+			<S.Container>
+				<WorkspaceWidget className="demo" engine={this.state.engine} model={this.state.model}/>
+			</S.Container>
 		)
 	}
 }

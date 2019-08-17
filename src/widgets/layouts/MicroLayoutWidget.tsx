@@ -6,7 +6,7 @@ import { DraggableWidget } from '../DraggableWidget';
 import { FloatingPanelWidget } from '../FloatingPanelWidget';
 import * as PropTypes from 'prop-types';
 import { WorkspacePanelFactory } from '../../WorkspacePanelFactory';
-import styled from "@emotion/styled";
+import styled from '@emotion/styled';
 
 export interface MicroLayoutWidgetProps {
 	node: WorkspaceNodeModel;
@@ -14,12 +14,12 @@ export interface MicroLayoutWidgetProps {
 	className?;
 }
 
-namespace S{
+namespace S {
 	export const MicroLayout = styled.div`
 		display: flex;
 		flex-direction: column;
 		flex-grow: 1;
-	`
+	`;
 }
 
 export class MicroLayoutWidget extends React.Component<MicroLayoutWidgetProps> {

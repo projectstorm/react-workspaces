@@ -4,29 +4,28 @@ import { WorkspaceEngine } from '../WorkspaceEngine';
 import { StandardLayoutWidget } from './layouts/StandardLayoutWidget';
 import { MicroLayoutWidget } from './layouts/MicroLayoutWidget';
 import { DraggableWidget } from './DraggableWidget';
-import styled from "@emotion/styled";
-import {css} from "@emotion/core";
+import styled from '@emotion/styled';
+import { css } from '@emotion/core';
 
 export interface TrayWidgetProps {
 	node: WorkspaceNodeModel;
 	engine: WorkspaceEngine;
 }
 
-namespace S{
-	export const Container = styled.div<{expand: boolean}>`
+namespace S {
+	export const Container = styled.div<{ expand: boolean }>`
 		display: flex;
 		flex-direction: column;
 		position: relative;
-		flex-grow: ${p => p.expand ? 1 : 0};
+		flex-grow: ${p => (p.expand ? 1 : 0)};
 	`;
-	
+
 	export const Content = css`
 		flex-grow: 1;
 	`;
 }
 
 export class TrayWidget extends React.Component<TrayWidgetProps> {
-
 	getHeader() {
 		let header = this.props.engine.getTrayHeader(this.props.node);
 		if (header) {
@@ -47,7 +46,7 @@ export class TrayWidget extends React.Component<TrayWidgetProps> {
 				{this.props.node.mode === 'micro' ? (
 					<MicroLayoutWidget css={S.Content} node={this.props.node} engine={this.props.engine} />
 				) : (
-					<StandardLayoutWidget css={S.Content}  node={this.props.node} engine={this.props.engine} />
+					<StandardLayoutWidget css={S.Content} node={this.props.node} engine={this.props.engine} />
 				)}
 			</S.Container>
 		);

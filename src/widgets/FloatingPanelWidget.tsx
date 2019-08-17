@@ -4,7 +4,7 @@ import { PanelWidget } from './PanelWidget';
 import { WorkspaceEngine } from '../WorkspaceEngine';
 import * as PropTypes from 'prop-types';
 import { WorkspaceModel } from '../models/WorkspaceModel';
-import styled from "@emotion/styled";
+import styled from '@emotion/styled';
 
 export interface FloatingPanelWidgetProps {
 	model: WorkspaceModel;
@@ -12,12 +12,12 @@ export interface FloatingPanelWidgetProps {
 	relativeElement: HTMLDivElement;
 }
 
-namespace S{
+namespace S {
 	export const Container = styled.div`
 		position: absolute;
 		background-color: black;
 		pointer-events: all;
-		box-shadow: 0 0 10px rgba(0,0,0, 0.5);
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 		transition: top 0.3s, left 0.3s;
 	`;
 }

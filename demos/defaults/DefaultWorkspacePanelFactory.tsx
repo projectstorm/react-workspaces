@@ -1,6 +1,15 @@
-import {WorkspacePanelFactory} from "../../src/WorkspacePanelFactory";
+import {
+	GenerateEvent,
+	GenerateMicroButtonEvent,
+	GeneratePanelTabEvent,
+	WorkspacePanelFactory
+} from "../../src/WorkspacePanelFactory";
 import {DefaultWorkspacePanelModel} from "./DefaultWorkspacePanelModel";
 import * as React from "react";
+import {DefaultPanelTitleWidget} from "./widgets/DefaultPanelTitleWidget";
+import {DefaultPanelContentWidget} from "./widgets/DefaultPanelContentWidget";
+import {DefaultPanelMicroButtonWidget} from "./widgets/DefaultPanelMicroButtonWidget";
+import {DefaultPanelTabWidget} from "./widgets/DefaultPanelTabWidget";
 
 export class DefaultWorkspacePanelFactory extends WorkspacePanelFactory<DefaultWorkspacePanelModel> {
 
@@ -10,29 +19,25 @@ export class DefaultWorkspacePanelFactory extends WorkspacePanelFactory<DefaultW
 
 	generatePanelTitle(event): JSX.Element {
 		return (
-			<div className="srw-default__title">{event.model.displayName}</div>
+			<DefaultPanelTitleWidget title={event.model.displayName} />
 		);
 	}
 
-	generatePanelContent(event): JSX.Element {
+	generatePanelContent(event: GenerateEvent<DefaultWorkspacePanelModel>): JSX.Element {
 		return (
-			<div className="srw-default__content">
-				Content
-			</div>
+			<DefaultPanelContentWidget>Hello World: {event.model.displayName}</DefaultPanelContentWidget>
 		);
 	}
 
-	generatePanelTab(event): JSX.Element {
+	generatePanelTab(event: GeneratePanelTabEvent<DefaultWorkspacePanelModel>): JSX.Element {
 		return (
-			<div className={"srw-default__tab " + (event.selected ? "srw-default--selected" : '')}>{event.model.displayName}</div>
+			<DefaultPanelTabWidget name={event.model.displayName} selected={event.selected} />
 		);
 	}
 
-	generateMicroButton(event): JSX.Element {
+	generateMicroButton(event: GenerateMicroButtonEvent<DefaultWorkspacePanelModel>): JSX.Element {
 		return (
-			<div className={"srw-default__micro"+(event.selected?' srw-default--selected':'')}>
-				<div className={"fa "+event.model.icon} />
-			</div>
+			<DefaultPanelMicroButtonWidget selected={event.selected} icon={event.model.icon} />
 		)
 	}
 

@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { DropZoneWidget } from '../DropZoneWidget';
+import { DropZoneWidget } from '../dropzone/DropZoneWidget';
 import * as _ from 'lodash';
 import { WorkspaceModel } from '../../models/WorkspaceModel';
 import { WorkspaceEngine } from '../../WorkspaceEngine';
-import styled from "@emotion/styled";
+import styled from '@emotion/styled';
 
 export interface DirectionalLayoutWidgetProps {
 	vertical: boolean;
@@ -16,23 +16,18 @@ export interface DirectionalLayoutWidgetProps {
 	className?;
 }
 
-namespace S{
-	export const Container = styled.div<{expand: boolean, vertical: boolean}>`
+namespace S {
+	export const Container = styled.div<{ expand: boolean; vertical: boolean }>`
 		display: flex;
-		flex-grow: ${p => p.expand ? 1 : 0};
-		flex-direction: ${p => p.vertical ? 'column': 'row'};
+		flex-grow: ${p => (p.expand ? 1 : 0)};
+		flex-direction: ${p => (p.vertical ? 'column' : 'row')};
 	`;
 }
 
 export class DirectionalLayoutWidget extends React.Component<DirectionalLayoutWidgetProps> {
-
 	render() {
 		return (
-			<S.Container
-				className={this.props.className}
-				expand={this.props.expand}
-				vertical={this.props.vertical}
-				>
+			<S.Container className={this.props.className} expand={this.props.expand} vertical={this.props.vertical}>
 				<DropZoneWidget
 					vertical={!this.props.vertical}
 					disallow={!this.props.dropZoneAllowed(0)}

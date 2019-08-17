@@ -15,7 +15,6 @@ export interface StandardLayoutWidgetProps {
 }
 
 export class StandardLayoutWidget extends React.Component<StandardLayoutWidgetProps> {
-
 	generateElement(model: WorkspaceModel) {
 		if (model instanceof WorkspaceNodeModel) {
 			return <TrayWidget key={model.id} node={model} engine={this.props.engine} />;
@@ -60,7 +59,7 @@ export class StandardLayoutWidget extends React.Component<StandardLayoutWidgetPr
 	}
 
 	render() {
-		if(!this.props.node){
+		if (!this.props.node) {
 			return null;
 		}
 		return (

@@ -1,36 +1,32 @@
 const path = require('path');
-module.exports = {
-	module: {
-		rules: [
-			{
-				test: /\.scss$/,
-				loaders: ["style-loader", "css-loader", "sass-loader"],
-				include: path.resolve(__dirname, '../')
-			},
-			{
-				test: /\.css/,
-				loaders: ["style-loader", "css-loader"],
-				include: path.resolve(__dirname, '../')
-			},
-			{
-				enforce: 'pre',
-				test: /\.js$/,
-				loader: "source-map-loader",
-				exclude: [
-					/node_modules\//
+module.exports = async ({ config, mode }) => {
+	return {
+		...config,
+		resolve: {
+			...config.resolve,
+			extensions: ['.tsx', '.ts', '.js']
+		},
+		module: {
+			...config.module,
+			rules: [
+				...config.module.rules,
+				...[
+					{
+						enforce: 'pre',
+						test: /\.js$/,
+						loader: 'source-map-loader',
+						exclude: [/node_modules\//]
+					},
+					{
+						test: /\.tsx?$/,
+						exclude: /node_modules/,
+						loader: 'ts-loader',
+						options: {
+							transpileOnly: true
+						}
+					}
 				]
-			},
-			{
-				test: /\.tsx?$/,
-				loader: 'ts-loader',
-			},
-			{
-				test: /\.(woff|woff2|eot|ttf|otf|svg)$/,
-				loader: "file-loader"
-			}
-		]
-	},
-	resolve: {
-		extensions: [".js",".tsx", ".ts"]
-	}
+			]
+		}
+	};
 };
