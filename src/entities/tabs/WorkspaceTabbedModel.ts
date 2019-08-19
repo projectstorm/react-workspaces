@@ -3,7 +3,7 @@ import * as _ from 'lodash';
 import { WorkspaceModel } from '../../core-models/WorkspaceModel';
 
 export class WorkspaceTabbedModel extends WorkspaceCollectionModel<WorkspaceModel> {
-	selected: string;
+	protected selected: string;
 
 	static NAME = 'tabs';
 

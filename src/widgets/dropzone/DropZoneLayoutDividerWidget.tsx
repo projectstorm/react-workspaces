@@ -33,10 +33,11 @@ namespace S {
 	`;
 
 	const hint = css`
-		animation-name: ${fade};
-		animation-duration: 0.5s;
-		animation-iteration-count: infinite;
-		animation-direction: alternate-reverse;
+		// animation-name: ${fade};
+		// animation-duration: 0.5s;
+		// animation-iteration-count: infinite;
+		// animation-direction: alternate-reverse;
+		background: mediumpurple;
 	`;
 
 	const active = css`

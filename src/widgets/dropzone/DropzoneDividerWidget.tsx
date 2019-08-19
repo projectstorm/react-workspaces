@@ -26,23 +26,25 @@ namespace S {
 		position: relative;
 		transition: width ${animation}, height ${animation};
 		align-self: stretch;
+		background: mediumpurple;
 	`;
 
 	export const ContainerH = styled.div<{ enter: boolean; size: number }>`
 		${_Container};
 		width: ${p => (p.enter ? p.size : 0)}px;
+		flex-shrink: 0;
 	`;
 
 	export const ContainerV = styled.div<{ enter: boolean; size: number }>`
 		${_Container};
 		height: ${p => (p.enter ? p.size : 0)}px;
+		flex-shrink: 0;
 	`;
 
 	const _Overlay = css`
 		position: absolute;
 		z-index: 2;
 		transition: width ${animation}, height ${animation};
-		//border: solid 1px red;
 	`;
 
 	export const _Drop = css`
@@ -55,16 +57,14 @@ namespace S {
 		left: 50%;
 		transform: translateX(-50%);
 		width: ${p => (p.enter ? p.size * 2 : p.size)}px;
-		top: -20px;
-		bottom: -20px;
+		height: 100%;
 	`;
 
 	export const OverlayV = styled.div<{ enter: boolean; size: number }>`
 		${_Overlay};
 		top: 50%;
 		transform: translateY(-50%);
-		left: -20px;
-		right: -20px;
+		width: 100%;
 		height: ${p => (p.enter ? p.size * 2 : p.size)}px;
 	`;
 }

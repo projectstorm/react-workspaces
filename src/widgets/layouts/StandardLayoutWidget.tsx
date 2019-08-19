@@ -6,6 +6,7 @@ import { WorkspaceEngine } from '../../core/WorkspaceEngine';
 import { WorkspaceModel } from '../../core-models/WorkspaceModel';
 import { DirectionalLayoutWidget } from './DirectionalLayoutWidget';
 import { WorkspaceLayoutFactory } from '../../core/WorkspaceLayoutFactory';
+import { WorkspaceCollectionModel } from '../../core-models/WorkspaceCollectionModel';
 
 export interface StandardLayoutWidgetProps {
 	node: WorkspaceNodeModel;
@@ -14,53 +15,73 @@ export interface StandardLayoutWidgetProps {
 }
 
 export class StandardLayoutWidget extends React.Component<StandardLayoutWidgetProps> {
-	generateElement(model: WorkspaceModel) {
-		if (model instanceof WorkspaceNodeModel) {
-			return this.props.engine.getFactory<WorkspaceLayoutFactory>(model).generateLayout({
-				model: model,
-				engine: this.props.engine
-			});
-		} else if (model instanceof WorkspaceTabbedModel) {
-			return this.props.engine.getFactory<WorkspaceLayoutFactory>(model).generateLayout({
-				model: model,
-				engine: this.props.engine
-			});
-		} else if (!this.props.node.parent) {
-			return (
-				<DirectionalLayoutWidget
-					data={[model]}
-					generateElement={model => {
-						return <PanelWidget engine={this.props.engine} model={model} expand={true} />;
-					}}
-					expand={model.expandHorizontal}
-					engine={this.props.engine}
-					vertical={!this.props.node.vertical}
-					key={model.id}
-					dropped={(index, dropped) => {
-						let node = new WorkspaceNodeModel();
-						node.setVertical(true);
-						node.setExpand(model.expandHorizontal, true);
-						node.addModel(model);
-						node.addModel(dropped, index);
+	getWrapper(model: WorkspaceModel, vertical: boolean, getContent: (model: WorkspaceModel) => JSX.Element) {
+		return (
+			<DirectionalLayoutWidget
+				data={[model]}
+				generateElement={getContent}
+				expand={model.expandHorizontal}
+				engine={this.props.engine}
+				vertical={vertical}
+				key={model.id}
+				dropped={(index, dropped) => {
+					let node = new WorkspaceNodeModel();
+					node.setVertical(true);
+					node.setExpand(model.expandHorizontal, true);
+					node.addModel(model);
+					node.addModel(dropped, index);
 
-						this.props.node.replaceModel(model, node);
-						this.props.engine.fireModelUpdated();
-					}}
-					dropZoneAllowed={() => {
-						return true;
-					}}
-				/>
-			);
-		} else {
-			return (
-				<PanelWidget
-					key={model.id}
-					engine={this.props.engine}
-					model={model}
-					expand={this.props.node.vertical ? model.expandVertical : model.expandHorizontal}
-				/>
-			);
+					this.props.node.replaceModel(model, node);
+					this.props.engine.fireModelUpdated();
+				}}
+				dropZoneAllowed={() => {
+					return true;
+				}}
+			/>
+		);
+	}
+	generateElement(model: WorkspaceModel) {
+
+		if (model instanceof WorkspaceTabbedModel) {
+			if (!this.props.node.parent) {
+				return this.getWrapper(model, true, model => {
+					return this.props.engine.getFactory<WorkspaceLayoutFactory>(model).generateLayout({
+						model: model as any,
+						engine: this.props.engine
+					});
+				});
+			}
 		}
+
+		if (model instanceof WorkspaceCollectionModel) {
+			return this.props.engine.getFactory<WorkspaceLayoutFactory>(model).generateLayout({
+				model: model,
+				engine: this.props.engine
+			});
+		}
+
+		if (!this.props.node.parent) {
+			return this.getWrapper(model, !this.props.node.vertical, model => {
+				return (
+					<PanelWidget
+						key={model.id}
+						engine={this.props.engine}
+						model={model}
+						expand={true}
+					/>
+				);
+			});
+		}
+
+		return (
+			<PanelWidget
+				key={model.id}
+				engine={this.props.engine}
+				model={model}
+				expand={this.props.node.vertical ? model.expandVertical : model.expandHorizontal}
+			/>
+		);
+
 	}
 
 	render() {
@@ -74,7 +95,7 @@ export class StandardLayoutWidget extends React.Component<StandardLayoutWidgetPr
 				generateElement={model => {
 					return this.generateElement(model);
 				}}
-				expand={this.props.node.shouldExpand()}
+				expand={true}
 				dropZoneAllowed={index => {
 					return true;
 				}}

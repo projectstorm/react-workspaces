@@ -26,15 +26,14 @@ module.exports = {
 			},
 		]
 	},
-	devtool: production ? 'source-map' : 'cheap-module-source-map',
+	devtool: 'cheap-eval-source-map',
 	mode: production ? 'production' : 'development',
 	optimization: {
 		minimizer: [
 			new TerserPlugin({
 				parallel: true,
 				terserOptions: {
-					safari10: true,
-					ecma: 6
+					mangle: false
 				}
 			})
 		]

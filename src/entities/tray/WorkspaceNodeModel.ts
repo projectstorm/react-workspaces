@@ -13,7 +13,7 @@ export class WorkspaceNodeModel extends WorkspaceCollectionModel {
 
 	constructor() {
 		super(WorkspaceNodeModel.NAME);
-		this.vertical = false;
+		this.vertical = true;
 		this.mode = 'expand';
 		this.floatingModel = null;
 	}
