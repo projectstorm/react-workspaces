@@ -4,8 +4,8 @@ import { WorkspaceFactory } from './WorkspaceFactory';
 import { WorkspaceModel } from '../core-models/WorkspaceModel';
 import { WorkspaceEngineInterface } from './WorkspaceEngineInterface';
 import { uuid } from './tools';
-import {WorkspaceTabFactory} from "../entities/tabs/WorkspaceTabFactory";
-import {WorkspaceTrayFactory} from "../entities/tray/WorkspaceTrayFactory";
+import { WorkspaceTabFactory } from '../entities/tabs/WorkspaceTabFactory';
+import { WorkspaceTrayFactory } from '../entities/tray/WorkspaceTrayFactory';
 
 export interface WorkspaceEngineListener {
 	repaint?: () => any;
@@ -14,7 +14,6 @@ export interface WorkspaceEngineListener {
 }
 
 export class WorkspaceEngine implements WorkspaceEngineInterface {
-
 	// factories
 	factories: { [type: string]: WorkspaceFactory };
 	listeners: { [id: string]: WorkspaceEngineListener };

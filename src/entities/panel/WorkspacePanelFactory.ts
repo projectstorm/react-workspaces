@@ -1,4 +1,4 @@
-import {GenerateEvent, WorkspaceFactory} from '../../core/WorkspaceFactory';
+import { GenerateEvent, WorkspaceFactory } from '../../core/WorkspaceFactory';
 import { WorkspaceModel } from '../../core-models/WorkspaceModel';
 
 export interface GenerateMicroButtonEvent<T extends WorkspaceModel> extends GenerateEvent<T> {

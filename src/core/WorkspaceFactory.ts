@@ -1,5 +1,5 @@
 import { WorkspaceModel } from '../core-models/WorkspaceModel';
-import {WorkspaceEngine} from "./WorkspaceEngine";
+import { WorkspaceEngine } from './WorkspaceEngine';
 
 export interface GenerateEvent<T extends WorkspaceModel> {
 	engine: WorkspaceEngine;

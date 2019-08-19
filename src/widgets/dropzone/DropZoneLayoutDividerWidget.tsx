@@ -100,7 +100,10 @@ namespace S {
 	`;
 }
 
-export class DropZoneLayoutDividerWidget extends React.Component<DropZoneLayoutDividerWidgetProps, DropZoneLayoutDividerWidgetState> {
+export class DropZoneLayoutDividerWidget extends React.Component<
+	DropZoneLayoutDividerWidgetProps,
+	DropZoneLayoutDividerWidgetState
+> {
 	constructor(props: DropZoneLayoutDividerWidgetProps) {
 		super(props);
 		this.state = {

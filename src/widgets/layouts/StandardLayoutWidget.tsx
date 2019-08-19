@@ -5,7 +5,7 @@ import { PanelWidget } from '../../entities/panel/PanelWidget';
 import { WorkspaceEngine } from '../../core/WorkspaceEngine';
 import { WorkspaceModel } from '../../core-models/WorkspaceModel';
 import { DirectionalLayoutWidget } from './DirectionalLayoutWidget';
-import {WorkspaceLayoutFactory} from "../../core/WorkspaceLayoutFactory";
+import { WorkspaceLayoutFactory } from '../../core/WorkspaceLayoutFactory';
 
 export interface StandardLayoutWidgetProps {
 	node: WorkspaceNodeModel;
@@ -17,11 +17,13 @@ export class StandardLayoutWidget extends React.Component<StandardLayoutWidgetPr
 	generateElement(model: WorkspaceModel) {
 		if (model instanceof WorkspaceNodeModel) {
 			return this.props.engine.getFactory<WorkspaceLayoutFactory>(model).generateLayout({
-				model: model, engine: this.props.engine
+				model: model,
+				engine: this.props.engine
 			});
 		} else if (model instanceof WorkspaceTabbedModel) {
 			return this.props.engine.getFactory<WorkspaceLayoutFactory>(model).generateLayout({
-				model: model, engine: this.props.engine
+				model: model,
+				engine: this.props.engine
 			});
 		} else if (!this.props.node.parent) {
 			return (

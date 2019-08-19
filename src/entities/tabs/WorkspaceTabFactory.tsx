@@ -7,11 +7,10 @@ import * as _ from 'lodash';
 import { TabButtonWidget } from './TabButtonWidget';
 import { DropzoneOrderWidget } from '../../widgets/dropzone/DropzoneOrderWidget';
 
-export class WorkspaceTabFactory<
-	T extends WorkspaceTabbedModel = WorkspaceTabbedModel
-> extends WorkspaceLayoutFactory<T> {
-
-	constructor(){
+export class WorkspaceTabFactory<T extends WorkspaceTabbedModel = WorkspaceTabbedModel> extends WorkspaceLayoutFactory<
+	T
+> {
+	constructor() {
 		super(WorkspaceTabbedModel.NAME);
 	}
 
