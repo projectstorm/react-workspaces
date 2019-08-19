@@ -1,21 +1,21 @@
 import * as React from 'react';
-import { WorkspaceNodeModel } from './models/node/WorkspaceNodeModel';
 import { DragEvent } from 'react';
 import { WorkspaceFactory } from './WorkspaceFactory';
-import { WorkspaceModel } from './models/WorkspaceModel';
-import { WorkspaceNodeFactory } from './models/node/WorkspaceNodeFactory';
-import { WorkspaceTabbedFactory } from './models/tabs/WorkspaceTabbedFactory';
+import { WorkspaceModel } from '../core-models/WorkspaceModel';
 import { WorkspaceEngineInterface } from './WorkspaceEngineInterface';
 import { uuid } from './tools';
+import {WorkspaceTabFactory} from "../entities/tabs/WorkspaceTabFactory";
+import {WorkspaceTrayFactory} from "../entities/tray/WorkspaceTrayFactory";
 
 export interface WorkspaceEngineListener {
 	repaint?: () => any;
 	draggingElement?: (model: WorkspaceModel, dragging: boolean) => any;
-	generateTrayHeader?: (model: WorkspaceNodeModel) => JSX.Element;
 	modelUpdated?: () => any;
 }
 
 export class WorkspaceEngine implements WorkspaceEngineInterface {
+
+	// factories
 	factories: { [type: string]: WorkspaceFactory };
 	listeners: { [id: string]: WorkspaceEngineListener };
 	draggingID: string;
@@ -28,8 +28,8 @@ export class WorkspaceEngine implements WorkspaceEngineInterface {
 		this.listeners = {};
 		this.draggingID = null;
 		this.fullscreenModel = null;
-		this.registerFactory(new WorkspaceNodeFactory());
-		this.registerFactory(new WorkspaceTabbedFactory());
+		this.registerFactory(new WorkspaceTabFactory());
+		this.registerFactory(new WorkspaceTrayFactory());
 	}
 
 	setFullscreenModel(model: WorkspaceModel | null) {
@@ -64,18 +64,6 @@ export class WorkspaceEngine implements WorkspaceEngineInterface {
 		for (let i in this.listeners) {
 			cb(this.listeners[i]);
 		}
-	}
-
-	getTrayHeader(model: WorkspaceNodeModel): JSX.Element {
-		for (let i in this.listeners) {
-			if (this.listeners[i].generateTrayHeader) {
-				let element = this.listeners[i].generateTrayHeader(model);
-				if (element) {
-					return element;
-				}
-			}
-		}
-		return null;
 	}
 
 	getDropEventModelID(event: DragEvent): string {

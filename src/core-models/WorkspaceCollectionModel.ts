@@ -1,5 +1,5 @@
 import { WorkspaceModel, SerializedModel, WorkspaceModelListener } from './WorkspaceModel';
-import { WorkspaceEngine } from '../WorkspaceEngine';
+import { WorkspaceEngine } from '../core/WorkspaceEngine';
 import { WorkspaceCollectionInterface } from './WorkspaceCollectionInterface';
 
 export interface SerializedCollectionModel extends SerializedModel {

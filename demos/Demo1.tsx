@@ -1,11 +1,12 @@
 import * as React from "react";
 import {DefaultWorkspacePanelFactory} from "./defaults/DefaultWorkspacePanelFactory";
-import {WorkspaceNodeModel} from "../src/models/node/WorkspaceNodeModel";
+import {WorkspaceNodeModel} from "../src/entities/tray/WorkspaceNodeModel";
 import {DefaultWorkspacePanelModel} from "./defaults/DefaultWorkspacePanelModel";
-import {WorkspaceEngine} from "../src/WorkspaceEngine";
+import {WorkspaceEngine} from "../src/core/WorkspaceEngine";
 import {WorkspaceWidget} from "../src/widgets/WorkspaceWidget";
-import {WorkspaceTabbedModel} from "../src/models/tabs/WorkspaceTabbedModel";
+import {WorkspaceTabbedModel} from "../src/entities/tabs/WorkspaceTabbedModel";
 import styled from "@emotion/styled";
+import {DefaultTrayFactory} from "./defaults/DefaultTrayFactory";
 
 export interface Demo1State {
 	engine: WorkspaceEngine;
@@ -25,17 +26,7 @@ export class Demo1 extends React.Component<any,Demo1State> {
 		super(props);
 		let engine = new WorkspaceEngine();
 		engine.registerFactory(new DefaultWorkspacePanelFactory());
-		engine.registerListener({
-			generateTrayHeader: (model) => {
-				return (
-					<div className="demo-tray-header" onDoubleClick={() => {
-						model.setMode(model.mode === 'micro' ? 'expand' : 'micro');
-						engine.fireRepaintListeners();
-					}}>
-					</div>
-				)
-			}
-		});
+		engine.registerFactory(new DefaultTrayFactory());
 
 		let model = new WorkspaceNodeModel();
 		model

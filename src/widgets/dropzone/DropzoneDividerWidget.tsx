@@ -3,8 +3,8 @@ import { jsx } from '@emotion/core';
 import * as React from 'react';
 import styled from '@emotion/styled';
 import { css } from '@emotion/core';
-import { WorkspaceModel } from '../../models/WorkspaceModel';
-import { WorkspaceEngine } from '../../WorkspaceEngine';
+import { WorkspaceModel } from '../../core-models/WorkspaceModel';
+import { WorkspaceEngine } from '../../core/WorkspaceEngine';
 import { DropzoneLogicWidget } from '../primitives/DropzoneLogicWidget';
 
 export interface DropzoneDividerWidgetProps {

@@ -1,8 +1,8 @@
 import * as React from 'react';
 import styled from '@emotion/styled';
-import { WorkspaceEngine } from '../../WorkspaceEngine';
+import { WorkspaceEngine } from '../../core/WorkspaceEngine';
 import { DraggableWidget } from './DraggableWidget';
-import { WorkspaceModel } from '../../models/WorkspaceModel';
+import { WorkspaceModel } from '../../core-models/WorkspaceModel';
 
 export interface DropzoneLogicWidgetProps {
 	onDrop: (model?: WorkspaceModel) => any;

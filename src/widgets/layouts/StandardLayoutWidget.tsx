@@ -1,12 +1,11 @@
 import * as React from 'react';
-import { WorkspaceNodeModel } from '../../models/node/WorkspaceNodeModel';
-import { WorkspaceTabbedModel } from '../../models/tabs/WorkspaceTabbedModel';
-import { PanelWidget } from '../PanelWidget';
-import { TabGroupWidget } from '../tabs/TabGroupWidget';
-import { WorkspaceEngine } from '../../WorkspaceEngine';
-import { TrayWidget } from '../TrayWidget';
-import { WorkspaceModel } from '../../models/WorkspaceModel';
+import { WorkspaceNodeModel } from '../../entities/tray/WorkspaceNodeModel';
+import { WorkspaceTabbedModel } from '../../entities/tabs/WorkspaceTabbedModel';
+import { PanelWidget } from '../../entities/panel/PanelWidget';
+import { WorkspaceEngine } from '../../core/WorkspaceEngine';
+import { WorkspaceModel } from '../../core-models/WorkspaceModel';
 import { DirectionalLayoutWidget } from './DirectionalLayoutWidget';
+import {WorkspaceLayoutFactory} from "../../core/WorkspaceLayoutFactory";
 
 export interface StandardLayoutWidgetProps {
 	node: WorkspaceNodeModel;
@@ -17,9 +16,13 @@ export interface StandardLayoutWidgetProps {
 export class StandardLayoutWidget extends React.Component<StandardLayoutWidgetProps> {
 	generateElement(model: WorkspaceModel) {
 		if (model instanceof WorkspaceNodeModel) {
-			return <TrayWidget key={model.id} node={model} engine={this.props.engine} />;
+			return this.props.engine.getFactory<WorkspaceLayoutFactory>(model).generateLayout({
+				model: model, engine: this.props.engine
+			});
 		} else if (model instanceof WorkspaceTabbedModel) {
-			return <TabGroupWidget key={model.id} model={model} engine={this.props.engine} />;
+			return this.props.engine.getFactory<WorkspaceLayoutFactory>(model).generateLayout({
+				model: model, engine: this.props.engine
+			});
 		} else if (!this.props.node.parent) {
 			return (
 				<DirectionalLayoutWidget

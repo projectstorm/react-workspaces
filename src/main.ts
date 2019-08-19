@@ -1,23 +1,28 @@
-export * from './widgets/PanelWidget';
 export * from './widgets/WorkspaceWidget';
 export * from './widgets/primitives/DraggableWidget';
 export * from './widgets/FloatingPanelWidget';
 export * from './widgets/dropzone/DropZoneLayoutDividerWidget';
-export * from './widgets/tabs/TabButtonWidget';
-export * from './widgets/tabs/TabGroupWidget';
 
 export * from './widgets/layouts/MicroLayoutWidget';
 export * from './widgets/layouts/StandardLayoutWidget';
 
-export * from './models/node/WorkspaceNodeModel';
-export * from './models/node/WorkspaceNodeFactory';
+export * from './entities/panel/WorkspacePanelFactory';
+export * from './entities/panel/PanelWidget';
 
-export * from './models/WorkspaceCollectionModel';
-export * from './models/tabs/WorkspaceTabbedModel';
-export * from './models/WorkspaceModel';
+export * from './entities/tray/WorkspaceNodeModel';
+export * from './entities/tray/WorkspaceTrayFactory';
 
-export * from './WorkspaceEngine';
-export * from './WorkspacePanelFactory';
+export * from './entities/tabs/WorkspaceTabbedModel';
+export * from './entities/tabs/WorkspaceTabFactory';
+export * from './entities/tabs/TabButtonWidget';
+export * from './entities/tabs/TabGroupWidget';
+
+export * from './core-models/WorkspaceCollectionModel';
+export * from './core-models/WorkspaceModel';
+
+export * from './core/WorkspaceEngine';
+export * from './core/WorkspaceLayoutFactory';
+export * from './core/WorkspaceFactory';
 
 export * from '../demos/defaults/DefaultWorkspacePanelModel';
 export * from '../demos/defaults/DefaultWorkspacePanelFactory';

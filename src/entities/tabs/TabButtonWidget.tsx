@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { DraggableWidget } from '../primitives/DraggableWidget';
-import { WorkspaceTabbedModel } from '../../models/tabs/WorkspaceTabbedModel';
-import { WorkspaceEngine } from '../../WorkspaceEngine';
-import { WorkspacePanelFactory } from '../../WorkspacePanelFactory';
-import { WorkspaceModel } from '../../models/WorkspaceModel';
+import { DraggableWidget } from '../../widgets/primitives/DraggableWidget';
+import { WorkspaceTabbedModel } from './WorkspaceTabbedModel';
+import { WorkspaceEngine } from '../../core/WorkspaceEngine';
+import { WorkspacePanelFactory } from '../panel/WorkspacePanelFactory';
+import { WorkspaceModel } from '../../core-models/WorkspaceModel';
 
 export interface TabButtonWidgetProps {
 	model: WorkspaceModel;

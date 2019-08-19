@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { WorkspaceEngine } from '../WorkspaceEngine';
-import { DraggableWidget } from './primitives/DraggableWidget';
-import { WorkspacePanelFactory } from '../WorkspacePanelFactory';
-import { WorkspaceModel } from '../models/WorkspaceModel';
+import { WorkspaceEngine } from '../../core/WorkspaceEngine';
+import { DraggableWidget } from '../../widgets/primitives/DraggableWidget';
+import { WorkspacePanelFactory } from './WorkspacePanelFactory';
+import { WorkspaceModel } from '../../core-models/WorkspaceModel';
 import styled from '@emotion/styled';
-import { PerformanceWidget } from './PerformanceWidget';
+import { PerformanceWidget } from '../../widgets/PerformanceWidget';
 
 export interface PanelWidgetProps {
 	model: WorkspaceModel;

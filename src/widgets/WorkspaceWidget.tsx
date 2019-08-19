@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { WorkspaceNodeModel } from '../models/node/WorkspaceNodeModel';
-import { WorkspaceEngine } from '../WorkspaceEngine';
-import { PanelWidget } from './PanelWidget';
+import { WorkspaceNodeModel } from '../entities/tray/WorkspaceNodeModel';
+import { WorkspaceEngine } from '../core/WorkspaceEngine';
+import { PanelWidget } from '../entities/panel/PanelWidget';
 import * as PropTypes from 'prop-types';
 import { StandardLayoutWidget } from './layouts/StandardLayoutWidget';
 import styled from '@emotion/styled';

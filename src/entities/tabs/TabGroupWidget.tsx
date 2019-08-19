@@ -1,19 +1,17 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
 import * as React from 'react';
-import * as _ from 'lodash';
-import { WorkspaceTabbedModel } from '../../models/tabs/WorkspaceTabbedModel';
-import { WorkspaceEngine } from '../../WorkspaceEngine';
-import { TabButtonWidget } from './TabButtonWidget';
-import { WorkspacePanelFactory } from '../../WorkspacePanelFactory';
+import { WorkspaceTabbedModel } from './WorkspaceTabbedModel';
+import { WorkspaceEngine } from '../../core/WorkspaceEngine';
+import { WorkspacePanelFactory } from '../panel/WorkspacePanelFactory';
 import styled from '@emotion/styled';
-import { DraggableWidget } from '../primitives/DraggableWidget';
+import { DraggableWidget } from '../../widgets/primitives/DraggableWidget';
 import { css } from '@emotion/core';
-import { DropzoneOrderWidget } from '../dropzone/DropzoneOrderWidget';
 
 export interface TabGroupWidgetProps {
 	model: WorkspaceTabbedModel;
 	engine: WorkspaceEngine;
+	tabs: JSX.Element;
 }
 
 namespace S {
@@ -44,17 +42,7 @@ export class TabGroupWidget extends React.Component<TabGroupWidgetProps> {
 		return (
 			<S.Container>
 				<DraggableWidget css={S.Tabs} engine={this.props.engine} model={this.props.model}>
-					<DropzoneOrderWidget
-						size={50}
-						engine={this.props.engine}
-						vertical={false}
-						dropped={(element, index) => {
-							this.props.model.addModel(element, index);
-						}}>
-						{_.map(this.props.model.children, child => {
-							return <TabButtonWidget model={child} engine={this.props.engine} key={child.id} />;
-						})}
-					</DropzoneOrderWidget>
+					{this.props.tabs}
 				</DraggableWidget>
 				<S.Content>
 					{selectedFactory.generatePanelContent({

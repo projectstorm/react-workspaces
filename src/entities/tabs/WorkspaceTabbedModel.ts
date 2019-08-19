@@ -1,6 +1,6 @@
-import { WorkspaceCollectionModel } from '../WorkspaceCollectionModel';
+import { WorkspaceCollectionModel } from '../../core-models/WorkspaceCollectionModel';
 import * as _ from 'lodash';
-import { WorkspaceModel } from '../WorkspaceModel';
+import { WorkspaceModel } from '../../core-models/WorkspaceModel';
 
 export class WorkspaceTabbedModel extends WorkspaceCollectionModel<WorkspaceModel> {
 	selected: string;

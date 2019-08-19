@@ -1,15 +1,15 @@
 import {
-	GenerateEvent,
 	GenerateMicroButtonEvent,
 	GeneratePanelTabEvent,
 	WorkspacePanelFactory
-} from "../../src/WorkspacePanelFactory";
+} from "../../src/entities/panel/WorkspacePanelFactory";
 import {DefaultWorkspacePanelModel} from "./DefaultWorkspacePanelModel";
 import * as React from "react";
 import {DefaultPanelTitleWidget} from "./widgets/DefaultPanelTitleWidget";
 import {DefaultPanelContentWidget} from "./widgets/DefaultPanelContentWidget";
 import {DefaultPanelMicroButtonWidget} from "./widgets/DefaultPanelMicroButtonWidget";
 import {DefaultPanelTabWidget} from "./widgets/DefaultPanelTabWidget";
+import {GenerateEvent} from "../../src/core/WorkspaceFactory";
 
 export class DefaultWorkspacePanelFactory extends WorkspacePanelFactory<DefaultWorkspacePanelModel> {
 

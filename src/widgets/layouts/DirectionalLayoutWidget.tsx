@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { DropZoneLayoutDividerWidget } from '../dropzone/DropZoneLayoutDividerWidget';
 import * as _ from 'lodash';
-import { WorkspaceModel } from '../../models/WorkspaceModel';
-import { WorkspaceEngine } from '../../WorkspaceEngine';
+import { WorkspaceModel } from '../../core-models/WorkspaceModel';
+import { WorkspaceEngine } from '../../core/WorkspaceEngine';
 import styled from '@emotion/styled';
 
 export interface DirectionalLayoutWidgetProps {

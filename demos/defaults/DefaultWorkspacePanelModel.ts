@@ -1,5 +1,5 @@
-import { WorkspaceModel } from '../../src/models/WorkspaceModel';
-import { WorkspaceEngine } from '../../src/WorkspaceEngine';
+import { WorkspaceModel } from '../../src/core-models/WorkspaceModel';
+import { WorkspaceEngine } from '../../src/core/WorkspaceEngine';
 import { IconName } from '@fortawesome/free-solid-svg-icons';
 
 export class DefaultWorkspacePanelModel extends WorkspaceModel {

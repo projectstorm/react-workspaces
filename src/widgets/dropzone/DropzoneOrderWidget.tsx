@@ -2,8 +2,8 @@ import * as React from 'react';
 import * as _ from 'lodash';
 import styled from '@emotion/styled';
 import { DropzoneDividerWidget } from './DropzoneDividerWidget';
-import { WorkspaceEngine } from '../../WorkspaceEngine';
-import { WorkspaceModel } from '../../models/WorkspaceModel';
+import { WorkspaceEngine } from '../../core/WorkspaceEngine';
+import { WorkspaceModel } from '../../core-models/WorkspaceModel';
 
 export interface DropzoneOrderWidgetProps {
 	vertical: boolean;

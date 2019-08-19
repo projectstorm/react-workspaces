@@ -1,6 +1,6 @@
-import { WorkspaceCollectionModel } from '../WorkspaceCollectionModel';
-import { WorkspaceEngine } from '../../WorkspaceEngine';
-import { WorkspaceModel } from '../WorkspaceModel';
+import { WorkspaceCollectionModel } from '../../core-models/WorkspaceCollectionModel';
+import { WorkspaceEngine } from '../../core/WorkspaceEngine';
+import { WorkspaceModel } from '../../core-models/WorkspaceModel';
 
 export type WorkspaceNodeModelMode = 'expand' | 'micro';
 

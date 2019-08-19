@@ -1,5 +1,5 @@
-import { WorkspaceEngineInterface } from '../WorkspaceEngineInterface';
-import { uuid } from '../tools';
+import { WorkspaceEngineInterface } from '../core/WorkspaceEngineInterface';
+import { uuid } from '../core/tools';
 import { WorkspaceCollectionInterface } from './WorkspaceCollectionInterface';
 
 export interface SerializedModel {

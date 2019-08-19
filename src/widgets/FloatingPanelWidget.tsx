@@ -1,9 +1,9 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { PanelWidget } from './PanelWidget';
-import { WorkspaceEngine } from '../WorkspaceEngine';
+import { PanelWidget } from '../entities/panel/PanelWidget';
+import { WorkspaceEngine } from '../core/WorkspaceEngine';
 import * as PropTypes from 'prop-types';
-import { WorkspaceModel } from '../models/WorkspaceModel';
+import { WorkspaceModel } from '../core-models/WorkspaceModel';
 import styled from '@emotion/styled';
 
 export interface FloatingPanelWidgetProps {

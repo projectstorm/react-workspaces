@@ -1,11 +1,11 @@
 import * as React from 'react';
 import * as _ from 'lodash';
-import { WorkspaceNodeModel } from '../../models/node/WorkspaceNodeModel';
-import { WorkspaceEngine } from '../../WorkspaceEngine';
+import { WorkspaceNodeModel } from '../../entities/tray/WorkspaceNodeModel';
+import { WorkspaceEngine } from '../../core/WorkspaceEngine';
 import { DraggableWidget } from '../primitives/DraggableWidget';
 import { FloatingPanelWidget } from '../FloatingPanelWidget';
 import * as PropTypes from 'prop-types';
-import { WorkspacePanelFactory } from '../../WorkspacePanelFactory';
+import { WorkspacePanelFactory } from '../../entities/panel/WorkspacePanelFactory';
 import styled from '@emotion/styled';
 
 export interface MicroLayoutWidgetProps {

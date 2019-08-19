@@ -1,15 +1,16 @@
 import * as React from 'react';
-import { WorkspaceNodeModel } from '../models/node/WorkspaceNodeModel';
-import { WorkspaceEngine } from '../WorkspaceEngine';
-import { StandardLayoutWidget } from './layouts/StandardLayoutWidget';
-import { MicroLayoutWidget } from './layouts/MicroLayoutWidget';
-import { DraggableWidget } from './primitives/DraggableWidget';
+import { WorkspaceNodeModel } from './WorkspaceNodeModel';
+import { WorkspaceEngine } from '../../core/WorkspaceEngine';
+import { StandardLayoutWidget } from '../../widgets/layouts/StandardLayoutWidget';
+import { MicroLayoutWidget } from '../../widgets/layouts/MicroLayoutWidget';
+import { DraggableWidget } from '../../widgets/primitives/DraggableWidget';
 import styled from '@emotion/styled';
 import { css } from '@emotion/core';
 
 export interface TrayWidgetProps {
 	node: WorkspaceNodeModel;
 	engine: WorkspaceEngine;
+	header: JSX.Element;
 }
 
 namespace S {
@@ -27,15 +28,11 @@ namespace S {
 
 export class TrayWidget extends React.Component<TrayWidgetProps> {
 	getHeader() {
-		let header = this.props.engine.getTrayHeader(this.props.node);
-		if (header) {
-			return (
-				<DraggableWidget model={this.props.node} engine={this.props.engine}>
-					{header}
-				</DraggableWidget>
-			);
-		}
-		return null;
+		return (
+			<DraggableWidget model={this.props.node} engine={this.props.engine}>
+				{this.props.header}
+			</DraggableWidget>
+		);
 	}
 
 	render() {

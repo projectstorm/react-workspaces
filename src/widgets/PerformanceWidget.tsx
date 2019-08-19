@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as _ from 'lodash';
-import { WorkspaceEngine } from '../WorkspaceEngine';
+import { WorkspaceEngine } from '../core/WorkspaceEngine';
 
 export interface PerformanceWidgetProps {
 	data: object;
