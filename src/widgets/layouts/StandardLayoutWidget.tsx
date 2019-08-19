@@ -41,7 +41,6 @@ export class StandardLayoutWidget extends React.Component<StandardLayoutWidgetPr
 		);
 	}
 	generateElement(model: WorkspaceModel) {
-
 		if (model instanceof WorkspaceTabbedModel) {
 			if (!this.props.node.parent) {
 				return this.getWrapper(model, true, model => {
@@ -62,14 +61,7 @@ export class StandardLayoutWidget extends React.Component<StandardLayoutWidgetPr
 
 		if (!this.props.node.parent) {
 			return this.getWrapper(model, !this.props.node.vertical, model => {
-				return (
-					<PanelWidget
-						key={model.id}
-						engine={this.props.engine}
-						model={model}
-						expand={true}
-					/>
-				);
+				return <PanelWidget key={model.id} engine={this.props.engine} model={model} expand={true} />;
 			});
 		}
 
@@ -81,7 +73,6 @@ export class StandardLayoutWidget extends React.Component<StandardLayoutWidgetPr
 				expand={this.props.node.vertical ? model.expandVertical : model.expandHorizontal}
 			/>
 		);
-
 	}
 
 	render() {
