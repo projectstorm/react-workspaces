@@ -21,6 +21,7 @@ export interface DropzoneOrderWidgetState {
 namespace S {
 	export const Container = styled.div<{ vertical: boolean }>`
 		display: flex;
+		overflow-x: scroll;
 		flex-direction: ${p => (p.vertical ? 'column' : 'row')};
 	`;
 
