@@ -19,6 +19,7 @@ namespace S {
 		flex-direction: column;
 		position: relative;
 		flex-grow: ${p => (p.expand ? 1 : 0)};
+		${p => p.expand && `width: 50%`};
 	`;
 
 	export const Content = css`

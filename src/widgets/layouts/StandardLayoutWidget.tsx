@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from '@emotion/core';
 import * as React from 'react';
 import { WorkspaceNodeModel } from '../../entities/tray/WorkspaceNodeModel';
 import { WorkspaceTabbedModel } from '../../entities/tabs/WorkspaceTabbedModel';
@@ -7,11 +9,18 @@ import { WorkspaceModel } from '../../core-models/WorkspaceModel';
 import { DirectionalLayoutWidget } from './DirectionalLayoutWidget';
 import { WorkspaceLayoutFactory } from '../../core/WorkspaceLayoutFactory';
 import { WorkspaceCollectionModel } from '../../core-models/WorkspaceCollectionModel';
+import { css } from '@emotion/core';
 
 export interface StandardLayoutWidgetProps {
 	node: WorkspaceNodeModel;
 	engine: WorkspaceEngine;
 	className?;
+}
+
+namespace S {
+	export const ExpandWidth = css`
+		width: 50%;
+	`;
 }
 
 export class StandardLayoutWidget extends React.Component<StandardLayoutWidgetProps> {
@@ -24,6 +33,7 @@ export class StandardLayoutWidget extends React.Component<StandardLayoutWidgetPr
 				engine={this.props.engine}
 				vertical={vertical}
 				key={model.id}
+				css={[!this.props.node.vertical && model.expandHorizontal && S.ExpandWidth]}
 				dropped={(index, dropped) => {
 					let node = new WorkspaceNodeModel();
 					node.setVertical(true);

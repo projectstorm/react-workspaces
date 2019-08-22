@@ -23,14 +23,14 @@ namespace S {
 		display: flex;
 		overflow-x: scroll;
 		flex-direction: ${p => (p.vertical ? 'column' : 'row')};
-		
+
 		::-webkit-scrollbar {
-      width: 0;
-      height: 0;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: rgba(0,0,0,0);
-    }
+			width: 0;
+			height: 0;
+		}
+		::-webkit-scrollbar-thumb {
+			background: rgba(0, 0, 0, 0);
+		}
 	`;
 
 	export const EmptyPlaceholderV = styled.div<{ size: number }>`
