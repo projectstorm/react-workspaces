@@ -8,6 +8,7 @@ export interface DraggableWidgetProps {
 	model: WorkspaceModel;
 	className?: string;
 	onClick?: () => any;
+	forwardRef?: React.RefObject<HTMLDivElement>;
 }
 
 namespace S {
@@ -22,6 +23,7 @@ export class DraggableWidget extends React.Component<DraggableWidgetProps> {
 	render() {
 		return (
 			<S.Draggable
+				ref={this.props.forwardRef}
 				draggable={true}
 				onDragStart={event => {
 					event.stopPropagation();

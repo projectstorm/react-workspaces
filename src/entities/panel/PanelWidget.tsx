@@ -17,7 +17,7 @@ namespace S {
 		display: flex;
 		flex-direction: column;
 		position: relative;
-		flex-shrink: 1;
+		flex-shrink: ${p => (p.expand ? 1 : 0)};
 		flex-grow: ${p => (p.expand ? 1 : 0)};
 		max-height: 100%;
 		overflow: hidden;
