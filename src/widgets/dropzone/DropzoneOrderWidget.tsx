@@ -89,9 +89,9 @@ export class DropzoneOrderWidget extends React.Component<DropzoneOrderWidgetProp
 		const children = React.Children.toArray(this.props.children);
 
 		return [this.getDivider(0)].concat(
-			_.map(children, (child, index) => {
+			_.map(children, (child: JSX.Element, index) => {
 				return (
-					<React.Fragment>
+					<React.Fragment child={child.key}>
 						{child}
 						{this.getDivider(index + 1)}
 					</React.Fragment>
