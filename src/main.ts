@@ -11,6 +11,7 @@ export * from './entities/panel/PanelWidget';
 
 export * from './entities/tray/WorkspaceNodeModel';
 export * from './entities/tray/WorkspaceTrayFactory';
+export * from './entities/tray/TrayWidget';
 
 export * from './entities/tabs/WorkspaceTabbedModel';
 export * from './entities/tabs/WorkspaceTabFactory';
