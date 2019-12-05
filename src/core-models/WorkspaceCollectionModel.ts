@@ -7,10 +7,14 @@ export interface SerializedCollectionModel extends SerializedModel {
 	type: string;
 }
 
+export interface WorkspaceCollectionModelListener extends WorkspaceModelListener {
+	childRemoved?: (node: WorkspaceModel) => any;
+}
+
 export class WorkspaceCollectionModel<
 	T extends WorkspaceModel<SerializedModel> = WorkspaceModel<SerializedModel>,
 	S extends SerializedCollectionModel = SerializedCollectionModel
-> extends WorkspaceModel<S> implements WorkspaceCollectionInterface {
+> extends WorkspaceModel<S, WorkspaceCollectionModelListener> implements WorkspaceCollectionInterface {
 	children: T[];
 	childrenListeners: { [id: string]: () => any };
 
@@ -96,6 +100,11 @@ export class WorkspaceCollectionModel<
 		this.childrenListeners[model.id] = model.registerListener({
 			removed: () => {
 				this.removeModel(model);
+				this.itterateListeners(list => {
+					if (list.childRemoved) {
+						list.childRemoved(model);
+					}
+				});
 			}
 		});
 

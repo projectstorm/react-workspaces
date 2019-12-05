@@ -34,10 +34,18 @@ export class WorkspaceModel<
 		this.listeners = {};
 	}
 
-	fireNodeRemoved(node: WorkspaceModel) {
+	itterateListeners(cb: (listener: L) => any) {
 		for (let id in this.listeners) {
-			this.listeners[id].removed && this.listeners[id].removed(node);
+			cb(this.listeners[id]);
 		}
+	}
+
+	fireNodeRemoved(node: WorkspaceModel) {
+		this.itterateListeners(list => {
+			if (list.removed) {
+				list.removed(node);
+			}
+		});
 	}
 
 	registerListener(listener: L) {
