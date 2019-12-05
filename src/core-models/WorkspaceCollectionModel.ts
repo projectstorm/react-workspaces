@@ -87,7 +87,7 @@ export class WorkspaceCollectionModel<
 			return this;
 		}
 		this.children.splice(index, 1);
-		if (fire && this.children.length === 0) {
+		if (this.parent && fire && this.children.length === 0) {
 			this.parent.removeModel(this);
 		}
 		return this;

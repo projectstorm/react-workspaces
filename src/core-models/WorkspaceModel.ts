@@ -10,7 +10,7 @@ export interface SerializedModel {
 }
 
 export interface WorkspaceModelListener {
-	removed: (node: WorkspaceModel) => any;
+	removed?: (node: WorkspaceModel) => any;
 }
 
 export class WorkspaceModel<
