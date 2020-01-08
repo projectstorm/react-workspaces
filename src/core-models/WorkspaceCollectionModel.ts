@@ -1,6 +1,7 @@
 import { WorkspaceModel, SerializedModel, WorkspaceModelListener } from './WorkspaceModel';
 import { WorkspaceEngine } from '../core/WorkspaceEngine';
 import { WorkspaceCollectionInterface } from './WorkspaceCollectionInterface';
+import { WorkspaceFactory } from '../core/WorkspaceFactory';
 
 export interface SerializedCollectionModel extends SerializedModel {
 	children: SerializedModel[];
@@ -27,8 +28,14 @@ export class WorkspaceCollectionModel<
 	fromArray(payload: S, engine: WorkspaceEngine) {
 		super.fromArray(payload, engine);
 		for (let child of payload.children) {
-			let model: any = engine.getFactory(child.type).generateModel();
+			let factory: WorkspaceFactory;
+			try {
+				factory = engine.getFactory(child.type);
+			} catch (ex) {
+				continue;
+			}
 
+			let model: any = factory.generateModel();
 			model.fromArray(child, engine);
 			this.addModel(model);
 		}
@@ -101,6 +108,7 @@ export class WorkspaceCollectionModel<
 			removed: () => {
 				this.removeModel(model);
 				this.itterateListeners(list => {
+					console.log(list);
 					if (list.childRemoved) {
 						list.childRemoved(model);
 					}

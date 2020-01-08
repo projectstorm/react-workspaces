@@ -13,6 +13,15 @@ export interface WorkspaceEngineListener {
 	modelUpdated?: () => any;
 }
 
+class WorkspaceEngineError extends Error {
+	public _is__storm_workspaces_error_: true;
+
+	constructor(m: string) {
+		super(m);
+		Object.setPrototypeOf(this, WorkspaceEngineError.prototype);
+	}
+}
+
 export class WorkspaceEngine implements WorkspaceEngineInterface {
 	// factories
 	factories: { [type: string]: WorkspaceFactory };
@@ -90,7 +99,7 @@ export class WorkspaceEngine implements WorkspaceEngineInterface {
 			model = model.type;
 		}
 		if (!this.factories[model]) {
-			throw 'Cannot find Workspace factory for model with type: [' + model + ']';
+			throw new WorkspaceEngineError('Cannot find Workspace factory for model with type: [' + model + ']');
 		}
 		return this.factories[model] as T;
 	}
