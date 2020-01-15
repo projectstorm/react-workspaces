@@ -144,6 +144,10 @@ export class DropZoneLayoutDividerWidget extends React.Component<
 	}
 
 	render() {
+		// if drag and drop is not enabled, return null here
+		if (!this.props.engine.dragAndDropEnabled) {
+			return null;
+		}
 		return (
 			<S.DropZone
 				active={!this.props.disallow && this.state.hoverActive}

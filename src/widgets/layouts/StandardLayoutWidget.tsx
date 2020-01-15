@@ -24,7 +24,7 @@ namespace S {
 }
 
 export class StandardLayoutWidget extends React.Component<StandardLayoutWidgetProps> {
-	getWrapper(model: WorkspaceModel, vertical: boolean, getContent: (model: WorkspaceModel) => JSX.Element) {
+	getWrapper<T extends WorkspaceModel>(model: T, vertical: boolean, getContent: (model: T) => JSX.Element) {
 		return (
 			<DirectionalLayoutWidget
 				data={[model]}

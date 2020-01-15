@@ -13,7 +13,7 @@ export interface WorkspaceEngineListener {
 	modelUpdated?: () => any;
 }
 
-class WorkspaceEngineError extends Error {
+export class WorkspaceEngineError extends Error {
 	public _is__storm_workspaces_error_: true;
 
 	constructor(m: string) {
@@ -30,14 +30,21 @@ export class WorkspaceEngine implements WorkspaceEngineInterface {
 	fullscreenModel: WorkspaceModel;
 	fireModelUpdateEvent: boolean;
 	repainting: boolean;
+	dragAndDropEnabled: boolean;
 
 	constructor() {
 		this.factories = {};
 		this.listeners = {};
 		this.draggingID = null;
 		this.fullscreenModel = null;
+		this.dragAndDropEnabled = true;
 		this.registerFactory(new WorkspaceTabFactory());
 		this.registerFactory(new WorkspaceTrayFactory());
+	}
+
+	setDragAndDropEnabled(drag: boolean = true) {
+		this.dragAndDropEnabled = drag;
+		this.fireRepaintListeners();
 	}
 
 	setFullscreenModel(model: WorkspaceModel | null) {

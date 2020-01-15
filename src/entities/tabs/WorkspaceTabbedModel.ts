@@ -14,7 +14,7 @@ export class WorkspaceTabbedModel extends WorkspaceCollectionModel<WorkspaceMode
 
 	addModel(model: WorkspaceModel, position: number = null): this {
 		super.addModel(model, position);
-		this.selected = this.selected || model.id;
+		this.selected = model.id;
 		return this;
 	}
 

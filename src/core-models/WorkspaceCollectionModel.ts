@@ -2,6 +2,7 @@ import { WorkspaceModel, SerializedModel, WorkspaceModelListener } from './Works
 import { WorkspaceEngine } from '../core/WorkspaceEngine';
 import { WorkspaceCollectionInterface } from './WorkspaceCollectionInterface';
 import { WorkspaceFactory } from '../core/WorkspaceFactory';
+import * as _ from 'lodash';
 
 export interface SerializedCollectionModel extends SerializedModel {
 	children: SerializedModel[];
@@ -72,7 +73,7 @@ export class WorkspaceCollectionModel<
 
 	replaceModel(oldModel: T, newModel): this {
 		let index = this.children.indexOf(oldModel);
-		this.removeModel(oldModel, false);
+		this.removeModel(oldModel);
 		this.addModel(newModel, index);
 		return this;
 	}
@@ -87,20 +88,30 @@ export class WorkspaceCollectionModel<
 		super.delete();
 	}
 
-	removeModel(model: T, fire: boolean = true): this {
+	normalize() {
+		if (this.parent && this.children.length === 0) {
+			this.parent.removeModel(this);
+		}
+	}
+
+	removeModel(model: T, runNormalizationChecks: boolean = true): this {
 		let index = this.children.indexOf(model);
 		if (index === -1) {
 			console.log('could not find model');
 			return this;
 		}
 		this.children.splice(index, 1);
-		if (this.parent && fire && this.children.length === 0) {
-			this.parent.removeModel(this);
+		if (runNormalizationChecks) {
+			this.normalize();
 		}
 		return this;
 	}
 
 	addModel(model: T, position: number = null): this {
+		// dont add model multiple times
+		if (_.find(this.children, { id: model.id })) {
+			return this;
+		}
 		model.setParent(this);
 
 		// allow a child to remove itself
@@ -108,7 +119,6 @@ export class WorkspaceCollectionModel<
 			removed: () => {
 				this.removeModel(model);
 				this.itterateListeners(list => {
-					console.log(list);
 					if (list.childRemoved) {
 						list.childRemoved(model);
 					}

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { WorkspaceEngine } from '../../core/WorkspaceEngine';
+import { WorkspaceEngine, WorkspaceEngineError } from '../../core/WorkspaceEngine';
 import { DraggableWidget } from '../../widgets/primitives/DraggableWidget';
 import { WorkspacePanelFactory } from './WorkspacePanelFactory';
 import { WorkspaceModel } from '../../core-models/WorkspaceModel';
@@ -33,28 +33,36 @@ namespace S {
 
 export class PanelWidget extends React.Component<PanelWidgetProps> {
 	render() {
-		let factory = this.props.engine.getFactory<WorkspacePanelFactory>(this.props.model);
-		return (
-			<S.Container expand={this.props.expand}>
-				<DraggableWidget model={this.props.model} engine={this.props.engine}>
-					{factory.generatePanelTitle({
-						model: this.props.model,
-						engine: this.props.engine
-					})}
-				</DraggableWidget>
-				<S.Content>
-					<PerformanceWidget
-						engine={this.props.engine}
-						data={this.props.model.toArray()}
-						children={() => {
-							return factory.generatePanelContent({
-								model: this.props.model,
-								engine: this.props.engine
-							});
-						}}
-					/>
-				</S.Content>
-			</S.Container>
-		);
+		let factory: WorkspacePanelFactory;
+		try {
+			factory = this.props.engine.getFactory<WorkspacePanelFactory>(this.props.model);
+			return (
+				<S.Container expand={this.props.expand}>
+					<DraggableWidget model={this.props.model} engine={this.props.engine}>
+						{factory.generatePanelTitle({
+							model: this.props.model,
+							engine: this.props.engine
+						})}
+					</DraggableWidget>
+					<S.Content>
+						<PerformanceWidget
+							engine={this.props.engine}
+							data={this.props.model.toArray()}
+							children={() => {
+								return factory.generatePanelContent({
+									model: this.props.model,
+									engine: this.props.engine
+								});
+							}}
+						/>
+					</S.Content>
+				</S.Container>
+			);
+		} catch (ex) {
+			if ((ex as WorkspaceEngineError)._is__storm_workspaces_error_) {
+				this.props.model.delete();
+			}
+			return null;
+		}
 	}
 }

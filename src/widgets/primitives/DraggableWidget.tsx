@@ -21,6 +21,9 @@ export class DraggableWidget extends React.Component<DraggableWidgetProps> {
 	static WORKSPACE_MIME = 'panel';
 
 	render() {
+		if (!this.props.engine.dragAndDropEnabled) {
+			return this.props.children;
+		}
 		return (
 			<S.Draggable
 				ref={this.props.forwardRef}
