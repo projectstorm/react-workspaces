@@ -14,12 +14,17 @@ export interface TabGroupWidgetProps {
 	tabs: JSX.Element;
 }
 
+export interface TabGroupWidgetState {
+	height: number;
+}
+
 namespace S {
 	export const Container = styled.div`
 		display: flex;
 		flex-direction: column;
 		position: relative;
 		flex-grow: 1;
+		height: 100%;
 	`;
 
 	export const Tabs = css`
@@ -28,23 +33,45 @@ namespace S {
 		flex-grow: 0;
 	`;
 
-	export const Content = styled.div`
+	export const Content = styled.div<{ height: number }>`
 		flex-grow: 1;
 		display: flex;
+		height: 100%;
+		max-height: calc(100% - ${p => p.height}px);
 	`;
 }
 
-export class TabGroupWidget extends React.Component<TabGroupWidgetProps> {
+export class TabGroupWidget extends React.Component<TabGroupWidgetProps, TabGroupWidgetState> {
+	headerRef: React.RefObject<HTMLDivElement>;
+
+	constructor(props) {
+		super(props);
+		this.headerRef = React.createRef();
+		this.state = {
+			height: 0
+		};
+	}
+
+	componentDidMount(): void {
+		requestAnimationFrame(() => {
+			if (this.headerRef.current) {
+				this.setState({
+					height: this.headerRef.current.getBoundingClientRect().height
+				});
+			}
+		});
+	}
+
 	render() {
 		let selected = this.props.model.getSelected();
 		let selectedFactory = this.props.engine.getFactory<WorkspacePanelFactory>(selected);
 
 		return (
 			<S.Container>
-				<DraggableWidget css={S.Tabs} engine={this.props.engine} model={this.props.model}>
+				<DraggableWidget forwardRef={this.headerRef} css={S.Tabs} engine={this.props.engine} model={this.props.model}>
 					{this.props.tabs}
 				</DraggableWidget>
-				<S.Content>
+				<S.Content height={this.state.height}>
 					{selectedFactory.generatePanelContent({
 						model: selected,
 						engine: this.props.engine

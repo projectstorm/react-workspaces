@@ -108,10 +108,6 @@ export class WorkspaceCollectionModel<
 	}
 
 	addModel(model: T, position: number = null): this {
-		// dont add model multiple times
-		if (_.find(this.children, { id: model.id })) {
-			return this;
-		}
 		model.setParent(this);
 
 		// allow a child to remove itself

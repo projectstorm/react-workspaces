@@ -34,10 +34,16 @@ export class WorkspaceWidget extends React.Component<WorkspaceWidgetProps> {
 	listener: () => any;
 	timerListener: any;
 	floatingContainer: HTMLDivElement;
+	forwardRef: React.RefObject<HTMLDivElement>;
 
 	static childContextTypes = {
 		workspace: PropTypes.any
 	};
+
+	constructor(props) {
+		super(props);
+		this.forwardRef = React.createRef();
+	}
 
 	componentDidMount() {
 		this.listener = this.props.engine.registerListener({
@@ -64,6 +70,10 @@ export class WorkspaceWidget extends React.Component<WorkspaceWidgetProps> {
 		return this.getRelativePosition(element).left > this.floatingContainer.offsetWidth / 2;
 	}
 
+	getWorkspaceDimensions(): Partial<ClientRect> {
+		return this.forwardRef.current.getBoundingClientRect();
+	}
+
 	getRelativePosition(element: HTMLElement): Partial<ClientRect> {
 		let rect = element.getBoundingClientRect();
 		let rect2 = this.floatingContainer.getBoundingClientRect();
@@ -82,6 +92,7 @@ export class WorkspaceWidget extends React.Component<WorkspaceWidgetProps> {
 	render() {
 		return (
 			<S.Container
+				ref={this.forwardRef}
 				onDragOver={event => {
 					if (this.timerListener) {
 						clearTimeout(this.timerListener);

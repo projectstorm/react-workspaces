@@ -36,7 +36,6 @@ namespace S {
 
 export class TrayWidget extends React.Component<TrayWidgetProps, TrayWidgetState> {
 	headerRef: React.RefObject<HTMLDivElement>;
-	ref: React.RefObject<HTMLDivElement>;
 
 	constructor(props) {
 		super(props);
@@ -44,7 +43,6 @@ export class TrayWidget extends React.Component<TrayWidgetProps, TrayWidgetState
 			height: 0
 		};
 		this.headerRef = React.createRef();
-		this.ref = React.createRef();
 	}
 
 	getHeader() {
@@ -57,7 +55,7 @@ export class TrayWidget extends React.Component<TrayWidgetProps, TrayWidgetState
 
 	componentDidMount(): void {
 		requestAnimationFrame(() => {
-			if (this.ref.current && this.headerRef.current) {
+			if (this.headerRef.current) {
 				this.setState({
 					height: this.headerRef.current.getBoundingClientRect().height
 				});
@@ -72,7 +70,7 @@ export class TrayWidget extends React.Component<TrayWidgetProps, TrayWidgetState
 			flex-grow: 1;
 		`;
 		return (
-			<S.Container ref={this.ref} className={this.props.className} expand={expand}>
+			<S.Container className={this.props.className} expand={expand}>
 				{this.getHeader()}
 				{this.props.node.mode === 'micro' ? (
 					<MicroLayoutWidget css={S.Content} node={this.props.node} engine={this.props.engine} />

@@ -19,6 +19,8 @@ namespace S {
 		pointer-events: all;
 		box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 		transition: top 0.3s, left 0.3s;
+		display: flex;
+		z-index: 1;
 	`;
 }
 
@@ -46,7 +48,8 @@ export class FloatingPanelWidget extends React.Component<FloatingPanelWidgetProp
 		let relativePosition = this.context.workspace.getRelativePosition(this.props.relativeElement);
 
 		let style: any = {
-			top: relativePosition.top
+			top: relativePosition.top,
+			maxHeight: this.context.workspace.getWorkspaceDimensions().height - relativePosition.top
 		};
 		if (this.context.workspace.isRight(this.props.relativeElement)) {
 			style['right'] = this.context.workspace.floatingContainer.offsetWidth - relativePosition.left;
