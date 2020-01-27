@@ -12,8 +12,8 @@ export interface DraggableWidgetProps {
 }
 
 namespace S {
-	export const Draggable = styled.div`
-		cursor: move;
+	export const Draggable = styled.div<{ draggable: boolean }>`
+		cursor: ${p => (p.draggable ? 'move' : 'pointer')};
 	`;
 }
 
@@ -21,13 +21,10 @@ export class DraggableWidget extends React.Component<DraggableWidgetProps> {
 	static WORKSPACE_MIME = 'panel';
 
 	render() {
-		if (!this.props.engine.dragAndDropEnabled) {
-			return this.props.children;
-		}
 		return (
 			<S.Draggable
 				ref={this.props.forwardRef}
-				draggable={true}
+				draggable={this.props.engine.dragAndDropEnabled}
 				onDragStart={event => {
 					event.stopPropagation();
 					this.props.engine.itterateListeners(list => {
