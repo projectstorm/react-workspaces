@@ -7,6 +7,7 @@ import { WorkspacePanelFactory } from '../panel/WorkspacePanelFactory';
 import styled from '@emotion/styled';
 import { DraggableWidget } from '../../widgets/primitives/DraggableWidget';
 import { css } from '@emotion/core';
+import { PerformanceWidget } from '../../widgets/PerformanceWidget';
 
 export interface TabGroupWidgetProps {
 	model: WorkspaceTabbedModel;
@@ -72,10 +73,16 @@ export class TabGroupWidget extends React.Component<TabGroupWidgetProps, TabGrou
 					{this.props.tabs}
 				</DraggableWidget>
 				<S.Content height={this.state.height}>
-					{selectedFactory.generatePanelContent({
-						model: selected,
-						engine: this.props.engine
-					})}
+					<PerformanceWidget
+						data={selected.toArray()}
+						engine={this.props.engine}
+						children={() => {
+							return selectedFactory.generatePanelContent({
+								model: selected,
+								engine: this.props.engine
+							});
+						}}
+					/>
 				</S.Content>
 			</S.Container>
 		);
