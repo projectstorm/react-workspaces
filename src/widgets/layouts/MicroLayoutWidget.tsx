@@ -25,7 +25,10 @@ namespace S {
 		display: flex;
 		flex-direction: column;
 		overflow-y: scroll;
-		margin-right: -30px;
+
+		::-webkit-scrollbar {
+			width: 0;
+		}
 	`;
 }
 
