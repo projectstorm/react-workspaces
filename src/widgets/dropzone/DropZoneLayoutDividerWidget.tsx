@@ -6,6 +6,9 @@ import { WorkspaceModel } from '../../core-models/WorkspaceModel';
 import styled from '@emotion/styled';
 import { css, keyframes } from '@emotion/core';
 import { DropzoneLogicWidget } from '../primitives/DropzoneLogicWidget';
+import { DividerContext } from './DropzoneDividerWidget';
+import * as _ from 'lodash';
+import Color from 'color';
 
 export interface DropZoneLayoutDividerWidgetProps {
 	dropped?: (model: WorkspaceModel) => any;
@@ -21,30 +24,11 @@ export interface DropZoneLayoutDividerWidgetState {
 
 const threshold = 2;
 
+const getTransparent = _.memoize((color, transparency) => {
+	return new Color(color).alpha(transparency).toString();
+});
+
 namespace S {
-	const fade = keyframes`
-		0% {
-			background: mediumpurple;
-		}
-
-		100% {
-			background: rgba(mediumpurple, 0);
-		}
-	`;
-
-	const hint = css`
-		// animation-name: ${fade};
-		// animation-duration: 0.5s;
-		// animation-iteration-count: infinite;
-		// animation-direction: alternate-reverse;
-		background: mediumpurple;
-	`;
-
-	const active = css`
-		opacity: 1;
-		background: rgb(0, 192, 255);
-	`;
-
 	const floatingActive = css`
 		transition: opacity 0.5s;
 		opacity: 0.5;
@@ -55,12 +39,6 @@ namespace S {
 		width: 20px;
 		transform: translateX(-50%);
 		margin-left: ${threshold / 2}px;
-		background: linear-gradient(
-			90deg,
-			rgba(0, 192, 255, 0.2) 0%,
-			rgba(0, 192, 255, 1) 50%,
-			rgba(0, 192, 255, 0.2) 100%
-		);
 	`;
 
 	const floatingHorizontal = css`
@@ -68,20 +46,20 @@ namespace S {
 		height: 20px;
 		transform: translateY(-50%);
 		margin-top: ${threshold / 2}px;
-		background: linear-gradient(
-			180deg,
-			rgba(0, 192, 255, 0.2) 0%,
-			rgba(0, 192, 255, 1) 50%,
-			rgba(0, 192, 255, 0.2) 100%
-		);
 	`;
 
-	export const Floating = styled.div<{ active: boolean; vertical: boolean }>`
+	export const Floating = styled.div<{ active: boolean; vertical: boolean; color1: string; color2: string }>`
 		position: absolute;
 		opacity: 0;
 		z-index: 2;
 		${p => p.active && floatingActive};
 		${p => (p.vertical ? floatingVertical : floatingHorizontal)};
+		background: linear-gradient(
+			${p => (p.vertical ? 90 : 180)}deg,
+			${p => p.color2} 0%,
+			${p => p.color1} 50%,
+			${p => p.color2} 100%
+		);
 	`;
 
 	export const Drop = css`
@@ -89,15 +67,15 @@ namespace S {
 		width: 100%;
 	`;
 
-	export const DropZone = styled.div<{ hint: boolean; active: boolean }>`
+	export const DropZone = styled.div<{ active: boolean; color: string }>`
 		transition: opacity 0.2s;
 		pointer-events: all;
 		min-width: ${threshold}px;
 		min-height: ${threshold}px;
 		background: transparent;
 		position: relative;
-		${p => p.active && active};
-		${p => p.hint && hint};
+		opacity: ${p => (p.active ? 1.0 : 0)};
+		background: ${p => p.color};
 	`;
 }
 
@@ -112,7 +90,7 @@ export class DropZoneLayoutDividerWidget extends React.Component<
 		};
 	}
 
-	getHover() {
+	getHover(color: string) {
 		if (!this.props.engine.draggingID || this.props.disallow) {
 			return null;
 		}
@@ -120,6 +98,8 @@ export class DropZoneLayoutDividerWidget extends React.Component<
 			<S.Floating
 				active={this.state.hoverActive}
 				vertical={this.props.vertical}
+				color1={color}
+				color2={getTransparent(color, 0.2)}
 				onDragLeave={() => {
 					this.setState({ hoverActive: false });
 					this.props.hover && this.props.hover(false);
@@ -148,15 +128,19 @@ export class DropZoneLayoutDividerWidget extends React.Component<
 		if (!this.props.engine.dragAndDropEnabled) {
 			return null;
 		}
+
 		return (
-			<S.DropZone
-				active={!this.props.disallow && this.state.hoverActive}
-				hint={!this.props.disallow && !this.state.hoverActive && !!this.props.engine.draggingID}
-				style={{
-					animationDelay: `${parseInt(`${Math.random() * 500}`)}ms`
-				}}>
-				{this.getHover()}
-			</S.DropZone>
+			<DividerContext.Consumer>
+				{colors => {
+					return (
+						<S.DropZone
+							active={!this.props.disallow && !!this.props.engine.draggingID}
+							color={this.state.hoverActive ? colors.active : colors.hint}>
+							{this.getHover(colors.active)}
+						</S.DropZone>
+					);
+				}}
+			</DividerContext.Consumer>
 		);
 	}
 }

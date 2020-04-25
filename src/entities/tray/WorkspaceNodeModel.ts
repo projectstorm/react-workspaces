@@ -32,8 +32,8 @@ export class WorkspaceNodeModel extends WorkspaceCollectionModel {
 		this.mode = payload['mode'];
 	}
 
-	removeModel(model: WorkspaceModel): this {
-		super.removeModel(model);
+	removeModel(model: WorkspaceModel, runNormalizationChecks: boolean = true): this {
+		super.removeModel(model, runNormalizationChecks);
 		if (this.floatingModel && this.floatingModel === model) {
 			this.floatingModel = null;
 		}

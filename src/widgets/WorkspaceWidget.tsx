@@ -5,10 +5,13 @@ import { PanelWidget } from '../entities/panel/PanelWidget';
 import * as PropTypes from 'prop-types';
 import { StandardLayoutWidget } from './layouts/StandardLayoutWidget';
 import styled from '@emotion/styled';
+import { DividerContext } from './dropzone/DropzoneDividerWidget';
 
 export interface WorkspaceWidgetProps {
 	model: WorkspaceNodeModel;
 	engine: WorkspaceEngine;
+	dividerColor?: string;
+	dividerColorActive?: string;
 }
 
 export interface WorkspaceWidgetContext {
@@ -91,35 +94,41 @@ export class WorkspaceWidget extends React.Component<WorkspaceWidgetProps> {
 
 	render() {
 		return (
-			<S.Container
-				ref={this.forwardRef}
-				onDragOver={event => {
-					if (this.timerListener) {
-						clearTimeout(this.timerListener);
-						this.timerListener = null;
-					}
-
-					this.timerListener = setTimeout(() => {
-						this.props.engine.setDraggingNode(null);
-					}, 200);
-
-					if (this.props.engine.draggingID) {
-						return;
-					}
-					let id = this.props.engine.getDropEventModelID(event);
-					this.props.engine.setDraggingNode(id);
+			<DividerContext.Provider
+				value={{
+					hint: this.props.dividerColor,
+					active: this.props.dividerColorActive
 				}}>
-				{this.props.engine.fullscreenModel ? (
-					<PanelWidget expand={true} model={this.props.engine.fullscreenModel} engine={this.props.engine} />
-				) : (
-					<StandardLayoutWidget node={this.props.model} engine={this.props.engine} />
-				)}
-				<S.Floating
-					ref={ref => {
-						this.floatingContainer = ref;
-					}}
-				/>
-			</S.Container>
+				<S.Container
+					ref={this.forwardRef}
+					onDragOver={event => {
+						if (this.timerListener) {
+							clearTimeout(this.timerListener);
+							this.timerListener = null;
+						}
+
+						this.timerListener = setTimeout(() => {
+							this.props.engine.setDraggingNode(null);
+						}, 200);
+
+						if (this.props.engine.draggingID) {
+							return;
+						}
+						let id = this.props.engine.getDropEventModelID(event);
+						this.props.engine.setDraggingNode(id);
+					}}>
+					{this.props.engine.fullscreenModel ? (
+						<PanelWidget expand={true} model={this.props.engine.fullscreenModel} engine={this.props.engine} />
+					) : (
+						<StandardLayoutWidget node={this.props.model} engine={this.props.engine} />
+					)}
+					<S.Floating
+						ref={ref => {
+							this.floatingContainer = ref;
+						}}
+					/>
+				</S.Container>
+			</DividerContext.Provider>
 		);
 	}
 }

@@ -102,7 +102,6 @@ export class StandardLayoutWidget extends React.Component<StandardLayoutWidgetPr
 				}}
 				dropped={(index, model: WorkspaceModel) => {
 					this.props.node.addModel(model, index);
-					console.log(this.props.node, model);
 					this.props.engine.fireModelUpdated();
 				}}
 				vertical={this.props.node.vertical}

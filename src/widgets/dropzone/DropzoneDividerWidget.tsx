@@ -26,19 +26,20 @@ namespace S {
 		position: relative;
 		transition: width ${animation}, height ${animation};
 		align-self: stretch;
-		background: mediumpurple;
 	`;
 
-	export const ContainerH = styled.div<{ enter: boolean; size: number }>`
+	export const ContainerH = styled.div<{ enter: boolean; size: number; color: string }>`
 		${_Container};
 		width: ${p => (p.enter ? p.size : 0)}px;
 		flex-shrink: 0;
+		background: ${p => p.color};
 	`;
 
-	export const ContainerV = styled.div<{ enter: boolean; size: number }>`
+	export const ContainerV = styled.div<{ enter: boolean; size: number; color: string }>`
 		${_Container};
 		height: ${p => (p.enter ? p.size : 0)}px;
 		flex-shrink: 0;
+		background: ${p => p.color};
 	`;
 
 	const _Overlay = css`
@@ -69,6 +70,11 @@ namespace S {
 	`;
 }
 
+export const DividerContext = React.createContext({
+	hint: 'mediumpurple',
+	active: 'rgb(0,192,255)'
+});
+
 export class DropzoneDividerWidget extends React.Component<DropzoneDividerWidgetProps, DropzoneDividerWidgetState> {
 	constructor(props: DropzoneDividerWidgetProps) {
 		super(props);
@@ -98,23 +104,35 @@ export class DropzoneDividerWidget extends React.Component<DropzoneDividerWidget
 			size: this.props.size || 30,
 			enter: this.state.hover
 		};
-		const Innner: any = {
+		const Inner: any = {
 			size: this.props.size || 30,
 			enter: this.state.hover
 		};
 
 		if (this.props.vertical) {
 			return (
-				<S.ContainerV {...Container}>
-					<S.OverlayV {...Innner}>{this.getDropZone()}</S.OverlayV>
-				</S.ContainerV>
+				<DividerContext.Consumer>
+					{color => {
+						return (
+							<S.ContainerV {...Container} color={color.hint}>
+								<S.OverlayV {...Inner}>{this.getDropZone()}</S.OverlayV>
+							</S.ContainerV>
+						);
+					}}
+				</DividerContext.Consumer>
 			);
 		}
 
 		return (
-			<S.ContainerH {...Container}>
-				<S.OverlayH {...Innner}>{this.getDropZone()}</S.OverlayH>
-			</S.ContainerH>
+			<DividerContext.Consumer>
+				{color => {
+					return (
+						<S.ContainerH {...Container} color={color.hint}>
+							<S.OverlayH {...Inner}>{this.getDropZone()}</S.OverlayH>
+						</S.ContainerH>
+					);
+				}}
+			</DividerContext.Consumer>
 		);
 	}
 }

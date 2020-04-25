@@ -73,7 +73,7 @@ export class WorkspaceCollectionModel<
 
 	replaceModel(oldModel: T, newModel): this {
 		let index = this.children.indexOf(oldModel);
-		this.removeModel(oldModel);
+		this.removeModel(oldModel, false);
 		this.addModel(newModel, index);
 		return this;
 	}

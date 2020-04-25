@@ -36,6 +36,7 @@ namespace S {
 
 export class TrayWidget extends React.Component<TrayWidgetProps, TrayWidgetState> {
 	headerRef: React.RefObject<HTMLDivElement>;
+	observer: ResizeObserver;
 
 	constructor(props) {
 		super(props);
@@ -53,14 +54,19 @@ export class TrayWidget extends React.Component<TrayWidgetProps, TrayWidgetState
 		);
 	}
 
+	componentWillUnmount() {
+		this.observer && this.observer.disconnect();
+	}
+
 	componentDidMount(): void {
-		requestAnimationFrame(() => {
-			if (this.headerRef.current) {
+		if (this.headerRef.current) {
+			this.observer = new ResizeObserver(() => {
 				this.setState({
 					height: this.headerRef.current.getBoundingClientRect().height
 				});
-			}
-		});
+			});
+			this.observer.observe(this.headerRef.current);
+		}
 	}
 
 	render() {
