@@ -1,6 +1,6 @@
 {
 	"name": "@projectstorm/react-workspaces",
-	"version": "2.3.0",
+	"version": "2.4.0",
 	"main": "./dist/main.js",
 	"typings": "./dist/@types/src/main",
 	"author": "dylanvorster",
