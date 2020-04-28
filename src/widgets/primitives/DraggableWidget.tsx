@@ -34,11 +34,14 @@ export class DraggableWidget extends React.Component<DraggableWidgetProps> {
 						WorkspaceEngine.namespaceMime(DraggableWidget.WORKSPACE_MIME),
 						JSON.stringify(this.props.model.toArray())
 					);
+					if (event.altKey) {
+						event.dataTransfer.effectAllowed = 'copy';
+					}
 					event.dataTransfer.setData(WorkspaceEngine.namespaceMime(`id/${this.props.model.id}`), '');
 				}}
 				onDragEnd={event => {
 					event.stopPropagation();
-					if (event.dataTransfer.dropEffect !== 'none') {
+					if (event.dataTransfer.dropEffect === 'move') {
 						this.props.model.delete();
 						this.props.engine.fireModelUpdated();
 					}

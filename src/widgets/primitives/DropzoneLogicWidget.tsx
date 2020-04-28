@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import { WorkspaceEngine } from '../../core/WorkspaceEngine';
 import { DraggableWidget } from './DraggableWidget';
 import { WorkspaceModel } from '../../core-models/WorkspaceModel';
+import { uuid, regenerateIDs } from '../../core/tools';
 
 export interface DropzoneLogicWidgetProps {
 	onDrop: (model?: WorkspaceModel) => any;
@@ -39,6 +40,12 @@ export class DropzoneLogicWidget extends React.Component<DropzoneLogicWidgetProp
 						const factory = this.props.engine.getFactory(object.type);
 						const draggingNode = factory.generateModel();
 						draggingNode.fromArray(object, this.props.engine);
+
+						// recursively update models because this is a clone operation
+						console.log(event.dataTransfer.effectAllowed);
+						if (event.dataTransfer.effectAllowed === 'copy') {
+							regenerateIDs(draggingNode);
+						}
 						this.props.onDrop(draggingNode);
 						return;
 					} catch (ex) {
@@ -60,7 +67,11 @@ export class DropzoneLogicWidget extends React.Component<DropzoneLogicWidgetProp
 					}
 
 					event.preventDefault();
-					event.dataTransfer.dropEffect = 'move';
+					if (!!event.altKey) {
+						event.dataTransfer.dropEffect = 'copy';
+					} else {
+						event.dataTransfer.dropEffect = 'move';
+					}
 
 					if (!this.state.enter) {
 						this.setState({ enter: true }, () => {
