@@ -2,7 +2,6 @@ import { WorkspaceModel, SerializedModel, WorkspaceModelListener } from './Works
 import { WorkspaceEngine } from '../core/WorkspaceEngine';
 import { WorkspaceCollectionInterface } from './WorkspaceCollectionInterface';
 import { WorkspaceFactory } from '../core/WorkspaceFactory';
-import * as _ from 'lodash';
 
 export interface SerializedCollectionModel extends SerializedModel {
 	children: SerializedModel[];
@@ -18,12 +17,12 @@ export class WorkspaceCollectionModel<
 	S extends SerializedCollectionModel = SerializedCollectionModel
 > extends WorkspaceModel<S, WorkspaceCollectionModelListener> implements WorkspaceCollectionInterface {
 	children: T[];
-	childrenListeners: { [id: string]: () => any };
+	childrenListeners: (() => any)[];
 
 	constructor(type: string) {
 		super(type);
 		this.children = [];
-		this.childrenListeners = {};
+		this.childrenListeners = [];
 	}
 
 	fromArray(payload: S, engine: WorkspaceEngine) {
@@ -80,9 +79,8 @@ export class WorkspaceCollectionModel<
 
 	delete() {
 		// delete all the children
+		this.childrenListeners.forEach(l => l())
 		for (let child of this.children) {
-			// remove the listener
-			this.childrenListeners[child.id]();
 			child.delete();
 		}
 		super.delete();
@@ -111,7 +109,7 @@ export class WorkspaceCollectionModel<
 		model.setParent(this);
 
 		// allow a child to remove itself
-		this.childrenListeners[model.id] = model.registerListener({
+		this.childrenListeners.push(model.registerListener({
 			removed: () => {
 				this.removeModel(model);
 				this.itterateListeners(list => {
@@ -120,7 +118,7 @@ export class WorkspaceCollectionModel<
 					}
 				});
 			}
-		});
+		}));
 
 		if (position === null) {
 			this.children.push(model);
