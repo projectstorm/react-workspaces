@@ -46,6 +46,7 @@ export class PanelWidget extends React.Component<PanelWidgetProps> {
 					</DraggableWidget>
 					<S.Content>
 						<PerformanceWidget
+							key={this.props.model.id}
 							engine={this.props.engine}
 							data={this.props.model.toArray()}
 							children={() => {
