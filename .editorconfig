@@ -1,11 +1,9 @@
-# EditorConfig is awesome: http://EditorConfig.org
-
-# top-most EditorConfig file
-root = true
-
 [*]
-indent_style = tab
+indent_style = space
 indent_size = 2
+trim_trailing_whitespace = true
 
+# Some exceptions
 [{package.json,.travis.yml}]
 indent_style = space
+indent_size = 2

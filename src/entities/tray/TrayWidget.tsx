@@ -1,6 +1,4 @@
-/** @jsx jsx */
 import * as React from 'react';
-import { jsx } from '@emotion/react';
 import { WorkspaceNodeModel } from './WorkspaceNodeModel';
 import { WorkspaceEngine } from '../../core/WorkspaceEngine';
 import { StandardLayoutWidget } from '../../widgets/layouts/StandardLayoutWidget';
@@ -25,8 +23,8 @@ namespace S {
 		display: flex;
 		flex-direction: column;
 		position: relative;
-		flex-grow: ${p => (p.expand ? 1 : 0)};
-		${p => p.expand && `width: 50%`};
+		flex-grow: ${(p) => (p.expand ? 1 : 0)};
+		${(p) => p.expand && `width: 50%`};
 	`;
 
 	export const Content = css`

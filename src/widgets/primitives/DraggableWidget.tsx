@@ -13,7 +13,7 @@ export interface DraggableWidgetProps {
 
 namespace S {
 	export const Draggable = styled.div<{ draggable: boolean }>`
-		cursor: ${p => (p.draggable ? 'move' : 'pointer')};
+		cursor: ${(p) => (p.draggable ? 'move' : 'pointer')};
 	`;
 }
 
@@ -25,9 +25,9 @@ export class DraggableWidget extends React.Component<DraggableWidgetProps> {
 			<S.Draggable
 				ref={this.props.forwardRef}
 				draggable={this.props.engine.dragAndDropEnabled}
-				onDragStart={event => {
+				onDragStart={(event) => {
 					event.stopPropagation();
-					this.props.engine.itterateListeners(list => {
+					this.props.engine.itterateListeners((list) => {
 						list.draggingElement && list.draggingElement(this.props.model, true);
 					});
 					event.dataTransfer.setData(
@@ -39,14 +39,14 @@ export class DraggableWidget extends React.Component<DraggableWidgetProps> {
 					}
 					event.dataTransfer.setData(WorkspaceEngine.namespaceMime(`id/${this.props.model.id}`), '');
 				}}
-				onDragEnd={event => {
+				onDragEnd={(event) => {
 					event.stopPropagation();
 					if (event.dataTransfer.dropEffect === 'move') {
 						this.props.model.delete();
 						this.props.engine.fireModelUpdated();
 					}
 					this.props.engine.setDraggingNode(null);
-					this.props.engine.itterateListeners(list => {
+					this.props.engine.itterateListeners((list) => {
 						list.draggingElement && list.draggingElement(this.props.model, false);
 					});
 				}}

@@ -65,16 +65,16 @@ export class MicroLayoutWidget extends React.Component<MicroLayoutWidgetProps> {
 		return (
 			<S.MicroLayout
 				className={this.props.className}
-				ref={ref => {
+				ref={(ref) => {
 					this.div = ref;
 				}}>
 				<S.Scrollable>
-					{_.map(this.props.node.getFlattened(), child => {
+					{_.map(this.props.node.getFlattened(), (child) => {
 						let selected = this.props.node.floatingModel && this.props.node.floatingModel.id === child.id;
 						return (
 							<div
 								key={child.id}
-								ref={ref => {
+								ref={(ref) => {
 									this.buttons[child.id] = ref;
 								}}>
 								<DraggableWidget
@@ -97,8 +97,10 @@ export class MicroLayoutWidget extends React.Component<MicroLayoutWidgetProps> {
 							</div>
 						);
 					})}
-					{// is rendered into a react portal
-					this.props.node.floatingModel && this.getFloatingModel()}
+					{
+						// is rendered into a react portal
+						this.props.node.floatingModel && this.getFloatingModel()
+					}
 				</S.Scrollable>
 			</S.MicroLayout>
 		);

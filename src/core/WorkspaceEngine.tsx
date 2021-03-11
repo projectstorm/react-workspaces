@@ -70,7 +70,7 @@ export class WorkspaceEngine implements WorkspaceEngineInterface {
 
 	_fireModelUpdated() {
 		this.fireModelUpdateEvent = false;
-		this.itterateListeners(listener => {
+		this.itterateListeners((listener) => {
 			listener.modelUpdated && listener.modelUpdated();
 		});
 	}
@@ -92,7 +92,7 @@ export class WorkspaceEngine implements WorkspaceEngineInterface {
 
 	fireRepaintListeners() {
 		this.repainting = true;
-		this.itterateListeners(list => {
+		this.itterateListeners((list) => {
 			list.repaint && list.repaint();
 		});
 	}

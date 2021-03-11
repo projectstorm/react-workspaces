@@ -19,8 +19,8 @@ export interface DirectionalLayoutWidgetProps {
 namespace S {
 	export const Container = styled.div<{ expand: boolean; vertical: boolean }>`
 		display: flex;
-		flex-grow: ${p => (p.expand ? 1 : 0)};
-		flex-direction: ${p => (p.vertical ? 'column' : 'row')};
+		flex-grow: ${(p) => (p.expand ? 1 : 0)};
+		flex-direction: ${(p) => (p.vertical ? 'column' : 'row')};
 		max-height: 100%;
 	`;
 }
@@ -32,7 +32,7 @@ export class DirectionalLayoutWidget extends React.Component<DirectionalLayoutWi
 				<DropZoneLayoutDividerWidget
 					vertical={!this.props.vertical}
 					disallow={!this.props.dropZoneAllowed(0)}
-					dropped={model => {
+					dropped={(model) => {
 						this.props.dropped(0, model);
 					}}
 					engine={this.props.engine}
@@ -45,7 +45,7 @@ export class DirectionalLayoutWidget extends React.Component<DirectionalLayoutWi
 							<DropZoneLayoutDividerWidget
 								vertical={!this.props.vertical}
 								disallow={!this.props.dropZoneAllowed(index + 1)}
-								dropped={droppedModel => {
+								dropped={(droppedModel) => {
 									this.props.dropped(index + 1, droppedModel);
 								}}
 								engine={this.props.engine}

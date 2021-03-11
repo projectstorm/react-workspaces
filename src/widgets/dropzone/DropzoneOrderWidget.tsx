@@ -22,7 +22,7 @@ namespace S {
 	export const Container = styled.div<{ vertical: boolean }>`
 		display: flex;
 		overflow-x: scroll;
-		flex-direction: ${p => (p.vertical ? 'column' : 'row')};
+		flex-direction: ${(p) => (p.vertical ? 'column' : 'row')};
 
 		::-webkit-scrollbar {
 			width: 0;
@@ -35,11 +35,11 @@ namespace S {
 
 	export const EmptyPlaceholderV = styled.div<{ size: number }>`
 		height: 10px;
-		min-width: ${p => p.size}px;
+		min-width: ${(p) => p.size}px;
 	`;
 	export const EmptyPlaceholderH = styled.div<{ size: number }>`
 		width: 10px;
-		min-height: ${p => p.size}px;
+		min-height: ${(p) => p.size}px;
 	`;
 }
 
@@ -58,7 +58,7 @@ export class DropzoneOrderWidget extends React.Component<DropzoneOrderWidgetProp
 		if (this.state.dragging || _.keys(this.state.draggingChild).length > 0) {
 			return (
 				<DropzoneDividerWidget
-					entered={entered => {
+					entered={(entered) => {
 						if (entered) {
 							this.state.draggingChild[`${index}`] = true;
 						} else {
@@ -69,7 +69,7 @@ export class DropzoneOrderWidget extends React.Component<DropzoneOrderWidgetProp
 						});
 					}}
 					vertical={this.props.vertical}
-					dropped={model => {
+					dropped={(model) => {
 						this.props.dropped(model, index);
 						this.setState({
 							dragging: false,
@@ -105,7 +105,7 @@ export class DropzoneOrderWidget extends React.Component<DropzoneOrderWidgetProp
 			<S.Container
 				vertical={this.props.vertical}
 				className={this.props.className}
-				onDragOver={event => {
+				onDragOver={(event) => {
 					if (this.listener) {
 						clearInterval(this.listener);
 						this.listener = null;

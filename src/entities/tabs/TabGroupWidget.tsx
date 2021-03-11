@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/react';
 import * as React from 'react';
 import { WorkspaceTabbedModel } from './WorkspaceTabbedModel';
 import { WorkspaceEngine } from '../../core/WorkspaceEngine';
@@ -38,7 +36,7 @@ namespace S {
 		flex-grow: 1;
 		display: flex;
 		height: 100%;
-		max-height: calc(100% - ${p => p.height}px);
+		max-height: calc(100% - ${(p) => p.height}px);
 	`;
 }
 

@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { WorkspaceEngine } from '../../core/WorkspaceEngine';
 import { DraggableWidget } from './DraggableWidget';
 import { WorkspaceModel } from '../../core-models/WorkspaceModel';
-import { uuid, regenerateIDs } from '../../core/tools';
+import { regenerateIDs } from '../../core/tools';
 
 export interface DropzoneLogicWidgetProps {
 	onDrop: (model?: WorkspaceModel) => any;
@@ -32,7 +32,7 @@ export class DropzoneLogicWidget extends React.Component<DropzoneLogicWidgetProp
 		return (
 			<S.Container
 				className={this.props.className}
-				onDrop={event => {
+				onDrop={(event) => {
 					event.persist();
 					let data = event.dataTransfer.getData(WorkspaceEngine.namespaceMime(DraggableWidget.WORKSPACE_MIME));
 					try {
@@ -53,7 +53,7 @@ export class DropzoneLogicWidget extends React.Component<DropzoneLogicWidgetProp
 					}
 					this.props.onDrop(null);
 				}}
-				onDragOver={event => {
+				onDragOver={(event) => {
 					let found = false;
 					for (var i = 0; i < event.dataTransfer.types.length; ++i) {
 						// allow the effect

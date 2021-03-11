@@ -1,10 +1,8 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/react';
 import * as React from 'react';
 import { WorkspaceEngine } from '../../core/WorkspaceEngine';
 import { WorkspaceModel } from '../../core-models/WorkspaceModel';
 import styled from '@emotion/styled';
-import { css, keyframes } from '@emotion/react';
+import { css } from '@emotion/react';
 import { DropzoneLogicWidget } from '../primitives/DropzoneLogicWidget';
 import { DividerContext } from './DropzoneDividerWidget';
 import * as _ from 'lodash';
@@ -52,13 +50,13 @@ namespace S {
 		position: absolute;
 		opacity: 0;
 		z-index: 2;
-		${p => p.active && floatingActive};
-		${p => (p.vertical ? floatingVertical : floatingHorizontal)};
+		${(p) => p.active && floatingActive};
+		${(p) => (p.vertical ? floatingVertical : floatingHorizontal)};
 		background: linear-gradient(
-			${p => (p.vertical ? 90 : 180)}deg,
-			${p => p.color2} 0%,
-			${p => p.color1} 50%,
-			${p => p.color2} 100%
+			${(p) => (p.vertical ? 90 : 180)}deg,
+			${(p) => p.color2} 0%,
+			${(p) => p.color1} 50%,
+			${(p) => p.color2} 100%
 		);
 	`;
 
@@ -74,8 +72,8 @@ namespace S {
 		min-height: ${threshold}px;
 		background: transparent;
 		position: relative;
-		opacity: ${p => (p.active ? 1.0 : 0)};
-		background: ${p => p.color};
+		opacity: ${(p) => (p.active ? 1.0 : 0)};
+		background: ${(p) => p.color};
 	`;
 }
 
@@ -107,13 +105,13 @@ export class DropZoneLayoutDividerWidget extends React.Component<
 				<DropzoneLogicWidget
 					css={S.Drop}
 					engine={this.props.engine}
-					onDrop={model => {
+					onDrop={(model) => {
 						this.props.dropped(model);
 						this.setState({
 							hoverActive: false
 						});
 					}}
-					onDragEnter={entered => {
+					onDragEnter={(entered) => {
 						this.setState({
 							hoverActive: entered
 						});
@@ -131,7 +129,7 @@ export class DropZoneLayoutDividerWidget extends React.Component<
 
 		return (
 			<DividerContext.Consumer>
-				{colors => {
+				{(colors) => {
 					return (
 						<S.DropZone
 							active={!this.props.disallow && !!this.props.engine.draggingID}

@@ -41,7 +41,7 @@ export class WorkspaceModel<
 	}
 
 	fireNodeRemoved(node: WorkspaceModel) {
-		this.itterateListeners(list => {
+		this.itterateListeners((list) => {
 			if (list.removed) {
 				list.removed(node);
 			}

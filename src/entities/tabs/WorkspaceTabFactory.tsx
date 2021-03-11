@@ -7,9 +7,9 @@ import * as _ from 'lodash';
 import { TabButtonWidget } from './TabButtonWidget';
 import { DropzoneOrderWidget } from '../../widgets/dropzone/DropzoneOrderWidget';
 
-export class WorkspaceTabFactory<T extends WorkspaceTabbedModel = WorkspaceTabbedModel> extends WorkspaceLayoutFactory<
-	T
-> {
+export class WorkspaceTabFactory<
+	T extends WorkspaceTabbedModel = WorkspaceTabbedModel
+> extends WorkspaceLayoutFactory<T> {
 	constructor() {
 		super(WorkspaceTabbedModel.NAME);
 	}
@@ -27,7 +27,7 @@ export class WorkspaceTabFactory<T extends WorkspaceTabbedModel = WorkspaceTabbe
 				dropped={(element, index) => {
 					event.model.addModel(element, index);
 				}}>
-				{_.map(event.model.children, child => {
+				{_.map(event.model.children, (child) => {
 					return <TabButtonWidget model={child} engine={event.engine} key={child.id} />;
 				})}
 			</DropzoneOrderWidget>

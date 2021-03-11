@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/react';
 import * as React from 'react';
 import { WorkspaceNodeModel } from '../../entities/tray/WorkspaceNodeModel';
 import { WorkspaceTabbedModel } from '../../entities/tabs/WorkspaceTabbedModel';
@@ -53,7 +51,7 @@ export class StandardLayoutWidget extends React.Component<StandardLayoutWidgetPr
 	generateElement(model: WorkspaceModel) {
 		if (model instanceof WorkspaceTabbedModel) {
 			if (!this.props.node.parent) {
-				return this.getWrapper(model, true, model => {
+				return this.getWrapper(model, true, (model) => {
 					return this.props.engine.getFactory<WorkspaceLayoutFactory>(model).generateLayout({
 						model: model as any,
 						engine: this.props.engine
@@ -70,7 +68,7 @@ export class StandardLayoutWidget extends React.Component<StandardLayoutWidgetPr
 		}
 
 		if (!this.props.node.parent) {
-			return this.getWrapper(model, !this.props.node.vertical, model => {
+			return this.getWrapper(model, !this.props.node.vertical, (model) => {
 				return <PanelWidget key={model.id} engine={this.props.engine} model={model} expand={true} />;
 			});
 		}
@@ -93,11 +91,11 @@ export class StandardLayoutWidget extends React.Component<StandardLayoutWidgetPr
 			<DirectionalLayoutWidget
 				className={this.props.className}
 				data={this.props.node.children}
-				generateElement={model => {
+				generateElement={(model) => {
 					return this.generateElement(model);
 				}}
 				expand={true}
-				dropZoneAllowed={index => {
+				dropZoneAllowed={(index) => {
 					return true;
 				}}
 				dropped={(index, model: WorkspaceModel) => {

@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/react';
 import * as React from 'react';
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
@@ -30,16 +28,16 @@ namespace S {
 
 	export const ContainerH = styled.div<{ enter: boolean; size: number; color: string }>`
 		${_Container};
-		width: ${p => (p.enter ? p.size : 0)}px;
+		width: ${(p) => (p.enter ? p.size : 0)}px;
 		flex-shrink: 0;
-		background: ${p => p.color};
+		background: ${(p) => p.color};
 	`;
 
 	export const ContainerV = styled.div<{ enter: boolean; size: number; color: string }>`
 		${_Container};
-		height: ${p => (p.enter ? p.size : 0)}px;
+		height: ${(p) => (p.enter ? p.size : 0)}px;
 		flex-shrink: 0;
-		background: ${p => p.color};
+		background: ${(p) => p.color};
 	`;
 
 	const _Overlay = css`
@@ -57,7 +55,7 @@ namespace S {
 		${_Overlay};
 		left: 50%;
 		transform: translateX(-50%);
-		width: ${p => (p.enter ? p.size * 2 : p.size)}px;
+		width: ${(p) => (p.enter ? p.size * 2 : p.size)}px;
 		height: 100%;
 	`;
 
@@ -66,7 +64,7 @@ namespace S {
 		top: 50%;
 		transform: translateY(-50%);
 		width: 100%;
-		height: ${p => (p.enter ? p.size * 2 : p.size)}px;
+		height: ${(p) => (p.enter ? p.size * 2 : p.size)}px;
 	`;
 }
 
@@ -89,7 +87,7 @@ export class DropzoneDividerWidget extends React.Component<DropzoneDividerWidget
 				css={S._Drop}
 				engine={this.props.engine}
 				onDrop={this.props.dropped}
-				onDragEnter={entered => {
+				onDragEnter={(entered) => {
 					this.props.entered(entered);
 					this.setState({
 						hover: entered
@@ -112,7 +110,7 @@ export class DropzoneDividerWidget extends React.Component<DropzoneDividerWidget
 		if (this.props.vertical) {
 			return (
 				<DividerContext.Consumer>
-					{color => {
+					{(color) => {
 						return (
 							<S.ContainerV {...Container} color={color.hint}>
 								<S.OverlayV {...Inner}>{this.getDropZone()}</S.OverlayV>
@@ -125,7 +123,7 @@ export class DropzoneDividerWidget extends React.Component<DropzoneDividerWidget
 
 		return (
 			<DividerContext.Consumer>
-				{color => {
+				{(color) => {
 					return (
 						<S.ContainerH {...Container} color={color.hint}>
 							<S.OverlayH {...Inner}>{this.getDropZone()}</S.OverlayH>

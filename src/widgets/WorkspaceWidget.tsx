@@ -101,7 +101,7 @@ export class WorkspaceWidget extends React.Component<WorkspaceWidgetProps> {
 				}}>
 				<S.Container
 					ref={this.forwardRef}
-					onDragOver={event => {
+					onDragOver={(event) => {
 						if (this.timerListener) {
 							clearTimeout(this.timerListener);
 							this.timerListener = null;
@@ -123,7 +123,7 @@ export class WorkspaceWidget extends React.Component<WorkspaceWidgetProps> {
 						<StandardLayoutWidget node={this.props.model} engine={this.props.engine} />
 					)}
 					<S.Floating
-						ref={ref => {
+						ref={(ref) => {
 							this.floatingContainer = ref;
 						}}
 					/>
