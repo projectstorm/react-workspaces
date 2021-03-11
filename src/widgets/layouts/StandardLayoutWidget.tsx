@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { jsx } from '@emotion/core';
+import { jsx } from '@emotion/react';
 import * as React from 'react';
 import { WorkspaceNodeModel } from '../../entities/tray/WorkspaceNodeModel';
 import { WorkspaceTabbedModel } from '../../entities/tabs/WorkspaceTabbedModel';
@@ -9,7 +9,7 @@ import { WorkspaceModel } from '../../core-models/WorkspaceModel';
 import { DirectionalLayoutWidget } from './DirectionalLayoutWidget';
 import { WorkspaceLayoutFactory } from '../../core/WorkspaceLayoutFactory';
 import { WorkspaceCollectionModel } from '../../core-models/WorkspaceCollectionModel';
-import { css } from '@emotion/core';
+import { css } from '@emotion/react';
 
 export interface StandardLayoutWidgetProps {
 	node: WorkspaceNodeModel;

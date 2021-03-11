@@ -2,7 +2,7 @@ import * as React from "react";
 import styled from "@emotion/styled";
 import { IconName } from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {css} from "@emotion/core";
+import {css} from "@emotion/react";
 
 export interface DefaultPanelMicroButtonWidgetProps {
 	icon: IconName;

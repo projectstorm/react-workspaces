@@ -1,10 +1,10 @@
 /** @jsx jsx */
-import { jsx } from '@emotion/core';
+import { jsx } from '@emotion/react';
 import * as React from 'react';
 import { WorkspaceEngine } from '../../core/WorkspaceEngine';
 import { WorkspaceModel } from '../../core-models/WorkspaceModel';
 import styled from '@emotion/styled';
-import { css, keyframes } from '@emotion/core';
+import { css, keyframes } from '@emotion/react';
 import { DropzoneLogicWidget } from '../primitives/DropzoneLogicWidget';
 import { DividerContext } from './DropzoneDividerWidget';
 import * as _ from 'lodash';

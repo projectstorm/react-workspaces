@@ -1,13 +1,13 @@
 /** @jsx jsx */
 import * as React from 'react';
-import { jsx } from '@emotion/core';
+import { jsx } from '@emotion/react';
 import { WorkspaceNodeModel } from './WorkspaceNodeModel';
 import { WorkspaceEngine } from '../../core/WorkspaceEngine';
 import { StandardLayoutWidget } from '../../widgets/layouts/StandardLayoutWidget';
 import { MicroLayoutWidget } from '../../widgets/layouts/MicroLayoutWidget';
 import { DraggableWidget } from '../../widgets/primitives/DraggableWidget';
 import styled from '@emotion/styled';
-import { css } from '@emotion/core';
+import { css } from '@emotion/react';
 
 export interface TrayWidgetProps {
 	node: WorkspaceNodeModel;

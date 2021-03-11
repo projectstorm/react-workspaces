@@ -1,12 +1,12 @@
 /** @jsx jsx */
-import { jsx } from '@emotion/core';
+import { jsx } from '@emotion/react';
 import * as React from 'react';
 import { WorkspaceTabbedModel } from './WorkspaceTabbedModel';
 import { WorkspaceEngine } from '../../core/WorkspaceEngine';
 import { WorkspacePanelFactory } from '../panel/WorkspacePanelFactory';
 import styled from '@emotion/styled';
 import { DraggableWidget } from '../../widgets/primitives/DraggableWidget';
-import { css } from '@emotion/core';
+import { css } from '@emotion/react';
 import { PerformanceWidget } from '../../widgets/PerformanceWidget';
 
 export interface TabGroupWidgetProps {

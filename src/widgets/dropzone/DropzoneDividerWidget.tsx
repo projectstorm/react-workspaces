@@ -1,8 +1,8 @@
 /** @jsx jsx */
-import { jsx } from '@emotion/core';
+import { jsx } from '@emotion/react';
 import * as React from 'react';
 import styled from '@emotion/styled';
-import { css } from '@emotion/core';
+import { css } from '@emotion/react';
 import { WorkspaceModel } from '../../core-models/WorkspaceModel';
 import { WorkspaceEngine } from '../../core/WorkspaceEngine';
 import { DropzoneLogicWidget } from '../primitives/DropzoneLogicWidget';

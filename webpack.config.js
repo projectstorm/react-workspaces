@@ -26,7 +26,7 @@ module.exports = {
 			},
 		]
 	},
-	devtool: 'cheap-eval-source-map',
+	devtool: 'cheap-source-map',
 	mode: production ? 'production' : 'development',
 	optimization: {
 		minimizer: [
