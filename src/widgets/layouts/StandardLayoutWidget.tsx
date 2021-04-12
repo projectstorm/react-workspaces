@@ -7,7 +7,7 @@ import { WorkspaceModel } from '../../core-models/WorkspaceModel';
 import { DirectionalLayoutWidget } from './DirectionalLayoutWidget';
 import { WorkspaceLayoutFactory } from '../../core/WorkspaceLayoutFactory';
 import { WorkspaceCollectionModel } from '../../core-models/WorkspaceCollectionModel';
-import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 
 export interface StandardLayoutWidgetProps {
 	node: WorkspaceNodeModel;
@@ -16,22 +16,22 @@ export interface StandardLayoutWidgetProps {
 }
 
 namespace S {
-	export const ExpandWidth = css`
-		width: 50%;
+	export const DirectionalLayout = styled(DirectionalLayoutWidget)<{ halveWidth: boolean }>`
+		${(p) => (p.halveWidth ? 'width: 50%' : '')};
 	`;
 }
 
 export class StandardLayoutWidget extends React.Component<StandardLayoutWidgetProps> {
 	getWrapper<T extends WorkspaceModel>(model: T, vertical: boolean, getContent: (model: T) => JSX.Element) {
 		return (
-			<DirectionalLayoutWidget
+			<S.DirectionalLayout
 				data={[model]}
 				generateElement={getContent}
 				expand={model.expandHorizontal}
 				engine={this.props.engine}
 				vertical={vertical}
 				key={model.id}
-				css={[!this.props.node.vertical && model.expandHorizontal && S.ExpandWidth]}
+				halveWidth={!this.props.node.vertical && model.expandHorizontal}
 				dropped={(index, dropped) => {
 					let node = new WorkspaceNodeModel();
 					node.setVertical(true);

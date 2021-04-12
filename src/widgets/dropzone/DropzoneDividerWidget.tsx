@@ -46,7 +46,7 @@ namespace S {
 		transition: width ${animation}, height ${animation};
 	`;
 
-	export const _Drop = css`
+	export const DropzoneLogic = styled(DropzoneLogicWidget)`
 		height: 100%;
 		width: 100%;
 	`;
@@ -83,8 +83,7 @@ export class DropzoneDividerWidget extends React.Component<DropzoneDividerWidget
 
 	getDropZone() {
 		return (
-			<DropzoneLogicWidget
-				css={S._Drop}
+			<S.DropzoneLogic
 				engine={this.props.engine}
 				onDrop={this.props.dropped}
 				onDragEnter={(entered) => {

@@ -5,7 +5,6 @@ import { StandardLayoutWidget } from '../../widgets/layouts/StandardLayoutWidget
 import { MicroLayoutWidget } from '../../widgets/layouts/MicroLayoutWidget';
 import { DraggableWidget } from '../../widgets/primitives/DraggableWidget';
 import styled from '@emotion/styled';
-import { css } from '@emotion/react';
 
 export interface TrayWidgetProps {
 	node: WorkspaceNodeModel;
@@ -27,8 +26,13 @@ namespace S {
 		${(p) => p.expand && `width: 50%`};
 	`;
 
-	export const Content = css`
+	export const MicroLayout = styled(MicroLayoutWidget)`
 		flex-grow: 1;
+	`;
+
+	export const StandardLayout = styled(StandardLayoutWidget)<{ height: number }>`
+		flex-grow: 1;
+		]max-height: calc(100% - ${(p) => p.height}px);
 	`;
 }
 
@@ -69,17 +73,13 @@ export class TrayWidget extends React.Component<TrayWidgetProps, TrayWidgetState
 
 	render() {
 		const expand = this.props.node.shouldExpand() && this.props.node.mode === 'expand';
-		const style = css`
-			max-height: calc(100% - ${this.state.height}px);
-			flex-grow: 1;
-		`;
 		return (
 			<S.Container className={this.props.className} expand={expand}>
 				{this.getHeader()}
 				{this.props.node.mode === 'micro' ? (
-					<MicroLayoutWidget css={S.Content} node={this.props.node} engine={this.props.engine} />
+					<S.MicroLayout node={this.props.node} engine={this.props.engine} />
 				) : (
-					<StandardLayoutWidget css={style} node={this.props.node} engine={this.props.engine} />
+					<S.StandardLayout height={this.state.height} node={this.props.node} engine={this.props.engine} />
 				)}
 			</S.Container>
 		);

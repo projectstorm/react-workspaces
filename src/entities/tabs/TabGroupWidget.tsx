@@ -4,7 +4,6 @@ import { WorkspaceEngine } from '../../core/WorkspaceEngine';
 import { WorkspacePanelFactory } from '../panel/WorkspacePanelFactory';
 import styled from '@emotion/styled';
 import { DraggableWidget } from '../../widgets/primitives/DraggableWidget';
-import { css } from '@emotion/react';
 import { PerformanceWidget } from '../../widgets/PerformanceWidget';
 
 export interface TabGroupWidgetProps {
@@ -26,7 +25,7 @@ namespace S {
 		height: 100%;
 	`;
 
-	export const Tabs = css`
+	export const Draggable = styled(DraggableWidget)`
 		display: flex;
 		flex-wrap: wrap;
 		flex-grow: 0;
@@ -67,9 +66,9 @@ export class TabGroupWidget extends React.Component<TabGroupWidgetProps, TabGrou
 
 		return (
 			<S.Container>
-				<DraggableWidget forwardRef={this.headerRef} css={S.Tabs} engine={this.props.engine} model={this.props.model}>
+				<S.Draggable forwardRef={this.headerRef} engine={this.props.engine} model={this.props.model}>
 					{this.props.tabs}
-				</DraggableWidget>
+				</S.Draggable>
 				<S.Content height={this.state.height}>
 					<PerformanceWidget
 						data={selected.toArray()}

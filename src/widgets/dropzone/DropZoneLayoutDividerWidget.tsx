@@ -60,7 +60,7 @@ namespace S {
 		);
 	`;
 
-	export const Drop = css`
+	export const Drop = styled(DropzoneLogicWidget)`
 		height: 100%;
 		width: 100%;
 	`;
@@ -102,8 +102,7 @@ export class DropZoneLayoutDividerWidget extends React.Component<
 					this.setState({ hoverActive: false });
 					this.props.hover && this.props.hover(false);
 				}}>
-				<DropzoneLogicWidget
-					css={S.Drop}
+				<S.Drop
 					engine={this.props.engine}
 					onDrop={(model) => {
 						this.props.dropped(model);

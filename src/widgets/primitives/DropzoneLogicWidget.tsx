@@ -42,7 +42,6 @@ export class DropzoneLogicWidget extends React.Component<DropzoneLogicWidgetProp
 						draggingNode.fromArray(object, this.props.engine);
 
 						// recursively update models because this is a clone operation
-						console.log(event.dataTransfer.effectAllowed);
 						if (event.dataTransfer.effectAllowed === 'copy') {
 							regenerateIDs(draggingNode);
 						}

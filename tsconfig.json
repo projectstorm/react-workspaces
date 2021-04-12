@@ -10,10 +10,11 @@
 		"suppressExcessPropertyErrors": true,
 		"esModuleInterop": true,
 		"noImplicitAny": false,
-		"sourceMap": true,
+    "moduleResolution": "Node",
+    "sourceMap": true,
 		"jsx": "react",
 		"target": "es6",
-		"module": "commonjs",
+		"module": "ES6",
 		"lib": [
 			"es2015",
 			"dom"
