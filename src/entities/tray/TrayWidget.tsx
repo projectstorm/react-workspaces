@@ -32,7 +32,7 @@ namespace S {
 
 	export const StandardLayout = styled(StandardLayoutWidget)<{ height: number }>`
 		flex-grow: 1;
-		]max-height: calc(100% - ${(p) => p.height}px);
+		max-height: calc(100% - ${(p) => p.height}px);
 	`;
 }
 
