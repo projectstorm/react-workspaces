@@ -12,6 +12,7 @@ import {
 	DefaultWorkspacePanelFactory,
 	DefaultWorkspacePanelModel
 } from '@projectstorm/react-workspaces-defaults';
+import 'typeface-open-sans';
 
 export interface Demo1State {
 	engine: WorkspaceEngine;
@@ -22,6 +23,7 @@ namespace S {
 	export const Container = styled.div`
 		background: rgb(70, 70, 70);
 		height: 100%;
+		font-family: 'Open Sans';
 	`;
 }
 
