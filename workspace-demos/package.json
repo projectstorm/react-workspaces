@@ -1,0 +1,26 @@
+{
+  "name": "@projectstorm/react-workspaces-demos",
+  "dependencies": {
+    "react": "^18.2.0",
+    "@emotion/styled": "^11.10.4",
+    "@projectstorm/react-workspaces-core": "2.0.0-alpha",
+    "@projectstorm/react-workspaces-defaults": "2.0.0-alpha"
+  },
+  "scripts": {
+    "storybook": "start-storybook"
+  },
+  "devDependencies": {
+    "@storybook/addon-essentials": "^6.5.6",
+    "@storybook/addons": "^6.5.6",
+    "@storybook/builder-webpack5": "^6.5.6",
+    "@storybook/manager-webpack5": "^6.5.6",
+    "@storybook/react": "^6.5.6",
+    "@storybook/theming": "^6.5.6",
+    "@types/node": "^17.0.39",
+    "@types/react": "18.0.10",
+    "@types/react-dom": "^18.0.5",
+    "react-dom": "18.1.0",
+    "source-map-loader": "^3.0.1",
+    "webpack": "^5.73.0"
+  }
+}

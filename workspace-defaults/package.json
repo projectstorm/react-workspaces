@@ -1,0 +1,18 @@
+{
+  "name": "@projectstorm/react-workspaces-defaults",
+  "version": "2.0.0-alpha",
+  "main": "./dist/index.js",
+  "types": "./dist/@types/index.d.ts",
+  "dependencies": {
+    "react": "^18.2.0",
+    "@emotion/styled": "^11.10.4",
+    "@emotion/react": "^11.10.4",
+    "@fortawesome/free-solid-svg-icons": "^6.2.0",
+    "@projectstorm/react-workspaces-core": "2.0.0-alpha",
+    "@fortawesome/react-fontawesome": "^0.2.0",
+    "@fortawesome/fontawesome-svg-core": "^6.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.21"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "declaration": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "sourceMap": true,
+    "inlineSources": true,
+    "preserveSymlinks": false,
+    "skipDefaultLibCheck": true,
+    "composite": true,
+    "incremental": true,
+    "jsx": "react",
+    "target": "ES6",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "lib": [
+      "ESNext",
+      "dom"
+    ]
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}

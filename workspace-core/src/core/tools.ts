@@ -1,0 +1,10 @@
+import { WorkspaceModel } from '../core-models/WorkspaceModel';
+import { WorkspaceCollectionModel } from '../core-models/WorkspaceCollectionModel';
+import { v4 } from 'uuid';
+
+export const regenerateIDs = (model: WorkspaceModel) => {
+	if (model instanceof WorkspaceCollectionModel) {
+		model.children.forEach((m) => regenerateIDs(m));
+	}
+	model.id = v4();
+};

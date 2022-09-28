@@ -19,11 +19,7 @@ module.exports = {
 				enforce: "pre",
 				test: /\.js$/,
 				loader: "source-map-loader"
-			},
-			{
-				test: /\.tsx?$/,
-				loader: 'ts-loader'
-			},
+			}
 		]
 	},
 	devtool: 'cheap-source-map',
@@ -37,8 +33,5 @@ module.exports = {
 				}
 			})
 		]
-	},
-	resolve: {
-		extensions: [".tsx", ".ts", ".js"]
 	}
 };

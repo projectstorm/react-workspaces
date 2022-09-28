@@ -1,0 +1,21 @@
+{
+  "name": "@projectstorm/react-workspaces-core",
+  "version": "2.0.0-alpha",
+  "main": "./dist/index.js",
+  "types": "./dist/@types/index.d.ts",
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "@emotion/styled": "^11.10.4",
+    "@emotion/react": "^11.10.4",
+    "lodash": "^4.17.21",
+    "color": "^4.2.3",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.21",
+    "@types/react-dom": "^18.0.6",
+    "@types/lodash": "^4.14.185",
+    "@types/uuid": "^8.3.4"
+  }
+}
