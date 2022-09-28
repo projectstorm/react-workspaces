@@ -19,7 +19,9 @@ export const useResizeObserver = (props: UseResizeObserverProps) => {
 		});
 		resizeObserver.observe(props.forwardRef.current);
 		return () => {
-			resizeObserver.unobserve(props.forwardRef.current);
+			if (props.forwardRef.current) {
+				resizeObserver.unobserve(props.forwardRef.current);
+			}
 			resizeObserver.disconnect();
 		};
 	}, []);

@@ -22,7 +22,10 @@ export interface Demo1State {
 namespace S {
 	export const Container = styled.div`
 		background: rgb(70, 70, 70);
+		position: absolute;
 		height: 100%;
+		width: 100%;
+		overflow: hidden;
 		font-family: 'Open Sans';
 	`;
 }
@@ -36,6 +39,7 @@ export class Demo1Stories extends React.Component<any, Demo1State> {
 		engine.registerFactory(new DefaultTrayFactory());
 
 		let model = new WorkspaceNodeModel();
+		model.setHorizontal(true);
 		model
 
 			//left panel
