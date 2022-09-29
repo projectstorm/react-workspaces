@@ -33,13 +33,16 @@ namespace S {
 }
 
 export const WorkspaceWidget: React.FC<WorkspaceWidgetProps> = (props) => {
-	const [timerListener, setTimerListener] = useState(null);
-
 	const ref_container = useRef<HTMLDivElement>();
 	const ref_floating = useRef<HTMLDivElement>();
 
+	const timerListener = useRef(null);
+
 	const forceUpdate = useForceUpdate();
 	const [dimensionContainer] = useState(() => {
+		return new DimensionContainer();
+	});
+	const [floatingContainer] = useState(() => {
 		return new DimensionContainer();
 	});
 
@@ -48,7 +51,15 @@ export const WorkspaceWidget: React.FC<WorkspaceWidgetProps> = (props) => {
 		dimension: dimensionContainer
 	});
 
+	useResizeObserver({
+		forwardRef: ref_floating,
+		dimension: floatingContainer
+	});
+
 	useEffect(() => {
+		props.engine.setWorkspaceContainer(dimensionContainer);
+		props.engine.setFloatingContainer(floatingContainer);
+
 		props.engine.floatingContainerRef = ref_floating;
 		props.engine.registerListener({
 			repaint: () => {
@@ -67,16 +78,14 @@ export const WorkspaceWidget: React.FC<WorkspaceWidgetProps> = (props) => {
 			<S.Container
 				ref={ref_container}
 				onDragOver={(event) => {
-					if (timerListener) {
-						clearTimeout(timerListener);
-						setTimerListener(null);
+					if (timerListener.current) {
+						clearTimeout(timerListener.current);
+						timerListener.current = null;
 					}
 
-					setTimerListener(
-						setTimeout(() => {
-							props.engine.setDraggingNode(null);
-						}, 200)
-					);
+					timerListener.current = setTimeout(() => {
+						props.engine.setDraggingNode(null);
+					}, 200);
 
 					if (props.engine.draggingID) {
 						return;

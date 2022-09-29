@@ -37,7 +37,7 @@ export class DimensionContainer extends BaseObserver<DimensionContainerListener>
 	update(dim: Partial<Dimension>) {
 		let dirty = false;
 		for (let i in dim) {
-			if (this.dimensions[i] === dim[i]) {
+			if (this.dimensions[i] !== dim[i]) {
 				this.dimensions[i] = dim[i];
 				dirty = true;
 			}

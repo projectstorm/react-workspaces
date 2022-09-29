@@ -80,7 +80,12 @@ export class Demo1Stories extends React.Component<any, Demo1State> {
 	render() {
 		return (
 			<S.Container>
-				<WorkspaceWidget engine={this.state.engine} model={this.state.model} />
+				<WorkspaceWidget
+					engine={this.state.engine}
+					model={this.state.model}
+					dividerColor="rgb(0,192,255)"
+					dividerColorActive="rgb(192,255,0)"
+				/>
 			</S.Container>
 		);
 	}
