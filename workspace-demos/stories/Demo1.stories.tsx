@@ -5,7 +5,8 @@ import {
 	WorkspaceNodeModel,
 	WorkspaceTabbedModel,
 	WorkspaceTabFactory,
-	WorkspaceWidget
+	WorkspaceWidget,
+	ResizeOverlayWidget
 } from '@projectstorm/react-workspaces-core';
 import {
 	DefaultTrayFactory,
@@ -90,6 +91,22 @@ export class Demo1Stories extends React.Component<any, Demo1State> {
 		);
 	}
 }
+
+export const ResizeHorizontal = () => {
+	return (
+		<S.Container>
+			<ResizeOverlayWidget vertical={false} />
+		</S.Container>
+	);
+};
+
+export const ResizeVertical = () => {
+	return (
+		<S.Container>
+			<ResizeOverlayWidget vertical={true} />
+		</S.Container>
+	);
+};
 
 export const Comp = () => {
 	return <Demo1Stories />;

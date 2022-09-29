@@ -1,10 +1,13 @@
 export * from './widgets/WorkspaceWidget';
 export * from './widgets/primitives/DraggableWidget';
 export * from './widgets/FloatingPanelWidget';
-export * from './widgets/dropzone/DropZoneLayoutDividerWidget';
 
 export * from './widgets/layouts/MicroLayoutWidget';
 export * from './widgets/layouts/StandardLayoutWidget';
+
+export * from './widgets/dropzone/DropZoneLayoutDividerWidget';
+
+export * from './widgets/ResizeOverlayWidget';
 
 export * from './entities/panel/WorkspacePanelFactory';
 export * from './entities/panel/PanelWidget';

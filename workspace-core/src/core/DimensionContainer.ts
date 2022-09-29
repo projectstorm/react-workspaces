@@ -56,6 +56,13 @@ export class DimensionContainer extends BaseObserver<DimensionContainerListener>
 		};
 	}
 
+	getRelativeMousePosition(position: { clientX: number; clientY: number }): { clientX: number; clientY: number } {
+		return {
+			clientX: position.clientX - this.dimensions.left,
+			clientY: position.clientY - this.dimensions.top
+		};
+	}
+
 	getRelativeElementPosition(element: HTMLElement): RawPosition {
 		let rect = element.getBoundingClientRect();
 		return this.getRelativePosition(_.pick(rect, ['top', 'left', 'bottom', 'right']));

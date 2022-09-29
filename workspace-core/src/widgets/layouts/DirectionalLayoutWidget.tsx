@@ -30,6 +30,7 @@ export class DirectionalLayoutWidget extends React.Component<DirectionalLayoutWi
 		return (
 			<S.Container className={this.props.className} expand={this.props.expand} vertical={this.props.vertical}>
 				<DropZoneLayoutDividerWidget
+					allowResizing={false}
 					vertical={!this.props.vertical}
 					disallow={!this.props.dropZoneAllowed(0)}
 					dropped={(model) => {
@@ -43,6 +44,7 @@ export class DirectionalLayoutWidget extends React.Component<DirectionalLayoutWi
 						<React.Fragment key={model.id}>
 							{this.props.generateElement(model)}
 							<DropZoneLayoutDividerWidget
+								allowResizing={index !== this.props.data.length - 1}
 								vertical={!this.props.vertical}
 								disallow={!this.props.dropZoneAllowed(index + 1)}
 								dropped={(droppedModel) => {

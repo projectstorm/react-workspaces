@@ -13,6 +13,7 @@ export interface DropZoneLayoutDividerWidgetProps {
 	hover?: (entered: boolean) => any;
 	engine: WorkspaceEngine;
 	disallow?: boolean;
+	allowResizing: boolean;
 	vertical: boolean;
 }
 
@@ -65,7 +66,7 @@ namespace S {
 		width: 100%;
 	`;
 
-	export const DropZone = styled.div<{ active: boolean; color: string }>`
+	export const DropZone = styled.div<{ active: boolean; color: string; vertical: boolean; allowResizing: boolean }>`
 		transition: opacity 0.2s;
 		pointer-events: all;
 		min-width: ${threshold}px;
@@ -74,6 +75,10 @@ namespace S {
 		position: relative;
 		opacity: ${(p) => (p.active ? 1.0 : 0)};
 		background: ${(p) => p.color};
+
+		&:hover {
+			cursor: ${(p) => (p.allowResizing ? (p.vertical ? 'col-resize' : 'row-resize') : 'inherit')};
+		}
 	`;
 }
 
@@ -132,6 +137,8 @@ export class DropZoneLayoutDividerWidget extends React.Component<
 				{(colors) => {
 					return (
 						<S.DropZone
+							allowResizing={this.props.allowResizing}
+							vertical={this.props.vertical}
 							active={!this.props.disallow && !!this.props.engine.draggingID}
 							color={this.state.hoverActive ? colors.active : colors.hint}
 						>
