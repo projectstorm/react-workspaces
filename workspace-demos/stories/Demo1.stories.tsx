@@ -6,7 +6,8 @@ import {
 	WorkspaceTabbedModel,
 	WorkspaceTabFactory,
 	WorkspaceWidget,
-	ResizeOverlayWidget
+	ResizeOverlayWidget,
+	DebugLayer
 } from '@projectstorm/react-workspaces-core';
 import {
 	DefaultTrayFactory,
@@ -38,6 +39,7 @@ export class Demo1Stories extends React.Component<any, Demo1State> {
 		engine.registerFactory(new WorkspaceTabFactory());
 		engine.registerFactory(new DefaultWorkspacePanelFactory());
 		engine.registerFactory(new DefaultTrayFactory());
+		engine.layerManager.addLayer(new DebugLayer());
 
 		let model = new WorkspaceNodeModel();
 		model.setHorizontal(true);

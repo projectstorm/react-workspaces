@@ -2,6 +2,7 @@ import { WorkspaceModel, SerializedModel, WorkspaceModelListener } from './Works
 import { WorkspaceEngine } from '../core/WorkspaceEngine';
 import { WorkspaceCollectionInterface } from './WorkspaceCollectionInterface';
 import { WorkspaceFactory } from '../core/WorkspaceFactory';
+import * as _ from 'lodash';
 
 export interface SerializedCollectionModel extends SerializedModel {
 	children: SerializedModel[];
@@ -58,6 +59,11 @@ export class WorkspaceCollectionModel<
 
 	isLastModel(model: T): boolean {
 		return this.children[this.children.length - 1].id === model.id;
+	}
+
+	flatten() {
+		const children = _.flatMap(this.children.map((c) => c.flatten()));
+		return super.flatten().concat(children);
 	}
 
 	getFlattened(): WorkspaceModel[] {

@@ -3,8 +3,10 @@ import styled from '@emotion/styled';
 import { useEffect, useRef, useState } from 'react';
 import { DimensionContainer } from '../core/DimensionContainer';
 import { useResizeObserver } from './hooks/useResizeObserver';
+
 export interface ResizeOverlayWidgetProps {
 	vertical: boolean;
+	onClick?: (event: { max: number; value: number }) => any;
 }
 
 const THICKNESS = 4;
@@ -32,9 +34,18 @@ export const ResizeOverlayWidget: React.FC<ResizeOverlayWidgetProps> = (props) =
 			}
 		};
 
+		const click = (event: MouseEvent) => {
+			props.onClick?.({
+				max: props.vertical ? dimension.dimensions.width : dimension.dimensions.height,
+				value: position
+			});
+		};
+
 		ref.current.addEventListener('mousemove', mouseMove);
+		ref.current.addEventListener('mousedown', click);
 		return () => {
 			ref.current?.removeEventListener('mousemove', mouseMove);
+			ref.current?.removeEventListener('mousedown', click);
 		};
 	}, []);
 

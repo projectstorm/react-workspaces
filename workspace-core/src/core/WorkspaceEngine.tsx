@@ -5,6 +5,7 @@ import { WorkspaceModel } from '../core-models/WorkspaceModel';
 import { WorkspaceEngineInterface } from './WorkspaceEngineInterface';
 import { BaseListener, BaseObserver } from './BaseObserver';
 import { DimensionContainer } from './DimensionContainer';
+import { LayerManager } from '../widgets/layers/LayerManager';
 
 export interface WorkspaceEngineListener extends BaseListener {
 	repaint?: () => any;
@@ -29,6 +30,7 @@ export class WorkspaceEngine extends BaseObserver<WorkspaceEngineListener> imple
 	fireModelUpdateEvent: boolean;
 	repainting: boolean;
 	dragAndDropEnabled: boolean;
+	layerManager: LayerManager;
 
 	// dimensions
 	workspaceContainer: DimensionContainer;
@@ -45,6 +47,7 @@ export class WorkspaceEngine extends BaseObserver<WorkspaceEngineListener> imple
 		this.fullscreenModel = null;
 		this.dragAndDropEnabled = true;
 		this.floatingContainerRef = null;
+		this.layerManager = new LayerManager();
 	}
 
 	setWorkspaceContainer(workspaceContainer: DimensionContainer) {

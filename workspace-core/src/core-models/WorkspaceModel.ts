@@ -2,6 +2,7 @@ import { WorkspaceEngineInterface } from '../core/WorkspaceEngineInterface';
 import { WorkspaceCollectionInterface } from './WorkspaceCollectionInterface';
 import { v4 } from 'uuid';
 import { BaseListener, BaseObserver } from '../core/BaseObserver';
+import { DimensionContainer } from '../core/DimensionContainer';
 
 export interface SerializedModel {
 	id: string;
@@ -11,7 +12,8 @@ export interface SerializedModel {
 }
 
 export interface WorkspaceModelListener extends BaseListener {
-	removed?: (node: WorkspaceModel) => any;
+	removed?: () => any;
+	visibilityChanged?: () => any;
 }
 
 export class WorkspaceModel<
@@ -24,6 +26,10 @@ export class WorkspaceModel<
 	parent: WorkspaceCollectionInterface & WorkspaceModel;
 	type: string;
 
+	// render properties
+	r_dimensions: DimensionContainer;
+	r_visible: boolean;
+
 	constructor(type: string) {
 		super();
 		this.type = type;
@@ -32,18 +38,28 @@ export class WorkspaceModel<
 		this.expandHorizontal = true;
 		this.expandVertical = true;
 		this.listeners = {};
+		this.r_visible = false;
+		this.r_dimensions = new DimensionContainer();
 	}
 
-	fireNodeRemoved(node: WorkspaceModel) {
+	setVisible(visible: boolean) {
+		if (this.r_visible === visible) {
+			return;
+		}
+		this.r_visible = visible;
+		this.iterateListeners((cb) => cb.visibilityChanged?.());
+	}
+
+	fireNodeRemoved() {
 		this.iterateListeners((list) => {
 			if (list.removed) {
-				list.removed(node);
+				list.removed();
 			}
 		});
 	}
 
 	delete() {
-		this.fireNodeRemoved(this);
+		this.fireNodeRemoved();
 	}
 
 	hasParentID(parentID: string): boolean {
@@ -64,6 +80,10 @@ export class WorkspaceModel<
 		this.expandHorizontal = horizontal;
 		this.expandVertical = vertical;
 		return this;
+	}
+
+	flatten(): WorkspaceModel[] {
+		return [this];
 	}
 
 	toArray(): T {

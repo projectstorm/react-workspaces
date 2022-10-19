@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { DimensionContainer } from '../../core/DimensionContainer';
 import { useCallback, useEffect } from 'react';
+import { useWindowResize } from './useWindowResize';
 
 export interface UseResizeObserverProps {
 	dimension: DimensionContainer;
@@ -12,6 +13,11 @@ export const useResizeObserver = (props: UseResizeObserverProps) => {
 		let dims = props.forwardRef.current.getBoundingClientRect();
 		props.dimension.update(dims);
 	}, []);
+
+	useWindowResize({
+		resized: update
+	});
+
 	useEffect(() => {
 		update();
 		const resizeObserver = new ResizeObserver(() => {

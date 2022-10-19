@@ -5,6 +5,8 @@ import { WorkspacePanelFactory } from './WorkspacePanelFactory';
 import { WorkspaceModel } from '../../core-models/WorkspaceModel';
 import styled from '@emotion/styled';
 import { PerformanceWidget } from '../../widgets/PerformanceWidget';
+import { useResizeObserver } from '../../widgets/hooks/useResizeObserver';
+import { useModelElement } from '../../widgets/hooks/useModelElement';
 
 export interface PanelWidgetProps {
 	model: WorkspaceModel;
@@ -31,39 +33,39 @@ namespace S {
 	`;
 }
 
-export class PanelWidget extends React.Component<PanelWidgetProps> {
-	render() {
-		let factory: WorkspacePanelFactory;
-		try {
-			factory = this.props.engine.getFactory<WorkspacePanelFactory>(this.props.model);
-			return (
-				<S.Container expand={this.props.expand}>
-					<DraggableWidget model={this.props.model} engine={this.props.engine}>
-						{factory.generatePanelTitle({
-							model: this.props.model,
-							engine: this.props.engine
-						})}
-					</DraggableWidget>
-					<S.Content>
-						<PerformanceWidget
-							key={this.props.model.id}
-							engine={this.props.engine}
-							data={this.props.model.toArray()}
-							children={() => {
-								return factory.generatePanelContent({
-									model: this.props.model,
-									engine: this.props.engine
-								});
-							}}
-						/>
-					</S.Content>
-				</S.Container>
-			);
-		} catch (ex) {
-			if ((ex as WorkspaceEngineError)._is__storm_workspaces_error_) {
-				this.props.model.delete();
-			}
-			return null;
+export const PanelWidget: React.FC<PanelWidgetProps> = (props) => {
+	const ref = useModelElement({
+		model: props.model
+	});
+	try {
+		const factory = props.engine.getFactory<WorkspacePanelFactory>(props.model);
+		return (
+			<S.Container ref={ref} expand={props.expand}>
+				<DraggableWidget model={props.model} engine={props.engine}>
+					{factory.generatePanelTitle({
+						model: props.model,
+						engine: props.engine
+					})}
+				</DraggableWidget>
+				<S.Content>
+					<PerformanceWidget
+						key={props.model.id}
+						engine={props.engine}
+						data={props.model.toArray()}
+						children={() => {
+							return factory.generatePanelContent({
+								model: props.model,
+								engine: props.engine
+							});
+						}}
+					/>
+				</S.Content>
+			</S.Container>
+		);
+	} catch (ex) {
+		if ((ex as WorkspaceEngineError)._is__storm_workspaces_error_) {
+			props.model.delete();
 		}
+		return null;
 	}
-}
+};

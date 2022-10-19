@@ -9,6 +9,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useForceUpdate } from './hooks/useForceUpdate';
 import { DimensionContainer } from '../core/DimensionContainer';
 import { useResizeObserver } from './hooks/useResizeObserver';
+import { LayerManagerWidget } from './layers/LayerManagerWidget';
 
 export interface WorkspaceWidgetProps {
 	model: WorkspaceNodeModel;
@@ -27,6 +28,11 @@ namespace S {
 	export const Floating = styled.div`
 		position: absolute;
 		pointer-events: none;
+		width: 100%;
+		height: 100%;
+	`;
+
+	export const LayerManager = styled(LayerManagerWidget)`
 		width: 100%;
 		height: 100%;
 	`;
@@ -100,6 +106,7 @@ export const WorkspaceWidget: React.FC<WorkspaceWidgetProps> = (props) => {
 					<StandardLayoutWidget node={props.model} engine={props.engine} />
 				)}
 				<S.Floating ref={ref_floating} />
+				<S.LayerManager engine={props.engine} layerManager={props.engine.layerManager} model={props.model} />
 			</S.Container>
 		</DividerContext.Provider>
 	);
