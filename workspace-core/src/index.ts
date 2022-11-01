@@ -30,3 +30,5 @@ export * from './core/WorkspaceFactory';
 
 export * from './widgets/layers/LayerManager';
 export * from './widgets/layers/debug/DebugLayer';
+
+export * from './widgets/layers/dropzone/DropZoneLayer';

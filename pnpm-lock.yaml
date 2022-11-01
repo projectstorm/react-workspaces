@@ -71,9 +71,11 @@ importers:
       '@storybook/manager-webpack5': ^6.5.12
       '@storybook/react': ^6.5.12
       '@storybook/theming': ^6.5.12
+      '@types/lodash': ^4.14.187
       '@types/node': ^18.7.23
       '@types/react': 18.0.21
       '@types/react-dom': ^18.0.6
+      lodash: ^4.17.21
       react: ^18.2.0
       react-dom: 18.2.0
       source-map-loader: ^4.0.0
@@ -83,6 +85,7 @@ importers:
       '@emotion/styled': 11.10.4_iapumuv4e6jcjznwuxpf4tt22e
       '@projectstorm/react-workspaces-core': link:../workspace-core
       '@projectstorm/react-workspaces-defaults': link:../workspace-defaults
+      lodash: 4.17.21
       react: 18.2.0
       typeface-open-sans: 1.1.13
     devDependencies:
@@ -92,6 +95,7 @@ importers:
       '@storybook/manager-webpack5': 6.5.12_biqbaboplfbrettd7655fr4n2y
       '@storybook/react': 6.5.12_vz244hcnvsmefml6anv3qxg3my
       '@storybook/theming': 6.5.12_biqbaboplfbrettd7655fr4n2y
+      '@types/lodash': 4.14.187
       '@types/node': 18.7.23
       '@types/react': 18.0.21
       '@types/react-dom': 18.0.6
@@ -3514,7 +3518,7 @@ packages:
       '@babel/preset-env': 7.13.10
       '@babel/types': 7.19.0
       '@mdx-js/mdx': 1.6.22
-      '@types/lodash': 4.14.186
+      '@types/lodash': 4.14.187
       js-string-escape: 1.0.1
       loader-utils: 2.0.0
       lodash: 4.17.21
@@ -3533,7 +3537,7 @@ packages:
       '@babel/preset-env': 7.13.10_@babel+core@7.19.1
       '@babel/types': 7.19.0
       '@mdx-js/mdx': 1.6.22
-      '@types/lodash': 4.14.186
+      '@types/lodash': 4.14.187
       js-string-escape: 1.0.1
       loader-utils: 2.0.0
       lodash: 4.17.21
@@ -3902,6 +3906,10 @@ packages:
 
   /@types/lodash/4.14.186:
     resolution: {integrity: sha512-eHcVlLXP0c2FlMPm56ITode2AgLMSa6aJ05JTTbYbI+7EMkCEE5qk2E41d5g2lCVTqRe0GnnRFurmlCsDODrPw==}
+    dev: true
+
+  /@types/lodash/4.14.187:
+    resolution: {integrity: sha512-MrO/xLXCaUgZy3y96C/iOsaIqZSeupyTImKClHunL5GrmaiII2VwvWmLBu2hwa0Kp0sV19CsyjtrTc/Fx8rg/A==}
     dev: true
 
   /@types/mdast/3.0.10:

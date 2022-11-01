@@ -12,10 +12,14 @@ export interface RenderLayerEvent {
 	model: WorkspaceModel;
 }
 
+export interface LayerOptions {
+	mouseEvents: boolean;
+}
+
 export abstract class Layer extends BaseObserver<LayerListener> {
 	id: string;
 
-	constructor() {
+	constructor(public options: LayerOptions) {
 		super();
 		this.id = v4();
 	}

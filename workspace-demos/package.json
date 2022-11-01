@@ -7,10 +7,12 @@
     "react": "^18.2.0",
     "typeface-open-sans": "^1.1.13",
     "@emotion/styled": "^11.10.4",
+    "lodash": "^4.17.21",
     "@projectstorm/react-workspaces-core": "2.0.0-alpha",
     "@projectstorm/react-workspaces-defaults": "2.0.0-alpha"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.187",
     "@storybook/addon-essentials": "^6.5.12",
     "@storybook/addons": "^6.5.12",
     "@storybook/builder-webpack5": "^6.5.12",
