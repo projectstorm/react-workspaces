@@ -20,12 +20,12 @@ export class WorkspaceCollectionModel<
 	extends WorkspaceModel<S, WorkspaceCollectionModelListener>
 	implements WorkspaceCollectionInterface {
 	children: T[];
-	childrenListeners: (() => any)[];
+	childrenListeners: Set<() => any>;
 
 	constructor(type: string) {
 		super(type);
 		this.children = [];
-		this.childrenListeners = [];
+		this.childrenListeners = new Set();
 	}
 
 	fromArray(payload: S, engine: WorkspaceEngine) {
@@ -117,16 +117,20 @@ export class WorkspaceCollectionModel<
 		model.setParent(this);
 
 		// allow a child to remove itself
-		this.childrenListeners.push(
-			model.registerListener({
-				removed: () => {
-					this.removeModel(model);
-					this.iterateListeners((list) => {
-						list.childRemoved?.(model);
-					});
-				}
-			})
-		);
+		const listener = model.registerListener({
+			removed: () => {
+				listener();
+				this.childrenListeners.delete(listener);
+				this.removeModel(model);
+				this.iterateListeners((list) => {
+					list.childRemoved?.(model);
+				});
+			},
+			layoutInvalidated: () => {
+				this.invalidateLayout();
+			}
+		});
+		this.childrenListeners.add(listener);
 
 		if (position === null) {
 			this.children.push(model);

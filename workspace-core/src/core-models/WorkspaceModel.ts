@@ -13,6 +13,7 @@ export interface SerializedModel {
 
 export interface WorkspaceModelListener extends BaseListener {
 	removed?: () => any;
+	layoutInvalidated?: () => any;
 	visibilityChanged?: () => any;
 }
 
@@ -40,6 +41,10 @@ export class WorkspaceModel<
 		this.listeners = {};
 		this.r_visible = false;
 		this.r_dimensions = new DimensionContainer();
+	}
+
+	invalidateLayout() {
+		this.iterateListeners((cb) => cb.layoutInvalidated?.());
 	}
 
 	setVisible(visible: boolean) {

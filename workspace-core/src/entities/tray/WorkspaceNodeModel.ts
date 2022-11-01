@@ -59,6 +59,7 @@ export class WorkspaceNodeModel extends WorkspaceCollectionModel {
 
 	setMode(mode: WorkspaceNodeModelMode): this {
 		this.mode = mode;
+		this.invalidateLayout();
 		return this;
 	}
 

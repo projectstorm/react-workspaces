@@ -52,6 +52,14 @@ export const WorkspaceWidget: React.FC<WorkspaceWidgetProps> = (props) => {
 		return new DimensionContainer();
 	});
 
+	useEffect(() => {
+		props.engine.fireRepainted();
+	});
+
+	useEffect(() => {
+		props.engine.setRootModel(props.model);
+	}, [props.model]);
+
 	useResizeObserver({
 		forwardRef: ref_container,
 		dimension: dimensionContainer
@@ -68,6 +76,9 @@ export const WorkspaceWidget: React.FC<WorkspaceWidgetProps> = (props) => {
 
 		props.engine.floatingContainerRef = ref_floating;
 		props.engine.registerListener({
+			layoutInvalidated: () => {
+				forceUpdate();
+			},
 			repaint: () => {
 				forceUpdate();
 			}

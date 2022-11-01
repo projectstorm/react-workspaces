@@ -5,7 +5,6 @@ import { WorkspacePanelFactory } from './WorkspacePanelFactory';
 import { WorkspaceModel } from '../../core-models/WorkspaceModel';
 import styled from '@emotion/styled';
 import { PerformanceWidget } from '../../widgets/PerformanceWidget';
-import { useResizeObserver } from '../../widgets/hooks/useResizeObserver';
 import { useModelElement } from '../../widgets/hooks/useModelElement';
 
 export interface PanelWidgetProps {
@@ -35,7 +34,8 @@ namespace S {
 
 export const PanelWidget: React.FC<PanelWidgetProps> = (props) => {
 	const ref = useModelElement({
-		model: props.model
+		model: props.model,
+		engine: props.engine
 	});
 	try {
 		const factory = props.engine.getFactory<WorkspacePanelFactory>(props.model);

@@ -1,21 +1,29 @@
-import { v1 } from 'uuid';
+import { v4 } from 'uuid';
 
 export interface BaseObserverInterface<T extends BaseListener> {
-	registerListener(listener: Partial<T>): () => void;
+	registerListener(listener: Partial<T>, meta?: any): () => void;
 }
 
 export interface BaseListener {}
 
 export class BaseObserver<T extends BaseListener> implements BaseObserverInterface<T> {
-	protected listeners: { [id: string]: Partial<T> };
+	protected listeners: {
+		[id: string]: {
+			l: Partial<T>;
+			meta: any;
+		};
+	};
 
 	constructor() {
 		this.listeners = {};
 	}
 
-	registerListener(listener: Partial<T>): () => void {
-		const id = v1();
-		this.listeners[id] = listener;
+	registerListener(listener: Partial<T>, meta?: any): () => void {
+		const id = v4();
+		this.listeners[id] = {
+			l: listener,
+			meta
+		};
 		return () => {
 			delete this.listeners[id];
 		};
@@ -23,7 +31,7 @@ export class BaseObserver<T extends BaseListener> implements BaseObserverInterfa
 
 	iterateListeners(cb: (listener: Partial<T>) => any) {
 		for (let i in this.listeners) {
-			cb(this.listeners[i]);
+			cb(this.listeners[i].l);
 		}
 	}
 }

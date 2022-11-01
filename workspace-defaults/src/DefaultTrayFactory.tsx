@@ -15,7 +15,6 @@ export class DefaultTrayFactory extends WorkspaceTrayFactory {
 			<S.Tray
 				onDoubleClick={() => {
 					event.model.setMode(event.model.mode === 'micro' ? 'expand' : 'micro');
-					event.engine.fireRepaintListeners();
 				}}
 			/>
 		);

@@ -11,6 +11,8 @@ export interface WorkspaceEngineListener extends BaseListener {
 	repaint?: () => any;
 	draggingElement?: (model: WorkspaceModel, dragging: boolean) => any;
 	modelUpdated?: () => any;
+	layoutInvalidated: () => any;
+	layoutRepainted: () => any;
 }
 
 export class WorkspaceEngineError extends Error {
@@ -27,10 +29,10 @@ export class WorkspaceEngine extends BaseObserver<WorkspaceEngineListener> imple
 	factories: { [type: string]: WorkspaceFactory };
 	draggingID: string;
 	fullscreenModel: WorkspaceModel;
+	layerManager: LayerManager;
 	fireModelUpdateEvent: boolean;
 	repainting: boolean;
 	dragAndDropEnabled: boolean;
-	layerManager: LayerManager;
 
 	// dimensions
 	workspaceContainer: DimensionContainer;
@@ -38,6 +40,10 @@ export class WorkspaceEngine extends BaseObserver<WorkspaceEngineListener> imple
 
 	//refs
 	floatingContainerRef: React.RefObject<HTMLDivElement>;
+
+	// root
+	public rootModel: WorkspaceModel;
+	private rootModelListener: () => any;
 
 	constructor() {
 		super();
@@ -48,6 +54,25 @@ export class WorkspaceEngine extends BaseObserver<WorkspaceEngineListener> imple
 		this.dragAndDropEnabled = true;
 		this.floatingContainerRef = null;
 		this.layerManager = new LayerManager();
+		this.rootModel = null;
+	}
+
+	setRootModel(model: WorkspaceModel) {
+		this.rootModelListener?.();
+		this.rootModelListener = model.registerListener({
+			layoutInvalidated: () => {
+				this.invalidateLayout();
+			}
+		});
+		this.rootModel = model;
+	}
+
+	fireRepainted() {
+		this.iterateListeners((cb) => cb.layoutRepainted?.());
+	}
+
+	invalidateLayout() {
+		this.iterateListeners((cb) => cb.layoutInvalidated?.());
 	}
 
 	setWorkspaceContainer(workspaceContainer: DimensionContainer) {
