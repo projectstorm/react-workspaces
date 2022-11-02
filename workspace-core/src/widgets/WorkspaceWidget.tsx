@@ -10,7 +10,8 @@ import { useForceUpdate } from './hooks/useForceUpdate';
 import { DimensionContainer } from '../core/DimensionContainer';
 import { useResizeObserver } from './hooks/useResizeObserver';
 import { LayerManagerWidget } from './layers/LayerManagerWidget';
-import { DraggableWidget } from './primitives/DraggableWidget';
+import { useDragOverModel } from './hooks/dnd-model/useDragOverModel';
+import { UseMouseDragEventsRootWidget } from './hooks/dnd/useMouseDragEvents';
 
 export interface WorkspaceWidgetProps {
 	model: WorkspaceNodeModel;
@@ -86,40 +87,45 @@ export const WorkspaceWidget: React.FC<WorkspaceWidgetProps> = (props) => {
 		});
 	}, []);
 
+	useDragOverModel({
+		forwardRef: ref_container,
+		// don't accept the drag, but use it for data
+		accept: false,
+		dragOver: ({ modelID }) => {
+			if (timerListener.current) {
+				clearTimeout(timerListener.current);
+				timerListener.current = null;
+			}
+
+			timerListener.current = setTimeout(() => {
+				props.engine.setDraggingNode(null);
+			}, 200);
+
+			if (props.engine.draggingID) {
+				return;
+			}
+			props.engine.setDraggingNode(modelID);
+		}
+	});
+
 	return (
-		<DividerContext.Provider
-			value={{
-				hint: props.dividerColor,
-				active: props.dividerColorActive
-			}}
-		>
-			<S.Container
-				ref={ref_container}
-				onDragOver={(event) => {
-					if (timerListener.current) {
-						clearTimeout(timerListener.current);
-						timerListener.current = null;
-					}
-
-					timerListener.current = setTimeout(() => {
-						props.engine.setDraggingNode(null);
-					}, 200);
-
-					if (props.engine.draggingID) {
-						return;
-					}
-					let id = props.engine.getDropEventModelID(event);
-					props.engine.setDraggingNode(id);
+		<UseMouseDragEventsRootWidget forwardRef={ref_container}>
+			<DividerContext.Provider
+				value={{
+					hint: props.dividerColor,
+					active: props.dividerColorActive
 				}}
 			>
-				{props.engine.fullscreenModel ? (
-					<PanelWidget expand={true} model={props.engine.fullscreenModel} engine={props.engine} />
-				) : (
-					<StandardLayoutWidget node={props.model} engine={props.engine} />
-				)}
-				<S.Floating ref={ref_floating} />
-				<S.LayerManager engine={props.engine} layerManager={props.engine.layerManager} model={props.model} />
-			</S.Container>
-		</DividerContext.Provider>
+				<S.Container ref={ref_container}>
+					{props.engine.fullscreenModel ? (
+						<PanelWidget expand={true} model={props.engine.fullscreenModel} engine={props.engine} />
+					) : (
+						<StandardLayoutWidget node={props.model} engine={props.engine} />
+					)}
+					<S.Floating ref={ref_floating} />
+					<S.LayerManager engine={props.engine} layerManager={props.engine.layerManager} model={props.model} />
+				</S.Container>
+			</DividerContext.Provider>
+		</UseMouseDragEventsRootWidget>
 	);
 };

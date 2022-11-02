@@ -3,6 +3,7 @@ import { WorkspaceCollectionInterface } from './WorkspaceCollectionInterface';
 import { v4 } from 'uuid';
 import { BaseListener, BaseObserver } from '../core/BaseObserver';
 import { DimensionContainer } from '../core/DimensionContainer';
+import { Alignment } from '../core/tools';
 
 export interface SerializedModel {
 	id: string;
@@ -61,6 +62,13 @@ export class WorkspaceModel<
 				list.removed();
 			}
 		});
+	}
+
+	getSibling(alignment: Alignment): WorkspaceModel | null {
+		if (this.parent) {
+			return this.parent.getChildSibling(this, alignment);
+		}
+		return null;
 	}
 
 	delete() {

@@ -11,11 +11,6 @@ import {
 } from '@projectstorm/react-workspaces-core';
 import { DropZoneAlignmentButtonWidget } from './DropZoneAlignmentButtonWidget';
 
-export const DropZoneDragContext = React.createContext<{
-	increment: () => any;
-	decrement: () => any;
-}>(null);
-
 export interface DropZoneLayerPanelWidgetProps {
 	model: WorkspaceModel;
 	engine: WorkspaceEngine;
@@ -38,10 +33,10 @@ export const DropZoneLayerPanelWidget: React.FC<DropZoneLayerPanelWidgetProps> =
 			<S.DimensionTracking entered={show} model={props.model}>
 				<S.Inside ref={ref}>
 					<S.Layer visible={show}>
-						<DropZoneAlignmentButtonWidget alignment={Alignment.TOP} />
-						<DropZoneAlignmentButtonWidget alignment={Alignment.LEFT} />
-						<DropZoneAlignmentButtonWidget alignment={Alignment.BOTTOM} />
-						<DropZoneAlignmentButtonWidget alignment={Alignment.RIGHT} />
+						<DropZoneAlignmentButtonWidget model={props.model} engine={props.engine} alignment={Alignment.TOP} />
+						<DropZoneAlignmentButtonWidget model={props.model} engine={props.engine} alignment={Alignment.LEFT} />
+						<DropZoneAlignmentButtonWidget model={props.model} engine={props.engine} alignment={Alignment.BOTTOM} />
+						<DropZoneAlignmentButtonWidget model={props.model} engine={props.engine} alignment={Alignment.RIGHT} />
 					</S.Layer>
 					<S.Layer2 visible={show}>
 						<S.ButtonBar>

@@ -15,7 +15,7 @@ export interface UseMouseDragEventsProps {
 export const useMouseDragEvents = (props: UseMouseDragEventsProps) => {
 	const c = useContext(DropZoneDragContext);
 	useEffect(() => {
-		const dragEnter = () => {
+		const dragEnter = (event: DragEvent) => {
 			c.increment();
 			props.mouseEnter?.();
 		};
@@ -27,10 +27,12 @@ export const useMouseDragEvents = (props: UseMouseDragEventsProps) => {
 
 		props.forwardRef.current.addEventListener('dragenter', dragEnter);
 		props.forwardRef.current.addEventListener('dragleave', dragLeave);
+		props.forwardRef.current.addEventListener('drop', dragLeave);
 
 		return () => {
 			props.forwardRef.current?.removeEventListener('dragenter', dragEnter);
 			props.forwardRef.current?.removeEventListener('dragleave', dragLeave);
+			props.forwardRef.current?.removeEventListener('drop', dragLeave);
 		};
 	}, []);
 };
@@ -50,13 +52,13 @@ export const UseMouseDragEventsRootWidget: React.FC<React.PropsWithChildren<UseM
 				increment: () => {
 					dragCount.current = dragCount.current + 1;
 					if (dragCount.current > 0) {
-						props.mouseEnter();
+						props.mouseEnter?.();
 					}
 				},
 				decrement: () => {
 					dragCount.current = dragCount.current - 1;
 					if (dragCount.current === 0) {
-						props.mouseExit();
+						props.mouseExit?.();
 					}
 				}
 			}}

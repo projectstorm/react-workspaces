@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { DragEvent } from 'react';
 import { WorkspaceFactory } from './WorkspaceFactory';
 import { WorkspaceModel } from '../core-models/WorkspaceModel';
 import { WorkspaceEngineInterface } from './WorkspaceEngineInterface';
@@ -108,15 +107,6 @@ export class WorkspaceEngine extends BaseObserver<WorkspaceEngineListener> imple
 		this.iterateListeners((listener) => {
 			listener.modelUpdated && listener.modelUpdated();
 		});
-	}
-
-	getDropEventModelID(event: DragEvent): string {
-		for (var i = 0; i < event.dataTransfer.types.length; ++i) {
-			const mime = event.dataTransfer.types[i];
-			if (mime.startsWith('srw/id/')) {
-				return mime.substr('srw/id/'.length);
-			}
-		}
 	}
 
 	fireRepaintListeners() {

@@ -2,6 +2,8 @@ import * as React from 'react';
 import { WorkspaceEngine } from '../../core/WorkspaceEngine';
 import { WorkspaceModel } from '../../core-models/WorkspaceModel';
 import styled from '@emotion/styled';
+import { useRef } from 'react';
+import { useDraggableModel } from '../hooks/dnd-model/useDraggableModel';
 
 export interface DraggableWidgetProps {
 	engine: WorkspaceEngine;
@@ -17,43 +19,30 @@ namespace S {
 	`;
 }
 
-export class DraggableWidget extends React.Component<React.PropsWithChildren<DraggableWidgetProps>> {
-	static WORKSPACE_MIME = 'panel';
-
-	render() {
-		return (
-			<S.Draggable
-				ref={this.props.forwardRef}
-				draggable={this.props.engine.dragAndDropEnabled}
-				onDragStart={(event) => {
-					event.stopPropagation();
-					this.props.engine.iterateListeners((list) => {
-						list.draggingElement && list.draggingElement(this.props.model, true);
-					});
-					event.dataTransfer.setData(
-						WorkspaceEngine.namespaceMime(DraggableWidget.WORKSPACE_MIME),
-						JSON.stringify(this.props.model.toArray())
-					);
-					if (event.altKey) {
-						event.dataTransfer.effectAllowed = 'copy';
-					}
-					event.dataTransfer.setData(WorkspaceEngine.namespaceMime(`id/${this.props.model.id}`), '');
-				}}
-				onDragEnd={(event) => {
-					event.stopPropagation();
-					if (event.dataTransfer.dropEffect === 'move') {
-						this.props.model.delete();
-						this.props.engine.fireModelUpdated();
-					}
-					this.props.engine.setDraggingNode(null);
-					this.props.engine.iterateListeners((list) => {
-						list.draggingElement && list.draggingElement(this.props.model, false);
-					});
-				}}
-				{...this.props}
-			>
-				{this.props.children}
-			</S.Draggable>
-		);
-	}
-}
+export const DraggableWidget: React.FC<React.PropsWithChildren<DraggableWidgetProps>> = (props) => {
+	const ref = useRef<HTMLDivElement>();
+	useDraggableModel({
+		forwardRef: props.forwardRef || ref,
+		model: props.model
+	});
+	return (
+		<S.Draggable
+			ref={props.forwardRef || ref}
+			draggable={props.engine.dragAndDropEnabled}
+			onDragStart={(event) => {
+				props.engine.iterateListeners((list) => {
+					list.draggingElement && list.draggingElement(props.model, true);
+				});
+			}}
+			onDragEnd={(event) => {
+				props.engine.setDraggingNode(null);
+				props.engine.iterateListeners((list) => {
+					list.draggingElement && list.draggingElement(props.model, false);
+				});
+			}}
+			{...props}
+		>
+			{props.children}
+		</S.Draggable>
+	);
+};

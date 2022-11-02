@@ -52,10 +52,10 @@ export const DropZoneLayerWidget: React.FC<DropZoneLayerWidgetProps> = (props) =
 				// .filter((m) => m.id !== props.draggingModel.id)
 				.map((m) => {
 					if (!(m instanceof WorkspaceCollectionModel)) {
-						return <DropZoneLayerPanelWidget engine={props.engine} model={m} />;
+						return <DropZoneLayerPanelWidget engine={props.engine} model={m} key={m.id} />;
 					}
 					if (m instanceof WorkspaceTabbedModel) {
-						return <DropZoneLayerPanelWidget engine={props.engine} model={m} />;
+						return <DropZoneLayerPanelWidget engine={props.engine} model={m} key={m.id} />;
 					}
 					return null;
 				})}

@@ -15,3 +15,7 @@ export enum Alignment {
 	BOTTOM = 'bottom',
 	RIGHT = 'right'
 }
+
+export const log = (...args) => {
+	console.debug(`[SRW] `, ...args);
+};

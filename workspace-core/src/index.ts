@@ -11,10 +11,11 @@ export * from './widgets/hooks/useForceUpdate';
 export * from './widgets/hooks/useModelElement';
 export * from './widgets/hooks/useResizeObserver';
 export * from './widgets/hooks/useWindowResize';
-export * from './widgets/hooks/useMouseDragEvents';
-export * from './widgets/hooks/useDraggableModel';
-export * from './widgets/hooks/useDroppable';
-export * from './widgets/hooks/useDraggableModel';
+export * from './widgets/hooks/dnd/useMouseDragEvents';
+export * from './widgets/hooks/dnd/useDroppable';
+export * from './widgets/hooks/dnd/useDragOver';
+export * from './widgets/hooks/dnd-model/useDraggableModel';
+export * from './widgets/hooks/dnd-model/useDragOverModel';
 
 export * from './widgets/dropzone/DropZoneLayoutDividerWidget';
 export * from './widgets/primitives/DimensionTrackingWidget';

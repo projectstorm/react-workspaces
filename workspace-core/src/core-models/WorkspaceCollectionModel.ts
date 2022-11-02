@@ -3,6 +3,7 @@ import { WorkspaceEngine } from '../core/WorkspaceEngine';
 import { WorkspaceCollectionInterface } from './WorkspaceCollectionInterface';
 import { WorkspaceFactory } from '../core/WorkspaceFactory';
 import * as _ from 'lodash';
+import { Alignment } from '../core/tools';
 
 export interface SerializedCollectionModel extends SerializedModel {
 	children: SerializedModel[];
@@ -148,5 +149,9 @@ export class WorkspaceCollectionModel<
 	addModelAfter(relativeModel: T, model: T) {
 		let index = this.children.indexOf(relativeModel);
 		this.addModel(model, index + 1);
+	}
+
+	getChildSibling(model: WorkspaceModel, alignment: Alignment): WorkspaceModel {
+		return null;
 	}
 }

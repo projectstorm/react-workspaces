@@ -1,6 +1,7 @@
 import { WorkspaceCollectionModel } from '../../core-models/WorkspaceCollectionModel';
 import { WorkspaceEngine } from '../../core/WorkspaceEngine';
 import { WorkspaceModel } from '../../core-models/WorkspaceModel';
+import { Alignment } from '../../core/tools';
 
 export type WorkspaceNodeModelMode = 'expand' | 'micro';
 
@@ -66,5 +67,35 @@ export class WorkspaceNodeModel extends WorkspaceCollectionModel {
 	setFloatingModel(model: WorkspaceModel | null): this {
 		this.floatingModel = model;
 		return this;
+	}
+
+	getModelBefore(model: WorkspaceModel) {
+		const index = this.children.indexOf(model);
+		if (index <= 0) {
+			return null;
+		}
+		return this.children[index - 1];
+	}
+
+	getModelAfter(model: WorkspaceModel) {
+		const index = this.children.indexOf(model);
+		if (index >= this.children.length - 1) {
+			return null;
+		}
+		return this.children[index + 1];
+	}
+
+	getChildSibling(model: WorkspaceModel, alignment: Alignment): WorkspaceModel {
+		if (this.vertical && alignment === Alignment.TOP) {
+			return this.getModelBefore(model);
+		} else if (this.vertical && alignment === Alignment.BOTTOM) {
+			return this.getModelAfter(model);
+		}
+		if (!this.vertical && alignment === Alignment.LEFT) {
+			return this.getModelBefore(model);
+		} else if (!this.vertical && alignment === Alignment.RIGHT) {
+			return this.getModelAfter(model);
+		}
+		return null;
 	}
 }

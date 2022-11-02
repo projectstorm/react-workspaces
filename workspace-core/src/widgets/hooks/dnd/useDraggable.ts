@@ -1,9 +1,11 @@
 import * as React from 'react';
 import { useEffect } from 'react';
+import { log } from '../../../core/tools';
 
 export interface UseDraggableProps<T extends { [key: string]: any }> {
 	forwardRef: React.RefObject<HTMLDivElement>;
 	encode: () => T;
+	dragend: (options: { copy: boolean; success: boolean }) => any;
 }
 
 export const useDraggable = <T>(props: UseDraggableProps<T>) => {
@@ -15,16 +17,34 @@ export const useDraggable = <T>(props: UseDraggableProps<T>) => {
 			}
 
 			// show copy
+			event.dataTransfer.dropEffect = 'none';
 			if (event.altKey) {
+				log(`dragging as a copy operation`);
 				event.dataTransfer.effectAllowed = 'copy';
+			} else {
+				event.dataTransfer.effectAllowed = 'move';
 			}
 
 			// encode all mime types
 			for (let key in object) {
-				event.dataTransfer.setData(key, JSON.stringify(object));
+				log(`setting up mime: ${key}`);
+				event.dataTransfer.setData(key, JSON.stringify(object[key]));
 			}
 		};
-		const dragEnd = async (event: DragEvent) => {};
+		const dragEnd = async (event: DragEvent) => {
+			if (event.dataTransfer.dropEffect === 'none') {
+				props.dragend({
+					copy: false,
+					success: false
+				});
+				return;
+			}
+			event.stopPropagation();
+			props.dragend({
+				copy: event.dataTransfer.dropEffect === 'copy',
+				success: true
+			});
+		};
 
 		props.forwardRef.current.addEventListener('dragstart', dragStart);
 		props.forwardRef.current.addEventListener('dragend', dragEnd);
