@@ -11,20 +11,20 @@ import { useEffect } from 'react';
 import { DropZoneLayerPanelWidget } from './DropZoneLayerPanelWidget';
 
 export class DropZoneLayer extends Layer {
-	constructor() {
+	constructor(public draggingModel: WorkspaceModel) {
 		super({
 			mouseEvents: false
 		});
 	}
 
 	renderLayer(event): JSX.Element {
-		return <DropZoneLayerWidget engine={event.engine} model={event.model} />;
+		return <DropZoneLayerWidget engine={event.engine} draggingModel={this.draggingModel} />;
 	}
 }
 
 export interface DropZoneLayerWidgetProps {
 	engine: WorkspaceEngine;
-	model: WorkspaceModel;
+	draggingModel: WorkspaceModel;
 }
 
 export const DropZoneLayerWidget: React.FC<DropZoneLayerWidgetProps> = (props) => {
@@ -32,7 +32,7 @@ export const DropZoneLayerWidget: React.FC<DropZoneLayerWidgetProps> = (props) =
 
 	// TODO rerun this when models added
 	useEffect(() => {
-		const listeners = props.model.flatten().map((m) =>
+		const listeners = props.engine.rootModel.flatten().map((m) =>
 			m.registerListener({
 				visibilityChanged: () => {
 					forceUpdate();
@@ -45,15 +45,17 @@ export const DropZoneLayerWidget: React.FC<DropZoneLayerWidgetProps> = (props) =
 	}, []);
 	return (
 		<>
-			{props.model
+			{props.engine.rootModel
 				.flatten()
 				.filter((m) => m.r_visible)
+				// dont show a drop zone for the same model
+				// .filter((m) => m.id !== props.draggingModel.id)
 				.map((m) => {
 					if (!(m instanceof WorkspaceCollectionModel)) {
-						return <DropZoneLayerPanelWidget model={m} />;
+						return <DropZoneLayerPanelWidget engine={props.engine} model={m} />;
 					}
 					if (m instanceof WorkspaceTabbedModel) {
-						return <DropZoneLayerPanelWidget model={m} />;
+						return <DropZoneLayerPanelWidget engine={props.engine} model={m} />;
 					}
 					return null;
 				})}

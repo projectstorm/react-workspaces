@@ -12,6 +12,9 @@ export * from './widgets/hooks/useModelElement';
 export * from './widgets/hooks/useResizeObserver';
 export * from './widgets/hooks/useWindowResize';
 export * from './widgets/hooks/useMouseDragEvents';
+export * from './widgets/hooks/useDraggableModel';
+export * from './widgets/hooks/useDroppable';
+export * from './widgets/hooks/useDraggableModel';
 
 export * from './widgets/dropzone/DropZoneLayoutDividerWidget';
 export * from './widgets/primitives/DimensionTrackingWidget';

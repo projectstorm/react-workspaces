@@ -3,12 +3,13 @@ import { useRef, useState } from 'react';
 import styled from '@emotion/styled';
 import { DropZoneLayerButtonWidget } from './DropZoneLayerButtonWidget';
 import {
+	Alignment,
 	DimensionTrackingWidget,
 	UseMouseDragEventsRootWidget,
+	WorkspaceEngine,
 	WorkspaceModel
 } from '@projectstorm/react-workspaces-core';
 import { DropZoneAlignmentButtonWidget } from './DropZoneAlignmentButtonWidget';
-import { Alignment } from '@projectstorm/react-workspaces-core';
 
 export const DropZoneDragContext = React.createContext<{
 	increment: () => any;
@@ -17,6 +18,7 @@ export const DropZoneDragContext = React.createContext<{
 
 export interface DropZoneLayerPanelWidgetProps {
 	model: WorkspaceModel;
+	engine: WorkspaceEngine;
 }
 
 export const DropZoneLayerPanelWidget: React.FC<DropZoneLayerPanelWidgetProps> = (props) => {
@@ -43,8 +45,9 @@ export const DropZoneLayerPanelWidget: React.FC<DropZoneLayerPanelWidgetProps> =
 					</S.Layer>
 					<S.Layer2 visible={show}>
 						<S.ButtonBar>
-							<DropZoneLayerButtonWidget text="Replace" icon="copy" />
-							{/*<DropZoneLayerButtonWidget text="Tabs" icon="" />*/}
+							<DropZoneLayerButtonWidget engine={props.engine} text="Replace" icon="copy" />
+							<DropZoneLayerButtonWidget engine={props.engine} text="Tabs" icon="copy" />
+							<DropZoneLayerButtonWidget engine={props.engine} text="Tray" icon="copy" />
 						</S.ButtonBar>
 					</S.Layer2>
 				</S.Inside>
@@ -57,14 +60,10 @@ namespace S {
 	export const DimensionTracking = styled(DimensionTrackingWidget)<{ entered: boolean }>`
 		border: solid 2px transparent;
 		box-sizing: border-box;
-		background: rgba(0, 0, 0, 0.4);
-		opacity: ${(p) => (p.entered ? 1 : 0.4)};
-		transition: border 0.5s, opacity 0.5s;
+		background: ${(p) => (p.entered ? 'rgba(0, 0, 0, 0.4)' : 'transparent')};
+		border: solid 2px ${(p) => (p.entered ? '#0096ff' : 'transparent')};
+		transition: border 0.5s, background 0.5s;
 		pointer-events: all;
-
-		&:hover {
-			border: solid 2px #0096ff;
-		}
 	`;
 
 	export const ButtonBar = styled.div`
@@ -84,6 +83,7 @@ namespace S {
 		justify-content: center;
 		pointer-events: none;
 		opacity: ${(p) => (p.visible ? 1 : 0)};
+		transition: opacity 0.3s;
 	`;
 
 	export const Layer2 = styled.div<{ visible: boolean }>`
@@ -100,6 +100,7 @@ namespace S {
 		padding: 20px;
 		pointer-events: none;
 		opacity: ${(p) => (p.visible ? 1 : 0)};
+		transition: opacity 0.3s;
 	`;
 
 	export const Inside = styled.div`

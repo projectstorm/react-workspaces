@@ -10,6 +10,7 @@ import { useForceUpdate } from './hooks/useForceUpdate';
 import { DimensionContainer } from '../core/DimensionContainer';
 import { useResizeObserver } from './hooks/useResizeObserver';
 import { LayerManagerWidget } from './layers/LayerManagerWidget';
+import { DraggableWidget } from './primitives/DraggableWidget';
 
 export interface WorkspaceWidgetProps {
 	model: WorkspaceNodeModel;

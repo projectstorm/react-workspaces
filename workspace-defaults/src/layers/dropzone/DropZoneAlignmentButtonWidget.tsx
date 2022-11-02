@@ -25,25 +25,42 @@ export const DropZoneAlignmentButtonWidget: React.FC<DropZoneAlignmentButtonWidg
 		}
 	});
 
+	const vertical = props.alignment === Alignment.LEFT || props.alignment === Alignment.RIGHT;
+
 	let width = SPLIT_THICK;
 	let height = SPLIT_LENGTH;
-	if (props.alignment === Alignment.TOP || props.alignment === Alignment.BOTTOM) {
+	if (!vertical) {
 		width = SPLIT_LENGTH;
 		height = SPLIT_THICK;
 	}
 
-	return <S.SplitContainer ref={ref} alignment={props.alignment} hover={entered} width={width} height={height} />;
+	return (
+		<S.SplitContainer ref={ref} vertical={vertical} alignment={props.alignment} hover={entered}>
+			<S.SplitContainerIcon hover={entered} width={width} height={height} />
+		</S.SplitContainer>
+	);
 };
 
 namespace S {
-	export const SplitContainer = styled.div<{ width: number; height: number; alignment: Alignment; hover: boolean }>`
+	export const SplitContainer = styled.div<{ alignment: Alignment; hover: boolean; vertical: boolean }>`
+		${(p) => p.alignment}: 0;
+		position: absolute;
+		width: ${(p) => (p.vertical ? '30px' : '100%')};
+		height: ${(p) => (!p.vertical ? '30px' : '100%')};
+		pointer-events: all;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	`;
+
+	export const SplitContainerIcon = styled.div<{ width: number; height: number; hover: boolean }>`
 		border-radius: 2px;
 		background: ${(p) => (p.hover ? 'orange' : '#0096ff')};
-		position: absolute;
-		pointer-events: all;
+		transition: background 0.3s, width ease-out 0.3s, height ease-out 0.3s;
+		transition-delay: 0.1s;
+		pointer-events: none;
 
-		width: ${(p) => p.width}px;
-		height: ${(p) => p.height}px;
-		${(p) => p.alignment}: ${SPLIT_MARGIN}px;
+		width: ${(p) => (p.hover ? '100%' : `${p.width}px`)};
+		height: ${(p) => (p.hover ? '100%' : `${p.height}px`)};
 	`;
 }
