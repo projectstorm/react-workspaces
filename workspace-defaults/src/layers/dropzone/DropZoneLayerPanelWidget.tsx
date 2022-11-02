@@ -1,10 +1,14 @@
 import * as React from 'react';
 import { useRef, useState } from 'react';
 import styled from '@emotion/styled';
-import * as _ from 'lodash';
-import { css } from '@emotion/react';
 import { DropZoneLayerButtonWidget } from './DropZoneLayerButtonWidget';
-import { DimensionTrackingWidget, WorkspaceModel } from '@projectstorm/react-workspaces-core';
+import {
+	DimensionTrackingWidget,
+	UseMouseDragEventsRootWidget,
+	WorkspaceModel
+} from '@projectstorm/react-workspaces-core';
+import { DropZoneAlignmentButtonWidget } from './DropZoneAlignmentButtonWidget';
+import { Alignment } from '@projectstorm/react-workspaces-core';
 
 export const DropZoneDragContext = React.createContext<{
 	increment: () => any;
@@ -16,55 +20,36 @@ export interface DropZoneLayerPanelWidgetProps {
 }
 
 export const DropZoneLayerPanelWidget: React.FC<DropZoneLayerPanelWidgetProps> = (props) => {
-	const dragCount = useRef(0);
+	const ref = useRef<HTMLDivElement>();
 	const [show, setShow] = useState(false);
 
-	console.log(dragCount);
 	return (
-		<DropZoneDragContext.Provider
-			value={{
-				increment: () => {
-					dragCount.current = dragCount.current + 1;
-					if (!show && dragCount.current > 0) {
-						setShow(true);
-					}
-				},
-				decrement: () => {
-					dragCount.current = dragCount.current - 1;
-					if (show && dragCount.current === 0) {
-						setShow(false);
-					}
-				}
+		<UseMouseDragEventsRootWidget
+			forwardRef={ref}
+			mouseEnter={() => {
+				setShow(true);
+			}}
+			mouseExit={() => {
+				setShow(false);
 			}}
 		>
-			<DropZoneDragContext.Consumer>
-				{({ increment, decrement }) => (
-					<S.DimensionTracking entered={show} model={props.model}>
-						<S.Inside
-							onDragEnter={() => {
-								increment();
-							}}
-							onDragLeave={() => {
-								decrement();
-							}}
-						>
-							<S.Layer visible={show}>
-								<S.SplitContainerLeft />
-								<S.SplitContainerRight />
-								<S.SplitContainerTop />
-								<S.SplitContainerBottom />
-							</S.Layer>
-							<S.Layer2 visible={show}>
-								<S.ButtonBar>
-									<DropZoneLayerButtonWidget text="Replace" icon="copy" />
-									{/*<DropZoneLayerButtonWidget text="Tabs" icon="" />*/}
-								</S.ButtonBar>
-							</S.Layer2>
-						</S.Inside>
-					</S.DimensionTracking>
-				)}
-			</DropZoneDragContext.Consumer>
-		</DropZoneDragContext.Provider>
+			<S.DimensionTracking entered={show} model={props.model}>
+				<S.Inside ref={ref}>
+					<S.Layer visible={show}>
+						<DropZoneAlignmentButtonWidget alignment={Alignment.TOP} />
+						<DropZoneAlignmentButtonWidget alignment={Alignment.LEFT} />
+						<DropZoneAlignmentButtonWidget alignment={Alignment.BOTTOM} />
+						<DropZoneAlignmentButtonWidget alignment={Alignment.RIGHT} />
+					</S.Layer>
+					<S.Layer2 visible={show}>
+						<S.ButtonBar>
+							<DropZoneLayerButtonWidget text="Replace" icon="copy" />
+							{/*<DropZoneLayerButtonWidget text="Tabs" icon="" />*/}
+						</S.ButtonBar>
+					</S.Layer2>
+				</S.Inside>
+			</S.DimensionTracking>
+		</UseMouseDragEventsRootWidget>
 	);
 };
 
@@ -125,47 +110,5 @@ namespace S {
 		display: flex;
 		align-items: center;
 		justify-content: center;
-	`;
-
-	const SPLIT_THICK = 13;
-	const SPLIT_LENGTH = 60;
-	const SPLIT_MARGIN = 8;
-
-	const SplitContainerShared = css`
-		border-radius: 2px;
-		background: #0096ff;
-		position: absolute;
-
-		&:hover {
-			background: orange;
-		}
-	`;
-
-	export const SplitContainerLeft = styled.div`
-		${SplitContainerShared};
-		width: ${SPLIT_THICK}px;
-		height: ${SPLIT_LENGTH}px;
-		left: ${SPLIT_MARGIN}px;
-	`;
-
-	export const SplitContainerRight = styled.div`
-		${SplitContainerShared};
-		width: ${SPLIT_THICK}px;
-		height: ${SPLIT_LENGTH}px;
-		right: ${SPLIT_MARGIN}px;
-	`;
-
-	export const SplitContainerTop = styled.div`
-		${SplitContainerShared};
-		height: ${SPLIT_THICK}px;
-		width: ${SPLIT_LENGTH}px;
-		top: ${SPLIT_MARGIN}px;
-	`;
-
-	export const SplitContainerBottom = styled.div`
-		${SplitContainerShared};
-		height: ${SPLIT_THICK}px;
-		width: ${SPLIT_LENGTH}px;
-		bottom: ${SPLIT_MARGIN}px;
 	`;
 }

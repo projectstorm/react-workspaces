@@ -1,15 +1,16 @@
 import { BaseListener, BaseObserver } from './BaseObserver';
 import * as _ from 'lodash';
+import { Alignment } from './tools';
 
 export interface DimensionContainerListener extends BaseListener {
 	updated: () => any;
 }
 
 export interface RawPosition {
-	top: number;
-	left: number;
-	bottom: number;
-	right: number;
+	[Alignment.TOP]: number;
+	[Alignment.LEFT]: number;
+	[Alignment.BOTTOM]: number;
+	[Alignment.RIGHT]: number;
 }
 
 export interface RawDimensions {

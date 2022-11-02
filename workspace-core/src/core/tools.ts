@@ -8,3 +8,10 @@ export const regenerateIDs = (model: WorkspaceModel) => {
 	}
 	model.id = v4();
 };
+
+export enum Alignment {
+	TOP = 'top',
+	LEFT = 'left',
+	BOTTOM = 'bottom',
+	RIGHT = 'right'
+}

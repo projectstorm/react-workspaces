@@ -2,6 +2,8 @@ export * from './widgets/WorkspaceWidget';
 export * from './widgets/primitives/DraggableWidget';
 export * from './widgets/FloatingPanelWidget';
 
+export * from './core/tools';
+
 export * from './widgets/layouts/MicroLayoutWidget';
 export * from './widgets/layouts/StandardLayoutWidget';
 
@@ -9,6 +11,7 @@ export * from './widgets/hooks/useForceUpdate';
 export * from './widgets/hooks/useModelElement';
 export * from './widgets/hooks/useResizeObserver';
 export * from './widgets/hooks/useWindowResize';
+export * from './widgets/hooks/useMouseDragEvents';
 
 export * from './widgets/dropzone/DropZoneLayoutDividerWidget';
 export * from './widgets/primitives/DimensionTrackingWidget';

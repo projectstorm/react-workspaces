@@ -1,9 +1,9 @@
 import * as React from 'react';
+import { useRef, useState } from 'react';
 import styled from '@emotion/styled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { DropZoneDragContext } from './DropZoneLayerPanelWidget';
-import { useState } from 'react';
+import { useMouseDragEvents } from '@projectstorm/react-workspaces-core';
 
 export interface DropZoneLayerButtonWidgetProps {
 	icon: IconProp;
@@ -12,25 +12,21 @@ export interface DropZoneLayerButtonWidgetProps {
 
 export const DropZoneLayerButtonWidget: React.FC<DropZoneLayerButtonWidgetProps> = (props) => {
 	const [entered, setEntered] = useState(false);
+	const ref = useRef<HTMLDivElement>();
+	useMouseDragEvents({
+		forwardRef: ref,
+		mouseEnter: () => {
+			setEntered(true);
+		},
+		mouseExit: () => {
+			setEntered(false);
+		}
+	});
 	return (
-		<DropZoneDragContext.Consumer>
-			{({ increment, decrement }) => (
-				<S.Container
-					entered={entered}
-					onDragEnter={() => {
-						increment();
-						setEntered(true);
-					}}
-					onDragLeave={() => {
-						decrement();
-						setEntered(false);
-					}}
-				>
-					<S.Icon icon={props.icon} />
-					<S.Text>{props.text}</S.Text>
-				</S.Container>
-			)}
-		</DropZoneDragContext.Consumer>
+		<S.Container ref={ref} entered={entered}>
+			<S.Icon icon={props.icon} />
+			<S.Text>{props.text}</S.Text>
+		</S.Container>
 	);
 };
 namespace S {
