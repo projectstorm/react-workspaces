@@ -13,6 +13,8 @@ export interface WorkspaceEngineListener extends BaseListener {
 	modelUpdated?: () => any;
 	layoutInvalidated: () => any;
 	layoutRepainted: () => any;
+	modelDragStart: () => any;
+	modelDragEnd: () => any;
 }
 
 export class WorkspaceEngineError extends Error {
@@ -141,8 +143,10 @@ export class WorkspaceEngine extends BaseObserver<WorkspaceEngineListener> imple
 	setDraggingNode(id: string) {
 		if (this.draggingID !== id) {
 			this.draggingID = id;
+			this.iterateListeners((cb) => cb.modelDragStart?.());
 			this.fireRepaintListeners();
 		} else if (id === null) {
+			this.iterateListeners((cb) => cb.modelDragEnd?.());
 			this.fireRepaintListeners();
 		}
 	}

@@ -1,17 +1,19 @@
 import * as React from 'react';
-import { Layer } from '../LayerManager';
-import { WorkspaceEngine } from '../../../core/WorkspaceEngine';
-import { WorkspaceModel } from '../../../core-models/WorkspaceModel';
-import { WorkspaceCollectionModel } from '../../../core-models/WorkspaceCollectionModel';
-import { DropZoneLayerPanelWidget } from './DropZoneLayerPanelWidget';
-import { WorkspaceTabbedModel } from '../../../entities/tabs/WorkspaceTabbedModel';
+import {
+	Layer,
+	useForceUpdate,
+	WorkspaceCollectionModel,
+	WorkspaceEngine,
+	WorkspaceModel,
+	WorkspaceTabbedModel
+} from '@projectstorm/react-workspaces-core';
 import { useEffect } from 'react';
-import { useForceUpdate } from '../../hooks/useForceUpdate';
+import { DropZoneLayerPanelWidget } from './DropZoneLayerPanelWidget';
 
 export class DropZoneLayer extends Layer {
 	constructor() {
 		super({
-			mouseEvents: true
+			mouseEvents: false
 		});
 	}
 

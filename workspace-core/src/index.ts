@@ -5,7 +5,13 @@ export * from './widgets/FloatingPanelWidget';
 export * from './widgets/layouts/MicroLayoutWidget';
 export * from './widgets/layouts/StandardLayoutWidget';
 
+export * from './widgets/hooks/useForceUpdate';
+export * from './widgets/hooks/useModelElement';
+export * from './widgets/hooks/useResizeObserver';
+export * from './widgets/hooks/useWindowResize';
+
 export * from './widgets/dropzone/DropZoneLayoutDividerWidget';
+export * from './widgets/primitives/DimensionTrackingWidget';
 
 export * from './widgets/ResizeOverlayWidget';
 
@@ -30,5 +36,3 @@ export * from './core/WorkspaceFactory';
 
 export * from './widgets/layers/LayerManager';
 export * from './widgets/layers/debug/DebugLayer';
-
-export * from './widgets/layers/dropzone/DropZoneLayer';

@@ -55,11 +55,11 @@ export const TabGroupWidget: React.FC<TabGroupWidgetProps> = (props) => {
 	let selectedFactory = props.engine.getFactory<WorkspacePanelFactory>(selected);
 
 	return (
-		<S.Container ref={ref}>
+		<S.Container>
 			<S.Draggable forwardRef={headerRef} engine={props.engine} model={props.model}>
 				{props.tabs}
 			</S.Draggable>
-			<S.Content height={height}>
+			<S.Content ref={ref} height={height}>
 				<PerformanceWidget
 					data={selected.toArray()}
 					engine={props.engine}

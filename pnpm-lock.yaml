@@ -47,7 +47,9 @@ importers:
       '@fortawesome/free-solid-svg-icons': ^6.2.0
       '@fortawesome/react-fontawesome': ^0.2.0
       '@projectstorm/react-workspaces-core': 2.0.0-alpha
+      '@types/lodash': ^4.14.187
       '@types/react': ^18.0.21
+      lodash: ^4.17.21
       react: ^18.2.0
     dependencies:
       '@emotion/react': 11.10.4_iapumuv4e6jcjznwuxpf4tt22e
@@ -56,8 +58,10 @@ importers:
       '@fortawesome/free-solid-svg-icons': 6.2.0
       '@fortawesome/react-fontawesome': 0.2.0_6j2wdqxompc6mcokhxkpep2gqu
       '@projectstorm/react-workspaces-core': link:../workspace-core
+      lodash: 4.17.21
       react: 18.2.0
     devDependencies:
+      '@types/lodash': 4.14.187
       '@types/react': 18.0.21
 
   workspace-demos:

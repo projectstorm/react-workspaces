@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { useEffect } from 'react';
 
-export interface UseResizeObserverProps {
+export interface UseWindowResizeProps {
 	resized: () => any;
 }
 
-export const useWindowResize = (props: UseResizeObserverProps) => {
+export const useWindowResize = (props: UseWindowResizeProps) => {
 	useEffect(() => {
 		const listener = () => {
 			props.resized();
