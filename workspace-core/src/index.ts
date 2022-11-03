@@ -28,6 +28,7 @@ export * from './entities/tray/WorkspaceTrayFactory';
 export * from './entities/tray/TrayWidget';
 
 export * from './entities/node/WorkspaceNodeModel';
+export * from './entities/node/WorkspaceNodeFactory';
 
 export * from './entities/tabs/WorkspaceTabbedModel';
 export * from './entities/tabs/WorkspaceTabFactory';

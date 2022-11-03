@@ -10,6 +10,8 @@ export interface SerializedModel {
 	expandVertical: boolean;
 	expandHorizontal: boolean;
 	type: string;
+	width: number;
+	height: number;
 }
 
 export interface WorkspaceModelListener extends BaseListener {
@@ -125,9 +127,11 @@ export class WorkspaceModel<
 	toArray(): T {
 		return {
 			id: this.id,
+			type: this.type,
 			expandHorizontal: this.expandHorizontal,
 			expandVertical: this.expandVertical,
-			type: this.type
+			width: this.width,
+			height: this.height
 		} as T;
 	}
 
@@ -135,5 +139,7 @@ export class WorkspaceModel<
 		this.id = payload.id;
 		this.expandHorizontal = payload.expandHorizontal;
 		this.expandVertical = payload.expandVertical;
+		this.width = payload.width || 0;
+		this.height = payload.height || 0;
 	}
 }

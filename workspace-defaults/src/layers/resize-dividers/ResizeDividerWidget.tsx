@@ -8,6 +8,7 @@ import {
 	WorkspaceEngine
 } from '@projectstorm/react-workspaces-core';
 import { UseMouseDragDistanceProps } from '@projectstorm/react-workspaces-core';
+import { Alignment } from '@projectstorm/react-workspaces-core';
 
 export interface ResizeDividerWidgetProps {
 	dividerContainer: ResizeDivision;
@@ -20,8 +21,30 @@ const getResizeStrategy = (divider: ResizeDivision): Pick<UseMouseDragDistancePr
 	const { before, after, dimensions } = divider;
 
 	if (dimensions.isPortrait()) {
+		// before shrinks + HACK
+		if ((!before.expandHorizontal && after.expandHorizontal) || !before.getSibling(Alignment.LEFT)) {
+			return {
+				startMove: () => {
+					initial = before.width;
+				},
+				moved: ({ distanceX }) => {
+					before.setWidth(initial + distanceX);
+				}
+			};
+		}
+		// after shrinks + HACK
+		else if ((!after.expandHorizontal && before.expandHorizontal) || !after.getSibling(Alignment.RIGHT)) {
+			return {
+				startMove: () => {
+					initial = after.width;
+				},
+				moved: ({ distanceX }) => {
+					after.setWidth(initial - distanceX);
+				}
+			};
+		}
 		// both shrink
-		if (!before.expandHorizontal && !after.expandHorizontal) {
+		else if (!before.expandHorizontal && !after.expandHorizontal) {
 			return {
 				startMove: () => {
 					initial = before.width;
@@ -30,29 +53,6 @@ const getResizeStrategy = (divider: ResizeDivision): Pick<UseMouseDragDistancePr
 				moved: ({ distanceX }) => {
 					before.setWidth(initial + distanceX);
 					after.setWidth(initial2 - distanceX);
-				}
-			};
-		}
-
-		// before shrinks
-		if (!before.expandHorizontal) {
-			return {
-				startMove: () => {
-					initial = before.width;
-				},
-				moved: ({ distanceX }) => {
-					before.setWidth(initial + distanceX);
-				}
-			};
-		}
-		// after shrinks
-		else if (!after.expandHorizontal) {
-			return {
-				startMove: () => {
-					initial = after.width;
-				},
-				moved: ({ distanceX }) => {
-					after.setWidth(initial - distanceX);
 				}
 			};
 		}

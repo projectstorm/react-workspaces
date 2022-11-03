@@ -12,7 +12,7 @@ export class WorkspaceTrayModel extends WorkspaceNodeModel {
 	mode: WorkspaceNodeModelMode;
 	floatingModel: WorkspaceModel;
 
-	static NAME = 'srw-node';
+	static NAME = 'srw-tray';
 	r_divisons: DimensionContainer[];
 
 	constructor() {

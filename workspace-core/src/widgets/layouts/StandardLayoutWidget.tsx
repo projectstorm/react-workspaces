@@ -4,6 +4,7 @@ import { WorkspaceModel } from '../../core-models/WorkspaceModel';
 import { DirectionalLayoutWidget } from './DirectionalLayoutWidget';
 import { WorkspaceNodeModel } from '../../entities/node/WorkspaceNodeModel';
 import { useModelElement } from '../hooks/useModelElement';
+import styled from '@emotion/styled';
 
 export interface StandardLayoutWidgetProps {
 	node: WorkspaceNodeModel;
@@ -17,7 +18,7 @@ export const StandardLayoutWidget: React.FC<StandardLayoutWidgetProps> = (props)
 		model: props.node
 	});
 	return (
-		<DirectionalLayoutWidget
+		<S.DirectionalLayout
 			forwardRef={ref}
 			dimensionContainerForDivider={(index: number) => {
 				return props.node.r_divisons[index];
@@ -45,3 +46,10 @@ export const StandardLayoutWidget: React.FC<StandardLayoutWidgetProps> = (props)
 		/>
 	);
 };
+
+namespace S {
+	export const DirectionalLayout = styled(DirectionalLayoutWidget)`
+		height: 100%;
+		width: 100%;
+	`;
+}

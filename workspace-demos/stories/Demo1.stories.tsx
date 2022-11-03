@@ -8,7 +8,9 @@ import {
 	WorkspaceNodeModel,
 	WorkspaceTabbedModel,
 	WorkspaceTabFactory,
-	WorkspaceWidget
+	WorkspaceWidget,
+	WorkspaceNodeFactory,
+	WorkspaceTrayModel
 } from '@projectstorm/react-workspaces-core';
 import {
 	DefaultTrayFactory,
@@ -18,12 +20,6 @@ import {
 	ResizeDividersLayer
 } from '@projectstorm/react-workspaces-defaults';
 import 'typeface-open-sans';
-import { WorkspaceModel } from '@projectstorm/react-workspaces-core/dist';
-
-export interface Demo1State {
-	engine: WorkspaceEngine;
-	model: WorkspaceNodeModel;
-}
 
 namespace S {
 	export const Container = styled.div`
@@ -52,12 +48,13 @@ export const ResizeVertical = () => {
 	);
 };
 
-const CompInternal: React.FC<{ model: WorkspaceModel }> = (props) => {
+const CompInternal: React.FC<{ model: WorkspaceNodeModel }> = (props) => {
 	const [engine] = useState(() => {
 		const e = new WorkspaceEngine();
 		// @ts-ignore
 		e.registerFactory(new WorkspaceTabFactory());
 		e.registerFactory(new DefaultWorkspacePanelFactory());
+		e.registerFactory(new WorkspaceNodeFactory());
 		// @ts-ignore
 		e.registerFactory(new DefaultTrayFactory());
 		return e;
@@ -102,7 +99,7 @@ export const Comp1 = () => {
 					.addModel(new DefaultWorkspacePanelModel('Panel 2'))
 			)
 			.addModel(
-				new WorkspaceNodeModel()
+				new WorkspaceTrayModel()
 					.setExpand(false)
 					.setVertical(true)
 					.addModel(new DefaultWorkspacePanelModel('Panel 1'))
@@ -131,7 +128,7 @@ export const Comp1 = () => {
 			)
 			.addModel(
 				new WorkspaceNodeModel()
-					.setExpand(false)
+					.setExpand(true)
 					.setVertical(true)
 					// .setMode('micro')
 					.addModel(new DefaultWorkspacePanelModel('Panel 4'))
