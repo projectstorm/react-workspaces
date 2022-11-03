@@ -19,7 +19,7 @@ export const useModelElement = (props: UseModelElementProps) => {
 					// wait for a repaint
 					l2 = props.engine.registerListener({
 						layoutRepainted: () => {
-							l2();
+							l2?.();
 							l2 = null;
 							const dims = ref.current.getBoundingClientRect();
 							props.model.r_dimensions.update(dims);

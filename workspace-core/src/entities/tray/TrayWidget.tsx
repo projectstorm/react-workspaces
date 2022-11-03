@@ -18,11 +18,12 @@ export interface TrayWidgetState {
 }
 
 namespace S {
-	export const Container = styled.div<{ expand: boolean }>`
+	export const Container = styled.div<{ expand: boolean; width: number }>`
 		display: flex;
 		flex-direction: column;
 		position: relative;
 		flex-grow: ${(p) => (p.expand ? 1 : 0)};
+		${(p) => (p.width !== 0 ? `width: ${p.width}px` : '')};
 		${(p) => p.expand && `width: 50%`};
 	`;
 
@@ -74,7 +75,7 @@ export class TrayWidget extends React.Component<TrayWidgetProps, TrayWidgetState
 	render() {
 		const expand = this.props.node.shouldExpand() && this.props.node.mode === 'expand';
 		return (
-			<S.Container className={this.props.className} expand={expand}>
+			<S.Container width={this.props.node.width} className={this.props.className} expand={expand}>
 				{this.getHeader()}
 				{this.props.node.mode === 'micro' ? (
 					<S.MicroLayout node={this.props.node} engine={this.props.engine} />

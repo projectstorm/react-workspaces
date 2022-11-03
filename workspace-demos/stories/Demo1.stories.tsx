@@ -18,6 +18,7 @@ import {
 	ResizeDividersLayer
 } from '@projectstorm/react-workspaces-defaults';
 import 'typeface-open-sans';
+import { WorkspaceModel } from '@projectstorm/react-workspaces-core/dist';
 
 export interface Demo1State {
 	engine: WorkspaceEngine;
@@ -51,7 +52,7 @@ export const ResizeVertical = () => {
 	);
 };
 
-export const Comp = () => {
+const CompInternal: React.FC<{ model: WorkspaceModel }> = (props) => {
 	const [engine] = useState(() => {
 		const e = new WorkspaceEngine();
 		// @ts-ignore
@@ -60,42 +61,6 @@ export const Comp = () => {
 		// @ts-ignore
 		e.registerFactory(new DefaultTrayFactory());
 		return e;
-	});
-
-	const [model] = useState(() => {
-		let model = new WorkspaceNodeModel();
-		model.setHorizontal(true);
-		model
-
-			//left panel
-			.addModel(
-				new WorkspaceNodeModel()
-					.setExpand(false)
-					.setVertical(true)
-					.addModel(new DefaultWorkspacePanelModel('Panel 1'))
-					.addModel(new DefaultWorkspacePanelModel('Panel 2'))
-			)
-
-			//tab panel
-			.addModel(
-				new WorkspaceTabbedModel()
-					.addModel(new DefaultWorkspacePanelModel('Tab 1'))
-					.addModel(new DefaultWorkspacePanelModel('Tab 2'))
-					.addModel(new DefaultWorkspacePanelModel('Tab 3'))
-			)
-
-			//right panel
-			.addModel(new DefaultWorkspacePanelModel('Panel 3'))
-			.addModel(
-				new WorkspaceNodeModel()
-					.setExpand(false)
-					.setVertical(true)
-					// .setMode('micro')
-					.addModel(new DefaultWorkspacePanelModel('Panel 4'))
-					.addModel(new DefaultWorkspacePanelModel('Panel 5'))
-					.addModel(new DefaultWorkspacePanelModel('Panel 6'))
-			);
-		return model;
 	});
 
 	useEffect(() => {
@@ -114,12 +79,123 @@ export const Comp = () => {
 		<S.Container>
 			<WorkspaceWidget
 				engine={engine}
-				model={model}
+				model={props.model}
 				dividerColor="rgb(0,192,255)"
 				dividerColorActive="rgb(192,255,0)"
 			/>
 		</S.Container>
 	);
+};
+
+export const Comp1 = () => {
+	const [model] = useState(() => {
+		let model = new WorkspaceNodeModel();
+		model.setHorizontal(true);
+		model
+
+			//left panel
+			.addModel(
+				new WorkspaceNodeModel()
+					.setExpand(false)
+					.setVertical(true)
+					.addModel(new DefaultWorkspacePanelModel('Panel 1').setExpand(false, false))
+					.addModel(new DefaultWorkspacePanelModel('Panel 2'))
+			)
+			.addModel(
+				new WorkspaceNodeModel()
+					.setExpand(false)
+					.setVertical(true)
+					.addModel(new DefaultWorkspacePanelModel('Panel 1'))
+					.addModel(new DefaultWorkspacePanelModel('Panel 2'))
+			)
+
+			//right panel
+			// .addModel(new DefaultWorkspacePanelModel('Panel 3'))
+			.addModel(
+				new WorkspaceNodeModel()
+					.setExpand(false)
+					.setVertical(true)
+					// .setMode('micro')
+					.addModel(new DefaultWorkspacePanelModel('Panel 4'))
+					.addModel(new DefaultWorkspacePanelModel('Panel 5'))
+					.addModel(new DefaultWorkspacePanelModel('Panel 6'))
+			)
+			.addModel(
+				new WorkspaceNodeModel()
+					.setExpand(false)
+					.setVertical(true)
+					// .setMode('micro')
+					.addModel(new DefaultWorkspacePanelModel('Panel 4'))
+					.addModel(new DefaultWorkspacePanelModel('Panel 5'))
+					.addModel(new DefaultWorkspacePanelModel('Panel 6'))
+			)
+			.addModel(
+				new WorkspaceNodeModel()
+					.setExpand(false)
+					.setVertical(true)
+					// .setMode('micro')
+					.addModel(new DefaultWorkspacePanelModel('Panel 4'))
+					.addModel(new DefaultWorkspacePanelModel('Panel 5'))
+					.addModel(new DefaultWorkspacePanelModel('Panel 6'))
+			);
+		return model;
+	});
+	return <CompInternal model={model} />;
+};
+
+export const Comp2 = () => {
+	const [model] = useState(() => {
+		let model = new WorkspaceNodeModel();
+		model.setHorizontal(true);
+		model
+
+			//left panel
+			.addModel(
+				new WorkspaceNodeModel()
+					.setExpand(false)
+					.setVertical(true)
+					.addModel(new DefaultWorkspacePanelModel('Panel 1').setExpand(false, false))
+					.addModel(new DefaultWorkspacePanelModel('Panel 2'))
+			)
+			.addModel(
+				new WorkspaceNodeModel()
+					.setExpand(false)
+					.setVertical(true)
+					.addModel(new DefaultWorkspacePanelModel('Panel 1'))
+					.addModel(new DefaultWorkspacePanelModel('Panel 2'))
+			)
+
+			//tab panel
+			.addModel(
+				new WorkspaceTabbedModel()
+					.addModel(new DefaultWorkspacePanelModel('Tab 1'))
+					.addModel(new DefaultWorkspacePanelModel('Tab 2'))
+					.addModel(new DefaultWorkspacePanelModel('Tab 3'))
+			)
+
+			//right panel
+			// .addModel(new DefaultWorkspacePanelModel('Panel 3'))
+			.addModel(
+				new WorkspaceNodeModel()
+					.setExpand(false)
+					.setVertical(true)
+					// .setMode('micro')
+					.addModel(new DefaultWorkspacePanelModel('Panel 4'))
+					.addModel(new DefaultWorkspacePanelModel('Panel 5'))
+					.addModel(new DefaultWorkspacePanelModel('Panel 6'))
+			)
+			.addModel(
+				new WorkspaceNodeModel()
+					.setExpand(false)
+					.setVertical(true)
+					// .setMode('micro')
+					.addModel(new DefaultWorkspacePanelModel('Panel 4'))
+					.addModel(new DefaultWorkspacePanelModel('Panel 5'))
+					.addModel(new DefaultWorkspacePanelModel('Panel 6'))
+			);
+		return model;
+	});
+	return <CompInternal model={model} />;
 };
 
 export default {

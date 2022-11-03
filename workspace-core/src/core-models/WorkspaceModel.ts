@@ -25,6 +25,9 @@ export class WorkspaceModel<
 	id: string;
 	expandVertical: boolean;
 	expandHorizontal: boolean;
+	width: number;
+	height: number;
+
 	parent: WorkspaceCollectionInterface & WorkspaceModel;
 	type: string;
 
@@ -42,6 +45,21 @@ export class WorkspaceModel<
 		this.listeners = {};
 		this.r_visible = false;
 		this.r_dimensions = new DimensionContainer();
+		this.width = 0;
+		this.height = 0;
+		this.r_dimensions.registerListener({
+			updated: () => {
+				if (this.width === 0 && this.height === 0) {
+					console.log('updating');
+					this.setWidth(this.r_dimensions.dimensions.width);
+				}
+			}
+		});
+	}
+
+	setWidth(width: number) {
+		this.width = width;
+		this.invalidateLayout();
 	}
 
 	invalidateLayout() {

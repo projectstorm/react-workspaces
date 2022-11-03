@@ -3,6 +3,7 @@ import { WorkspaceEngine } from '../../core/WorkspaceEngine';
 import { WorkspaceModel } from '../../core-models/WorkspaceModel';
 import { DirectionalLayoutWidget } from './DirectionalLayoutWidget';
 import { WorkspaceNodeModel } from '../../entities/node/WorkspaceNodeModel';
+import { useModelElement } from '../hooks/useModelElement';
 
 export interface StandardLayoutWidgetProps {
 	node: WorkspaceNodeModel;
@@ -10,33 +11,37 @@ export interface StandardLayoutWidgetProps {
 	className?: any;
 }
 
-export class StandardLayoutWidget extends React.Component<StandardLayoutWidgetProps> {
-	render() {
-		return (
-			<DirectionalLayoutWidget
-				dimensionContainerForDivider={(index: number) => {
-					return this.props.node.r_divisons[index];
-				}}
-				className={this.props.className}
-				data={this.props.node.children}
-				generateElement={(model) => {
-					return this.props.engine.getFactory(model).generateContent({
-						model: model,
-						engine: this.props.engine,
-						renderContentOnly: false
-					});
-				}}
-				expand={true}
-				dropZoneAllowed={(index) => {
-					return true;
-				}}
-				dropped={(index, model: WorkspaceModel) => {
-					this.props.node.addModel(model, index);
-					this.props.engine.fireModelUpdated();
-				}}
-				vertical={this.props.node.vertical}
-				engine={this.props.engine}
-			/>
-		);
-	}
-}
+export const StandardLayoutWidget: React.FC<StandardLayoutWidgetProps> = (props) => {
+	const ref = useModelElement({
+		engine: props.engine,
+		model: props.node
+	});
+	return (
+		<DirectionalLayoutWidget
+			forwardRef={ref}
+			dimensionContainerForDivider={(index: number) => {
+				return props.node.r_divisons[index];
+			}}
+			className={props.className}
+			data={props.node.children}
+			generateElement={(model) => {
+				return props.engine.getFactory(model).generateContent({
+					model: model,
+					engine: props.engine,
+					renderContentOnly: false,
+					verticalLayout: props.node.vertical
+				});
+			}}
+			expand={true}
+			dropZoneAllowed={(index) => {
+				return true;
+			}}
+			dropped={(index, model: WorkspaceModel) => {
+				props.node.addModel(model, index);
+				props.engine.fireModelUpdated();
+			}}
+			vertical={props.node.vertical}
+			engine={props.engine}
+		/>
+	);
+};

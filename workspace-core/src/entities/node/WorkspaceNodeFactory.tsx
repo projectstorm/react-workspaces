@@ -3,6 +3,8 @@ import * as React from 'react';
 import { RenderContentEvent, WorkspaceModelFactory } from '../../core/WorkspaceModelFactory';
 import { StandardLayoutWidget } from '../../widgets/layouts/StandardLayoutWidget';
 
+namespace S {}
+
 export class WorkspaceNodeFactory<T extends WorkspaceNodeModel = WorkspaceNodeModel> extends WorkspaceModelFactory<T> {
 	constructor() {
 		super(WorkspaceNodeModel.NAME);

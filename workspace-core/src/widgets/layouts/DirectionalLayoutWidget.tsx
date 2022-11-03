@@ -16,6 +16,7 @@ export interface DirectionalLayoutWidgetProps {
 	generateElement: (model: WorkspaceModel) => JSX.Element;
 	dimensionContainerForDivider: (index: number) => DimensionContainer;
 	className?: any;
+	forwardRef: React.RefObject<HTMLDivElement>;
 }
 
 namespace S {
@@ -29,7 +30,7 @@ namespace S {
 
 export const DirectionalLayoutWidget: React.FC<DirectionalLayoutWidgetProps> = (props) => {
 	return (
-		<S.Container className={props.className} expand={props.expand} vertical={props.vertical}>
+		<S.Container ref={props.forwardRef} className={props.className} expand={props.expand} vertical={props.vertical}>
 			<DividerWidget dimensionContainer={props.dimensionContainerForDivider(0)} key="drop-first" />
 			{_.map(props.data, (model: WorkspaceModel, index) => {
 				return (

@@ -14,6 +14,14 @@ export const useResizeObserver = (props: UseResizeObserverProps) => {
 		props.dimension.update(dims);
 	}, []);
 
+	useEffect(() => {
+		return props.dimension.registerListener({
+			invalidate: () => {
+				update();
+			}
+		});
+	}, []);
+
 	useWindowResize({
 		resized: update
 	});

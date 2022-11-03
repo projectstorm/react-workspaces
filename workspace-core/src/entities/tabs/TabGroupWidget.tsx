@@ -66,7 +66,8 @@ export const TabGroupWidget: React.FC<TabGroupWidgetProps> = (props) => {
 						return selectedFactory.generateContent({
 							model: selected,
 							engine: props.engine,
-							renderContentOnly: true
+							renderContentOnly: true,
+							verticalLayout: true
 						});
 					}}
 				/>

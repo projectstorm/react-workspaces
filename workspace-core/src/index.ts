@@ -6,6 +6,7 @@ export * from './widgets/layouts/MicroLayoutWidget';
 export * from './widgets/layouts/StandardLayoutWidget';
 
 export * from './widgets/hooks/useForceUpdate';
+export * from './widgets/hooks/useMouseDragDistance';
 export * from './widgets/hooks/useModelElement';
 export * from './widgets/hooks/useResizeObserver';
 export * from './widgets/hooks/useWindowResize';

@@ -5,6 +5,7 @@ import { v4 } from 'uuid';
 
 export interface DimensionContainerListener extends BaseListener {
 	updated: () => any;
+	invalidate: () => any;
 }
 
 export interface RawPosition {
@@ -36,6 +37,14 @@ export class DimensionContainer extends BaseObserver<DimensionContainerListener>
 			width: 0,
 			height: 0
 		};
+	}
+
+	isPortrait() {
+		return this.dimensions.height > this.dimensions.width;
+	}
+
+	invalidate() {
+		this.iterateListeners((cb) => cb.invalidate?.());
 	}
 
 	update(dim: Partial<Dimension>) {
