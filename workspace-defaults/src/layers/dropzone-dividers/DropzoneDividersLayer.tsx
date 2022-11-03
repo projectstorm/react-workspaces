@@ -1,25 +1,25 @@
 import * as React from 'react';
 import { useEffect } from 'react';
 import { Layer, useForceUpdate, WorkspaceEngine, WorkspaceNodeModel } from '@projectstorm/react-workspaces-core';
-import { ResizeDividerWidget } from './ResizeDividerWidget';
+import { DropzoneDividerWidget } from './DropzoneDividerWidget';
 
-export class ResizeDividersLayer extends Layer {
-	constructor() {
+export class DropzoneDividersLayer extends Layer {
+	constructor(public modelID: string) {
 		super({
 			mouseEvents: false
 		});
 	}
 
 	renderLayer(event): JSX.Element {
-		return <ResizeDividersLayerWidget engine={event.engine} />;
+		return <DropzoneDividersLayerWidget engine={event.engine} />;
 	}
 }
 
-export interface ResizeDividersLayerWidgetProps {
+export interface DropzoneDividersLayerWidgetProps {
 	engine: WorkspaceEngine;
 }
 
-export const ResizeDividersLayerWidget: React.FC<ResizeDividersLayerWidgetProps> = (props) => {
+export const DropzoneDividersLayerWidget: React.FC<DropzoneDividersLayerWidgetProps> = (props) => {
 	const forceUpdate = useForceUpdate(true);
 
 	// TODO rerun this when models added
@@ -41,9 +41,9 @@ export const ResizeDividersLayerWidget: React.FC<ResizeDividersLayerWidgetProps>
 			{props.engine.rootModel
 				.flatten()
 				.filter((p) => p instanceof WorkspaceNodeModel)
-				.flatMap((m: WorkspaceNodeModel) => m.getResizeDivisions())
+				.flatMap((m: WorkspaceNodeModel) => m.r_divisons)
 				.map((m) => {
-					return <ResizeDividerWidget engine={props.engine} dividerContainer={m} key={m.dimensions.id} />;
+					return <DropzoneDividerWidget engine={props.engine} dimension={m} key={m.id} />;
 				})}
 		</>
 	);

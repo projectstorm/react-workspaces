@@ -20,4 +20,8 @@ export * from './layers/dropzone/DropZoneLayerPanelWidget';
 export * from './layers/resize-dividers/ResizeDividersLayer';
 export * from './layers/resize-dividers/ResizeDividerWidget';
 
+export * from './layers/dropzone-dividers/DropzoneDividersLayer';
+export * from './layers/dropzone-dividers/DropzoneDividerWidget';
+
 export * from './behavior/draggingItemBehavior';
+export * from './behavior/draggingItemDividerBehavior';

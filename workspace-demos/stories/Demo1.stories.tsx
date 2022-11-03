@@ -17,6 +17,7 @@ import {
 	DefaultWorkspacePanelFactory,
 	DefaultWorkspacePanelModel,
 	draggingItemBehavior,
+	draggingItemDividerBehavior,
 	ResizeDividersLayer
 } from '@projectstorm/react-workspaces-defaults';
 import 'typeface-open-sans';
@@ -62,14 +63,15 @@ const CompInternal: React.FC<{ model: WorkspaceNodeModel }> = (props) => {
 
 	useEffect(() => {
 		draggingItemBehavior(engine);
-		engine.layerManager.addLayer(
-			new DebugLayer({
-				dividers: false,
-				resizeDividers: true,
-				panels: false
-			})
-		);
-		engine.layerManager.addLayer(new ResizeDividersLayer({}));
+		draggingItemDividerBehavior(engine);
+		engine.layerManager.addLayer(new ResizeDividersLayer());
+		// engine.layerManager.addLayer(
+		// 	new DebugLayer({
+		// 		dividers: false,
+		// 		resizeDividers: true,
+		// 		panels: false
+		// 	})
+		// );
 	}, []);
 
 	return (
