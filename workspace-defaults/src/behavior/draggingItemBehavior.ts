@@ -8,7 +8,7 @@ export const draggingItemBehavior = (engine: WorkspaceEngine) => {
 			if (layer) {
 				return;
 			}
-			layer = new DropZoneLayer(null);
+			layer = new DropZoneLayer(engine.draggingID);
 			engine.layerManager.addLayer(layer);
 		},
 		modelDragEnd: () => {
