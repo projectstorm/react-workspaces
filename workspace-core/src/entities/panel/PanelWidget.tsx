@@ -14,13 +14,13 @@ export interface PanelWidgetProps {
 }
 
 namespace S {
-	export const Container = styled.div<{ expand: boolean }>`
+	export const Container = styled.div`
 		display: flex;
 		flex-direction: column;
 		position: relative;
-		flex-shrink: ${(p) => (p.expand ? 1 : 0)};
-		flex-grow: ${(p) => (p.expand ? 1 : 0)};
 		max-height: 100%;
+		height: 100%;
+		width: 100%;
 		overflow: hidden;
 	`;
 
@@ -40,7 +40,7 @@ export const PanelWidget: React.FC<PanelWidgetProps> = (props) => {
 	try {
 		const factory = props.engine.getFactory<WorkspacePanelFactory>(props.model);
 		return (
-			<S.Container ref={ref} expand={props.expand}>
+			<S.Container ref={ref}>
 				<DraggableWidget model={props.model} engine={props.engine}>
 					{factory.generatePanelTitle({
 						model: props.model,

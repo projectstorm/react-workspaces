@@ -50,8 +50,8 @@ export class WorkspaceModel<
 		this.r_dimensions.registerListener({
 			updated: () => {
 				if (this.width === 0 && this.height === 0) {
-					console.log('updating');
 					this.setWidth(this.r_dimensions.dimensions.width);
+					this.setHeight(this.r_dimensions.dimensions.height);
 				}
 			}
 		});
@@ -59,6 +59,11 @@ export class WorkspaceModel<
 
 	setWidth(width: number) {
 		this.width = width;
+		this.invalidateLayout();
+	}
+
+	setHeight(height: number) {
+		this.height = height;
 		this.invalidateLayout();
 	}
 

@@ -63,7 +63,7 @@ const getResizeStrategy = (divider: ResizeDivision): Pick<UseMouseDragDistancePr
 				initial = before.height;
 			},
 			moved: ({ distanceY }) => {
-				before.setWidth(initial + distanceY);
+				before.setHeight(initial + distanceY);
 			}
 		};
 	} else if (!after.expandHorizontal) {
@@ -72,7 +72,7 @@ const getResizeStrategy = (divider: ResizeDivision): Pick<UseMouseDragDistancePr
 				initial = after.height;
 			},
 			moved: ({ distanceY }) => {
-				after.setWidth(initial - distanceY);
+				after.setHeight(initial - distanceY);
 			}
 		};
 	}

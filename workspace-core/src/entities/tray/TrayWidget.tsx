@@ -22,9 +22,8 @@ namespace S {
 		display: flex;
 		flex-direction: column;
 		position: relative;
-		flex-grow: ${(p) => (p.expand ? 1 : 0)};
-		${(p) => (p.width !== 0 ? `width: ${p.width}px` : '')};
-		${(p) => p.expand && `width: 50%`};
+		height: 100%;
+		width: 100%;
 	`;
 
 	export const MicroLayout = styled(MicroLayoutWidget)`
