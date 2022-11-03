@@ -42,6 +42,11 @@ export const DropzoneDividerWidget: React.FC<DropzoneDividerWidgetProps> = (prop
 		insetsHorizontal = -1 * PULL_OUTER;
 	}
 
+	if (entered) {
+		insetsVertical = insetsVertical - 5;
+		insetsHorizontal = insetsHorizontal - 5;
+	}
+
 	return (
 		<S.DimensionTracker dimension={props.dimension}>
 			<S.Container
@@ -54,16 +59,15 @@ export const DropzoneDividerWidget: React.FC<DropzoneDividerWidgetProps> = (prop
 	);
 };
 namespace S {
-	const INSETS = 10;
-
 	export const DimensionTracker = styled(DimensionTrackingWidget)``;
 
 	export const Container = styled.div<{ insetsVertical: number; insetsHorizontal: number; enter: boolean }>`
 		pointer-events: all;
 		position: absolute;
-		background: orange;
+		background: ${(p) => (p.enter ? 'orange' : '#0096ff')};
 		border-radius: 5px;
-		transition: opacity 0.3s;
+		transition: background 0.3s, opacity 0.3s, left 0.3s, top 0.3s, bottom 0.3s, right 0.3s;
+		transition-delay: 0.1s;
 		opacity: ${(p) => (p.enter ? 1 : 0.1)};
 		top: ${(p) => p.insetsVertical}px;
 		left: ${(p) => p.insetsHorizontal}px;
