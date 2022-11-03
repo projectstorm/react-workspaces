@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as _ from 'lodash';
-import { WorkspaceNodeModel } from '../../entities/tray/WorkspaceNodeModel';
+import { WorkspaceTrayModel } from '../../entities/tray/WorkspaceTrayModel';
 import { WorkspaceEngine } from '../../core/WorkspaceEngine';
 import { DraggableWidget } from '../primitives/DraggableWidget';
 import { FloatingPanelWidget } from '../FloatingPanelWidget';
@@ -8,7 +8,7 @@ import { WorkspacePanelFactory } from '../../entities/panel/WorkspacePanelFactor
 import styled from '@emotion/styled';
 
 export interface MicroLayoutWidgetProps {
-	node: WorkspaceNodeModel;
+	node: WorkspaceTrayModel;
 	engine: WorkspaceEngine;
 	className?;
 }

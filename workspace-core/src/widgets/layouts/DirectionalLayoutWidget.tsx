@@ -1,9 +1,10 @@
 import * as React from 'react';
-import { DropZoneLayoutDividerWidget } from '../dropzone/DropZoneLayoutDividerWidget';
 import * as _ from 'lodash';
 import { WorkspaceModel } from '../../core-models/WorkspaceModel';
 import { WorkspaceEngine } from '../../core/WorkspaceEngine';
 import styled from '@emotion/styled';
+import { DividerWidget } from '../primitives/DividerWidget';
+import { DimensionContainer } from '../../core/DimensionContainer';
 
 export interface DirectionalLayoutWidgetProps {
 	vertical: boolean;
@@ -13,7 +14,8 @@ export interface DirectionalLayoutWidgetProps {
 	engine: WorkspaceEngine;
 	data: WorkspaceModel[];
 	generateElement: (model: WorkspaceModel) => JSX.Element;
-	className?;
+	dimensionContainerForDivider: (index: number) => DimensionContainer;
+	className?: any;
 }
 
 namespace S {
@@ -25,37 +27,18 @@ namespace S {
 	`;
 }
 
-export class DirectionalLayoutWidget extends React.Component<DirectionalLayoutWidgetProps> {
-	render() {
-		return (
-			<S.Container className={this.props.className} expand={this.props.expand} vertical={this.props.vertical}>
-				<DropZoneLayoutDividerWidget
-					allowResizing={false}
-					vertical={!this.props.vertical}
-					disallow={!this.props.dropZoneAllowed(0)}
-					dropped={(model) => {
-						this.props.dropped(0, model);
-					}}
-					engine={this.props.engine}
-					key="drop-first"
-				/>
-				{_.map(this.props.data, (model: WorkspaceModel, index) => {
-					return (
-						<React.Fragment key={model.id}>
-							{this.props.generateElement(model)}
-							<DropZoneLayoutDividerWidget
-								allowResizing={index !== this.props.data.length - 1}
-								vertical={!this.props.vertical}
-								disallow={!this.props.dropZoneAllowed(index + 1)}
-								dropped={(droppedModel) => {
-									this.props.dropped(index + 1, droppedModel);
-								}}
-								engine={this.props.engine}
-							/>
-						</React.Fragment>
-					);
-				})}
-			</S.Container>
-		);
-	}
-}
+export const DirectionalLayoutWidget: React.FC<DirectionalLayoutWidgetProps> = (props) => {
+	return (
+		<S.Container className={props.className} expand={props.expand} vertical={props.vertical}>
+			<DividerWidget dimensionContainer={props.dimensionContainerForDivider(0)} key="drop-first" />
+			{_.map(props.data, (model: WorkspaceModel, index) => {
+				return (
+					<React.Fragment key={model.id}>
+						{props.generateElement(model)}
+						<DividerWidget dimensionContainer={props.dimensionContainerForDivider(index + 1)} key="drop-first" />
+					</React.Fragment>
+				);
+			})}
+		</S.Container>
+	);
+};

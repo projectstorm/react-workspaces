@@ -30,7 +30,7 @@ export const DropZoneLayerPanelWidget: React.FC<DropZoneLayerPanelWidgetProps> =
 				setShow(false);
 			}}
 		>
-			<S.DimensionTracking entered={show} model={props.model}>
+			<S.DimensionTracking entered={show} dimension={props.model.r_dimensions}>
 				<S.Inside ref={ref}>
 					<S.Layer visible={show}>
 						<DropZoneAlignmentButtonWidget model={props.model} engine={props.engine} alignment={Alignment.TOP} />

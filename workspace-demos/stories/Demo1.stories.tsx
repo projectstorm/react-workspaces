@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import {
+	DebugLayer,
 	ResizeOverlayWidget,
 	WorkspaceEngine,
 	WorkspaceNodeModel,
@@ -14,7 +15,7 @@ import {
 	DefaultWorkspacePanelFactory,
 	DefaultWorkspacePanelModel,
 	draggingItemBehavior,
-	DropZoneLayer
+	ResizeDividersLayer
 } from '@projectstorm/react-workspaces-defaults';
 import 'typeface-open-sans';
 
@@ -53,8 +54,10 @@ export const ResizeVertical = () => {
 export const Comp = () => {
 	const [engine] = useState(() => {
 		const e = new WorkspaceEngine();
+		// @ts-ignore
 		e.registerFactory(new WorkspaceTabFactory());
 		e.registerFactory(new DefaultWorkspacePanelFactory());
+		// @ts-ignore
 		e.registerFactory(new DefaultTrayFactory());
 		return e;
 	});
@@ -87,7 +90,7 @@ export const Comp = () => {
 				new WorkspaceNodeModel()
 					.setExpand(false)
 					.setVertical(true)
-					.setMode('micro')
+					// .setMode('micro')
 					.addModel(new DefaultWorkspacePanelModel('Panel 4'))
 					.addModel(new DefaultWorkspacePanelModel('Panel 5'))
 					.addModel(new DefaultWorkspacePanelModel('Panel 6'))
@@ -97,6 +100,14 @@ export const Comp = () => {
 
 	useEffect(() => {
 		draggingItemBehavior(engine);
+		engine.layerManager.addLayer(
+			new DebugLayer({
+				dividers: false,
+				resizeDividers: true,
+				panels: false
+			})
+		);
+		engine.layerManager.addLayer(new ResizeDividersLayer({}));
 	}, []);
 
 	return (

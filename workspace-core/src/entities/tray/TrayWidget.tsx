@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { WorkspaceNodeModel } from './WorkspaceNodeModel';
+import { WorkspaceTrayModel } from './WorkspaceTrayModel';
 import { WorkspaceEngine } from '../../core/WorkspaceEngine';
 import { StandardLayoutWidget } from '../../widgets/layouts/StandardLayoutWidget';
 import { MicroLayoutWidget } from '../../widgets/layouts/MicroLayoutWidget';
@@ -7,7 +7,7 @@ import { DraggableWidget } from '../../widgets/primitives/DraggableWidget';
 import styled from '@emotion/styled';
 
 export interface TrayWidgetProps {
-	node: WorkspaceNodeModel;
+	node: WorkspaceTrayModel;
 	engine: WorkspaceEngine;
 	header: JSX.Element;
 	className?;

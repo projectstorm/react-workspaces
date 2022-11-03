@@ -1,9 +1,10 @@
 import * as React from 'react';
 import * as _ from 'lodash';
 import styled from '@emotion/styled';
-import { DropzoneDividerWidget } from './DropzoneDividerWidget';
 import { WorkspaceEngine } from '../../core/WorkspaceEngine';
 import { WorkspaceModel } from '../../core-models/WorkspaceModel';
+import { DividerWidget } from '../primitives/DividerWidget';
+import { DimensionContainer } from '../../core/DimensionContainer';
 
 export interface DropzoneOrderWidgetProps {
 	vertical: boolean;
@@ -61,28 +62,30 @@ export class DropzoneOrderWidget extends React.Component<
 	getDivider(index: number) {
 		if (this.state.dragging || _.keys(this.state.draggingChild).length > 0) {
 			return (
-				<DropzoneDividerWidget
-					entered={(entered) => {
-						if (entered) {
-							this.state.draggingChild[`${index}`] = true;
-						} else {
-							delete this.state.draggingChild[`${index}`];
-						}
-						this.setState({
-							draggingChild: this.state.draggingChild
-						});
-					}}
-					vertical={this.props.vertical}
-					dropped={(model) => {
-						this.props.dropped(model, index);
-						this.setState({
-							dragging: false,
-							draggingChild: {}
-						});
-					}}
-					size={this.props.size}
+				<DividerWidget
+					// FIXME
+					dimensionContainer={new DimensionContainer()}
+					// entered={(entered) => {
+					// 	if (entered) {
+					// 		this.state.draggingChild[`${index}`] = true;
+					// 	} else {
+					// 		delete this.state.draggingChild[`${index}`];
+					// 	}
+					// 	this.setState({
+					// 		draggingChild: this.state.draggingChild
+					// 	});
+					// }}
+					// vertical={this.props.vertical}
+					// dropped={(model) => {
+					// 	this.props.dropped(model, index);
+					// 	this.setState({
+					// 		dragging: false,
+					// 		draggingChild: {}
+					// 	});
+					// }}
+					// size={this.props.size}
 					key={0}
-					engine={this.props.engine}
+					// engine={this.props.engine}
 				/>
 			);
 		}

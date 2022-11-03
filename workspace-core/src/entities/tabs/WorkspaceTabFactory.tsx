@@ -1,17 +1,23 @@
 import { WorkspaceTabbedModel } from './WorkspaceTabbedModel';
-import { WorkspaceLayoutFactory } from '../../core/WorkspaceLayoutFactory';
-import { GenerateEvent } from '../../core/WorkspaceFactory';
+import { GenerateEvent, WorkspaceModelFactory } from '../../core/WorkspaceModelFactory';
 import { TabGroupWidget } from './TabGroupWidget';
 import * as React from 'react';
 import * as _ from 'lodash';
 import { TabButtonWidget } from './TabButtonWidget';
 import { DropzoneOrderWidget } from '../../widgets/dropzone/DropzoneOrderWidget';
 
+export interface TabRenderer {
+	render: () => any;
+}
+
 export class WorkspaceTabFactory<
 	T extends WorkspaceTabbedModel = WorkspaceTabbedModel
-> extends WorkspaceLayoutFactory<T> {
+> extends WorkspaceModelFactory<T> {
+	renderers: Set<TabRenderer>;
+
 	constructor() {
 		super(WorkspaceTabbedModel.NAME);
+		this.renderers = new Set<TabRenderer>();
 	}
 
 	generateModel(): T {
@@ -35,7 +41,7 @@ export class WorkspaceTabFactory<
 		);
 	}
 
-	generateLayout(event: GenerateEvent<T>): JSX.Element {
+	generateContent(event: GenerateEvent<T>): JSX.Element {
 		return (
 			<TabGroupWidget tabs={this.generateTabs(event)} key={event.model.id} model={event.model} engine={event.engine} />
 		);

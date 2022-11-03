@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { WorkspaceFactory } from './WorkspaceFactory';
+import { WorkspaceModelFactory } from './WorkspaceModelFactory';
 import { WorkspaceModel } from '../core-models/WorkspaceModel';
 import { WorkspaceEngineInterface } from './WorkspaceEngineInterface';
 import { BaseListener, BaseObserver } from './BaseObserver';
@@ -27,7 +27,7 @@ export class WorkspaceEngineError extends Error {
 
 export class WorkspaceEngine extends BaseObserver<WorkspaceEngineListener> implements WorkspaceEngineInterface {
 	// factories
-	factories: { [type: string]: WorkspaceFactory };
+	factories: { [type: string]: WorkspaceModelFactory };
 	draggingID: string;
 	fullscreenModel: WorkspaceModel;
 	layerManager: LayerManager;
@@ -116,11 +116,11 @@ export class WorkspaceEngine extends BaseObserver<WorkspaceEngineListener> imple
 		});
 	}
 
-	registerFactory(factory: WorkspaceFactory) {
+	registerFactory(factory: WorkspaceModelFactory) {
 		this.factories[factory.type] = factory;
 	}
 
-	getFactory<T extends WorkspaceFactory>(model: WorkspaceModel | string): T {
+	getFactory<T extends WorkspaceModelFactory>(model: WorkspaceModel | string): T {
 		if (typeof model !== 'string') {
 			model = model.type;
 		}

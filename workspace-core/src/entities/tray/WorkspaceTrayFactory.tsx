@@ -1,23 +1,22 @@
-import { WorkspaceNodeModel } from './WorkspaceNodeModel';
-import { WorkspaceLayoutFactory } from '../../core/WorkspaceLayoutFactory';
+import { WorkspaceTrayModel } from './WorkspaceTrayModel';
 import * as React from 'react';
-import { GenerateEvent } from '../../core/WorkspaceFactory';
+import { GenerateEvent, WorkspaceModelFactory } from '../../core/WorkspaceModelFactory';
 import { TrayWidget } from './TrayWidget';
 
-export class WorkspaceTrayFactory<T extends WorkspaceNodeModel = WorkspaceNodeModel> extends WorkspaceLayoutFactory<T> {
+export class WorkspaceTrayFactory<T extends WorkspaceTrayModel = WorkspaceTrayModel> extends WorkspaceModelFactory<T> {
 	constructor() {
-		super(WorkspaceNodeModel.NAME);
+		super(WorkspaceTrayModel.NAME);
 	}
 
 	generateModel(): T {
-		return new WorkspaceNodeModel() as T;
+		return new WorkspaceTrayModel() as T;
 	}
 
 	generateTrayHeader(event: GenerateEvent<T>) {
 		return null;
 	}
 
-	generateLayout(event: GenerateEvent<T>): JSX.Element {
+	generateContent(event: GenerateEvent<T>): JSX.Element {
 		return (
 			<TrayWidget
 				header={this.generateTrayHeader(event)}

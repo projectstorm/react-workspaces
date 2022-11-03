@@ -1,7 +1,7 @@
 import { WorkspaceModel, SerializedModel, WorkspaceModelListener } from './WorkspaceModel';
 import { WorkspaceEngine } from '../core/WorkspaceEngine';
 import { WorkspaceCollectionInterface } from './WorkspaceCollectionInterface';
-import { WorkspaceFactory } from '../core/WorkspaceFactory';
+import { WorkspaceModelFactory } from '../core/WorkspaceModelFactory';
 import * as _ from 'lodash';
 import { Alignment } from '../core/tools';
 
@@ -16,9 +16,10 @@ export interface WorkspaceCollectionModelListener extends WorkspaceModelListener
 
 export class WorkspaceCollectionModel<
 		T extends WorkspaceModel = WorkspaceModel,
-		S extends SerializedCollectionModel = SerializedCollectionModel
+		S extends SerializedCollectionModel = SerializedCollectionModel,
+		L extends WorkspaceCollectionModelListener = WorkspaceCollectionModelListener
 	>
-	extends WorkspaceModel<S, WorkspaceCollectionModelListener>
+	extends WorkspaceModel<S, L>
 	implements WorkspaceCollectionInterface {
 	children: T[];
 	childrenListeners: Set<() => any>;
@@ -32,7 +33,7 @@ export class WorkspaceCollectionModel<
 	fromArray(payload: S, engine: WorkspaceEngine) {
 		super.fromArray(payload, engine);
 		for (let child of payload.children) {
-			let factory: WorkspaceFactory;
+			let factory: WorkspaceModelFactory;
 			try {
 				factory = engine.getFactory(child.type);
 			} catch (ex) {
@@ -84,6 +85,22 @@ export class WorkspaceCollectionModel<
 		this.removeModel(oldModel, false);
 		this.addModel(newModel, index);
 		return this;
+	}
+
+	getModelBefore(model: T) {
+		const index = this.children.indexOf(model);
+		if (index <= 0) {
+			return null;
+		}
+		return this.children[index - 1];
+	}
+
+	getModelAfter(model: T) {
+		const index = this.children.indexOf(model);
+		if (index >= this.children.length - 1) {
+			return null;
+		}
+		return this.children[index + 1];
 	}
 
 	delete() {

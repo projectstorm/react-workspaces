@@ -1,10 +1,8 @@
 import * as React from 'react';
-import { WorkspaceNodeModel } from '../entities/tray/WorkspaceNodeModel';
 import { WorkspaceEngine } from '../core/WorkspaceEngine';
 import { PanelWidget } from '../entities/panel/PanelWidget';
 import { StandardLayoutWidget } from './layouts/StandardLayoutWidget';
 import styled from '@emotion/styled';
-import { DividerContext } from './dropzone/DropzoneDividerWidget';
 import { useEffect, useRef, useState } from 'react';
 import { useForceUpdate } from './hooks/useForceUpdate';
 import { DimensionContainer } from '../core/DimensionContainer';
@@ -12,6 +10,7 @@ import { useResizeObserver } from './hooks/useResizeObserver';
 import { LayerManagerWidget } from './layers/LayerManagerWidget';
 import { useDragOverModel } from './hooks/dnd-model/useDragOverModel';
 import { UseMouseDragEventsRootWidget } from './hooks/dnd/useMouseDragEvents';
+import { WorkspaceNodeModel } from '../entities/node/WorkspaceNodeModel';
 
 export interface WorkspaceWidgetProps {
 	model: WorkspaceNodeModel;
@@ -67,11 +66,6 @@ export const WorkspaceWidget: React.FC<WorkspaceWidgetProps> = (props) => {
 		dimension: dimensionContainer
 	});
 
-	useResizeObserver({
-		forwardRef: ref_floating,
-		dimension: floatingContainer
-	});
-
 	useEffect(() => {
 		props.engine.setWorkspaceContainer(dimensionContainer);
 		props.engine.setFloatingContainer(floatingContainer);
@@ -110,22 +104,18 @@ export const WorkspaceWidget: React.FC<WorkspaceWidgetProps> = (props) => {
 
 	return (
 		<UseMouseDragEventsRootWidget forwardRef={ref_container}>
-			<DividerContext.Provider
-				value={{
-					hint: props.dividerColor,
-					active: props.dividerColorActive
-				}}
-			>
-				<S.Container ref={ref_container}>
-					{props.engine.fullscreenModel ? (
-						<PanelWidget expand={true} model={props.engine.fullscreenModel} engine={props.engine} />
-					) : (
-						<StandardLayoutWidget node={props.model} engine={props.engine} />
-					)}
-					<S.Floating ref={ref_floating} />
-					<S.LayerManager engine={props.engine} layerManager={props.engine.layerManager} model={props.model} />
-				</S.Container>
-			</DividerContext.Provider>
+			{/*<DividerContext.Provider*/}
+			{/*	value={{*/}
+			{/*		hint: props.dividerColor,*/}
+			{/*		active: props.dividerColorActive*/}
+			{/*	}}*/}
+			{/*>*/}
+			<S.Container ref={ref_container}>
+				<StandardLayoutWidget node={props.model} engine={props.engine} />
+				{/*<S.Floating ref={ref_floating} />*/}
+				<S.LayerManager engine={props.engine} layerManager={props.engine.layerManager} model={props.model} />
+			</S.Container>
+			{/*</DividerContext.Provider>*/}
 		</UseMouseDragEventsRootWidget>
 	);
 };

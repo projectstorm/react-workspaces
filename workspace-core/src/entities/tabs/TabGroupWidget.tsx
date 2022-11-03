@@ -1,11 +1,10 @@
 import * as React from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { WorkspaceTabbedModel } from './WorkspaceTabbedModel';
 import { WorkspaceEngine } from '../../core/WorkspaceEngine';
-import { WorkspacePanelFactory } from '../panel/WorkspacePanelFactory';
 import styled from '@emotion/styled';
 import { DraggableWidget } from '../../widgets/primitives/DraggableWidget';
 import { PerformanceWidget } from '../../widgets/PerformanceWidget';
-import { useEffect, useRef, useState } from 'react';
 import { useModelElement } from '../../widgets/hooks/useModelElement';
 
 export interface TabGroupWidgetProps {
@@ -52,7 +51,7 @@ export const TabGroupWidget: React.FC<TabGroupWidgetProps> = (props) => {
 	}, []);
 
 	let selected = props.model.getSelected();
-	let selectedFactory = props.engine.getFactory<WorkspacePanelFactory>(selected);
+	let selectedFactory = props.engine.getFactory(selected);
 
 	return (
 		<S.Container>
@@ -64,9 +63,10 @@ export const TabGroupWidget: React.FC<TabGroupWidgetProps> = (props) => {
 					data={selected.toArray()}
 					engine={props.engine}
 					children={() => {
-						return selectedFactory.generatePanelContent({
+						return selectedFactory.generateContent({
 							model: selected,
-							engine: props.engine
+							engine: props.engine,
+							renderContentOnly: true
 						});
 					}}
 				/>

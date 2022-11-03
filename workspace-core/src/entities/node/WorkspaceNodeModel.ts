@@ -2,27 +2,33 @@ import { WorkspaceCollectionModel } from '../../core-models/WorkspaceCollectionM
 import { WorkspaceEngine } from '../../core/WorkspaceEngine';
 import { WorkspaceModel } from '../../core-models/WorkspaceModel';
 import { Alignment } from '../../core/tools';
+import { DimensionContainer } from '../../core/DimensionContainer';
 
-export type WorkspaceNodeModelMode = 'expand' | 'micro';
+export interface ResizeDivision {
+	before: WorkspaceModel;
+	after: WorkspaceModel;
+	dimensions: DimensionContainer;
+}
 
 export class WorkspaceNodeModel extends WorkspaceCollectionModel {
-	vertical: boolean;
-	mode: WorkspaceNodeModelMode;
-	floatingModel: WorkspaceModel;
-
 	static NAME = 'srw-node';
 
-	constructor() {
-		super(WorkspaceNodeModel.NAME);
+	vertical: boolean;
+	floatingModel: WorkspaceModel;
+	r_divisons: DimensionContainer[];
+
+	constructor(type: string = WorkspaceNodeModel.NAME) {
+		super(type);
 		this.vertical = true;
-		this.mode = 'expand';
 		this.floatingModel = null;
+		this.r_divisons = [];
 	}
+
+	// !----------- serialize ---------
 
 	toArray() {
 		return {
 			...super.toArray(),
-			mode: this.mode,
 			vertical: this.vertical
 		};
 	}
@@ -30,14 +36,39 @@ export class WorkspaceNodeModel extends WorkspaceCollectionModel {
 	fromArray(payload: any, engine: WorkspaceEngine) {
 		super.fromArray(payload, engine);
 		this.vertical = payload['vertical'];
-		this.mode = payload['mode'];
+	}
+
+	// !----------- divisions ---------
+
+	getResizeDivisions(): ResizeDivision[] {
+		let divs: ResizeDivision[] = [];
+		for (let i = 1; i < this.r_divisons.length - 1; i++) {
+			divs.push({
+				before: this.children[i - 1],
+				after: this.children[i],
+				dimensions: this.r_divisons[i]
+			});
+		}
+		return divs;
+	}
+
+	recomputeDivisions() {
+		this.r_divisons = this.children
+			.map((c) => {
+				return new DimensionContainer();
+			})
+			.concat(new DimensionContainer());
+	}
+
+	addModel(model: WorkspaceModel, position: number = null): this {
+		super.addModel(model, position);
+		this.recomputeDivisions();
+		return this;
 	}
 
 	removeModel(model: WorkspaceModel, runNormalizationChecks: boolean = true): this {
 		super.removeModel(model, runNormalizationChecks);
-		if (this.floatingModel && this.floatingModel === model) {
-			this.floatingModel = null;
-		}
+		this.recomputeDivisions();
 		return this;
 	}
 
@@ -56,33 +87,6 @@ export class WorkspaceNodeModel extends WorkspaceCollectionModel {
 	setHorizontal(horizontal: boolean = true): this {
 		this.vertical = !horizontal;
 		return this;
-	}
-
-	setMode(mode: WorkspaceNodeModelMode): this {
-		this.mode = mode;
-		this.invalidateLayout();
-		return this;
-	}
-
-	setFloatingModel(model: WorkspaceModel | null): this {
-		this.floatingModel = model;
-		return this;
-	}
-
-	getModelBefore(model: WorkspaceModel) {
-		const index = this.children.indexOf(model);
-		if (index <= 0) {
-			return null;
-		}
-		return this.children[index - 1];
-	}
-
-	getModelAfter(model: WorkspaceModel) {
-		const index = this.children.indexOf(model);
-		if (index >= this.children.length - 1) {
-			return null;
-		}
-		return this.children[index + 1];
 	}
 
 	getChildSibling(model: WorkspaceModel, alignment: Alignment): WorkspaceModel {

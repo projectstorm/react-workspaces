@@ -13,5 +13,11 @@ export * from './widgets/DefaultPanelTabWidget';
 export * from './widgets/DefaultPanelTabWidget';
 
 export * from './layers/dropzone/DropZoneLayer';
+export * from './layers/dropzone/DropZoneAlignmentButtonWidget';
+export * from './layers/dropzone/DropZoneLayerButtonWidget';
+export * from './layers/dropzone/DropZoneLayerPanelWidget';
+
+export * from './layers/resize-dividers/ResizeDividersLayer';
+export * from './layers/resize-dividers/ResizeDividerWidget';
 
 export * from './behavior/draggingItemBehavior';

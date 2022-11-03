@@ -1,6 +1,7 @@
 import { BaseListener, BaseObserver } from './BaseObserver';
 import * as _ from 'lodash';
 import { Alignment } from './tools';
+import { v4 } from 'uuid';
 
 export interface DimensionContainerListener extends BaseListener {
 	updated: () => any;
@@ -22,9 +23,11 @@ export type Dimension = RawPosition & RawDimensions;
 
 export class DimensionContainer extends BaseObserver<DimensionContainerListener> {
 	dimensions: Dimension;
+	id: string;
 
 	constructor() {
 		super();
+		this.id = v4();
 		this.dimensions = {
 			top: 0,
 			bottom: 0,

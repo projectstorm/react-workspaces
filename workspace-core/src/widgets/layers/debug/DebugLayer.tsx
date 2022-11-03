@@ -5,39 +5,69 @@ import { WorkspaceEngine } from '../../../core/WorkspaceEngine';
 import { WorkspaceModel } from '../../../core-models/WorkspaceModel';
 import { WorkspaceCollectionModel } from '../../../core-models/WorkspaceCollectionModel';
 import { DimensionTrackingWidget } from '../../primitives/DimensionTrackingWidget';
+import { WorkspaceNodeModel } from '../../../entities/node/WorkspaceNodeModel';
+
+export interface DebugLayerOptions {
+	dividers?: boolean;
+	panels?: boolean;
+	resizeDividers?: boolean;
+}
 
 export class DebugLayer extends Layer {
-	constructor() {
+	constructor(public debugOptions: DebugLayerOptions = { panels: true }) {
 		super({
 			mouseEvents: false
 		});
 	}
 
 	renderLayer(event): JSX.Element {
-		return <DebugLayerWidget engine={event.engine} model={event.model} />;
+		return <DebugLayerWidget options={this.debugOptions} engine={event.engine} model={event.model} />;
 	}
 }
 
 export interface DebugLayerWidgetProps {
 	engine: WorkspaceEngine;
 	model: WorkspaceModel;
+	options: DebugLayerOptions;
 }
 
 export const DebugLayerWidget: React.FC<DebugLayerWidgetProps> = (props) => {
 	return (
 		<>
-			{props.model
-				.flatten()
-				.filter((p) => !(p instanceof WorkspaceCollectionModel))
-				.map((m) => {
-					return <DimensionTrackingWidget model={m} />;
-				})}
+			{props.options?.panels
+				? props.model
+						.flatten()
+						.filter((p) => !(p instanceof WorkspaceCollectionModel))
+						.map((m) => {
+							return <S.Outline dimension={m.r_dimensions} key={m.id} />;
+						})
+				: []}
+
+			{props.options?.dividers
+				? props.model
+						.flatten()
+						.filter((p) => p instanceof WorkspaceNodeModel)
+						.flatMap((m: WorkspaceNodeModel) => m.r_divisons)
+						.map((m) => {
+							return <S.Outline dimension={m} key={m.id} />;
+						})
+				: []}
+
+			{props.options?.resizeDividers
+				? props.model
+						.flatten()
+						.filter((p) => p instanceof WorkspaceNodeModel)
+						.flatMap((m: WorkspaceNodeModel) => m.getResizeDivisions())
+						.map((m) => {
+							return <S.Outline dimension={m.dimensions} key={m.dimensions.id} />;
+						})
+				: []}
 		</>
 	);
 };
 
 namespace S {
-	export const Container = styled(DimensionTrackingWidget)`
+	export const Outline = styled(DimensionTrackingWidget)`
 		box-sizing: border-box;
 		border: solid red 1px;
 	`;
