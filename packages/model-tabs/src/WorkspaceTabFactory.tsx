@@ -1,26 +1,52 @@
-import { WorkspaceTabbedModel } from './WorkspaceTabbedModel';
 import { TabGroupWidget } from './TabGroupWidget';
 import * as React from 'react';
 import * as _ from 'lodash';
 import { TabButtonWidget } from './TabButtonWidget';
-import { DropzoneOrderWidget, GenerateEvent, WorkspaceModelFactory } from '@projectstorm/react-workspaces-core';
+import {
+	DropzoneOrderWidget,
+	GenerateEvent,
+	WorkspaceModel,
+	WorkspaceModelFactory
+} from '@projectstorm/react-workspaces-core';
+import { WorkspaceTabModel } from './WorkspaceTabModel';
 
-export interface TabRenderer {
-	render: () => any;
+export interface TabRendererEvent<T extends WorkspaceModel> {
+	model: T;
+	selected: boolean;
 }
 
-export class WorkspaceTabFactory<
-	T extends WorkspaceTabbedModel = WorkspaceTabbedModel
-> extends WorkspaceModelFactory<T> {
+export interface TabRenderer<T extends WorkspaceModel = WorkspaceModel> {
+	matchModel(model: T): boolean;
+
+	renderTab(event: TabRendererEvent<T>): JSX.Element;
+}
+
+export class WorkspaceTabFactory<T extends WorkspaceTabModel = WorkspaceTabModel> extends WorkspaceModelFactory<T> {
 	renderers: Set<TabRenderer>;
 
 	constructor() {
-		super(WorkspaceTabbedModel.NAME);
+		super(WorkspaceTabModel.NAME);
 		this.renderers = new Set<TabRenderer>();
 	}
 
 	generateModel(): T {
-		return new WorkspaceTabbedModel() as T;
+		return new WorkspaceTabModel() as T;
+	}
+
+	addTabRenderer(r: TabRenderer) {
+		this.renderers.add(r);
+	}
+
+	renderTabForModel(model: WorkspaceModel, selected: boolean) {
+		for (let r of this.renderers.values()) {
+			if (r.matchModel(model)) {
+				return r.renderTab({
+					model: model,
+					selected: selected
+				});
+			}
+		}
+		return <span>{model.type}</span>;
 	}
 
 	generateTabs(event: GenerateEvent<T>) {
@@ -34,7 +60,7 @@ export class WorkspaceTabFactory<
 				}}
 			>
 				{_.map(event.model.children, (child) => {
-					return <TabButtonWidget model={child} engine={event.engine} key={child.id} />;
+					return <TabButtonWidget factory={this} model={child} engine={event.engine} key={child.id} />;
 				})}
 			</DropzoneOrderWidget>
 		);

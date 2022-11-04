@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { useEffect, useRef, useState } from 'react';
-import { WorkspaceTabbedModel } from './WorkspaceTabbedModel';
 import styled from '@emotion/styled';
 import {
 	DraggableWidget,
@@ -8,9 +7,10 @@ import {
 	useModelElement,
 	WorkspaceEngine
 } from '@projectstorm/react-workspaces-core';
+import { WorkspaceTabModel } from './WorkspaceTabModel';
 
 export interface TabGroupWidgetProps {
-	model: WorkspaceTabbedModel;
+	model: WorkspaceTabModel;
 	engine: WorkspaceEngine;
 	tabs: JSX.Element;
 }

@@ -16,9 +16,10 @@ import {
 } from '@projectstorm/react-workspaces-defaults';
 import { draggingItemBehavior } from '@projectstorm/react-workspaces-behavior-panel-dropzone';
 import { draggingItemDividerBehavior } from '@projectstorm/react-workspaces-behavior-divider-dropzone';
-import { WorkspaceTabbedModel, WorkspaceTabFactory } from '@projectstorm/react-workspaces-model-tabs';
+import { WorkspaceTabModel, WorkspaceTabFactory } from '@projectstorm/react-workspaces-model-tabs';
 import { WorkspaceTrayModel } from '@projectstorm/react-workspaces-model-tray';
 import { ResizeDividersLayer } from '@projectstorm/react-workspaces-behavior-resize';
+import { DefaultPanelTabRenderer } from '@projectstorm/react-workspaces-defaults/dist';
 
 namespace S {
 	export const Container = styled.div`
@@ -37,9 +38,11 @@ const CompInternal: React.FC<{ model: WorkspaceNodeModel }> = (props) => {
 		e.registerFactory(new DefaultWorkspacePanelFactory());
 		e.registerFactory(new WorkspaceNodeFactory());
 
+		const tabFactory = new WorkspaceTabFactory();
+		tabFactory.addTabRenderer(new DefaultPanelTabRenderer());
 		// TODO some bullshit error me thinks
 		// @ts-ignore
-		e.registerFactory(new WorkspaceTabFactory());
+		e.registerFactory(tabFactory);
 		// @ts-ignore
 		e.registerFactory(new DefaultTrayFactory());
 		return e;
@@ -150,7 +153,7 @@ export const Comp2 = () => {
 
 			//tab panel
 			.addModel(
-				new WorkspaceTabbedModel()
+				new WorkspaceTabModel()
 					.addModel(new DefaultWorkspacePanelModel('Tab 1'))
 					.addModel(new DefaultWorkspacePanelModel('Tab 2'))
 					.addModel(new DefaultWorkspacePanelModel('Tab 3'))

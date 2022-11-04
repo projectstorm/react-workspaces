@@ -88,11 +88,12 @@ export class MicroLayoutWidget extends React.Component<MicroLayoutWidgetProps> {
 									engine={this.props.engine}
 									model={child}
 								>
-									{this.props.engine.getFactory<WorkspacePanelFactory>(child).generateMicroButton({
-										model: child,
-										selected: selected,
-										engine: this.props.engine
-									})}
+									unknown
+									{/*{this.props.engine.getFactory<WorkspacePanelFactory>(child).generateMicroButton({*/}
+									{/*	model: child,*/}
+									{/*	selected: selected,*/}
+									{/*	engine: this.props.engine*/}
+									{/*})}*/}
 								</DraggableWidget>
 							</div>
 						);

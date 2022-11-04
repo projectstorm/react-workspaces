@@ -6,3 +6,4 @@ library.add(faCube, faCopy);
 export * from './DefaultWorkspacePanelModel';
 export * from './DefaultWorkspacePanelFactory';
 export * from './DefaultTrayFactory';
+export * from './DefaultPanelTabRenderer';

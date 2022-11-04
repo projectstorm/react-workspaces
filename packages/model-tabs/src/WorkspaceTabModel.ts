@@ -1,13 +1,13 @@
 import { WorkspaceCollectionModel, WorkspaceModel } from '@projectstorm/react-workspaces-core';
 import * as _ from 'lodash';
 
-export class WorkspaceTabbedModel extends WorkspaceCollectionModel {
+export class WorkspaceTabModel extends WorkspaceCollectionModel {
 	protected selected: string;
 
 	static NAME = 'tabs';
 
 	constructor() {
-		super(WorkspaceTabbedModel.NAME);
+		super(WorkspaceTabModel.NAME);
 		this.selected = null;
 	}
 

@@ -2,18 +2,13 @@ import { DefaultWorkspacePanelModel } from './DefaultWorkspacePanelModel';
 import * as React from 'react';
 import { DefaultPanelTitleWidget } from './widgets/DefaultPanelTitleWidget';
 import { DefaultPanelContentWidget } from './widgets/DefaultPanelContentWidget';
-import { DefaultPanelMicroButtonWidget } from './widgets/DefaultPanelMicroButtonWidget';
-import { DefaultPanelTabWidget } from './widgets/DefaultPanelTabWidget';
-import {
-	GenerateEvent,
-	GenerateMicroButtonEvent,
-	GeneratePanelTabEvent,
-	WorkspacePanelFactory
-} from '@projectstorm/react-workspaces-core';
+import { GenerateEvent, WorkspacePanelFactory } from '@projectstorm/react-workspaces-core';
 
 export class DefaultWorkspacePanelFactory extends WorkspacePanelFactory<DefaultWorkspacePanelModel> {
+	static TYPE = 'default';
+
 	constructor() {
-		super('default');
+		super(DefaultWorkspacePanelFactory.TYPE);
 	}
 
 	generatePanelTitle(event): JSX.Element {
@@ -22,14 +17,6 @@ export class DefaultWorkspacePanelFactory extends WorkspacePanelFactory<DefaultW
 
 	generatePanelContent(event: GenerateEvent<DefaultWorkspacePanelModel>): JSX.Element {
 		return <DefaultPanelContentWidget>Hello World: {event.model.displayName}</DefaultPanelContentWidget>;
-	}
-
-	generatePanelTab(event: GeneratePanelTabEvent<DefaultWorkspacePanelModel>): JSX.Element {
-		return <DefaultPanelTabWidget name={event.model.displayName} selected={event.selected} />;
-	}
-
-	generateMicroButton(event: GenerateMicroButtonEvent<DefaultWorkspacePanelModel>): JSX.Element {
-		return <DefaultPanelMicroButtonWidget selected={event.selected} icon={event.model.icon} />;
 	}
 
 	generateModel(): DefaultWorkspacePanelModel {
