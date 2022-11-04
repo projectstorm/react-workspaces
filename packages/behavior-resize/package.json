@@ -1,0 +1,14 @@
+{
+  "name": "@projectstorm/react-workspaces-behavior-resize",
+  "version": "2.0.0-alpha",
+  "main": "./dist/index.js",
+  "types": "./dist/@types/index.d.ts",
+  "dependencies": {
+    "@projectstorm/react-workspaces-core": "2.0.0-alpha",
+    "react": "^18.2.0",
+    "@emotion/styled": "^11.10.4"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.21"
+  }
+}

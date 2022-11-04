@@ -1,0 +1,34 @@
+{
+  "name": "@projectstorm/react-workspaces-demos",
+  "scripts": {
+    "storybook": "start-storybook"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "typeface-open-sans": "^1.1.13",
+    "@emotion/styled": "^11.10.4",
+    "lodash": "^4.17.21",
+    "@projectstorm/react-workspaces-core": "2.0.0-alpha",
+    "@projectstorm/react-workspaces-model-tray": "2.0.0-alpha",
+    "@projectstorm/react-workspaces-model-tabs": "2.0.0-alpha",
+    "@projectstorm/react-workspaces-defaults": "2.0.0-alpha",
+    "@projectstorm/react-workspaces-behavior-resize": "2.0.0-alpha",
+    "@projectstorm/react-workspaces-behavior-divider-dropzone": "2.0.0-alpha",
+    "@projectstorm/react-workspaces-behavior-panel-dropzone": "2.0.0-alpha"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.187",
+    "@storybook/addon-essentials": "^6.5.12",
+    "@storybook/addons": "^6.5.12",
+    "@storybook/builder-webpack5": "^6.5.12",
+    "@storybook/manager-webpack5": "^6.5.12",
+    "@storybook/react": "^6.5.12",
+    "@storybook/theming": "^6.5.12",
+    "@types/node": "^18.7.23",
+    "@types/react": "18.0.21",
+    "@types/react-dom": "^18.0.6",
+    "react-dom": "18.2.0",
+    "source-map-loader": "^4.0.0",
+    "webpack": "^5.74.0"
+  }
+}

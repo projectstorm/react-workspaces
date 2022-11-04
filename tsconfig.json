@@ -2,13 +2,28 @@
   "files": [],
   "references": [
     {
-      "path": "./workspace-core"
+      "path": "./demo"
     },
     {
-      "path": "./workspace-demos"
+      "path": "./packages/behavior-divider-dropzone"
     },
     {
-      "path": "./workspace-defaults"
+      "path": "./packages/behavior-panel-dropzone"
+    },
+    {
+      "path": "./packages/behavior-resize"
+    },
+    {
+      "path": "./packages/core"
+    },
+    {
+      "path": "./packages/defaults"
+    },
+    {
+      "path": "./packages/model-tabs"
+    },
+    {
+      "path": "./packages/model-tray"
     }
   ]
 }

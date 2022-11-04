@@ -1,0 +1,23 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "declarationDir": "dist/@types",
+    "rootDir": "src",
+    "outDir": "dist",
+    "tsBuildInfoFile": "dist/tsconfig.tsbuildinfo"
+  },
+  "exclude": [
+    "./dist"
+  ],
+  "references": [
+    {
+      "path": "../core"
+    },
+    {
+      "path": "../model-tray"
+    },
+    {
+      "path": "../model-tabs"
+    }
+  ]
+}

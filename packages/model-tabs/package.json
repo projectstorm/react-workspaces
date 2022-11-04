@@ -1,0 +1,17 @@
+{
+  "name": "@projectstorm/react-workspaces-model-tabs",
+  "version": "2.0.0-alpha",
+  "main": "./dist/index.js",
+  "types": "./dist/@types/index.d.ts",
+  "dependencies": {
+    "@projectstorm/react-workspaces-core": "2.0.0-alpha",
+    "react": "^18.2.0",
+    "@emotion/styled": "^11.10.4",
+    "@emotion/react": "^11.10.4",
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.21",
+    "@types/lodash": "^4.14.186"
+  }
+}
