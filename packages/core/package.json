@@ -2,7 +2,7 @@
   "name": "@projectstorm/react-workspaces-core",
   "version": "2.0.0-alpha",
   "main": "./dist/index.js",
-  "types": "./dist/@types/index.d.ts",
+  "types": "./dist/@types/index",
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

@@ -2,17 +2,14 @@ import * as React from 'react';
 import * as _ from 'lodash';
 import styled from '@emotion/styled';
 import { WorkspaceTrayModel } from './WorkspaceTrayModel';
-import {
-	DraggableWidget,
-	FloatingPanelWidget,
-	WorkspaceEngine,
-	WorkspacePanelFactory
-} from '@projectstorm/react-workspaces-core';
+import { DraggableWidget, FloatingPanelWidget, WorkspaceEngine } from '@projectstorm/react-workspaces-core';
+import { WorkspaceTrayFactory } from './WorkspaceTrayFactory';
 
 export interface MicroLayoutWidgetProps {
 	node: WorkspaceTrayModel;
 	engine: WorkspaceEngine;
-	className?;
+	factory: WorkspaceTrayFactory;
+	className?: any;
 }
 
 namespace S {
@@ -88,12 +85,7 @@ export class MicroLayoutWidget extends React.Component<MicroLayoutWidgetProps> {
 									engine={this.props.engine}
 									model={child}
 								>
-									unknown
-									{/*{this.props.engine.getFactory<WorkspacePanelFactory>(child).generateMicroButton({*/}
-									{/*	model: child,*/}
-									{/*	selected: selected,*/}
-									{/*	engine: this.props.engine*/}
-									{/*})}*/}
+									{this.props.factory.renderMicroPanelForModel(child)}
 								</DraggableWidget>
 							</div>
 						);

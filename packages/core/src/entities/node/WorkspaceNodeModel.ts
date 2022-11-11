@@ -8,6 +8,7 @@ export interface ResizeDivision {
 	before: WorkspaceModel;
 	after: WorkspaceModel;
 	dimensions: DimensionContainer;
+	vertical: boolean;
 }
 
 export class WorkspaceNodeModel extends WorkspaceCollectionModel {
@@ -46,7 +47,8 @@ export class WorkspaceNodeModel extends WorkspaceCollectionModel {
 			divs.push({
 				before: this.children[i - 1],
 				after: this.children[i],
-				dimensions: this.r_divisons[i]
+				dimensions: this.r_divisons[i],
+				vertical: !this.vertical
 			});
 		}
 		return divs;

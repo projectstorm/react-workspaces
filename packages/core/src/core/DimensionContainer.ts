@@ -43,6 +43,10 @@ export class DimensionContainer extends BaseObserver<DimensionContainerListener>
 		return this.dimensions.height > this.dimensions.width;
 	}
 
+	getVolume() {
+		return this.dimensions.width * this.dimensions.height;
+	}
+
 	invalidate() {
 		this.iterateListeners((cb) => cb.invalidate?.());
 	}

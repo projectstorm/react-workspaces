@@ -15,13 +15,12 @@ export interface WorkspaceCollectionModelListener extends WorkspaceModelListener
 }
 
 export class WorkspaceCollectionModel<
-		T extends WorkspaceModel = WorkspaceModel,
 		S extends SerializedCollectionModel = SerializedCollectionModel,
 		L extends WorkspaceCollectionModelListener = WorkspaceCollectionModelListener
 	>
 	extends WorkspaceModel<S, L>
 	implements WorkspaceCollectionInterface {
-	children: T[];
+	children: WorkspaceModel[];
 	childrenListeners: Set<() => any>;
 
 	constructor(type: string) {
@@ -55,11 +54,11 @@ export class WorkspaceCollectionModel<
 		} as S;
 	}
 
-	isFirstModel(model: T): boolean {
+	isFirstModel(model: WorkspaceModel): boolean {
 		return this.children[0].id === model.id;
 	}
 
-	isLastModel(model: T): boolean {
+	isLastModel(model: WorkspaceModel): boolean {
 		return this.children[this.children.length - 1].id === model.id;
 	}
 
@@ -80,14 +79,14 @@ export class WorkspaceCollectionModel<
 		return children;
 	}
 
-	replaceModel(oldModel: T, newModel): this {
+	replaceModel(oldModel: WorkspaceModel, newModel): this {
 		let index = this.children.indexOf(oldModel);
 		this.removeModel(oldModel, false);
 		this.addModel(newModel, index);
 		return this;
 	}
 
-	getModelBefore(model: T) {
+	getModelBefore(model: WorkspaceModel) {
 		const index = this.children.indexOf(model);
 		if (index <= 0) {
 			return null;
@@ -95,7 +94,7 @@ export class WorkspaceCollectionModel<
 		return this.children[index - 1];
 	}
 
-	getModelAfter(model: T) {
+	getModelAfter(model: WorkspaceModel) {
 		const index = this.children.indexOf(model);
 		if (index >= this.children.length - 1) {
 			return null;
@@ -118,7 +117,7 @@ export class WorkspaceCollectionModel<
 		}
 	}
 
-	removeModel(model: T, runNormalizationChecks: boolean = true): this {
+	removeModel(model: WorkspaceModel, runNormalizationChecks: boolean = true): this {
 		let index = this.children.indexOf(model);
 		if (index === -1) {
 			console.log('could not find model');
@@ -131,7 +130,7 @@ export class WorkspaceCollectionModel<
 		return this;
 	}
 
-	addModel(model: T, position: number = null): this {
+	addModel(model: WorkspaceModel, position: number = null): this {
 		model.setParent(this);
 
 		// allow a child to remove itself
@@ -158,12 +157,12 @@ export class WorkspaceCollectionModel<
 		return this;
 	}
 
-	addModelBefore(relativeModel: T, model: T) {
+	addModelBefore(relativeModel: WorkspaceModel, model: WorkspaceModel) {
 		let index = this.children.indexOf(relativeModel);
 		this.addModel(model, index);
 	}
 
-	addModelAfter(relativeModel: T, model: T) {
+	addModelAfter(relativeModel: WorkspaceModel, model: WorkspaceModel) {
 		let index = this.children.indexOf(relativeModel);
 		this.addModel(model, index + 1);
 	}

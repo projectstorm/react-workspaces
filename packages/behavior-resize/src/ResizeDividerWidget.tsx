@@ -20,7 +20,7 @@ const getResizeStrategy = (divider: ResizeDivision): Pick<UseMouseDragDistancePr
 	let initial2 = 0;
 	const { before, after, dimensions } = divider;
 
-	if (dimensions.isPortrait()) {
+	if (divider.vertical) {
 		// before shrinks + HACK
 		if ((!before.expandHorizontal && after.expandHorizontal) || !before.getSibling(Alignment.LEFT)) {
 			return {
@@ -76,11 +76,21 @@ const getResizeStrategy = (divider: ResizeDivision): Pick<UseMouseDragDistancePr
 			}
 		};
 	}
+	return {
+		startMove: () => {
+			initial = before.height;
+			initial2 = after.height;
+		},
+		moved: ({ distanceY }) => {
+			before.setHeight(initial + distanceY);
+			after.setHeight(initial2 - distanceY);
+		}
+	};
 };
 
 export const ResizeDividerWidget: React.FC<ResizeDividerWidgetProps> = (props) => {
 	const container = props.dividerContainer.dimensions;
-	const vertical = container.isPortrait();
+	const vertical = props.dividerContainer.vertical;
 	const ref = useRef<HTMLDivElement>();
 	const [strategy] = useState(() => {
 		return getResizeStrategy(props.dividerContainer);

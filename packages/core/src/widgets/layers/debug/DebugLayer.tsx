@@ -6,6 +6,8 @@ import { WorkspaceModel } from '../../../core-models/WorkspaceModel';
 import { WorkspaceCollectionModel } from '../../../core-models/WorkspaceCollectionModel';
 import { DimensionTrackingWidget } from '../../primitives/DimensionTrackingWidget';
 import { WorkspaceNodeModel } from '../../../entities/node/WorkspaceNodeModel';
+import { useEffect } from 'react';
+import { useForceUpdate } from '../../hooks/useForceUpdate';
 
 export interface DebugLayerOptions {
 	dividers?: boolean;
@@ -32,6 +34,15 @@ export interface DebugLayerWidgetProps {
 }
 
 export const DebugLayerWidget: React.FC<DebugLayerWidgetProps> = (props) => {
+	const forceUpdate = useForceUpdate(true);
+	useEffect(() => {
+		props.model.registerListener({
+			layoutInvalidated: () => {
+				forceUpdate();
+			}
+		});
+	}, []);
+
 	return (
 		<>
 			{props.options?.panels
@@ -39,7 +50,7 @@ export const DebugLayerWidget: React.FC<DebugLayerWidgetProps> = (props) => {
 						.flatten()
 						.filter((p) => !(p instanceof WorkspaceCollectionModel))
 						.map((m) => {
-							return <S.Outline dimension={m.r_dimensions} key={m.id} />;
+							return <S.Outline2 dimension={m.r_dimensions} key={m.id} />;
 						})
 				: []}
 
@@ -69,6 +80,11 @@ export const DebugLayerWidget: React.FC<DebugLayerWidgetProps> = (props) => {
 namespace S {
 	export const Outline = styled(DimensionTrackingWidget)`
 		box-sizing: border-box;
-		border: solid red 1px;
+		border: dashed red 1px;
+	`;
+
+	export const Outline2 = styled(DimensionTrackingWidget)`
+		box-sizing: border-box;
+		border: solid cyan 1px;
 	`;
 }

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as _ from 'lodash';
 import { DimensionContainer } from '../../core/DimensionContainer';
 import { useCallback, useEffect } from 'react';
 import { useWindowResize } from './useWindowResize';
@@ -9,10 +10,13 @@ export interface UseResizeObserverProps {
 }
 
 export const useResizeObserver = (props: UseResizeObserverProps) => {
-	const update = useCallback(() => {
-		let dims = props.forwardRef.current.getBoundingClientRect();
-		props.dimension.update(dims);
-	}, []);
+	const update = useCallback(
+		_.debounce(() => {
+			let dims = props.forwardRef.current.getBoundingClientRect();
+			props.dimension.update(dims);
+		}, 10),
+		[]
+	);
 
 	useEffect(() => {
 		return props.dimension.registerListener({
@@ -25,6 +29,24 @@ export const useResizeObserver = (props: UseResizeObserverProps) => {
 	useWindowResize({
 		resized: update
 	});
+
+	useEffect(() => {
+		const intersectionObserver = new IntersectionObserver(
+			() => {
+				update();
+			},
+			{
+				root: document.body
+			}
+		);
+		intersectionObserver.observe(props.forwardRef.current);
+		return () => {
+			if (props.forwardRef.current) {
+				intersectionObserver.unobserve(props.forwardRef.current);
+			}
+			intersectionObserver.disconnect();
+		};
+	}, []);
 
 	useEffect(() => {
 		update();

@@ -2,12 +2,11 @@
   "compileOnSave": false,
   "compilerOptions": {
     "declaration": true,
-    "skipLibCheck": true,
     "esModuleInterop": true,
+    "skipLibCheck": true,
     "sourceMap": true,
     "inlineSources": true,
-    "preserveSymlinks": false,
-    "skipDefaultLibCheck": true,
+    "preserveSymlinks": true,
     "composite": true,
     "incremental": true,
     "jsx": "react",
@@ -18,8 +17,5 @@
       "ESNext",
       "dom"
     ]
-  },
-  "exclude": [
-    "node_modules"
-  ]
+  }
 }

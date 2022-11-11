@@ -1,13 +1,14 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
-
+import * as _ from 'lodash';
 import 'typeface-open-sans';
 import {
 	WorkspaceEngine,
 	WorkspaceNodeFactory,
 	WorkspaceNodeModel,
-	WorkspaceWidget
+	WorkspaceWidget,
+	DebugLayer
 } from '@projectstorm/react-workspaces-core';
 import {
 	DefaultTrayFactory,
@@ -52,13 +53,13 @@ const CompInternal: React.FC<{ model: WorkspaceNodeModel }> = (props) => {
 		draggingItemBehavior(engine);
 		draggingItemDividerBehavior(engine);
 		engine.layerManager.addLayer(new ResizeDividersLayer());
-		// engine.layerManager.addLayer(
-		// 	new DebugLayer({
-		// 		dividers: false,
-		// 		resizeDividers: true,
-		// 		panels: false
-		// 	})
-		// );
+		engine.layerManager.addLayer(
+			new DebugLayer({
+				dividers: false,
+				resizeDividers: true,
+				panels: false
+			})
+		);
 	}, []);
 
 	return (

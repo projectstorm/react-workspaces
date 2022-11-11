@@ -18,6 +18,7 @@ export * from './widgets/primitives/DropzoneLogicWidget';
 
 export * from './widgets/dropzone/DropzoneOrderWidget';
 
+export * from './widgets/layers/debug/DebugLayer';
 export * from './widgets/layers/LayerManager';
 export * from './widgets/layers/LayerManagerWidget';
 

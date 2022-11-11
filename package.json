@@ -8,9 +8,6 @@
     "type": "git",
     "url": "https://github.com/projectstorm/react-workspaces.git"
   },
-  "workspaces": [
-    "workspace-*"
-  ],
   "keywords": [
     "web",
     "workspace",

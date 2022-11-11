@@ -5,11 +5,5 @@
     "rootDir": "src",
     "outDir": "dist",
     "tsBuildInfoFile": "dist/tsconfig.tsbuildinfo"
-  },
-  "exclude": [
-    "./dist"
-  ],
-  "references": [
-
-  ]
+  }
 }

@@ -5,8 +5,6 @@ import { WorkspaceEngine } from '../../core/WorkspaceEngine';
 import styled from '@emotion/styled';
 import { DividerWidget } from '../primitives/DividerWidget';
 import { DimensionContainer } from '../../core/DimensionContainer';
-import { useEffect } from 'react';
-import { useForceUpdate } from '../hooks/useForceUpdate';
 
 export interface DirectionalLayoutWidgetProps {
 	vertical: boolean;
