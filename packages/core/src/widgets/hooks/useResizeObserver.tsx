@@ -12,6 +12,9 @@ export interface UseResizeObserverProps {
 export const useResizeObserver = (props: UseResizeObserverProps) => {
 	const update = useCallback(
 		_.debounce(() => {
+			if (!props.forwardRef.current) {
+				return;
+			}
 			let dims = props.forwardRef.current.getBoundingClientRect();
 			props.dimension.update(dims);
 		}, 10),

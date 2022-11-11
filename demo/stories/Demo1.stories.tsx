@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
-import * as _ from 'lodash';
 import 'typeface-open-sans';
 import {
 	WorkspaceEngine,
@@ -19,7 +18,7 @@ import { draggingItemBehavior } from '@projectstorm/react-workspaces-behavior-pa
 import { draggingItemDividerBehavior } from '@projectstorm/react-workspaces-behavior-divider-dropzone';
 import { WorkspaceTabModel, WorkspaceTabFactory } from '@projectstorm/react-workspaces-model-tabs';
 import { WorkspaceTrayModel } from '@projectstorm/react-workspaces-model-tray';
-import { ResizeDividersLayer } from '@projectstorm/react-workspaces-behavior-resize';
+import { resizingBehavior } from '@projectstorm/react-workspaces-behavior-resize';
 import { DefaultPanelTabRenderer } from '@projectstorm/react-workspaces-defaults/dist';
 
 namespace S {
@@ -52,7 +51,7 @@ const CompInternal: React.FC<{ model: WorkspaceNodeModel }> = (props) => {
 	useEffect(() => {
 		draggingItemBehavior(engine);
 		draggingItemDividerBehavior(engine);
-		engine.layerManager.addLayer(new ResizeDividersLayer());
+		resizingBehavior(engine);
 		engine.layerManager.addLayer(
 			new DebugLayer({
 				dividers: false,

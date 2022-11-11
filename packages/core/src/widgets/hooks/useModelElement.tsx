@@ -21,6 +21,9 @@ export const useModelElement = (props: UseModelElementProps) => {
 						layoutRepainted: () => {
 							l2?.();
 							l2 = null;
+							if (!ref.current) {
+								return;
+							}
 							const dims = ref.current.getBoundingClientRect();
 							props.model.r_dimensions.update(dims);
 						}
