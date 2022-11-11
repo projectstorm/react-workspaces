@@ -16,7 +16,7 @@ export interface ResizeDividerWidgetProps {
 }
 
 const getResizeStrategy = (divider: ResizeDivision): Pick<UseMouseDragDistanceProps, 'startMove' | 'moved'> => {
-	let initial = 0;
+	let initial1 = 0;
 	let initial2 = 0;
 	const { before, after } = divider;
 
@@ -25,10 +25,10 @@ const getResizeStrategy = (divider: ResizeDivision): Pick<UseMouseDragDistancePr
 		if ((!before.expandHorizontal && after.expandHorizontal) || !before.getSibling(Alignment.LEFT)) {
 			return {
 				startMove: () => {
-					initial = before.width;
+					initial1 = before.size.width;
 				},
 				moved: ({ distanceX }) => {
-					before.setWidth(initial + distanceX);
+					before.setWidth(initial1 + distanceX);
 				}
 			};
 		}
@@ -36,10 +36,10 @@ const getResizeStrategy = (divider: ResizeDivision): Pick<UseMouseDragDistancePr
 		else if ((!after.expandHorizontal && before.expandHorizontal) || !after.getSibling(Alignment.RIGHT)) {
 			return {
 				startMove: () => {
-					initial = after.width;
+					initial1 = after.size.width;
 				},
 				moved: ({ distanceX }) => {
-					after.setWidth(initial - distanceX);
+					after.setWidth(initial1 - distanceX);
 				}
 			};
 		}
@@ -47,11 +47,11 @@ const getResizeStrategy = (divider: ResizeDivision): Pick<UseMouseDragDistancePr
 		else if (!before.expandHorizontal && !after.expandHorizontal) {
 			return {
 				startMove: () => {
-					initial = before.width;
-					initial2 = after.width;
+					initial1 = before.size.width;
+					initial2 = after.size.width;
 				},
 				moved: ({ distanceX }) => {
-					before.setWidth(initial + distanceX);
+					before.setWidth(initial1 + distanceX);
 					after.setWidth(initial2 - distanceX);
 				}
 			};
@@ -60,29 +60,29 @@ const getResizeStrategy = (divider: ResizeDivision): Pick<UseMouseDragDistancePr
 	if (!before.expandVertical) {
 		return {
 			startMove: () => {
-				initial = before.height;
+				initial1 = before.size.height;
 			},
 			moved: ({ distanceY }) => {
-				before.setHeight(initial + distanceY);
+				before.setHeight(initial1 + distanceY);
 			}
 		};
 	} else if (!after.expandHorizontal) {
 		return {
 			startMove: () => {
-				initial = after.height;
+				initial1 = after.size.height;
 			},
 			moved: ({ distanceY }) => {
-				after.setHeight(initial - distanceY);
+				after.setHeight(initial1 - distanceY);
 			}
 		};
 	}
 	return {
 		startMove: () => {
-			initial = before.height;
-			initial2 = after.height;
+			initial1 = before.size.height;
+			initial2 = after.size.height;
 		},
 		moved: ({ distanceY }) => {
-			before.setHeight(initial + distanceY);
+			before.setHeight(initial1 + distanceY);
 			after.setHeight(initial2 - distanceY);
 		}
 	};

@@ -2,7 +2,7 @@ import * as React from 'react';
 import styled from '@emotion/styled';
 import { useEffect } from 'react';
 import { useForceUpdate } from '../hooks/useForceUpdate';
-import { Dimension, DimensionContainer } from '../../core/DimensionContainer';
+import { DimensionContainer, IDimension } from '../../core/dimensions/DimensionContainer';
 
 export interface DimensionTrackingWidgetProps {
 	dimension: DimensionContainer;
@@ -26,7 +26,7 @@ export const DimensionTrackingWidget: React.FC<React.PropsWithChildren<Dimension
 };
 
 namespace S {
-	export const Container = styled.div<{ d: Dimension }>`
+	export const Container = styled.div<{ d: IDimension }>`
 		position: absolute;
 		width: ${(p) => p.d.width}px;
 		height: ${(p) => p.d.height}px;

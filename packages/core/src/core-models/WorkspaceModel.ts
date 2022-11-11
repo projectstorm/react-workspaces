@@ -1,9 +1,11 @@
 import { WorkspaceEngineInterface } from '../core/WorkspaceEngineInterface';
 import { WorkspaceCollectionInterface } from './WorkspaceCollectionInterface';
-import { v4 } from 'uuid';
 import { BaseListener, BaseObserver } from '../core/BaseObserver';
-import { DimensionContainer } from '../core/DimensionContainer';
 import { Alignment } from '../core/tools';
+import { v4 } from 'uuid';
+import * as _ from 'lodash';
+import { ISize, Size } from '../core/dimensions/Size';
+import { DimensionContainer } from '../core/dimensions/DimensionContainer';
 
 export interface SerializedModel {
 	id: string;
@@ -27,8 +29,10 @@ export class WorkspaceModel<
 	id: string;
 	expandVertical: boolean;
 	expandHorizontal: boolean;
-	width: number;
-	height: number;
+
+	size: Size;
+	minimumSize: Size;
+	maximumSize: Size;
 
 	parent: WorkspaceCollectionInterface & WorkspaceModel;
 	type: string;
@@ -44,29 +48,69 @@ export class WorkspaceModel<
 		this.parent = null;
 		this.expandHorizontal = true;
 		this.expandVertical = true;
-		this.listeners = {};
+		this.size = new Size();
+		this.maximumSize = new Size();
+		this.minimumSize = new Size();
 		this.r_visible = false;
 		this.r_dimensions = new DimensionContainer();
-		this.width = 0;
-		this.height = 0;
 		this.r_dimensions.registerListener({
 			updated: () => {
-				if (this.width === 0 && this.height === 0) {
-					this.setWidth(this.r_dimensions.dimensions.width);
-					this.setHeight(this.r_dimensions.dimensions.height);
+				if (this.size.width === 0 && this.size.height === 0) {
+					this.setSize({
+						width: this.r_dimensions.dimensions.width,
+						height: this.r_dimensions.dimensions.height
+					});
 				}
+			}
+		});
+		this.minimumSize.registerListener({
+			updated: () => {
+				this.normalizeSize();
+			}
+		});
+		this.maximumSize.registerListener({
+			updated: () => {
+				this.normalizeSize();
+			}
+		});
+		this.size.registerListener({
+			updated: () => {
+				this.normalizeSize();
+				this.invalidateLayout();
 			}
 		});
 	}
 
+	private normalizeSize() {
+		if (this.size.width < this.minimumSize.width) {
+			this.size.width = this.minimumSize.width;
+		}
+		if (this.size.height < this.minimumSize.height) {
+			this.size.height = this.minimumSize.height;
+		}
+
+		if (this.maximumSize.width > 0 && this.size.width > this.maximumSize.width) {
+			this.size.width = this.maximumSize.width;
+		}
+		if (this.maximumSize.height > 0 && this.size.height > this.maximumSize.height) {
+			this.size.height = this.maximumSize.height;
+		}
+	}
+
 	setWidth(width: number) {
-		this.width = width;
-		this.invalidateLayout();
+		this.setSize({
+			width: width
+		});
 	}
 
 	setHeight(height: number) {
-		this.height = height;
-		this.invalidateLayout();
+		this.setSize({
+			height: height
+		});
+	}
+
+	setSize(dims: Partial<ISize>) {
+		this.size.update(dims);
 	}
 
 	invalidateLayout() {
@@ -130,8 +174,8 @@ export class WorkspaceModel<
 			type: this.type,
 			expandHorizontal: this.expandHorizontal,
 			expandVertical: this.expandVertical,
-			width: this.width,
-			height: this.height
+			width: this.size.width,
+			height: this.size.height
 		} as T;
 	}
 
@@ -139,7 +183,9 @@ export class WorkspaceModel<
 		this.id = payload.id;
 		this.expandHorizontal = payload.expandHorizontal;
 		this.expandVertical = payload.expandVertical;
-		this.width = payload.width || 0;
-		this.height = payload.height || 0;
+		this.size.update({
+			width: payload.width,
+			height: payload.height
+		});
 	}
 }

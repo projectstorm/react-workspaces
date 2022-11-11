@@ -184,6 +184,52 @@ export const Comp2 = () => {
 	return <CompInternal model={model} />;
 };
 
+export const Comp3 = () => {
+	const [model] = useState(() => {
+		let model = new WorkspaceNodeModel();
+		model.setHorizontal(true);
+
+		const genNode = () => {
+			const node = new WorkspaceNodeModel()
+				.setExpand(false)
+				.setVertical(true)
+				.addModel(new DefaultWorkspacePanelModel('Panel 1').setExpand(false, false))
+				.addModel(new DefaultWorkspacePanelModel('Panel 2'));
+			node.minimumSize.update({
+				width: 50
+			});
+			node.maximumSize.update({
+				width: 250
+			});
+			return node;
+		};
+
+		model
+
+			//left panel
+			.addModel(genNode())
+
+			//tab panel
+			.addModel(
+				new WorkspaceTabModel()
+					.addModel(new DefaultWorkspacePanelModel('Tab 1'))
+					.addModel(new DefaultWorkspacePanelModel('Tab 2'))
+					.addModel(new DefaultWorkspacePanelModel('Tab 3'))
+			)
+
+			//tab panel
+			.addModel(
+				new WorkspaceTabModel()
+					.addModel(new DefaultWorkspacePanelModel('Tab 4'))
+					.addModel(new DefaultWorkspacePanelModel('Tab 5'))
+					.addModel(new DefaultWorkspacePanelModel('Tab 6'))
+			)
+
+			.addModel(genNode());
+		return model;
+	});
+	return <CompInternal model={model} />;
+};
 export default {
 	title: 'Workspace',
 	parameters: {

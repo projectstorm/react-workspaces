@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import { WorkspaceEngine } from '../../core/WorkspaceEngine';
 import { WorkspaceModel } from '../../core-models/WorkspaceModel';
 import { DividerWidget } from '../primitives/DividerWidget';
-import { DimensionContainer } from '../../core/DimensionContainer';
+import { DimensionContainer } from '../../core/dimensions/DimensionContainer';
 
 export interface DropzoneOrderWidgetProps {
 	vertical: boolean;

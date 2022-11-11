@@ -2,7 +2,7 @@ import { WorkspaceCollectionModel } from '../../core-models/WorkspaceCollectionM
 import { WorkspaceEngine } from '../../core/WorkspaceEngine';
 import { WorkspaceModel } from '../../core-models/WorkspaceModel';
 import { Alignment } from '../../core/tools';
-import { DimensionContainer } from '../../core/DimensionContainer';
+import { DimensionContainer } from '../../core/dimensions/DimensionContainer';
 
 export interface ResizeDivision {
 	before: WorkspaceModel;

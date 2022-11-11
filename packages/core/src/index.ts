@@ -36,7 +36,9 @@ export * from './core-models/WorkspaceCollectionModel';
 export * from './core-models/WorkspaceModel';
 
 export * from './core/tools';
-export * from './core/DimensionContainer';
+export * from './core/dimensions/DimensionContainer';
+export * from './core/dimensions/Position';
+export * from './core/dimensions/Size';
 export * from './core/WorkspaceModelFactory';
 export * from './core/WorkspaceEngine';
 export * from './core/WorkspaceEngineInterface';

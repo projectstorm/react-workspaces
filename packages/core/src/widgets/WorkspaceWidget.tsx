@@ -4,12 +4,12 @@ import { StandardLayoutWidget } from './layouts/StandardLayoutWidget';
 import styled from '@emotion/styled';
 import { useEffect, useRef, useState } from 'react';
 import { useForceUpdate } from './hooks/useForceUpdate';
-import { DimensionContainer } from '../core/DimensionContainer';
 import { useResizeObserver } from './hooks/useResizeObserver';
 import { LayerManagerWidget } from './layers/LayerManagerWidget';
 import { useDragOverModel } from './hooks/dnd-model/useDragOverModel';
 import { UseMouseDragEventsRootWidget } from './hooks/dnd/useMouseDragEvents';
 import { WorkspaceNodeModel } from '../entities/node/WorkspaceNodeModel';
+import { DimensionContainer } from '../core/dimensions/DimensionContainer';
 
 export interface WorkspaceWidgetProps {
 	model: WorkspaceNodeModel;

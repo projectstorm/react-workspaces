@@ -39,7 +39,6 @@ export const useDraggable = <T>(props: UseDraggableProps<T>) => {
 				});
 				return;
 			}
-			event.stopPropagation();
 			props.dragend({
 				copy: event.dataTransfer.dropEffect === 'copy',
 				success: true

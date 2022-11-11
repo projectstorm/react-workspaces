@@ -3,8 +3,8 @@ import { WorkspaceModelFactory } from './WorkspaceModelFactory';
 import { WorkspaceModel } from '../core-models/WorkspaceModel';
 import { WorkspaceEngineInterface } from './WorkspaceEngineInterface';
 import { BaseListener, BaseObserver } from './BaseObserver';
-import { DimensionContainer } from './DimensionContainer';
 import { LayerManager } from '../widgets/layers/LayerManager';
+import { DimensionContainer } from './dimensions/DimensionContainer';
 
 export interface WorkspaceEngineListener extends BaseListener {
 	repaint?: () => any;

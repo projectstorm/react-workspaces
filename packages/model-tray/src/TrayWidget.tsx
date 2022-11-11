@@ -74,7 +74,7 @@ export class TrayWidget extends React.Component<TrayWidgetProps, TrayWidgetState
 	render() {
 		const expand = this.props.node.shouldExpand() && this.props.node.mode === 'expand';
 		return (
-			<S.Container width={this.props.node.width} className={this.props.className} expand={expand}>
+			<S.Container width={this.props.node.size.width} className={this.props.className} expand={expand}>
 				{this.getHeader()}
 				{this.props.node.mode === 'micro' ? (
 					<S.MicroLayout node={this.props.node} engine={this.props.engine} factory={this.props.factory} />

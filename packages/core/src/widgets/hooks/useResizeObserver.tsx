@@ -1,8 +1,8 @@
 import * as React from 'react';
 import * as _ from 'lodash';
-import { DimensionContainer } from '../../core/DimensionContainer';
 import { useCallback, useEffect } from 'react';
 import { useWindowResize } from './useWindowResize';
+import { DimensionContainer } from '../../core/dimensions/DimensionContainer';
 
 export interface UseResizeObserverProps {
 	dimension: DimensionContainer;

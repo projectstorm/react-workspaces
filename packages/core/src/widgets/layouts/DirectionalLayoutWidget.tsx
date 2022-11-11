@@ -4,7 +4,7 @@ import { WorkspaceModel } from '../../core-models/WorkspaceModel';
 import { WorkspaceEngine } from '../../core/WorkspaceEngine';
 import styled from '@emotion/styled';
 import { DividerWidget } from '../primitives/DividerWidget';
-import { DimensionContainer } from '../../core/DimensionContainer';
+import { DimensionContainer } from '../../core/dimensions/DimensionContainer';
 
 export interface DirectionalLayoutWidgetProps {
 	vertical: boolean;
@@ -45,13 +45,13 @@ const ChildContainerWidget: React.FC<{
 	let expand: boolean = false;
 	if (props.vertical) {
 		if (!props.model.expandVertical) {
-			height = props.model.height;
+			height = props.model.size.height;
 		} else {
 			expand = true;
 		}
 	} else {
 		if (!props.model.expandHorizontal) {
-			width = props.model.width;
+			width = props.model.size.width;
 		} else {
 			expand = true;
 		}

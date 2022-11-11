@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { useRef } from 'react';
 import styled from '@emotion/styled';
-import { DimensionContainer } from '../../core/DimensionContainer';
 import { useResizeObserver } from '../hooks/useResizeObserver';
+import { DimensionContainer } from '../../core/dimensions/DimensionContainer';
 
 export interface DividerWidgetProps {
 	dimensionContainer: DimensionContainer;

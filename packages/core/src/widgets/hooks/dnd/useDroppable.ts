@@ -1,11 +1,6 @@
 import * as React from 'react';
 import { useEffect } from 'react';
-import { log } from '../../../core/tools';
-
-export type MousePosition = {
-	clientX: number;
-	clientY: number;
-};
+import { log, MousePosition } from '../../../core/tools';
 
 export interface UseDroppableOptions<T extends { [key: string]: any }> {
 	dropped?: (entity: T, traits: { position: MousePosition; isCopy: boolean }) => any;

@@ -9,6 +9,11 @@ export const regenerateIDs = (model: WorkspaceModel) => {
 	model.id = v4();
 };
 
+export interface MousePosition {
+	clientX: number;
+	clientY: number;
+}
+
 export enum Alignment {
 	TOP = 'top',
 	LEFT = 'left',
