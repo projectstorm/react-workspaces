@@ -32,6 +32,7 @@ export class RootWorkspaceModel extends WorkspaceNodeModel {
 		this.floatingWindows.add(window);
 		const layer = new FloatingWindowLayer(window);
 		this.engine.layerManager.addLayer(layer);
+		window.setParent(this);
 		window.registerListener({
 			removed: () => {
 				layer.remove();

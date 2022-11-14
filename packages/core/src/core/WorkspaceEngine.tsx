@@ -37,10 +37,6 @@ export class WorkspaceEngine extends BaseObserver<WorkspaceEngineListener> imple
 
 	// dimensions
 	workspaceContainer: DimensionContainer;
-	floatingContainer: DimensionContainer;
-
-	//refs
-	floatingContainerRef: React.RefObject<HTMLDivElement>;
 
 	// root
 	public rootModel: WorkspaceModel;
@@ -53,7 +49,6 @@ export class WorkspaceEngine extends BaseObserver<WorkspaceEngineListener> imple
 		this.draggingID = null;
 		this.fullscreenModel = null;
 		this.dragAndDropEnabled = true;
-		this.floatingContainerRef = null;
 		this.layerManager = new LayerManager();
 		this.rootModel = null;
 	}
@@ -78,10 +73,6 @@ export class WorkspaceEngine extends BaseObserver<WorkspaceEngineListener> imple
 
 	setWorkspaceContainer(workspaceContainer: DimensionContainer) {
 		this.workspaceContainer = workspaceContainer;
-	}
-
-	setFloatingContainer(floatingContainer: DimensionContainer) {
-		this.floatingContainer = floatingContainer;
 	}
 
 	setDragAndDropEnabled(drag: boolean = true) {

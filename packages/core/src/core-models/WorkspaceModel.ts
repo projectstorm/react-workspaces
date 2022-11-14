@@ -5,6 +5,7 @@ import { Alignment } from '../core/tools';
 import { v4 } from 'uuid';
 import { ISize, Size } from '../core/dimensions/Size';
 import { DimensionContainer } from '../core/dimensions/DimensionContainer';
+import { WorkspaceCollectionModel } from './WorkspaceCollectionModel';
 
 export interface SerializedModel {
 	id: string;
@@ -33,7 +34,7 @@ export class WorkspaceModel<
 	minimumSize: Size;
 	maximumSize: Size;
 
-	parent: WorkspaceCollectionInterface & WorkspaceModel;
+	parent: WorkspaceModel;
 	type: string;
 
 	// render properties
@@ -133,7 +134,7 @@ export class WorkspaceModel<
 	}
 
 	getSibling(alignment: Alignment): WorkspaceModel | null {
-		if (this.parent) {
+		if (this.parent instanceof WorkspaceCollectionModel) {
 			return this.parent.getChildSibling(this, alignment);
 		}
 		return null;
@@ -153,7 +154,7 @@ export class WorkspaceModel<
 		return this.parent.hasParentID(parentID);
 	}
 
-	setParent(parent: any) {
+	setParent(parent: WorkspaceModel) {
 		this.parent = parent;
 	}
 

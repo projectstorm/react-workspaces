@@ -40,15 +40,10 @@ namespace S {
 
 export const WorkspaceWidget: React.FC<WorkspaceWidgetProps> = (props) => {
 	const ref_container = useRef<HTMLDivElement>();
-	const ref_floating = useRef<HTMLDivElement>();
-
 	const timerListener = useRef(null);
 
 	const forceUpdate = useForceUpdate();
 	const [dimensionContainer] = useState(() => {
-		return new DimensionContainer();
-	});
-	const [floatingContainer] = useState(() => {
 		return new DimensionContainer();
 	});
 
@@ -67,9 +62,6 @@ export const WorkspaceWidget: React.FC<WorkspaceWidgetProps> = (props) => {
 
 	useEffect(() => {
 		props.engine.setWorkspaceContainer(dimensionContainer);
-		props.engine.setFloatingContainer(floatingContainer);
-
-		props.engine.floatingContainerRef = ref_floating;
 		props.engine.registerListener({
 			layoutInvalidated: () => {
 				forceUpdate();

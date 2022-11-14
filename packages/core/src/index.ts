@@ -26,7 +26,6 @@ export * from './widgets/layouts/StandardLayoutWidget';
 export * from './widgets/layouts/DirectionalLayoutWidget';
 
 export * from './widgets/PerformanceWidget';
-export * from './widgets/FloatingPanelWidget';
 export * from './widgets/WorkspaceWidget';
 
 export * from './entities/node/WorkspaceNodeModel';

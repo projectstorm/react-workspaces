@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as _ from 'lodash';
 import styled from '@emotion/styled';
 import { WorkspaceTrayModel } from './WorkspaceTrayModel';
-import { DraggableWidget, FloatingPanelWidget, WorkspaceEngine } from '@projectstorm/react-workspaces-core';
+import { DraggableWidget, WorkspaceEngine } from '@projectstorm/react-workspaces-core';
 import { WorkspaceTrayFactory } from './WorkspaceTrayFactory';
 
 export interface MicroLayoutWidgetProps {
@@ -37,16 +37,6 @@ export class MicroLayoutWidget extends React.Component<MicroLayoutWidgetProps> {
 	constructor(props: MicroLayoutWidgetProps) {
 		super(props);
 		this.buttons = {};
-	}
-
-	getFloatingModel() {
-		return (
-			<FloatingPanelWidget
-				relativeElement={this.buttons[this.props.node.floatingModel.id]}
-				model={this.props.node.floatingModel}
-				engine={this.props.engine}
-			/>
-		);
 	}
 
 	componentDidMount() {
@@ -90,10 +80,6 @@ export class MicroLayoutWidget extends React.Component<MicroLayoutWidgetProps> {
 							</div>
 						);
 					})}
-					{
-						// is rendered into a React portal
-						this.props.node.floatingModel && this.getFloatingModel()
-					}
 				</S.Scrollable>
 			</S.MicroLayout>
 		);

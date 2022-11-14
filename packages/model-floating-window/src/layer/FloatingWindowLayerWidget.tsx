@@ -57,6 +57,10 @@ namespace S {
 		box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
 		pointer-events: all;
 		border: solid 1px rgb(10, 10, 10);
+		height: 100%;
+		width: 100%;
+		display: flex;
+		flex-direction: column;
 	`;
 
 	export const Title = styled.div`
@@ -65,5 +69,6 @@ namespace S {
 		padding: 5px;
 		cursor: move;
 		user-select: none;
+		flex-shrink: 0;
 	`;
 }

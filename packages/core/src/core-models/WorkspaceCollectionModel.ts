@@ -112,7 +112,7 @@ export class WorkspaceCollectionModel<
 	}
 
 	normalize() {
-		if (this.parent && this.children.length === 0) {
+		if (this.parent && this.parent instanceof WorkspaceCollectionModel && this.children.length === 0) {
 			this.parent.removeModel(this);
 		}
 	}
