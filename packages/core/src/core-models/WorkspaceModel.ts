@@ -3,7 +3,6 @@ import { WorkspaceCollectionInterface } from './WorkspaceCollectionInterface';
 import { BaseListener, BaseObserver } from '../core/BaseObserver';
 import { Alignment } from '../core/tools';
 import { v4 } from 'uuid';
-import * as _ from 'lodash';
 import { ISize, Size } from '../core/dimensions/Size';
 import { DimensionContainer } from '../core/dimensions/DimensionContainer';
 

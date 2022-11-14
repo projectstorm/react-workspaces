@@ -10,13 +10,7 @@ export abstract class WorkspacePanelFactory<
 		if (event.renderContentOnly) {
 			return this.generatePanelContent(event);
 		}
-		return (
-			<PanelWidget
-				model={event.model}
-				engine={event.engine}
-				expand={event.verticalLayout ? event.model.expandVertical : event.model.expandHorizontal}
-			/>
-		);
+		return <PanelWidget model={event.model} engine={event.engine} />;
 	}
 
 	abstract generatePanelContent(event: GenerateEvent<T>): JSX.Element;

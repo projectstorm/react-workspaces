@@ -11,6 +11,7 @@
     "@projectstorm/react-workspaces-core": "2.0.0-alpha",
     "@projectstorm/react-workspaces-model-tray": "2.0.0-alpha",
     "@projectstorm/react-workspaces-model-tabs": "2.0.0-alpha",
+    "@projectstorm/react-workspaces-model-floating-window": "2.0.0-alpha",
     "@projectstorm/react-workspaces-defaults": "2.0.0-alpha",
     "@projectstorm/react-workspaces-behavior-resize": "2.0.0-alpha",
     "@projectstorm/react-workspaces-behavior-divider-dropzone": "2.0.0-alpha",

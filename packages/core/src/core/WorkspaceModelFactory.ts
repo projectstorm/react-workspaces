@@ -8,7 +8,6 @@ export interface GenerateEvent<T extends WorkspaceModel> {
 
 export interface RenderContentEvent<T extends WorkspaceModel> extends GenerateEvent<T> {
 	renderContentOnly: boolean;
-	verticalLayout: boolean;
 }
 
 export abstract class WorkspaceModelFactory<T extends WorkspaceModel = WorkspaceModel> {

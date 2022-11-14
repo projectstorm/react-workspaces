@@ -1,7 +1,12 @@
 import { WorkspaceTrayModel } from './WorkspaceTrayModel';
 import * as React from 'react';
 import { TrayWidget } from './TrayWidget';
-import { GenerateEvent, WorkspaceModel, WorkspaceModelFactory } from '@projectstorm/react-workspaces-core';
+import {
+	GenerateEvent,
+	RenderContentEvent,
+	WorkspaceModel,
+	WorkspaceModelFactory
+} from '@projectstorm/react-workspaces-core';
 
 export interface MicroPanelRendererEvent<T extends WorkspaceModel> {
 	model: T;
@@ -44,7 +49,7 @@ export class WorkspaceTrayFactory<T extends WorkspaceTrayModel = WorkspaceTrayMo
 		return null;
 	}
 
-	generateContent(event: GenerateEvent<T>): JSX.Element {
+	generateContent(event: RenderContentEvent<T>): JSX.Element {
 		return (
 			<TrayWidget
 				factory={this}

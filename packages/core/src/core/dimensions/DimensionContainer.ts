@@ -12,16 +12,21 @@ export interface DimensionContainerListener extends BaseListener {
 
 export type IDimension = IPosition & ISize;
 
+export interface DimensionContainerOptions {
+	position?: Position;
+	size?: Size;
+}
+
 export class DimensionContainer extends BaseObserver<DimensionContainerListener> {
 	position: Position;
 	size: Size;
 	id: string;
 
-	constructor() {
+	constructor(options: DimensionContainerOptions = {}) {
 		super();
 		this.id = v4();
-		this.size = new Size();
-		this.position = new Position();
+		this.size = options.size || new Size();
+		this.position = options.position || new Position();
 		this.size.registerListener({
 			updated: () => {
 				this.fireUpdated();

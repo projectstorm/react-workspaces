@@ -11,6 +11,9 @@
       "path": "./packages/behavior-panel-dropzone"
     },
     {
+      "path": "./packages/model-floating-window"
+    },
+    {
       "path": "./packages/behavior-resize"
     },
     {

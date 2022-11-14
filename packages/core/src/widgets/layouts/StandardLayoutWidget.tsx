@@ -29,8 +29,7 @@ export const StandardLayoutWidget: React.FC<StandardLayoutWidgetProps> = (props)
 				return props.engine.getFactory(model).generateContent({
 					model: model,
 					engine: props.engine,
-					renderContentOnly: false,
-					verticalLayout: props.node.vertical
+					renderContentOnly: false
 				});
 			}}
 			expand={true}

@@ -17,6 +17,15 @@
       "path": "../packages/defaults"
     },
     {
+      "path": "../packages/model-floating-window"
+    },
+    {
+      "path": "../packages/model-tabs"
+    },
+    {
+      "path": "../packages/model-tray"
+    },
+    {
       "path": "../packages/behavior-resize"
     },
     {

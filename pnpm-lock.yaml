@@ -20,6 +20,7 @@ importers:
       '@projectstorm/react-workspaces-behavior-resize': 2.0.0-alpha
       '@projectstorm/react-workspaces-core': 2.0.0-alpha
       '@projectstorm/react-workspaces-defaults': 2.0.0-alpha
+      '@projectstorm/react-workspaces-model-floating-window': 2.0.0-alpha
       '@projectstorm/react-workspaces-model-tabs': 2.0.0-alpha
       '@projectstorm/react-workspaces-model-tray': 2.0.0-alpha
       '@storybook/addon-essentials': ^6.5.12
@@ -45,6 +46,7 @@ importers:
       '@projectstorm/react-workspaces-behavior-resize': link:../packages/behavior-resize
       '@projectstorm/react-workspaces-core': link:../packages/core
       '@projectstorm/react-workspaces-defaults': link:../packages/defaults
+      '@projectstorm/react-workspaces-model-floating-window': link:../packages/model-floating-window
       '@projectstorm/react-workspaces-model-tabs': link:../packages/model-tabs
       '@projectstorm/react-workspaces-model-tray': link:../packages/model-tray
       lodash: 4.17.21
@@ -164,6 +166,25 @@ importers:
       react: 18.2.0
     devDependencies:
       '@types/lodash': 4.14.187
+      '@types/react': 18.0.21
+
+  packages/model-floating-window:
+    specifiers:
+      '@emotion/styled': ^11.10.4
+      '@fortawesome/fontawesome-svg-core': ^6.2.0
+      '@fortawesome/free-solid-svg-icons': ^6.2.0
+      '@fortawesome/react-fontawesome': ^0.2.0
+      '@projectstorm/react-workspaces-core': 2.0.0-alpha
+      '@types/react': ^18.0.21
+      react: ^18.2.0
+    dependencies:
+      '@emotion/styled': 11.10.4_iapumuv4e6jcjznwuxpf4tt22e
+      '@fortawesome/fontawesome-svg-core': 6.2.0
+      '@fortawesome/free-solid-svg-icons': 6.2.0
+      '@fortawesome/react-fontawesome': 0.2.0_6j2wdqxompc6mcokhxkpep2gqu
+      '@projectstorm/react-workspaces-core': link:../core
+      react: 18.2.0
+    devDependencies:
       '@types/react': 18.0.21
 
   packages/model-tabs:

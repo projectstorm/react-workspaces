@@ -5,6 +5,7 @@ import { WorkspaceModel } from '../../core-models/WorkspaceModel';
 
 export interface LayerListener extends BaseListener {
 	removed: () => any;
+	moveToTop: () => any;
 }
 
 export interface RenderLayerEvent {
@@ -29,10 +30,15 @@ export abstract class Layer extends BaseObserver<LayerListener> {
 	remove() {
 		this.iterateListeners((cb) => cb.removed?.());
 	}
+
+	moveToTop() {
+		this.iterateListeners((cb) => cb.moveToTop?.());
+	}
 }
 
 export interface LayerManagerListener extends BaseListener {
 	layersChanged: () => any;
+	layerAdded: () => any;
 }
 
 export class LayerManager extends BaseObserver<LayerManagerListener> {
@@ -47,14 +53,27 @@ export class LayerManager extends BaseObserver<LayerManagerListener> {
 		return Array.from(this._layers.values());
 	}
 
+	fireUpdated() {
+		this.iterateListeners((cb) => cb.layersChanged?.());
+	}
+
 	addLayer(layer: Layer) {
 		this._layers.add(layer);
 		const l = layer.registerListener({
 			removed: () => {
 				this._layers.delete(layer);
 				l();
+			},
+			moveToTop: () => {
+				// remove from current position
+				this._layers.delete(layer);
+
+				// add to the top
+				this._layers.add(layer);
+				this.fireUpdated();
 			}
 		});
-		this.iterateListeners((cb) => cb.layersChanged?.());
+		this.iterateListeners((cb) => cb.layerAdded?.());
+		this.fireUpdated();
 	}
 }

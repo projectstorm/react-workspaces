@@ -10,7 +10,6 @@ import { useModelElement } from '../../widgets/hooks/useModelElement';
 export interface PanelWidgetProps {
 	model: WorkspaceModel;
 	engine: WorkspaceEngine;
-	expand?: boolean;
 }
 
 namespace S {

@@ -5,6 +5,7 @@ import { TabButtonWidget } from './TabButtonWidget';
 import {
 	DropzoneOrderWidget,
 	GenerateEvent,
+	RenderContentEvent,
 	WorkspaceModel,
 	WorkspaceModelFactory
 } from '@projectstorm/react-workspaces-core';
@@ -66,7 +67,7 @@ export class WorkspaceTabFactory<T extends WorkspaceTabModel = WorkspaceTabModel
 		);
 	}
 
-	generateContent(event: GenerateEvent<T>): JSX.Element {
+	generateContent(event: RenderContentEvent<T>): JSX.Element {
 		return (
 			<TabGroupWidget tabs={this.generateTabs(event)} key={event.model.id} model={event.model} engine={event.engine} />
 		);
