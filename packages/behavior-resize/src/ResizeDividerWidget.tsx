@@ -18,6 +18,7 @@ export interface ResizeDividerWidgetProps {
 const getResizeStrategy = (divider: ResizeDivision): Pick<UseMouseDragDistanceProps, 'startMove' | 'moved'> => {
 	let initial1 = 0;
 	let initial2 = 0;
+
 	const { before, after } = divider;
 
 	if (divider.vertical) {

@@ -44,6 +44,16 @@ export class WorkspaceNodeModel extends WorkspaceCollectionModel {
 	getResizeDivisions(): ResizeDivision[] {
 		let divs: ResizeDivision[] = [];
 		for (let i = 1; i < this.r_divisons.length - 1; i++) {
+			if (this.vertical) {
+				if (this.children[i - 1].expandVertical && this.children[i].expandVertical) {
+					continue;
+				}
+			} else {
+				if (this.children[i - 1].expandHorizontal && this.children[i].expandHorizontal) {
+					continue;
+				}
+			}
+
 			divs.push({
 				before: this.children[i - 1],
 				after: this.children[i],
