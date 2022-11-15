@@ -1,6 +1,7 @@
 import { WorkspaceEngine, WorkspaceNodeModel } from '@projectstorm/react-workspaces-core';
 import { FloatingWindowModel } from './FloatingWindowModel';
-import { FloatingWindowLayer } from '../layer/FloatingWindowLayer';
+import { FloatingWindowLayer } from '../layer/window/FloatingWindowLayer';
+import { FloatingWindowResizeLayer } from '../layer/resize/FloatingWindowResizeLayer';
 
 export class RootWorkspaceModel extends WorkspaceNodeModel {
 	floatingWindows: Set<FloatingWindowModel>;
@@ -10,13 +11,22 @@ export class RootWorkspaceModel extends WorkspaceNodeModel {
 		super();
 		this.floatingWindows = new Set<FloatingWindowModel>();
 
-		// keep floating windows on-top
 		this.layerListener = this.engine.layerManager.registerListener({
 			layerAdded: () => {
+				// keep floating windows on-top
 				this.floatingWindows.forEach((w) => {
 					this.engine.layerManager.layers
 						.filter((l) => l instanceof FloatingWindowLayer)
-						.forEach((l: FloatingWindowLayer) => {
+						.forEach((l) => {
+							l.moveToTop();
+						});
+				});
+
+				// and keep the resizer ontop of that as well
+				this.floatingWindows.forEach((w) => {
+					this.engine.layerManager.layers
+						.filter((l) => l instanceof FloatingWindowResizeLayer)
+						.forEach((l) => {
 							l.moveToTop();
 						});
 				});
@@ -31,11 +41,14 @@ export class RootWorkspaceModel extends WorkspaceNodeModel {
 	addFloatingWindow(window: FloatingWindowModel) {
 		this.floatingWindows.add(window);
 		const layer = new FloatingWindowLayer(window);
+		const resize = new FloatingWindowResizeLayer(window);
 		this.engine.layerManager.addLayer(layer);
+		this.engine.layerManager.addLayer(resize);
 		window.setParent(this);
 		window.registerListener({
 			removed: () => {
 				layer.remove();
+				resize.remove();
 				this.floatingWindows.delete(window);
 			}
 		});

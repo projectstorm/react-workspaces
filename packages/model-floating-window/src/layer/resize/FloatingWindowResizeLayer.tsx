@@ -1,13 +1,13 @@
 import { Layer, RenderLayerEvent, WorkspaceModel } from '@projectstorm/react-workspaces-core';
 import * as React from 'react';
-import { FloatingWindowLayerWidget } from './FloatingWindowLayerWidget';
-import { FloatingWindowModel } from '../core/FloatingWindowModel';
+import { FloatingWindowModel } from '../../core/FloatingWindowModel';
+import { FloatingWindowResizeLayerWidget } from './FloatingWindowResizeLayerWidget';
 
 export interface FloatingWindowLayerOptions {
 	model: WorkspaceModel;
 }
 
-export class FloatingWindowLayer extends Layer {
+export class FloatingWindowResizeLayer extends Layer {
 	constructor(protected model: FloatingWindowModel) {
 		super({
 			mouseEvents: false
@@ -15,6 +15,6 @@ export class FloatingWindowLayer extends Layer {
 	}
 
 	renderLayer(event: RenderLayerEvent): JSX.Element {
-		return <FloatingWindowLayerWidget window={this.model} engine={event.engine} />;
+		return <FloatingWindowResizeLayerWidget window={this.model} />;
 	}
 }

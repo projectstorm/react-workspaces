@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useRef } from 'react';
-import { FloatingWindowModel } from '../core/FloatingWindowModel';
+import { FloatingWindowModel } from '../../core/FloatingWindowModel';
 import {
 	Alignment,
 	DimensionTrackingWidget,
@@ -41,8 +41,8 @@ export const FloatingWindowLayerWidget: React.FC<FloatingWindowLayerWidgetProps>
 
 	return (
 		<DimensionTrackingWidget dimension={props.window.dimension}>
-			<S.Container ref={ref}>
-				<S.Title>Menubar</S.Title>
+			<S.Container>
+				<S.Title ref={ref}>Menubar</S.Title>
 				{factory.generateContent({
 					engine: props.engine,
 					model: props.window.child,

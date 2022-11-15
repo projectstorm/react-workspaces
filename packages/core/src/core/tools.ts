@@ -21,6 +21,13 @@ export enum Alignment {
 	RIGHT = 'right'
 }
 
+export enum Corner {
+	TOP_LEFT = 'nw',
+	TOP_RIGHT = 'ne',
+	BOTTOM_RIGHT = 'se',
+	BOTTOM_LEFT = 'sw'
+}
+
 export const log = (...args) => {
 	console.debug(`[SRW] `, ...args);
 };

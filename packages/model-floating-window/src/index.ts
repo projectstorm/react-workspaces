@@ -1,5 +1,5 @@
 export * from './core/RootWorkspaceModel';
 export * from './core/FloatingWindowModel';
 
-export * from './layer/FloatingWindowLayer';
-export * from './layer/FloatingWindowLayerWidget';
+export * from './layer/window/FloatingWindowLayer';
+export * from './layer/window/FloatingWindowLayerWidget';
