@@ -5,18 +5,18 @@
   "types": "./dist/@types/index.d.ts",
   "dependencies": {
     "react": "^18.2.0",
-    "@emotion/styled": "^11.10.4",
+    "@emotion/styled": "^11.10.5",
     "@emotion/react": "^11.10.5",
     "lodash": "^4.17.21",
     "@projectstorm/react-workspaces-core": "2.0.0-alpha",
     "@projectstorm/react-workspaces-model-tabs": "2.0.0-alpha",
     "@projectstorm/react-workspaces-model-tray": "2.0.0-alpha",
-    "@fortawesome/free-solid-svg-icons": "^6.2.0",
+    "@fortawesome/free-solid-svg-icons": "^6.2.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
-    "@fortawesome/fontawesome-svg-core": "^6.2.0"
+    "@fortawesome/fontawesome-svg-core": "^6.2.1"
   },
   "devDependencies": {
-    "@types/react": "^18.0.21",
-    "@types/lodash": "^4.14.187"
+    "@types/react": "^18.0.25",
+    "@types/lodash": "^4.14.189"
   }
 }

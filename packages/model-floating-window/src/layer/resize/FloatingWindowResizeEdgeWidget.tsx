@@ -8,6 +8,7 @@ import { useMouseDragDistance } from '@projectstorm/react-workspaces-core/dist';
 export interface FloatingWindowResizeEdgeWidgetProps {
 	alignment: Alignment;
 	window: FloatingWindowModel;
+	debug?: boolean;
 }
 
 export const FloatingWindowResizeEdgeWidget: React.FC<FloatingWindowResizeEdgeWidgetProps> = (props) => {
@@ -49,6 +50,7 @@ export const FloatingWindowResizeEdgeWidget: React.FC<FloatingWindowResizeEdgeWi
 	return (
 		<S.Container
 			ref={ref}
+			debug={props.debug}
 			alignment={props.alignment}
 			vertical={props.alignment === Alignment.LEFT || props.alignment === Alignment.RIGHT}
 		></S.Container>
@@ -58,13 +60,13 @@ export const FloatingWindowResizeEdgeWidget: React.FC<FloatingWindowResizeEdgeWi
 namespace S {
 	const INSETS = 2;
 
-	export const Container = styled.div<{ vertical: boolean; alignment: Alignment }>`
+	export const Container = styled.div<{ vertical: boolean; alignment: Alignment; debug: boolean }>`
 		pointer-events: all;
 		cursor: ${(p) => (p.vertical ? 'col-resize' : 'row-resize')};
 		position: absolute;
 		${(p) => (p.vertical ? `height: 100%; width: ${INSETS * 3}px` : `width: 100%; height: ${INSETS * 3}px`)};
 		${(p) => p.alignment}: -${INSETS}px;
 		user-select: none;
-		//background: cyan;
+		background: ${(p) => (p.debug ? 'cyan' : 'transparent')};
 	`;
 }

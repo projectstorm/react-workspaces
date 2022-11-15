@@ -61,6 +61,7 @@ export class WorkspaceEngine extends BaseObserver<WorkspaceEngineListener> imple
 			}
 		});
 		this.rootModel = model;
+		this.iterateListeners((cb) => cb.modelUpdated?.());
 	}
 
 	fireRepainted() {
@@ -87,17 +88,6 @@ export class WorkspaceEngine extends BaseObserver<WorkspaceEngineListener> imple
 
 	static namespaceMime(data: string) {
 		return `srw/${data}`;
-	}
-
-	fireModelUpdated() {
-		this.fireModelUpdateEvent = true;
-	}
-
-	_fireModelUpdated() {
-		this.fireModelUpdateEvent = false;
-		this.iterateListeners((listener) => {
-			listener.modelUpdated && listener.modelUpdated();
-		});
 	}
 
 	fireRepaintListeners() {

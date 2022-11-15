@@ -19,7 +19,8 @@ export class WorkspaceCollectionModel<
 		L extends WorkspaceCollectionModelListener = WorkspaceCollectionModelListener
 	>
 	extends WorkspaceModel<S, L>
-	implements WorkspaceCollectionInterface {
+	implements WorkspaceCollectionInterface
+{
 	children: WorkspaceModel[];
 	childrenListeners: Set<() => any>;
 

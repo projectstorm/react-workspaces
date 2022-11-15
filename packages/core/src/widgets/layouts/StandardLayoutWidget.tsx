@@ -38,7 +38,6 @@ export const StandardLayoutWidget: React.FC<StandardLayoutWidgetProps> = (props)
 			}}
 			dropped={(index, model: WorkspaceModel) => {
 				props.node.addModel(model, index);
-				props.engine.fireModelUpdated();
 			}}
 			vertical={props.node.vertical}
 			engine={props.engine}

@@ -3,10 +3,6 @@ import * as React from 'react';
 import { FloatingWindowLayerWidget } from './FloatingWindowLayerWidget';
 import { FloatingWindowModel } from '../../core/FloatingWindowModel';
 
-export interface FloatingWindowLayerOptions {
-	model: WorkspaceModel;
-}
-
 export class FloatingWindowLayer extends Layer {
 	constructor(protected model: FloatingWindowModel) {
 		super({

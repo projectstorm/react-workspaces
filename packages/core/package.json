@@ -6,16 +6,16 @@
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "@emotion/styled": "^11.10.4",
-    "@emotion/react": "^11.10.4",
+    "@emotion/styled": "^11.10.5",
+    "@emotion/react": "^11.10.5",
     "lodash": "^4.17.21",
     "color": "^4.2.3",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
-    "@types/react": "^18.0.21",
-    "@types/react-dom": "^18.0.6",
-    "@types/lodash": "^4.14.186",
+    "@types/react": "^18.0.25",
+    "@types/react-dom": "^18.0.9",
+    "@types/lodash": "^4.14.189",
     "@types/uuid": "^8.3.4"
   }
 }

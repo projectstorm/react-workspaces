@@ -22,6 +22,14 @@ export class DebugLayer extends Layer {
 		});
 	}
 
+	updateOptions(options: Partial<DebugLayerOptions>) {
+		this.debugOptions = {
+			...this.debugOptions,
+			...options
+		};
+		this.repaint();
+	}
+
 	renderLayer(event): JSX.Element {
 		return <DebugLayerWidget options={this.debugOptions} engine={event.engine} model={event.model} />;
 	}

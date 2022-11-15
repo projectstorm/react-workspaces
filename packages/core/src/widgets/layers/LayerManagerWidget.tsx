@@ -26,7 +26,7 @@ export const LayerManagerWidget: React.FC<LayerManagerWidgetProps> = (props) => 
 		<S.Container className={props.className}>
 			{props.layerManager.layers.map((l, index) => {
 				return (
-					<S.Layer pointerEvents={l.options.mouseEvents} index={index} key={l.id}>
+					<S.Layer $pointerEvents={l.options.mouseEvents} index={index} key={l.id}>
 						{l.renderLayer({
 							engine: props.engine,
 							model: props.model
@@ -43,9 +43,9 @@ namespace S {
 		pointer-events: none;
 	`;
 
-	export const Layer = styled.div<{ index: number; pointerEvents: boolean }>`
+	export const Layer = styled.div<{ index: number; $pointerEvents: boolean }>`
 		z-index: ${(p) => p.index};
-		pointer-events: ${(p) => (p.pointerEvents ? 'all' : 'none')};
+		pointer-events: ${(p) => (p.$pointerEvents ? 'all' : 'none')};
 		width: 100%;
 		height: 100%;
 	`;

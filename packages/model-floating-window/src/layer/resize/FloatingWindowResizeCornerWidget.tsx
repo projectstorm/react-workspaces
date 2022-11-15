@@ -7,6 +7,7 @@ import { FloatingWindowModel } from '../../core/FloatingWindowModel';
 export interface FloatingWindowResizeCornerWidgetProps {
 	corner: Corner;
 	window: FloatingWindowModel;
+	debug?: boolean;
 }
 
 export const FloatingWindowResizeCornerWidget: React.FC<FloatingWindowResizeCornerWidgetProps> = (props) => {
@@ -61,7 +62,7 @@ export const FloatingWindowResizeCornerWidget: React.FC<FloatingWindowResizeCorn
 			}
 		}
 	});
-	return <S.CornerResize ref={ref} corner={props.corner}></S.CornerResize>;
+	return <S.CornerResize debug={props.debug} ref={ref} corner={props.corner}></S.CornerResize>;
 };
 
 namespace S {
@@ -74,7 +75,7 @@ namespace S {
 		[Corner.BOTTOM_LEFT]: ['bottom', 'left']
 	};
 
-	export const CornerResize = styled.div<{ corner: Corner }>`
+	export const CornerResize = styled.div<{ corner: Corner; debug: boolean }>`
 		pointer-events: all;
 		cursor: ${(p) => p.corner}-resize;
 		position: absolute;
@@ -82,6 +83,6 @@ namespace S {
 		height: ${CORNER}px;
 		${(p) => CORNER_CSS[p.corner].map((c) => `${c}:-${CORNER / 2}px`).join(';')};
 		user-select: none;
-		//background: red;
+		background: ${(p) => (p.debug ? 'red' : 'transparent')};
 	`;
 }

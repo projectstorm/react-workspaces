@@ -6,6 +6,7 @@ import { WorkspaceModel } from '../../core-models/WorkspaceModel';
 export interface LayerListener extends BaseListener {
 	removed: () => any;
 	moveToTop: () => any;
+	repaint: () => any;
 }
 
 export interface RenderLayerEvent {
@@ -19,13 +20,23 @@ export interface LayerOptions {
 
 export abstract class Layer extends BaseObserver<LayerListener> {
 	id: string;
+	layerManager: LayerManager;
 
 	constructor(public options: LayerOptions) {
 		super();
 		this.id = v4();
+		this.layerManager = null;
 	}
 
 	abstract renderLayer(event: RenderLayerEvent): JSX.Element;
+
+	setLayerManager(manager: LayerManager) {
+		this.layerManager = manager;
+	}
+
+	isInserted() {
+		return !!this.layerManager;
+	}
 
 	remove() {
 		this.iterateListeners((cb) => cb.removed?.());
@@ -33,6 +44,10 @@ export abstract class Layer extends BaseObserver<LayerListener> {
 
 	moveToTop() {
 		this.iterateListeners((cb) => cb.moveToTop?.());
+	}
+
+	repaint() {
+		this.iterateListeners((cb) => cb.repaint?.());
 	}
 }
 
@@ -58,11 +73,16 @@ export class LayerManager extends BaseObserver<LayerManagerListener> {
 	}
 
 	addLayer(layer: Layer) {
+		layer.setLayerManager(this);
 		this._layers.add(layer);
 		const l = layer.registerListener({
 			removed: () => {
 				this._layers.delete(layer);
+				layer.setLayerManager(null);
 				l();
+			},
+			repaint: () => {
+				this.fireUpdated();
 			},
 			moveToTop: () => {
 				// remove from current position

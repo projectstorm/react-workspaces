@@ -3,18 +3,14 @@ import * as React from 'react';
 import { FloatingWindowModel } from '../../core/FloatingWindowModel';
 import { FloatingWindowResizeLayerWidget } from './FloatingWindowResizeLayerWidget';
 
-export interface FloatingWindowLayerOptions {
-	model: WorkspaceModel;
-}
-
 export class FloatingWindowResizeLayer extends Layer {
-	constructor(protected model: FloatingWindowModel) {
+	constructor(protected model: FloatingWindowModel, protected debug: boolean = false) {
 		super({
 			mouseEvents: false
 		});
 	}
 
 	renderLayer(event: RenderLayerEvent): JSX.Element {
-		return <FloatingWindowResizeLayerWidget window={this.model} />;
+		return <FloatingWindowResizeLayerWidget debug={this.debug} window={this.model} />;
 	}
 }
