@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styled from '@emotion/styled';
-import { WorkspaceTrayFactory, WorkspaceTrayModel } from '@projectstorm/react-workspaces-model-tray';
+import { WorkspaceTrayFactory, WorkspaceTrayModel, WorkspaceTrayMode } from '@projectstorm/react-workspaces-model-tray';
 import { WorkspaceModelFactoryEvent } from '@projectstorm/react-workspaces-core';
 
 namespace S {
@@ -15,7 +15,9 @@ export class DefaultTrayFactory extends WorkspaceTrayFactory {
 		return (
 			<S.Tray
 				onDoubleClick={() => {
-					event.model.setMode(event.model.mode === 'micro' ? 'expand' : 'micro');
+					event.model.setMode(
+						event.model.mode === WorkspaceTrayMode.NORMAL ? WorkspaceTrayMode.COLLAPSED : WorkspaceTrayMode.NORMAL
+					);
 				}}
 			/>
 		);

@@ -6,12 +6,23 @@ import { DefaultWorkspacePanelModel } from '@projectstorm/react-workspaces-defau
 import { WorkspaceTabModel } from '@projectstorm/react-workspaces-model-tabs';
 import { CompInternal, genVerticalNode, useEngine } from './helpers/tools';
 import { WorkspaceTrayModel } from '@projectstorm/react-workspaces-model-tray';
+import { WorkspaceTrayMode } from '@projectstorm/react-workspaces-model-tray';
 
 export const ComplexLayout = function (args) {
 	const engine = useEngine(args);
 	const [model] = useState(() => {
 		let model = new WorkspaceNodeModel();
 		model.setHorizontal(true);
+
+		const largeTray = new WorkspaceTrayModel({
+			iconWidth: 50
+		})
+			.setMode(WorkspaceTrayMode.COLLAPSED)
+			.setExpand(false, true);
+		for (let i = 0; i < 20; i++) {
+			largeTray.addModel(new DefaultWorkspacePanelModel('Tray panel ' + i));
+		}
+
 		model
 
 			//left panel
@@ -26,10 +37,12 @@ export const ComplexLayout = function (args) {
 					.addModel(new DefaultWorkspacePanelModel('Tab 3'))
 			)
 
-			//right panel
-			// .addModel(new DefaultWorkspacePanelModel('Panel 3'))
+			.addModel(largeTray)
 			.addModel(
-				new WorkspaceTrayModel()
+				new WorkspaceTrayModel({
+					iconWidth: 50
+				})
+					.setMode(WorkspaceTrayMode.NORMAL)
 					.setExpand(false, true)
 					.addModel(new DefaultWorkspacePanelModel('Tray panel 1'))
 					.addModel(new DefaultWorkspacePanelModel('Tray panel 2'))

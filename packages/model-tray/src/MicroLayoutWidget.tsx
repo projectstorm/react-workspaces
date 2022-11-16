@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as _ from 'lodash';
 import styled from '@emotion/styled';
 import { WorkspaceTrayModel } from './WorkspaceTrayModel';
-import { DraggableWidget, WorkspaceEngine } from '@projectstorm/react-workspaces-core';
+import { useModelElement, WorkspaceEngine, WorkspaceModel } from '@projectstorm/react-workspaces-core';
 import { WorkspaceTrayFactory } from './WorkspaceTrayFactory';
 
 export interface MicroLayoutWidgetProps {
@@ -15,6 +15,8 @@ export interface MicroLayoutWidgetProps {
 namespace S {
 	export const MicroLayout = styled.div`
 		display: flex;
+		flex-direction: column;
+		align-items: stretch;
 		flex-grow: 1;
 		overflow: hidden;
 	`;
@@ -23,6 +25,7 @@ namespace S {
 		display: flex;
 		flex-direction: column;
 		overflow-y: scroll;
+		align-items: stretch;
 
 		::-webkit-scrollbar {
 			width: 0;
@@ -30,14 +33,32 @@ namespace S {
 	`;
 }
 
+export interface MicroWrapperProps {
+	model: WorkspaceModel;
+	node: WorkspaceTrayModel;
+	engine: WorkspaceEngine;
+	factory: WorkspaceTrayFactory;
+}
+
+export const MicroWrapper: React.FC<MicroWrapperProps> = (props) => {
+	const ref = useModelElement({
+		model: props.model,
+		engine: props.engine
+	});
+	let selected = props.node.floatingModel && props.node.floatingModel.id === props.model.id;
+	const renderer = props.factory.getRendererForModel(props.model);
+	return (
+		<div ref={ref}>
+			{renderer?.renderIcon({
+				model: props.model,
+				selected: selected
+			}) || <span>?</span>}
+		</div>
+	);
+};
+
 export class MicroLayoutWidget extends React.Component<MicroLayoutWidgetProps> {
 	div: HTMLDivElement;
-	buttons: { [id: string]: HTMLDivElement };
-
-	constructor(props: MicroLayoutWidgetProps) {
-		super(props);
-		this.buttons = {};
-	}
 
 	componentDidMount() {
 		if (this.props.node.floatingModel) {
@@ -55,33 +76,7 @@ export class MicroLayoutWidget extends React.Component<MicroLayoutWidgetProps> {
 			>
 				<S.Scrollable>
 					{_.map(this.props.node.getFlattened(), (child) => {
-						let selected = this.props.node.floatingModel && this.props.node.floatingModel.id === child.id;
-						const renderer = this.props.factory.getRendererForModel(child);
-						return (
-							<div
-								key={child.id}
-								ref={(ref) => {
-									this.buttons[child.id] = ref;
-								}}
-							>
-								<DraggableWidget
-									onClick={() => {
-										if (selected) {
-											this.props.node.setFloatingModel(null);
-										} else {
-											this.props.node.setFloatingModel(child);
-										}
-										this.props.engine.fireRepaintListeners();
-									}}
-									engine={this.props.engine}
-									model={child}
-								>
-									{renderer?.renderIcon({
-										model: child
-									}) || <span>?</span>}
-								</DraggableWidget>
-							</div>
-						);
+						return <MicroWrapper {...this.props} model={child} key={child.id} />;
 					})}
 				</S.Scrollable>
 			</S.MicroLayout>

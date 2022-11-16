@@ -16,8 +16,7 @@ namespace S {
 	`;
 
 	export const Container = styled.div<{ selected: boolean }>`
-		width: 45px;
-		height: 45px;
+		min-height: 45px;
 		background-color: black;
 		display: flex;
 		justify-content: center;

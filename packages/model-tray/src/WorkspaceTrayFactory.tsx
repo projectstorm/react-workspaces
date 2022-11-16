@@ -10,6 +10,7 @@ import {
 
 export interface TrayModelPanelRendererEvent<T extends WorkspaceModel> {
 	model: T;
+	selected: boolean;
 }
 
 export interface TrayModelPanelRenderer<T extends WorkspaceModel = WorkspaceModel> extends WorkspaceNodePanelRenderer {
@@ -25,7 +26,9 @@ export class WorkspaceTrayFactory<T extends WorkspaceTrayModel = WorkspaceTrayMo
 	}
 
 	generateModel(): T {
-		return new WorkspaceTrayModel() as T;
+		return new WorkspaceTrayModel({
+			iconWidth: 50
+		}) as T;
 	}
 
 	generateTrayHeader(event: WorkspaceModelFactoryEvent<T>) {

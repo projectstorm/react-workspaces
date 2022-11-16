@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { WorkspaceTrayModel } from './WorkspaceTrayModel';
+import { WorkspaceTrayMode, WorkspaceTrayModel } from './WorkspaceTrayModel';
 import styled from '@emotion/styled';
 import { DraggableWidget, StandardLayoutWidget, WorkspaceEngine } from '@projectstorm/react-workspaces-core';
 import { MicroLayoutWidget } from './MicroLayoutWidget';
@@ -73,7 +73,7 @@ export class TrayWidget extends React.Component<TrayWidgetProps, TrayWidgetState
 	}
 
 	render() {
-		const expand = this.props.node.shouldExpand() && this.props.node.mode === 'expand';
+		const expand = this.props.node.shouldExpand() && this.props.node.mode === WorkspaceTrayMode.NORMAL;
 		return (
 			<S.Container width={this.props.node.size.width} className={this.props.className} expand={expand}>
 				{this.getHeader()}
