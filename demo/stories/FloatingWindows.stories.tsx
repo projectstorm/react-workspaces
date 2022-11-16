@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { useState } from 'react';
 import 'typeface-open-sans';
-import { DefaultWorkspacePanelModel } from '@projectstorm/react-workspaces-defaults';
+import { DefaultWindowModel, DefaultWorkspacePanelModel } from '@projectstorm/react-workspaces-defaults';
 import { WorkspaceTabModel } from '@projectstorm/react-workspaces-model-tabs';
-import { FloatingWindowModel, RootWorkspaceModel } from '@projectstorm/react-workspaces-model-floating-window';
+import { RootWorkspaceModel } from '@projectstorm/react-workspaces-model-floating-window';
 import { CompInternal, genVerticalNode, useEngine } from './helpers/tools';
 
 export const FloatingWindows = function (args) {
@@ -26,7 +26,7 @@ export const FloatingWindows = function (args) {
 
 			.addModel(genVerticalNode());
 
-		const window1 = new FloatingWindowModel(new DefaultWorkspacePanelModel('Floating window 1'));
+		const window1 = new DefaultWindowModel(new DefaultWorkspacePanelModel('Floating window 1'));
 		window1.position.update({
 			top: 100,
 			left: 100
@@ -35,7 +35,7 @@ export const FloatingWindows = function (args) {
 		window1.setHeight(400);
 		model.addFloatingWindow(window1);
 
-		const window2 = new FloatingWindowModel(new DefaultWorkspacePanelModel('Floating window 2'));
+		const window2 = new DefaultWindowModel(new DefaultWorkspacePanelModel('Floating window 2'));
 		window2.position.update({
 			top: 100,
 			left: 600

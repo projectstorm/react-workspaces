@@ -7,7 +7,7 @@ export class RootWorkspaceModel extends WorkspaceNodeModel {
 	floatingWindows: Set<FloatingWindowModel>;
 	layerListener: () => any;
 
-	constructor(private engine: WorkspaceEngine, protected debug: boolean = false) {
+	constructor(public engine: WorkspaceEngine, protected debug: boolean = false) {
 		super();
 		this.floatingWindows = new Set<FloatingWindowModel>();
 

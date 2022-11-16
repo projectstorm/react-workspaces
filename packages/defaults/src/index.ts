@@ -3,7 +3,11 @@ import { faCopy, faCube } from '@fortawesome/free-solid-svg-icons';
 
 library.add(faCube, faCopy);
 
-export * from './DefaultWorkspacePanelModel';
-export * from './DefaultWorkspacePanelFactory';
-export * from './DefaultTrayFactory';
+export * from './tray/DefaultTrayFactory';
+
+export * from './panel/DefaultWorkspacePanelModel';
+export * from './panel/DefaultWorkspacePanelFactory';
+
+export * from './window/DefaultWindowModelFactory';
+
 export * from './DefaultSubComponentRenderer';

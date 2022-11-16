@@ -10,6 +10,7 @@ import {
 } from '@projectstorm/react-workspaces-core';
 import styled from '@emotion/styled';
 import { FloatingWindowLayer } from './FloatingWindowLayer';
+import { FloatingWindowFactory } from '../../core/FloatingWindowFactory';
 
 export interface FloatingWindowLayerWidgetProps {
 	window: FloatingWindowModel;
@@ -46,15 +47,19 @@ export const FloatingWindowLayerWidget: React.FC<FloatingWindowLayerWidgetProps>
 		}
 	});
 
+	const windowFactory = props.engine.getFactory<FloatingWindowFactory>(props.window);
+
 	return (
 		<DimensionTrackingWidget animateDuration={props.animate ? 300 : 0} dimension={props.window.dimension}>
-			<S.Container>
-				<S.Title ref={ref}>Menubar</S.Title>
-				{factory.generateContent({
+			{windowFactory.generateContent({
+				content: factory.generateContent({
 					engine: props.engine,
 					model: props.window.child
-				})}
-			</S.Container>
+				}),
+				titlebar: <S.Title ref={ref}>Menubar</S.Title>,
+				engine: props.engine,
+				model: props.window
+			})}
 		</DimensionTrackingWidget>
 	);
 };

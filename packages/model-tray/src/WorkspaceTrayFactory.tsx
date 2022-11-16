@@ -7,6 +7,7 @@ import {
 	WorkspaceNodeFactory,
 	WorkspaceNodePanelRenderer
 } from '@projectstorm/react-workspaces-core';
+import { FloatingWindowFactory } from '@projectstorm/react-workspaces-model-floating-window';
 
 export interface TrayModelPanelRendererEvent<T extends WorkspaceModel> {
 	model: T;
@@ -17,17 +18,22 @@ export interface TrayModelPanelRenderer<T extends WorkspaceModel = WorkspaceMode
 	renderIcon(event: TrayModelPanelRendererEvent<T>): JSX.Element;
 }
 
+export interface WorkspaceTrayFactoryOptions {
+	windowFactory: FloatingWindowFactory;
+}
+
 export class WorkspaceTrayFactory<T extends WorkspaceTrayModel = WorkspaceTrayModel> extends WorkspaceNodeFactory<
 	T,
 	TrayModelPanelRenderer
 > {
-	constructor() {
+	constructor(protected options: WorkspaceTrayFactoryOptions) {
 		super(WorkspaceTrayModel.NAME);
 	}
 
 	generateModel(): T {
 		return new WorkspaceTrayModel({
-			iconWidth: 50
+			iconWidth: 50,
+			factory: this.options.windowFactory
 		}) as T;
 	}
 

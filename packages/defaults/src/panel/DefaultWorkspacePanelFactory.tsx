@@ -1,6 +1,6 @@
 import { DefaultWorkspacePanelModel } from './DefaultWorkspacePanelModel';
 import * as React from 'react';
-import { DefaultPanelContentWidget } from './widgets/DefaultPanelContentWidget';
+import { DefaultPanelContentWidget } from '../widgets/DefaultPanelContentWidget';
 import { WorkspaceModelFactory, WorkspaceModelFactoryEvent } from '@projectstorm/react-workspaces-core';
 
 export class DefaultWorkspacePanelFactory extends WorkspaceModelFactory<DefaultWorkspacePanelModel> {

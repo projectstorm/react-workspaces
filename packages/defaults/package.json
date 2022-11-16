@@ -11,6 +11,7 @@
     "@projectstorm/react-workspaces-core": "2.0.0-alpha",
     "@projectstorm/react-workspaces-model-tabs": "2.0.0-alpha",
     "@projectstorm/react-workspaces-model-tray": "2.0.0-alpha",
+    "@projectstorm/react-workspaces-model-floating-window": "2.0.0-alpha",
     "@fortawesome/free-solid-svg-icons": "^6.2.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@fortawesome/fontawesome-svg-core": "^6.2.1"

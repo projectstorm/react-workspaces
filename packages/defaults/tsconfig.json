@@ -18,6 +18,9 @@
     },
     {
       "path": "../model-tabs"
+    },
+    {
+      "path": "../model-floating-window"
     }
   ]
 }

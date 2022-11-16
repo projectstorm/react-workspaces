@@ -1,5 +1,5 @@
 import { WorkspaceModel } from '../core-models/WorkspaceModel';
-import { WorkspaceModelFactory } from '../core/WorkspaceModelFactory';
+import { WorkspaceModelFactory, WorkspaceModelFactoryEvent } from '../core/WorkspaceModelFactory';
 
 export interface SubComponentRenderer<T extends WorkspaceModel = WorkspaceModel> {
 	matchModel(model: T): boolean;
@@ -7,8 +7,9 @@ export interface SubComponentRenderer<T extends WorkspaceModel = WorkspaceModel>
 
 export abstract class SubComponentModelFactory<
 	T extends WorkspaceModel,
-	R extends SubComponentRenderer
-> extends WorkspaceModelFactory {
+	R extends SubComponentRenderer,
+	E extends WorkspaceModelFactoryEvent<T> = WorkspaceModelFactoryEvent<T>
+> extends WorkspaceModelFactory<T, E> {
 	renderers: Set<R>;
 
 	constructor(type: string) {

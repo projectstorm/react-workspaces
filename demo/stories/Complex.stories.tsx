@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useState } from 'react';
 import 'typeface-open-sans';
-import { DefaultWorkspacePanelModel } from '@projectstorm/react-workspaces-defaults';
+import { DefaultWindowModelFactory, DefaultWorkspacePanelModel } from '@projectstorm/react-workspaces-defaults';
 import { WorkspaceTabModel } from '@projectstorm/react-workspaces-model-tabs';
 import { CompInternal, genVerticalNode, useEngine } from './helpers/tools';
 import { WorkspaceTrayMode, WorkspaceTrayModel } from '@projectstorm/react-workspaces-model-tray';
@@ -11,10 +11,12 @@ export const ComplexLayout = function (args) {
 	const engine = useEngine(args);
 	const [model] = useState(() => {
 		let model = new RootWorkspaceModel(engine);
+		const windowFactory = new DefaultWindowModelFactory();
 		model.setHorizontal(true);
 
 		const largeTray = new WorkspaceTrayModel({
-			iconWidth: 50
+			iconWidth: 50,
+			factory: windowFactory
 		})
 			.setMode(WorkspaceTrayMode.COLLAPSED)
 			.setExpand(false, true);
@@ -39,7 +41,8 @@ export const ComplexLayout = function (args) {
 			.addModel(largeTray)
 			.addModel(
 				new WorkspaceTrayModel({
-					iconWidth: 50
+					iconWidth: 50,
+					factory: windowFactory
 				})
 					.setMode(WorkspaceTrayMode.NORMAL)
 					.setExpand(false, true)

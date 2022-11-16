@@ -2,9 +2,9 @@ import * as React from 'react';
 import { TabRenderer, TabRendererEvent } from '@projectstorm/react-workspaces-model-tabs';
 import { RenderTitleBarEvent, WorkspaceNodePanelRenderer } from '@projectstorm/react-workspaces-core';
 import { DefaultPanelTitleWidget } from './widgets/DefaultPanelTitleWidget';
-import { DefaultWorkspacePanelModel } from './DefaultWorkspacePanelModel';
+import { DefaultWorkspacePanelModel } from './panel/DefaultWorkspacePanelModel';
 import { DefaultPanelTabWidget } from './widgets/DefaultPanelTabWidget';
-import { DefaultWorkspacePanelFactory } from './DefaultWorkspacePanelFactory';
+import { DefaultWorkspacePanelFactory } from './panel/DefaultWorkspacePanelFactory';
 import { TrayModelPanelRenderer, TrayModelPanelRendererEvent } from '@projectstorm/react-workspaces-model-tray';
 import { DefaultPanelMicroButtonWidget } from './widgets/DefaultPanelMicroButtonWidget';
 

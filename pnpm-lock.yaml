@@ -147,6 +147,7 @@ importers:
       '@fortawesome/free-solid-svg-icons': ^6.2.1
       '@fortawesome/react-fontawesome': ^0.2.0
       '@projectstorm/react-workspaces-core': 2.0.0-alpha
+      '@projectstorm/react-workspaces-model-floating-window': 2.0.0-alpha
       '@projectstorm/react-workspaces-model-tabs': 2.0.0-alpha
       '@projectstorm/react-workspaces-model-tray': 2.0.0-alpha
       '@types/lodash': ^4.14.189
@@ -160,6 +161,7 @@ importers:
       '@fortawesome/free-solid-svg-icons': 6.2.1
       '@fortawesome/react-fontawesome': 0.2.0_z27bm67dtmuyyvss23ckjdrcuy
       '@projectstorm/react-workspaces-core': link:../core
+      '@projectstorm/react-workspaces-model-floating-window': link:../model-floating-window
       '@projectstorm/react-workspaces-model-tabs': link:../model-tabs
       '@projectstorm/react-workspaces-model-tray': link:../model-tray
       lodash: 4.17.21

@@ -6,7 +6,9 @@ import {
 	WorkspaceModelListener
 } from '@projectstorm/react-workspaces-core';
 
-export interface FloatingWindowModelListener extends WorkspaceModelListener {}
+export interface FloatingWindowModelListener extends WorkspaceModelListener {
+	childUpdated: () => any;
+}
 
 export interface FloatingWindowModelSerialized extends SerializedModel {
 	// TODO position INFO
@@ -19,8 +21,8 @@ export class FloatingWindowModel extends WorkspaceModel<FloatingWindowModelSeria
 	static TYPE = 'floating-window';
 	private parentListener: () => any;
 
-	constructor(public child: WorkspaceModel) {
-		super(FloatingWindowModel.TYPE);
+	constructor(type: string, public child: WorkspaceModel) {
+		super(type);
 		this.position = new Position();
 		this.dimension = new DimensionContainer({
 			position: this.position,
@@ -49,6 +51,7 @@ export class FloatingWindowModel extends WorkspaceModel<FloatingWindowModelSeria
 	setChild(child: WorkspaceModel) {
 		this.child = child;
 		this.invalidateLayout();
+		this.iterateListeners((cb) => cb.childUpdated?.());
 	}
 
 	normalizePosition() {

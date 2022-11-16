@@ -6,7 +6,10 @@ export interface WorkspaceModelFactoryEvent<T extends WorkspaceModel> {
 	model: T;
 }
 
-export abstract class WorkspaceModelFactory<T extends WorkspaceModel = WorkspaceModel> {
+export abstract class WorkspaceModelFactory<
+	T extends WorkspaceModel = WorkspaceModel,
+	E extends WorkspaceModelFactoryEvent<T> = WorkspaceModelFactoryEvent<T>
+> {
 	type: string;
 
 	constructor(type: string) {
@@ -15,5 +18,5 @@ export abstract class WorkspaceModelFactory<T extends WorkspaceModel = Workspace
 
 	abstract generateModel(): T;
 
-	abstract generateContent(event: WorkspaceModelFactoryEvent<T>): JSX.Element;
+	abstract generateContent(event: E): JSX.Element;
 }

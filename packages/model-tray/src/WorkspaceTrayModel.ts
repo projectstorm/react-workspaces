@@ -1,6 +1,9 @@
 import { WorkspaceEngine, WorkspaceModel, WorkspaceNodeModel } from '@projectstorm/react-workspaces-core';
-import { FloatingWindowModel, RootWorkspaceModel } from '@projectstorm/react-workspaces-model-floating-window';
-import { TrayFloatingWindow } from './TrayFloatingWindow';
+import {
+	FloatingWindowFactory,
+	FloatingWindowModel,
+	RootWorkspaceModel
+} from '@projectstorm/react-workspaces-model-floating-window';
 
 export enum WorkspaceTrayMode {
 	COLLAPSED = 'micro',
@@ -9,21 +12,40 @@ export enum WorkspaceTrayMode {
 
 export interface WorkspaceTrayModelOptions {
 	iconWidth: number;
+	factory: FloatingWindowFactory;
 }
 
 export class WorkspaceTrayModel extends WorkspaceNodeModel {
 	mode: WorkspaceTrayMode;
 	floatingModel: WorkspaceModel;
-	floatingWindow: TrayFloatingWindow;
+	floatingWindow: FloatingWindowModel;
 
 	private normalSize: number;
+	private childListener: () => any;
 
 	static NAME = 'srw-tray';
 
 	constructor(public options: WorkspaceTrayModelOptions) {
 		super(WorkspaceTrayModel.NAME);
 		this.floatingModel = null;
-		this.floatingWindow = new TrayFloatingWindow();
+		this.floatingWindow = options.factory.generateModel();
+
+		this.floatingWindow.registerListener({
+			childUpdated: () => {
+				this.floatingWindow.minimumSize.update({
+					width: 100,
+					height: 100
+				});
+				this.updateWindowPosition(this.floatingWindow.child);
+				this.childListener?.();
+				this.childListener = this.floatingWindow.child.r_dimensions.registerListener({
+					updated: () => {
+						this.updateWindowPosition(this.floatingWindow.child);
+					}
+				});
+			}
+		});
+
 		this.size.registerListener({
 			updated: () => {
 				if (this.mode === WorkspaceTrayMode.NORMAL) {
@@ -34,9 +56,16 @@ export class WorkspaceTrayModel extends WorkspaceNodeModel {
 		this.setMode(WorkspaceTrayMode.NORMAL);
 	}
 
+	updateWindowPosition(child: WorkspaceModel) {
+		this.floatingWindow.position.update({
+			left: -this.floatingWindow.size.width + child.r_dimensions.position.right - child.r_dimensions.size.width,
+			top: child.r_dimensions.position.top
+		});
+	}
+
 	delete() {
 		super.delete();
-		this.floatingWindow?.dispose();
+		this.childListener?.();
 	}
 
 	toArray() {
@@ -89,6 +118,10 @@ export class WorkspaceTrayModel extends WorkspaceNodeModel {
 		return this;
 	}
 
+	protected _getRootModel() {
+		return this.getRootModel() as RootWorkspaceModel;
+	}
+
 	setFloatingModel(model: WorkspaceModel | null): this {
 		this.floatingModel = model;
 		if (model === null) {
@@ -98,10 +131,8 @@ export class WorkspaceTrayModel extends WorkspaceNodeModel {
 		this.floatingWindow.setChild(model);
 
 		// add the window
-		const root = this.getRootModel();
-		if (root instanceof RootWorkspaceModel) {
-			root.addFloatingWindow(this.floatingWindow);
-		}
+		const root = this._getRootModel();
+		root.addFloatingWindow(this.floatingWindow);
 		return this;
 	}
 }
