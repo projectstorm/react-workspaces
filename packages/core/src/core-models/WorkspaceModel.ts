@@ -158,6 +158,13 @@ export class WorkspaceModel<
 		this.parent = parent;
 	}
 
+	getRootModel() {
+		if (!this.parent) {
+			return this;
+		}
+		return this.parent.getRootModel();
+	}
+
 	setExpand(horizontal: boolean = true, vertical: boolean = true): this {
 		this.expandHorizontal = horizontal;
 		this.expandVertical = vertical;

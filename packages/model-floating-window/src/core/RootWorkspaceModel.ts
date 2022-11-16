@@ -43,6 +43,9 @@ export class RootWorkspaceModel extends WorkspaceNodeModel {
 	}
 
 	addFloatingWindow(window: FloatingWindowModel) {
+		if (this.floatingWindows.has(window)) {
+			return;
+		}
 		this.floatingWindows.add(window);
 		const layer = new FloatingWindowLayer(window);
 		const resize = new FloatingWindowResizeLayer(window, this.debug);

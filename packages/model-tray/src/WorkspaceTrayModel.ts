@@ -1,4 +1,6 @@
 import { WorkspaceEngine, WorkspaceModel, WorkspaceNodeModel } from '@projectstorm/react-workspaces-core';
+import { FloatingWindowModel, RootWorkspaceModel } from '@projectstorm/react-workspaces-model-floating-window';
+import { TrayFloatingWindow } from './TrayFloatingWindow';
 
 export enum WorkspaceTrayMode {
 	COLLAPSED = 'micro',
@@ -12,6 +14,7 @@ export interface WorkspaceTrayModelOptions {
 export class WorkspaceTrayModel extends WorkspaceNodeModel {
 	mode: WorkspaceTrayMode;
 	floatingModel: WorkspaceModel;
+	floatingWindow: TrayFloatingWindow;
 
 	private normalSize: number;
 
@@ -20,6 +23,7 @@ export class WorkspaceTrayModel extends WorkspaceNodeModel {
 	constructor(public options: WorkspaceTrayModelOptions) {
 		super(WorkspaceTrayModel.NAME);
 		this.floatingModel = null;
+		this.floatingWindow = new TrayFloatingWindow(null);
 		this.size.registerListener({
 			updated: () => {
 				if (this.mode === WorkspaceTrayMode.NORMAL) {
@@ -28,6 +32,11 @@ export class WorkspaceTrayModel extends WorkspaceNodeModel {
 			}
 		});
 		this.setMode(WorkspaceTrayMode.NORMAL);
+	}
+
+	delete() {
+		super.delete();
+		this.floatingWindow?.dispose();
 	}
 
 	toArray() {
@@ -65,6 +74,7 @@ export class WorkspaceTrayModel extends WorkspaceNodeModel {
 				width: this.options.iconWidth
 			});
 		} else {
+			this.setFloatingModel(null);
 			this.maximumSize.update({
 				width: 0
 			});
@@ -81,6 +91,17 @@ export class WorkspaceTrayModel extends WorkspaceNodeModel {
 
 	setFloatingModel(model: WorkspaceModel | null): this {
 		this.floatingModel = model;
+		if (model === null) {
+			this.floatingWindow.delete();
+			return this;
+		}
+		this.floatingWindow.setChild(model);
+
+		// add the window
+		const root = this.getRootModel();
+		if (root instanceof RootWorkspaceModel) {
+			root.addFloatingWindow(this.floatingWindow);
+		}
 		return this;
 	}
 }

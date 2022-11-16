@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 import { WorkspaceTrayModel } from './WorkspaceTrayModel';
 import { useModelElement, WorkspaceEngine, WorkspaceModel } from '@projectstorm/react-workspaces-core';
 import { WorkspaceTrayFactory } from './WorkspaceTrayFactory';
+import { DraggableWidget } from '@projectstorm/react-workspaces-core';
 
 export interface MicroLayoutWidgetProps {
 	node: WorkspaceTrayModel;
@@ -48,12 +49,19 @@ export const MicroWrapper: React.FC<MicroWrapperProps> = (props) => {
 	let selected = props.node.floatingModel && props.node.floatingModel.id === props.model.id;
 	const renderer = props.factory.getRendererForModel(props.model);
 	return (
-		<div ref={ref}>
-			{renderer?.renderIcon({
-				model: props.model,
-				selected: selected
-			}) || <span>?</span>}
-		</div>
+		<DraggableWidget model={props.model} engine={props.engine}>
+			<div
+				ref={ref}
+				onClick={() => {
+					props.node.setFloatingModel(props.model);
+				}}
+			>
+				{renderer?.renderIcon({
+					model: props.model,
+					selected: selected
+				}) || <span>?</span>}
+			</div>
+		</DraggableWidget>
 	);
 };
 

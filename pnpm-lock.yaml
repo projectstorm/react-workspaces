@@ -210,6 +210,7 @@ importers:
     specifiers:
       '@emotion/styled': ^11.10.5
       '@projectstorm/react-workspaces-core': 2.0.0-alpha
+      '@projectstorm/react-workspaces-model-floating-window': 2.0.0-alpha
       '@types/lodash': ^4.14.189
       '@types/react': ^18.0.25
       lodash: ^4.17.21
@@ -217,6 +218,7 @@ importers:
     dependencies:
       '@emotion/styled': 11.10.5_fan5qbzahqtxlm5dzefqlqx5ia
       '@projectstorm/react-workspaces-core': link:../core
+      '@projectstorm/react-workspaces-model-floating-window': link:../model-floating-window
       lodash: 4.17.21
       react: 18.2.0
     devDependencies:

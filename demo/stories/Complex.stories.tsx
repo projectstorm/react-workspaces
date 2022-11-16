@@ -1,17 +1,16 @@
 import * as React from 'react';
 import { useState } from 'react';
 import 'typeface-open-sans';
-import { WorkspaceNodeModel } from '@projectstorm/react-workspaces-core';
 import { DefaultWorkspacePanelModel } from '@projectstorm/react-workspaces-defaults';
 import { WorkspaceTabModel } from '@projectstorm/react-workspaces-model-tabs';
 import { CompInternal, genVerticalNode, useEngine } from './helpers/tools';
-import { WorkspaceTrayModel } from '@projectstorm/react-workspaces-model-tray';
-import { WorkspaceTrayMode } from '@projectstorm/react-workspaces-model-tray';
+import { WorkspaceTrayMode, WorkspaceTrayModel } from '@projectstorm/react-workspaces-model-tray';
+import { RootWorkspaceModel } from '@projectstorm/react-workspaces-model-floating-window';
 
 export const ComplexLayout = function (args) {
 	const engine = useEngine(args);
 	const [model] = useState(() => {
-		let model = new WorkspaceNodeModel();
+		let model = new RootWorkspaceModel(engine);
 		model.setHorizontal(true);
 
 		const largeTray = new WorkspaceTrayModel({

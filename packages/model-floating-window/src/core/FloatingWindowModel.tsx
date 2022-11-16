@@ -1,6 +1,18 @@
-import { DimensionContainer, Position, WorkspaceEngine, WorkspaceModel } from '@projectstorm/react-workspaces-core';
+import {
+	DimensionContainer,
+	Position,
+	SerializedModel,
+	WorkspaceModel,
+	WorkspaceModelListener
+} from '@projectstorm/react-workspaces-core';
 
-export class FloatingWindowModel extends WorkspaceModel {
+export interface FloatingWindowModelListener extends WorkspaceModelListener {}
+
+export interface FloatingWindowModelSerialized extends SerializedModel {
+	// TODO position INFO
+}
+
+export class FloatingWindowModel extends WorkspaceModel<FloatingWindowModelSerialized, FloatingWindowModelListener> {
 	position: Position;
 	dimension: DimensionContainer;
 
@@ -32,6 +44,11 @@ export class FloatingWindowModel extends WorkspaceModel {
 		} else {
 			this.parentListener?.();
 		}
+	}
+
+	setChild(child: WorkspaceModel) {
+		this.child = child;
+		this.invalidateLayout();
 	}
 
 	normalizePosition() {
