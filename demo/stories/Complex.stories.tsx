@@ -5,6 +5,7 @@ import { WorkspaceNodeModel } from '@projectstorm/react-workspaces-core';
 import { DefaultWorkspacePanelModel } from '@projectstorm/react-workspaces-defaults';
 import { WorkspaceTabModel } from '@projectstorm/react-workspaces-model-tabs';
 import { CompInternal, genVerticalNode, useEngine } from './helpers/tools';
+import { WorkspaceTrayModel } from '@projectstorm/react-workspaces-model-tray';
 
 export const ComplexLayout = function (args) {
 	const engine = useEngine(args);
@@ -27,7 +28,13 @@ export const ComplexLayout = function (args) {
 
 			//right panel
 			// .addModel(new DefaultWorkspacePanelModel('Panel 3'))
-			.addModel(genVerticalNode())
+			.addModel(
+				new WorkspaceTrayModel()
+					.setExpand(false, true)
+					.addModel(new DefaultWorkspacePanelModel('Tray panel 1'))
+					.addModel(new DefaultWorkspacePanelModel('Tray panel 2'))
+					.addModel(new DefaultWorkspacePanelModel('Tray panel 3'))
+			)
 			.addModel(genVerticalNode());
 		return model;
 	});

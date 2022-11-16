@@ -15,15 +15,12 @@ export interface WorkspaceNodePanelRenderer<T extends WorkspaceModel = Workspace
 	renderTitleBar(model: RenderTitleBarEvent<T>): JSX.Element;
 }
 
-export class WorkspaceNodeFactory<T extends WorkspaceNodeModel = WorkspaceNodeModel> extends SubComponentModelFactory<
-	T,
-	WorkspaceNodePanelRenderer
-> {
-	renderers: Set<WorkspaceNodePanelRenderer>;
-
-	constructor() {
-		super(WorkspaceNodeModel.NAME);
-		this.renderers = new Set<WorkspaceNodePanelRenderer>();
+export class WorkspaceNodeFactory<
+	T extends WorkspaceNodeModel = WorkspaceNodeModel,
+	R extends WorkspaceNodePanelRenderer = WorkspaceNodePanelRenderer
+> extends SubComponentModelFactory<T, R> {
+	constructor(type: string = WorkspaceNodeModel.NAME) {
+		super(type);
 	}
 
 	generateModel(): T {

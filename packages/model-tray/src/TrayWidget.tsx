@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 import { DraggableWidget, StandardLayoutWidget, WorkspaceEngine } from '@projectstorm/react-workspaces-core';
 import { MicroLayoutWidget } from './MicroLayoutWidget';
 import { WorkspaceTrayFactory } from './WorkspaceTrayFactory';
+import { WorkspaceNodeWidget } from '@projectstorm/react-workspaces-core';
 
 export interface TrayWidgetProps {
 	node: WorkspaceTrayModel;
@@ -79,7 +80,7 @@ export class TrayWidget extends React.Component<TrayWidgetProps, TrayWidgetState
 				{this.props.node.mode === 'micro' ? (
 					<S.MicroLayout node={this.props.node} engine={this.props.engine} factory={this.props.factory} />
 				) : (
-					<S.StandardLayout height={this.state.height} node={this.props.node} engine={this.props.engine} />
+					<WorkspaceNodeWidget model={this.props.node} engine={this.props.engine} factory={this.props.factory} />
 				)}
 			</S.Container>
 		);

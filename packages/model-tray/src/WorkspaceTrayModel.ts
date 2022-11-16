@@ -3,7 +3,6 @@ import { WorkspaceEngine, WorkspaceModel, WorkspaceNodeModel } from '@projectsto
 export type WorkspaceNodeModelMode = 'expand' | 'micro';
 
 export class WorkspaceTrayModel extends WorkspaceNodeModel {
-	vertical: boolean;
 	mode: WorkspaceNodeModelMode;
 	floatingModel: WorkspaceModel;
 
@@ -11,7 +10,6 @@ export class WorkspaceTrayModel extends WorkspaceNodeModel {
 
 	constructor() {
 		super(WorkspaceTrayModel.NAME);
-		this.vertical = true;
 		this.mode = 'expand';
 		this.floatingModel = null;
 	}

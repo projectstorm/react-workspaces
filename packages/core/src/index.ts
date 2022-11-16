@@ -41,4 +41,5 @@ export * from './core/WorkspaceEngineInterface';
 
 export * from './entities/node/WorkspaceNodeModel';
 export * from './entities/node/WorkspaceNodeFactory';
+export * from './entities/node/WorkspaceNodeWidget';
 export * from './entities/SubComponentModelFactory';

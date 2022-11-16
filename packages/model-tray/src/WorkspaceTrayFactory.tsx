@@ -2,21 +2,21 @@ import { WorkspaceTrayModel } from './WorkspaceTrayModel';
 import * as React from 'react';
 import { TrayWidget } from './TrayWidget';
 import {
-	SubComponentModelFactory,
-	SubComponentRenderer,
 	WorkspaceModel,
-	WorkspaceModelFactoryEvent
+	WorkspaceModelFactoryEvent,
+	WorkspaceNodeFactory,
+	WorkspaceNodePanelRenderer
 } from '@projectstorm/react-workspaces-core';
 
 export interface TrayModelPanelRendererEvent<T extends WorkspaceModel> {
 	model: T;
 }
 
-export interface TrayModelPanelRenderer<T extends WorkspaceModel = WorkspaceModel> extends SubComponentRenderer {
+export interface TrayModelPanelRenderer<T extends WorkspaceModel = WorkspaceModel> extends WorkspaceNodePanelRenderer {
 	renderIcon(event: TrayModelPanelRendererEvent<T>): JSX.Element;
 }
 
-export class WorkspaceTrayFactory<T extends WorkspaceTrayModel = WorkspaceTrayModel> extends SubComponentModelFactory<
+export class WorkspaceTrayFactory<T extends WorkspaceTrayModel = WorkspaceTrayModel> extends WorkspaceNodeFactory<
 	T,
 	TrayModelPanelRenderer
 > {
