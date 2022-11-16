@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from '@emotion/styled';
-import { GenerateEvent } from '@projectstorm/react-workspaces-core';
 import { WorkspaceTrayFactory, WorkspaceTrayModel } from '@projectstorm/react-workspaces-model-tray';
+import { WorkspaceModelFactoryEvent } from '@projectstorm/react-workspaces-core';
 
 namespace S {
 	export const Tray = styled.div`
@@ -11,7 +11,7 @@ namespace S {
 }
 
 export class DefaultTrayFactory extends WorkspaceTrayFactory {
-	generateTrayHeader(event: GenerateEvent<WorkspaceTrayModel>): JSX.Element {
+	generateTrayHeader(event: WorkspaceModelFactoryEvent<WorkspaceTrayModel>): JSX.Element {
 		return (
 			<S.Tray
 				onDoubleClick={() => {

@@ -45,8 +45,7 @@ export const FloatingWindowLayerWidget: React.FC<FloatingWindowLayerWidgetProps>
 				<S.Title ref={ref}>Menubar</S.Title>
 				{factory.generateContent({
 					engine: props.engine,
-					model: props.window.child,
-					renderContentOnly: true
+					model: props.window.child
 				})}
 			</S.Container>
 		</DimensionTrackingWidget>

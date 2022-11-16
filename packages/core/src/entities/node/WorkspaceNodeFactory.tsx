@@ -1,20 +1,36 @@
 import { WorkspaceNodeModel } from './WorkspaceNodeModel';
 import * as React from 'react';
-import { RenderContentEvent, WorkspaceModelFactory } from '../../core/WorkspaceModelFactory';
-import { StandardLayoutWidget } from '../../widgets/layouts/StandardLayoutWidget';
+import { WorkspaceModelFactoryEvent } from '../../core/WorkspaceModelFactory';
+import { WorkspaceModel } from '../../core-models/WorkspaceModel';
+import { SubComponentModelFactory, SubComponentRenderer } from '../SubComponentModelFactory';
+import { WorkspaceNodeWidget } from './WorkspaceNodeWidget';
+import { WorkspaceEngine } from '../../core/WorkspaceEngine';
 
-namespace S {}
+export interface RenderTitleBarEvent<T extends WorkspaceModel> {
+	model: T;
+	engine: WorkspaceEngine;
+}
 
-export class WorkspaceNodeFactory<T extends WorkspaceNodeModel = WorkspaceNodeModel> extends WorkspaceModelFactory<T> {
+export interface WorkspaceNodePanelRenderer<T extends WorkspaceModel = WorkspaceModel> extends SubComponentRenderer<T> {
+	renderTitleBar(model: RenderTitleBarEvent<T>): JSX.Element;
+}
+
+export class WorkspaceNodeFactory<T extends WorkspaceNodeModel = WorkspaceNodeModel> extends SubComponentModelFactory<
+	T,
+	WorkspaceNodePanelRenderer
+> {
+	renderers: Set<WorkspaceNodePanelRenderer>;
+
 	constructor() {
 		super(WorkspaceNodeModel.NAME);
+		this.renderers = new Set<WorkspaceNodePanelRenderer>();
 	}
 
 	generateModel(): T {
 		return new WorkspaceNodeModel() as T;
 	}
 
-	generateContent(event: RenderContentEvent<T>): JSX.Element {
-		return <StandardLayoutWidget key={event.model.id} node={event.model} engine={event.engine} />;
+	generateContent(event: WorkspaceModelFactoryEvent<T>): JSX.Element {
+		return <WorkspaceNodeWidget model={event.model} engine={event.engine} factory={this} />;
 	}
 }

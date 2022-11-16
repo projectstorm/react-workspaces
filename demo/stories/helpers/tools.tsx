@@ -10,7 +10,7 @@ import {
 	WorkspaceWidget
 } from '@projectstorm/react-workspaces-core';
 import {
-	DefaultPanelTabRenderer,
+	DefaultSubComponentRenderer,
 	DefaultTrayFactory,
 	DefaultWorkspacePanelFactory,
 	DefaultWorkspacePanelModel
@@ -40,17 +40,26 @@ export const useEngine = (args: { DebugDividers?: boolean; DebugResizers?: boole
 	const [engine] = useState(() => {
 		const e = new WorkspaceEngine();
 
-		e.registerFactory(new DefaultWorkspacePanelFactory());
-		e.registerFactory(new WorkspaceNodeFactory());
+		const commonRenderer = new DefaultSubComponentRenderer();
 
 		const tabFactory = new WorkspaceTabFactory();
-		tabFactory.addTabRenderer(new DefaultPanelTabRenderer());
+		const trayFactory = new DefaultTrayFactory();
+		const workspaceNodeFactory = new WorkspaceNodeFactory();
+
+		e.registerFactory(new DefaultWorkspacePanelFactory());
+
+		tabFactory.addRenderer(commonRenderer);
+		trayFactory.addRenderer(commonRenderer);
+		workspaceNodeFactory.addRenderer(commonRenderer);
+
 		e.registerFactory(tabFactory);
-		e.registerFactory(new DefaultTrayFactory());
+		e.registerFactory(trayFactory);
+		e.registerFactory(workspaceNodeFactory);
 
 		draggingItemBehavior(e);
 		draggingItemDividerBehavior(e);
 		resizingBehavior(e);
+
 		e.layerManager.addLayer(debugLayer);
 		return e;
 	});

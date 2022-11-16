@@ -28,9 +28,6 @@ export * from './widgets/layouts/DirectionalLayoutWidget';
 export * from './widgets/PerformanceWidget';
 export * from './widgets/WorkspaceWidget';
 
-export * from './entities/node/WorkspaceNodeModel';
-export * from './entities/node/WorkspaceNodeFactory';
-
 export * from './core-models/WorkspaceCollectionModel';
 export * from './core-models/WorkspaceModel';
 
@@ -42,5 +39,6 @@ export * from './core/WorkspaceModelFactory';
 export * from './core/WorkspaceEngine';
 export * from './core/WorkspaceEngineInterface';
 
-export * from './entities/panel/PanelWidget';
-export * from './entities/panel/WorkspacePanelFactory';
+export * from './entities/node/WorkspaceNodeModel';
+export * from './entities/node/WorkspaceNodeFactory';
+export * from './entities/SubComponentModelFactory';

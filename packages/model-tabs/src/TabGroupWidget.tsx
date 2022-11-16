@@ -67,8 +67,7 @@ export const TabGroupWidget: React.FC<TabGroupWidgetProps> = (props) => {
 					children={() => {
 						return selectedFactory.generateContent({
 							model: selected,
-							engine: props.engine,
-							renderContentOnly: true
+							engine: props.engine
 						});
 					}}
 				/>

@@ -56,6 +56,7 @@ export class MicroLayoutWidget extends React.Component<MicroLayoutWidgetProps> {
 				<S.Scrollable>
 					{_.map(this.props.node.getFlattened(), (child) => {
 						let selected = this.props.node.floatingModel && this.props.node.floatingModel.id === child.id;
+						const renderer = this.props.factory.getRendererForModel(child);
 						return (
 							<div
 								key={child.id}
@@ -75,7 +76,9 @@ export class MicroLayoutWidget extends React.Component<MicroLayoutWidgetProps> {
 									engine={this.props.engine}
 									model={child}
 								>
-									{this.props.factory.renderMicroPanelForModel(child)}
+									{renderer?.renderIcon({
+										model: child
+									}) || <span>?</span>}
 								</DraggableWidget>
 							</div>
 						);

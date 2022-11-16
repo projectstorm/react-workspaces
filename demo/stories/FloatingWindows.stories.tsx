@@ -1,12 +1,8 @@
 import * as React from 'react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import 'typeface-open-sans';
-import { DebugLayer } from '@projectstorm/react-workspaces-core';
 import { DefaultWorkspacePanelModel } from '@projectstorm/react-workspaces-defaults';
-import { draggingItemBehavior } from '@projectstorm/react-workspaces-behavior-panel-dropzone';
-import { draggingItemDividerBehavior } from '@projectstorm/react-workspaces-behavior-divider-dropzone';
 import { WorkspaceTabModel } from '@projectstorm/react-workspaces-model-tabs';
-import { resizingBehavior } from '@projectstorm/react-workspaces-behavior-resize';
 import { FloatingWindowModel, RootWorkspaceModel } from '@projectstorm/react-workspaces-model-floating-window';
 import { CompInternal, genVerticalNode, useEngine } from './helpers/tools';
 

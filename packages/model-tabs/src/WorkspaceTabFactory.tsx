@@ -4,10 +4,10 @@ import * as _ from 'lodash';
 import { TabButtonWidget } from './TabButtonWidget';
 import {
 	DropzoneOrderWidget,
-	GenerateEvent,
-	RenderContentEvent,
+	SubComponentModelFactory,
+	SubComponentRenderer,
 	WorkspaceModel,
-	WorkspaceModelFactory
+	WorkspaceModelFactoryEvent
 } from '@projectstorm/react-workspaces-core';
 import { WorkspaceTabModel } from './WorkspaceTabModel';
 
@@ -16,41 +16,34 @@ export interface TabRendererEvent<T extends WorkspaceModel> {
 	selected: boolean;
 }
 
-export interface TabRenderer<T extends WorkspaceModel = WorkspaceModel> {
-	matchModel(model: T): boolean;
-
+export interface TabRenderer<T extends WorkspaceModel = WorkspaceModel> extends SubComponentRenderer<T> {
 	renderTab(event: TabRendererEvent<T>): JSX.Element;
 }
 
-export class WorkspaceTabFactory<T extends WorkspaceTabModel = WorkspaceTabModel> extends WorkspaceModelFactory<T> {
-	renderers: Set<TabRenderer>;
-
+export class WorkspaceTabFactory<T extends WorkspaceTabModel = WorkspaceTabModel> extends SubComponentModelFactory<
+	T,
+	TabRenderer
+> {
 	constructor() {
 		super(WorkspaceTabModel.NAME);
-		this.renderers = new Set<TabRenderer>();
 	}
 
 	generateModel(): T {
 		return new WorkspaceTabModel() as T;
 	}
 
-	addTabRenderer(r: TabRenderer) {
-		this.renderers.add(r);
-	}
-
 	renderTabForModel(model: WorkspaceModel, selected: boolean) {
-		for (let r of this.renderers.values()) {
-			if (r.matchModel(model)) {
-				return r.renderTab({
-					model: model,
-					selected: selected
-				});
-			}
+		const r = this.getRendererForModel(model);
+		if (r) {
+			return r.renderTab({
+				model: model,
+				selected: selected
+			});
 		}
 		return <span>{model.type}</span>;
 	}
 
-	generateTabs(event: GenerateEvent<T>) {
+	generateTabs(event: WorkspaceModelFactoryEvent<T>) {
 		return (
 			<DropzoneOrderWidget
 				size={50}
@@ -67,7 +60,7 @@ export class WorkspaceTabFactory<T extends WorkspaceTabModel = WorkspaceTabModel
 		);
 	}
 
-	generateContent(event: RenderContentEvent<T>): JSX.Element {
+	generateContent(event: WorkspaceModelFactoryEvent<T>): JSX.Element {
 		return (
 			<TabGroupWidget tabs={this.generateTabs(event)} key={event.model.id} model={event.model} engine={event.engine} />
 		);

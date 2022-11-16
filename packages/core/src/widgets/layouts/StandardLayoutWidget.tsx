@@ -10,6 +10,7 @@ export interface StandardLayoutWidgetProps {
 	node: WorkspaceNodeModel;
 	engine: WorkspaceEngine;
 	className?: any;
+	generateElement: (model: WorkspaceModel) => JSX.Element;
 }
 
 export const StandardLayoutWidget: React.FC<StandardLayoutWidgetProps> = (props) => {
@@ -25,13 +26,8 @@ export const StandardLayoutWidget: React.FC<StandardLayoutWidgetProps> = (props)
 			}}
 			className={props.className}
 			data={props.node.children}
-			generateElement={(model) => {
-				return props.engine.getFactory(model).generateContent({
-					model: model,
-					engine: props.engine,
-					renderContentOnly: false
-				});
-			}}
+			generateElement={props.generateElement}
+			// FIXME
 			expand={true}
 			dropZoneAllowed={(index) => {
 				return true;

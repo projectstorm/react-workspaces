@@ -17,6 +17,11 @@ export interface UseMouseDragDistanceProps {
 export const useMouseDragDistance = (props: UseMouseDragDistanceProps) => {
 	useEffect(() => {
 		const mouseDown = (event: MouseEvent) => {
+			// only listen for standard mouse button
+			if (event.button !== 0) {
+				return;
+			}
+
 			props.startMove?.();
 			const mouseMove = (event2: MouseEvent) => {
 				props.moved({

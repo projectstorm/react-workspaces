@@ -95,18 +95,13 @@ export const WorkspaceWidget: React.FC<WorkspaceWidgetProps> = (props) => {
 
 	return (
 		<UseMouseDragEventsRootWidget forwardRef={ref_container}>
-			{/*<DividerContext.Provider*/}
-			{/*	value={{*/}
-			{/*		hint: props.dividerColor,*/}
-			{/*		active: props.dividerColorActive*/}
-			{/*	}}*/}
-			{/*>*/}
 			<S.Container ref={ref_container}>
-				<StandardLayoutWidget node={props.model} engine={props.engine} />
-				{/*<S.Floating ref={ref_floating} />*/}
+				{props.engine.getFactory(props.model).generateContent({
+					engine: props.engine,
+					model: props.model
+				})}
 				<S.LayerManager engine={props.engine} layerManager={props.engine.layerManager} model={props.model} />
 			</S.Container>
-			{/*</DividerContext.Provider>*/}
 		</UseMouseDragEventsRootWidget>
 	);
 };
