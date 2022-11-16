@@ -4,6 +4,10 @@ import { WorkspaceModel } from '@projectstorm/react-workspaces-core';
 export class TrayFloatingWindow extends FloatingWindowModel {
 	private childListener: () => any;
 
+	constructor() {
+		super(null);
+	}
+
 	updatePosition() {
 		this.position.update({
 			left: -this.size.width + this.child.r_dimensions.position.right - this.child.r_dimensions.size.width,

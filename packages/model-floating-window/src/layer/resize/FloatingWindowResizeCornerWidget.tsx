@@ -8,6 +8,7 @@ export interface FloatingWindowResizeCornerWidgetProps {
 	corner: Corner;
 	window: FloatingWindowModel;
 	debug?: boolean;
+	toggleAnimation: (animate: boolean) => any;
 }
 
 export const FloatingWindowResizeCornerWidget: React.FC<FloatingWindowResizeCornerWidgetProps> = (props) => {
@@ -23,6 +24,7 @@ export const FloatingWindowResizeCornerWidget: React.FC<FloatingWindowResizeCorn
 	useMouseDragDistance({
 		forwardRef: ref,
 		startMove: () => {
+			props.toggleAnimation(false);
 			width.current = props.window.size.width;
 			height.current = props.window.size.height;
 			if (props.corner === Corner.TOP_LEFT) {
@@ -60,6 +62,9 @@ export const FloatingWindowResizeCornerWidget: React.FC<FloatingWindowResizeCorn
 					height: height.current + -1 * distanceY
 				});
 			}
+		},
+		endMove: () => {
+			props.toggleAnimation(true);
 		}
 	});
 	return <S.CornerResize debug={props.debug} ref={ref} corner={props.corner}></S.CornerResize>;

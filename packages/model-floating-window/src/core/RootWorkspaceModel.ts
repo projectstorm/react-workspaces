@@ -48,7 +48,13 @@ export class RootWorkspaceModel extends WorkspaceNodeModel {
 		}
 		this.floatingWindows.add(window);
 		const layer = new FloatingWindowLayer(window);
-		const resize = new FloatingWindowResizeLayer(window, this.debug);
+		const resize = new FloatingWindowResizeLayer({
+			model: window,
+			toggleAnimation: (animate) => {
+				layer.setAnimate(animate);
+			},
+			debug: this.debug
+		});
 		this.engine.layerManager.addLayer(layer);
 		this.engine.layerManager.addLayer(resize);
 		window.setParent(this);

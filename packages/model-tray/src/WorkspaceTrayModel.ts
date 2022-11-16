@@ -23,7 +23,7 @@ export class WorkspaceTrayModel extends WorkspaceNodeModel {
 	constructor(public options: WorkspaceTrayModelOptions) {
 		super(WorkspaceTrayModel.NAME);
 		this.floatingModel = null;
-		this.floatingWindow = new TrayFloatingWindow(null);
+		this.floatingWindow = new TrayFloatingWindow();
 		this.size.registerListener({
 			updated: () => {
 				if (this.mode === WorkspaceTrayMode.NORMAL) {

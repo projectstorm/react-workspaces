@@ -7,6 +7,7 @@ import { DimensionContainer, IDimension } from '../../core/dimensions/DimensionC
 export interface DimensionTrackingWidgetProps {
 	dimension: DimensionContainer;
 	className?: any;
+	animateDuration?: number;
 }
 
 export const DimensionTrackingWidget: React.FC<React.PropsWithChildren<DimensionTrackingWidgetProps>> = (props) => {
@@ -19,18 +20,19 @@ export const DimensionTrackingWidget: React.FC<React.PropsWithChildren<Dimension
 		});
 	}, [props.dimension]);
 	return (
-		<S.Container className={props.className} d={props.dimension.dimensions}>
+		<S.Container className={props.className} d={props.dimension.dimensions} animate={props.animateDuration || 0}>
 			{props.children}
 		</S.Container>
 	);
 };
 
 namespace S {
-	export const Container = styled.div<{ d: IDimension }>`
+	export const Container = styled.div<{ d: IDimension; animate: number }>`
 		position: absolute;
 		width: ${(p) => p.d.width}px;
 		height: ${(p) => p.d.height}px;
 		top: ${(p) => p.d.top}px;
 		left: ${(p) => p.d.left}px;
+		${(p) => (p.animate > 0 ? 'transition: top 0.3s, left 0.3s' : '')};
 	`;
 }

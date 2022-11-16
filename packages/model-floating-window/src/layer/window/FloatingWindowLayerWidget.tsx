@@ -9,10 +9,13 @@ import {
 	WorkspaceEngine
 } from '@projectstorm/react-workspaces-core';
 import styled from '@emotion/styled';
+import { FloatingWindowLayer } from './FloatingWindowLayer';
 
 export interface FloatingWindowLayerWidgetProps {
 	window: FloatingWindowModel;
 	engine: WorkspaceEngine;
+	animate: boolean;
+	layer: FloatingWindowLayer;
 }
 
 export const FloatingWindowLayerWidget: React.FC<FloatingWindowLayerWidgetProps> = (props) => {
@@ -26,6 +29,7 @@ export const FloatingWindowLayerWidget: React.FC<FloatingWindowLayerWidgetProps>
 	useMouseDragDistance({
 		forwardRef: ref,
 		startMove: () => {
+			props.layer.setAnimate(false);
 			initialPos.current = {
 				top: props.window.position.top,
 				left: props.window.position.left
@@ -36,11 +40,14 @@ export const FloatingWindowLayerWidget: React.FC<FloatingWindowLayerWidgetProps>
 				left: initialPos.current.left + distanceX,
 				top: initialPos.current.top + distanceY
 			});
+		},
+		endMove: () => {
+			props.layer.setAnimate(true);
 		}
 	});
 
 	return (
-		<DimensionTrackingWidget dimension={props.window.dimension}>
+		<DimensionTrackingWidget animateDuration={props.animate ? 300 : 0} dimension={props.window.dimension}>
 			<S.Container>
 				<S.Title ref={ref}>Menubar</S.Title>
 				{factory.generateContent({
