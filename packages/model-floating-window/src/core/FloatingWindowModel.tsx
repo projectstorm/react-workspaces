@@ -50,6 +50,7 @@ export class FloatingWindowModel extends WorkspaceModel<FloatingWindowModelSeria
 
 	setChild(child: WorkspaceModel) {
 		this.child = child;
+		child.setParent(this);
 		this.invalidateLayout();
 		this.iterateListeners((cb) => cb.childUpdated?.());
 	}

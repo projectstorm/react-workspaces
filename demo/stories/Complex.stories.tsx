@@ -24,6 +24,9 @@ export const ComplexLayout = function (args) {
 			largeTray.addModel(new DefaultWorkspacePanelModel('Tray panel ' + i));
 		}
 
+		const expandTray = genVerticalNode();
+		expandTray.setExpand(true, true);
+
 		model
 
 			//left panel
@@ -37,6 +40,7 @@ export const ComplexLayout = function (args) {
 					.addModel(new DefaultWorkspacePanelModel('Tab 2'))
 					.addModel(new DefaultWorkspacePanelModel('Tab 3'))
 			)
+			.addModel(expandTray)
 
 			.addModel(largeTray)
 			.addModel(

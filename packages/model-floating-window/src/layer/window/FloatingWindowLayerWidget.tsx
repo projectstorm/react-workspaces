@@ -1,10 +1,11 @@
 import * as React from 'react';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { FloatingWindowModel } from '../../core/FloatingWindowModel';
 import {
 	Alignment,
 	DimensionTrackingWidget,
 	IPosition,
+	useForceUpdate,
 	useMouseDragDistance,
 	WorkspaceEngine
 } from '@projectstorm/react-workspaces-core';
@@ -21,6 +22,8 @@ export interface FloatingWindowLayerWidgetProps {
 
 export const FloatingWindowLayerWidget: React.FC<FloatingWindowLayerWidgetProps> = (props) => {
 	const factory = props.engine.getFactory(props.window.child);
+
+	const forceUpdate = useForceUpdate();
 	const ref = useRef<HTMLDivElement>();
 	const initialPos = useRef<Pick<IPosition, Alignment.LEFT | Alignment.TOP>>({
 		left: props.window.position.left,
@@ -46,6 +49,14 @@ export const FloatingWindowLayerWidget: React.FC<FloatingWindowLayerWidgetProps>
 			props.layer.setAnimate(true);
 		}
 	});
+
+	useEffect(() => {
+		return props.window.registerListener({
+			childUpdated: () => {
+				forceUpdate();
+			}
+		});
+	}, []);
 
 	const windowFactory = props.engine.getFactory<FloatingWindowFactory>(props.window);
 

@@ -80,8 +80,6 @@ export class LayerManager extends BaseObserver<LayerManagerListener> {
 				this._layers.delete(layer);
 				layer.setLayerManager(null);
 				l();
-			},
-			repaint: () => {
 				this.fireUpdated();
 			},
 			moveToTop: () => {

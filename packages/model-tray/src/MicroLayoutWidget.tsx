@@ -53,7 +53,11 @@ export const MicroWrapper: React.FC<MicroWrapperProps> = (props) => {
 			<div
 				ref={ref}
 				onClick={() => {
-					props.node.setFloatingModel(props.model);
+					if (props.node.floatingModel === props.model) {
+						props.node.setFloatingModel(null);
+					} else {
+						props.node.setFloatingModel(props.model);
+					}
 				}}
 			>
 				{renderer?.renderIcon({

@@ -67,12 +67,20 @@ const ChildContainerWidget: React.FC<{
 export const DirectionalLayoutWidget: React.FC<DirectionalLayoutWidgetProps> = (props) => {
 	return (
 		<S.Container ref={props.forwardRef} className={props.className} expand={props.expand} vertical={props.vertical}>
-			<DividerWidget dimensionContainer={props.dimensionContainerForDivider(0)} key="drop-first" />
+			<DividerWidget
+				engine={props.engine}
+				dimensionContainer={props.dimensionContainerForDivider(0)}
+				key="drop-first"
+			/>
 			{_.map(props.data, (model: WorkspaceModel, index) => {
 				return (
 					<React.Fragment key={model.id}>
 						<ChildContainerWidget {...props} model={model} />
-						<DividerWidget dimensionContainer={props.dimensionContainerForDivider(index + 1)} key="drop-first" />
+						<DividerWidget
+							engine={props.engine}
+							dimensionContainer={props.dimensionContainerForDivider(index + 1)}
+							key="drop-first"
+						/>
 					</React.Fragment>
 				);
 			})}

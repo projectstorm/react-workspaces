@@ -3,6 +3,7 @@ import * as React from 'react';
 import { useResizeObserver } from './useResizeObserver';
 import { useEffect } from 'react';
 import { WorkspaceEngine } from '../../core/WorkspaceEngine';
+import { useDimensionLayoutInvalidator } from './useDimensionLayoutInvalidator';
 
 export interface UseModelElementProps {
 	model: WorkspaceModel;
@@ -11,36 +12,10 @@ export interface UseModelElementProps {
 
 export const useModelElement = (props: UseModelElementProps) => {
 	const ref = React.useRef<HTMLDivElement>();
-	useEffect(() => {
-		let l2 = null;
-		const l1 = props.engine.registerListener(
-			{
-				layoutInvalidated: () => {
-					// wait for a repaint
-					l2 = props.engine.registerListener({
-						layoutRepainted: () => {
-							l2?.();
-							l2 = null;
-							if (!ref.current) {
-								return;
-							}
-							const dims = ref.current.getBoundingClientRect();
-							props.model.r_dimensions.update(dims);
-						}
-					});
-				}
-			},
-			{
-				model: props.model.id,
-				type: 'useModelElement'
-			}
-		);
-
-		return () => {
-			l1();
-			l2?.();
-		};
-	}, []);
+	useDimensionLayoutInvalidator({
+		engine: props.engine,
+		dimension: props.model.r_dimensions
+	});
 	useResizeObserver({
 		forwardRef: ref,
 		dimension: props.model.r_dimensions

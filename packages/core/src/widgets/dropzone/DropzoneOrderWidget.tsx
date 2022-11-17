@@ -64,6 +64,7 @@ export class DropzoneOrderWidget extends React.Component<
 			return (
 				<DividerWidget
 					// FIXME
+					engine={this.props.engine}
 					dimensionContainer={new DimensionContainer()}
 					// entered={(entered) => {
 					// 	if (entered) {
