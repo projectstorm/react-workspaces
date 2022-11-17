@@ -2,9 +2,15 @@ import * as React from 'react';
 import * as _ from 'lodash';
 import styled from '@emotion/styled';
 import { WorkspaceTrayModel } from './WorkspaceTrayModel';
-import { useModelElement, WorkspaceEngine, WorkspaceModel } from '@projectstorm/react-workspaces-core';
+import {
+	DraggableWidget,
+	useModelElement,
+	useScrollObserver,
+	WorkspaceEngine,
+	WorkspaceModel
+} from '@projectstorm/react-workspaces-core';
 import { WorkspaceTrayFactory } from './WorkspaceTrayFactory';
-import { DraggableWidget } from '@projectstorm/react-workspaces-core';
+import { useRef } from 'react';
 
 export interface MicroLayoutWidgetProps {
 	node: WorkspaceTrayModel;
@@ -39,12 +45,17 @@ export interface MicroWrapperProps {
 	node: WorkspaceTrayModel;
 	engine: WorkspaceEngine;
 	factory: WorkspaceTrayFactory;
+	scrollRef: React.RefObject<HTMLDivElement>;
 }
 
 export const MicroWrapper: React.FC<MicroWrapperProps> = (props) => {
 	const ref = useModelElement({
 		model: props.model,
 		engine: props.engine
+	});
+	useScrollObserver({
+		forwardRef: props.scrollRef,
+		dimension: props.model.r_dimensions
 	});
 	let selected = props.node.floatingModel && props.node.floatingModel.id === props.model.id;
 	const renderer = props.factory.getRendererForModel(props.model);
@@ -69,29 +80,16 @@ export const MicroWrapper: React.FC<MicroWrapperProps> = (props) => {
 	);
 };
 
-export class MicroLayoutWidget extends React.Component<MicroLayoutWidgetProps> {
-	div: HTMLDivElement;
+export const MicroLayoutWidget: React.FC<MicroLayoutWidgetProps> = (props) => {
+	const ref = useRef<HTMLDivElement>();
 
-	componentDidMount() {
-		if (this.props.node.floatingModel) {
-			this.forceUpdate();
-		}
-	}
-
-	render() {
-		return (
-			<S.MicroLayout
-				className={this.props.className}
-				ref={(ref) => {
-					this.div = ref;
-				}}
-			>
-				<S.Scrollable>
-					{_.map(this.props.node.getFlattened(), (child) => {
-						return <MicroWrapper {...this.props} model={child} key={child.id} />;
-					})}
-				</S.Scrollable>
-			</S.MicroLayout>
-		);
-	}
-}
+	return (
+		<S.MicroLayout className={props.className}>
+			<S.Scrollable ref={ref}>
+				{_.map(props.node.getFlattened(), (child) => {
+					return <MicroWrapper scrollRef={ref} {...props} model={child} key={child.id} />;
+				})}
+			</S.Scrollable>
+		</S.MicroLayout>
+	);
+};
