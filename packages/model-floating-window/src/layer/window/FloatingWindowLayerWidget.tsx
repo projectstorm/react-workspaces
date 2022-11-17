@@ -6,6 +6,7 @@ import {
 	DimensionTrackingWidget,
 	IPosition,
 	useForceUpdate,
+	useModelElement,
 	useMouseDragDistance,
 	WorkspaceEngine
 } from '@projectstorm/react-workspaces-core';
@@ -58,10 +59,31 @@ export const FloatingWindowLayerWidget: React.FC<FloatingWindowLayerWidgetProps>
 		});
 	}, []);
 
+	useEffect(() => {
+		return props.window.position.registerListener({
+			updated: () => {
+				if (props.animate) {
+					setTimeout(() => {
+						props.window.r_dimensions.invalidate();
+					}, 300);
+				}
+			}
+		});
+	}, []);
+
+	const modelRef = useModelElement({
+		model: props.window,
+		engine: props.engine
+	});
+
 	const windowFactory = props.engine.getFactory<FloatingWindowFactory>(props.window);
 
 	return (
-		<DimensionTrackingWidget animateDuration={props.animate ? 300 : 0} dimension={props.window.dimension}>
+		<DimensionTrackingWidget
+			forwardRef={modelRef}
+			animateDuration={props.animate ? 300 : 0}
+			dimension={props.window.dimension}
+		>
 			{windowFactory.generateContent({
 				content: factory.generateContent({
 					engine: props.engine,

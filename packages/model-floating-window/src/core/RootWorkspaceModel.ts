@@ -35,7 +35,7 @@ export class RootWorkspaceModel extends WorkspaceNodeModel {
 	}
 
 	flatten() {
-		return super.flatten().concat(Array.from(this.floatingWindows.values()).map((v) => v.child));
+		return super.flatten().concat(Array.from(this.floatingWindows.values()).flatMap((v) => [v, v.child]));
 	}
 
 	dispose() {

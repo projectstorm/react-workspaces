@@ -30,6 +30,7 @@ export class FloatingWindowModel extends WorkspaceModel<FloatingWindowModelSeria
 		});
 		this.position.registerListener({
 			updated: () => {
+				this.r_dimensions.invalidate();
 				this.normalizePosition();
 			}
 		});
