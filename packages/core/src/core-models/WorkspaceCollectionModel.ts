@@ -4,6 +4,7 @@ import { WorkspaceCollectionInterface } from './WorkspaceCollectionInterface';
 import { WorkspaceModelFactory } from '../core/WorkspaceModelFactory';
 import * as _ from 'lodash';
 import { Alignment } from '../core/tools';
+import { DimensionContainer } from '../core/dimensions/DimensionContainer';
 
 export interface SerializedCollectionModel extends SerializedModel {
 	children: SerializedModel[];
@@ -146,6 +147,9 @@ export class WorkspaceCollectionModel<
 			},
 			layoutInvalidated: () => {
 				this.invalidateLayout();
+			},
+			dimensionsInvalidated: () => {
+				this.invalidateDimensions();
 			}
 		});
 		this.childrenListeners.add(listener);

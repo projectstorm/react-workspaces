@@ -64,6 +64,10 @@ export class WorkspaceNodeModel extends WorkspaceCollectionModel {
 		return divs;
 	}
 
+	getAllRenderDimensions(): DimensionContainer[] {
+		return super.getAllRenderDimensions().concat(Array.from(this.r_divisons.values()));
+	}
+
 	recomputeDivisions() {
 		this.r_divisons = this.children
 			.map((c) => {

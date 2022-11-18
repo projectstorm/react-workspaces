@@ -6,6 +6,7 @@ export interface UseDimensionLayoutInvalidatorOptions {
 	dimension: DimensionContainer;
 	engine: WorkspaceEngine;
 }
+
 export const useDimensionLayoutInvalidator = (props: UseDimensionLayoutInvalidatorOptions) => {
 	useEffect(() => {
 		let l2 = null;
@@ -19,6 +20,16 @@ export const useDimensionLayoutInvalidator = (props: UseDimensionLayoutInvalidat
 						props.dimension.invalidate();
 					}
 				});
+			},
+			dimensionsInvalidated: () => {
+				props.engine.rootModel
+					.flatten()
+					.flatMap((m) => {
+						return m.getAllRenderDimensions();
+					})
+					.forEach((d) => {
+						d.invalidate();
+					});
 			}
 		});
 

@@ -11,6 +11,7 @@ export interface WorkspaceEngineListener extends BaseListener {
 	draggingElement?: (model: WorkspaceModel, dragging: boolean) => any;
 	modelUpdated?: () => any;
 	layoutInvalidated: () => any;
+	dimensionsInvalidated: () => any;
 	layoutRepainted: () => any;
 	modelDragStart: () => any;
 	modelDragEnd: () => any;
@@ -58,6 +59,9 @@ export class WorkspaceEngine extends BaseObserver<WorkspaceEngineListener> imple
 		this.rootModelListener = model.registerListener({
 			layoutInvalidated: () => {
 				this.invalidateLayout();
+			},
+			dimensionsInvalidated: () => {
+				this.invalidateDimensions();
 			}
 		});
 		this.rootModel = model;
@@ -70,6 +74,10 @@ export class WorkspaceEngine extends BaseObserver<WorkspaceEngineListener> imple
 
 	invalidateLayout() {
 		this.iterateListeners((cb) => cb.layoutInvalidated?.());
+	}
+
+	invalidateDimensions() {
+		this.iterateListeners((cb) => cb.dimensionsInvalidated?.());
 	}
 
 	setWorkspaceContainer(workspaceContainer: DimensionContainer) {

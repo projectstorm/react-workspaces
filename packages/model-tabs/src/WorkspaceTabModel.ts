@@ -1,7 +1,23 @@
-import { WorkspaceCollectionModel, WorkspaceModel } from '@projectstorm/react-workspaces-core';
+import {
+	SerializedCollectionModel,
+	WorkspaceCollectionModel,
+	WorkspaceCollectionModelListener,
+	WorkspaceModel
+} from '@projectstorm/react-workspaces-core';
 import * as _ from 'lodash';
 
-export class WorkspaceTabModel extends WorkspaceCollectionModel {
+export interface WorkspaceTabModelListener extends WorkspaceCollectionModelListener {
+	selectionChanged: () => any;
+}
+
+export interface WorkspaceTabModelSerialized extends SerializedCollectionModel {
+	selected: string;
+}
+
+export class WorkspaceTabModel extends WorkspaceCollectionModel<
+	WorkspaceTabModelSerialized,
+	WorkspaceTabModelListener
+> {
 	protected selected: string;
 
 	static NAME = 'tabs';
@@ -13,14 +29,14 @@ export class WorkspaceTabModel extends WorkspaceCollectionModel {
 
 	addModel(model: WorkspaceModel, position: number = null): this {
 		super.addModel(model, position);
-		this.selected = model.id;
+		this.setSelected(model);
 		return this;
 	}
 
 	removeModel(model: WorkspaceModel): this {
 		super.removeModel(model);
 		if (this.selected === model.id && this.children.length > 0) {
-			this.selected = this.children[0].id;
+			this.setSelected(this.children[0]);
 		}
 		return this;
 	}
@@ -31,6 +47,7 @@ export class WorkspaceTabModel extends WorkspaceCollectionModel {
 
 	setSelected(model: WorkspaceModel): this {
 		this.selected = model.id;
+		this.iterateListeners((cb) => cb.selectionChanged?.());
 		return this;
 	}
 }

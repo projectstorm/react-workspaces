@@ -19,6 +19,7 @@ export interface SerializedModel {
 export interface WorkspaceModelListener extends BaseListener {
 	removed?: () => any;
 	layoutInvalidated?: () => any;
+	dimensionsInvalidated?: () => any;
 	visibilityChanged?: () => any;
 }
 
@@ -38,8 +39,8 @@ export class WorkspaceModel<
 	type: string;
 
 	// render properties
-	r_dimensions: DimensionContainer;
-	r_visible: boolean;
+	public r_dimensions: DimensionContainer;
+	public r_visible: boolean;
 
 	constructor(type: string) {
 		super();
@@ -76,7 +77,7 @@ export class WorkspaceModel<
 		this.size.registerListener({
 			updated: () => {
 				this.normalizeSize();
-				this.invalidateLayout();
+				this.invalidateDimensions();
 			}
 		});
 	}
@@ -111,6 +112,14 @@ export class WorkspaceModel<
 
 	setSize(dims: Partial<ISize>) {
 		this.size.update(dims);
+	}
+
+	getAllRenderDimensions() {
+		return [this.r_dimensions];
+	}
+
+	invalidateDimensions() {
+		this.iterateListeners((cb) => cb.dimensionsInvalidated?.());
 	}
 
 	invalidateLayout() {

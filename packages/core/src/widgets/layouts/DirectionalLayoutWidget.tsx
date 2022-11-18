@@ -5,6 +5,8 @@ import { WorkspaceEngine } from '../../core/WorkspaceEngine';
 import styled from '@emotion/styled';
 import { DividerWidget } from '../primitives/DividerWidget';
 import { DimensionContainer } from '../../core/dimensions/DimensionContainer';
+import { useEffect } from 'react';
+import { useForceUpdate } from '../hooks/useForceUpdate';
 
 export interface DirectionalLayoutWidgetProps {
 	vertical: boolean;
@@ -56,6 +58,14 @@ const ChildContainerWidget: React.FC<{
 			expand = true;
 		}
 	}
+	const forceUpdate = useForceUpdate();
+	useEffect(() => {
+		return props.model.size.registerListener({
+			updated: () => {
+				forceUpdate();
+			}
+		});
+	}, []);
 
 	return (
 		<S.ChildContainer expand={expand} width={width} height={height}>

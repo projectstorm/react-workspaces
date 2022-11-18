@@ -1,13 +1,14 @@
 import * as React from 'react';
-import { useEffect, useRef, useState } from 'react';
 import styled from '@emotion/styled';
 import {
 	DraggableWidget,
 	PerformanceWidget,
+	useForceUpdate,
 	useModelElement,
 	WorkspaceEngine
 } from '@projectstorm/react-workspaces-core';
 import { WorkspaceTabModel } from './WorkspaceTabModel';
+import { useEffect } from 'react';
 
 export interface TabGroupWidgetProps {
 	model: WorkspaceTabModel;
@@ -30,37 +31,35 @@ namespace S {
 		flex-grow: 0;
 	`;
 
-	export const Content = styled.div<{ height: number }>`
+	export const Content = styled.div`
 		flex-grow: 1;
 		display: flex;
 		height: 100%;
-		max-height: calc(100% - ${(p) => p.height}px);
 	`;
 }
 export const TabGroupWidget: React.FC<TabGroupWidgetProps> = (props) => {
-	const headerRef = useRef<HTMLDivElement>();
-	const [height, setHeight] = useState(0);
+	const forceUpdate = useForceUpdate();
+	useEffect(() => {
+		return props.model.registerListener({
+			selectionChanged: () => {
+				forceUpdate();
+			}
+		});
+	}, []);
 	const ref = useModelElement({
 		model: props.model,
 		engine: props.engine
 	});
-	useEffect(() => {
-		requestAnimationFrame(() => {
-			if (headerRef.current) {
-				setHeight(headerRef.current.getBoundingClientRect().height);
-			}
-		});
-	}, []);
 
 	let selected = props.model.getSelected();
 	let selectedFactory = props.engine.getFactory(selected);
 
 	return (
 		<S.Container>
-			<S.Draggable forwardRef={headerRef} engine={props.engine} model={props.model}>
+			<S.Draggable engine={props.engine} model={props.model}>
 				{props.tabs}
 			</S.Draggable>
-			<S.Content ref={ref} height={height}>
+			<S.Content ref={ref}>
 				<PerformanceWidget
 					data={selected.toArray()}
 					engine={props.engine}
