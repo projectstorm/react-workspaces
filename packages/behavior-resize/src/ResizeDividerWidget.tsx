@@ -2,18 +2,38 @@ import * as React from 'react';
 import { useEffect, useRef, useState } from 'react';
 import styled from '@emotion/styled';
 import {
+	Alignment,
 	DimensionTrackingWidget,
 	ResizeDivision,
 	useMouseDragDistance,
+	UseMouseDragDistanceProps,
 	WorkspaceEngine
 } from '@projectstorm/react-workspaces-core';
-import { UseMouseDragDistanceProps } from '@projectstorm/react-workspaces-core';
-import { Alignment } from '@projectstorm/react-workspaces-core';
 
 export interface ResizeDividerWidgetProps {
 	dividerContainer: ResizeDivision;
 	engine: WorkspaceEngine;
 }
+
+const isAligned = (divider: ResizeDivision, aligned: Alignment) => {
+	if (divider.before.expandHorizontal !== divider.after.expandHorizontal) {
+		return false;
+	}
+	let before = divider.before;
+	do {
+		before = before.getSibling(aligned);
+		if (!before) {
+			return true;
+		}
+		if (aligned === Alignment.LEFT && before.expandHorizontal) {
+			return false;
+		}
+		if (aligned === Alignment.TOP && before.expandVertical) {
+			return false;
+		}
+	} while (before);
+	return false;
+};
 
 const getResizeStrategy = (divider: ResizeDivision): Pick<UseMouseDragDistanceProps, 'startMove' | 'moved'> => {
 	let initial1 = 0;
@@ -22,8 +42,8 @@ const getResizeStrategy = (divider: ResizeDivision): Pick<UseMouseDragDistancePr
 	const { before, after } = divider;
 
 	if (divider.vertical) {
-		// before shrinks + HACK
-		if ((!before.expandHorizontal && after.expandHorizontal) || !before.getSibling(Alignment.LEFT)) {
+		// shrink|expand OR left aligned
+		if ((!before.expandHorizontal && after.expandHorizontal) || isAligned(divider, Alignment.LEFT)) {
 			return {
 				startMove: () => {
 					initial1 = before.size.width;
@@ -33,8 +53,8 @@ const getResizeStrategy = (divider: ResizeDivision): Pick<UseMouseDragDistancePr
 				}
 			};
 		}
-		// after shrinks + HACK
-		else if ((!after.expandHorizontal && before.expandHorizontal) || !after.getSibling(Alignment.RIGHT)) {
+		// expand|shrink OR right aligned
+		else if ((!after.expandHorizontal && before.expandHorizontal) || !isAligned(divider, Alignment.LEFT)) {
 			return {
 				startMove: () => {
 					initial1 = after.size.width;
@@ -44,7 +64,7 @@ const getResizeStrategy = (divider: ResizeDivision): Pick<UseMouseDragDistancePr
 				}
 			};
 		}
-		// both shrink
+		// shrink|shrink
 		else if (!before.expandHorizontal && !after.expandHorizontal) {
 			return {
 				startMove: () => {
@@ -58,7 +78,10 @@ const getResizeStrategy = (divider: ResizeDivision): Pick<UseMouseDragDistancePr
 			};
 		}
 	}
-	if (!before.expandVertical) {
+
+	// !------ VERTICAL ------
+	// shrink|expand OR top aligned
+	if ((!before.expandHorizontal && after.expandHorizontal) || isAligned(divider, Alignment.TOP)) {
 		return {
 			startMove: () => {
 				initial1 = before.size.height;
@@ -67,7 +90,9 @@ const getResizeStrategy = (divider: ResizeDivision): Pick<UseMouseDragDistancePr
 				before.setHeight(initial1 + distanceY);
 			}
 		};
-	} else if (!after.expandHorizontal) {
+	}
+	// shrink|expand OR bottom aligned
+	else if ((!after.expandHorizontal && before.expandHorizontal) || !isAligned(divider, Alignment.TOP)) {
 		return {
 			startMove: () => {
 				initial1 = after.size.height;
@@ -77,6 +102,8 @@ const getResizeStrategy = (divider: ResizeDivision): Pick<UseMouseDragDistancePr
 			}
 		};
 	}
+
+	// shrink|shrink
 	return {
 		startMove: () => {
 			initial1 = before.size.height;

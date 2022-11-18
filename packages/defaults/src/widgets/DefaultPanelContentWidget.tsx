@@ -1,6 +1,28 @@
 import * as React from 'react';
 import styled from '@emotion/styled';
+import { WorkspaceModel } from '@projectstorm/react-workspaces-core';
 
+export interface DefaultPanelContentWidgetProps {
+	model: WorkspaceModel;
+}
+
+export const Meta: React.FC<{ label: string; value: string }> = (props) => {
+	return (
+		<S.Meta>
+			<S.MetaKey>{props.label}</S.MetaKey>
+			<S.MetaValue>{props.value}</S.MetaValue>
+		</S.Meta>
+	);
+};
+
+export const DefaultPanelContentWidget: React.FC<DefaultPanelContentWidgetProps> = (props) => {
+	return (
+		<S.Container>
+			<Meta label="Expand horizontal" value={props.model.expandHorizontal ? 'true' : 'false'} />
+			<Meta label="Expand vertical" value={props.model.expandVertical ? 'true' : 'false'} />
+		</S.Container>
+	);
+};
 namespace S {
 	export const Container = styled.div`
 		background: rgba(0, 0, 0, 0.3);
@@ -9,10 +31,17 @@ namespace S {
 		font-size: 13px;
 		flex-grow: 1;
 	`;
-}
 
-export class DefaultPanelContentWidget extends React.Component<any, any> {
-	render() {
-		return <S.Container>{this.props.children}</S.Container>;
-	}
+	export const Meta = styled.div`
+		display: flex;
+		align-items: center;
+		font-size: 11px;
+	`;
+
+	export const MetaKey = styled.div``;
+
+	export const MetaValue = styled.div`
+		font-weight: bold;
+		padding-left: 5px;
+	`;
 }

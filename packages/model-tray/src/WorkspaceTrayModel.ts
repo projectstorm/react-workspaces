@@ -17,7 +17,7 @@ export interface WorkspaceTrayModelOptions {
 
 export class WorkspaceTrayModel extends WorkspaceNodeModel {
 	mode: WorkspaceTrayMode;
-	floatingModel: WorkspaceModel;
+	selectedModel: WorkspaceModel;
 	floatingWindow: FloatingWindowModel;
 
 	private normalSize: number;
@@ -54,6 +54,15 @@ export class WorkspaceTrayModel extends WorkspaceNodeModel {
 			}
 		});
 		this.setMode(WorkspaceTrayMode.NORMAL);
+	}
+
+	getSelectedModel() {
+		return this.selectedModel || this.children[0];
+	}
+
+	setSelectedModel(child: WorkspaceModel) {
+		this.selectedModel = child;
+		this.invalidateLayout();
 	}
 
 	updateWindowPosition(child: WorkspaceModel) {

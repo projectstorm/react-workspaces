@@ -5,6 +5,7 @@ import { DraggableWidget, StandardLayoutWidget, WorkspaceEngine } from '@project
 import { MicroLayoutWidget } from './MicroLayoutWidget';
 import { WorkspaceTrayFactory } from './WorkspaceTrayFactory';
 import { WorkspaceNodeWidget } from '@projectstorm/react-workspaces-core';
+import { WorkspaceModel } from '@projectstorm/react-workspaces-core/dist';
 
 export interface TrayWidgetProps {
 	node: WorkspaceTrayModel;
@@ -27,19 +28,64 @@ namespace S {
 		width: 100%;
 	`;
 
-	export const MicroLayout = styled(MicroLayoutWidget)`
+	export const MicroLayout = styled(MicroLayoutWidget)<{ width: number }>`
 		flex-grow: 1;
 	`;
 
-	export const StandardLayout = styled(StandardLayoutWidget)<{ height: number }>`
+	export const MicroLayoutShrink = styled(MicroLayoutWidget)<{ width: number }>`
+		min-width: ${(p) => p.width}px;
+		max-width: ${(p) => p.width}px;
+		flex-grow: 0;
+	`;
+
+	export const Content = styled.div`
+		display: flex;
 		flex-grow: 1;
-		max-height: calc(100% - ${(p) => p.height}px);
+		flex-direction: row;
+	`;
+
+	export const PanelContent = styled.div`
+		display: flex;
+		flex-grow: 1;
 	`;
 }
 
+export interface PanelContentProps {
+	model: WorkspaceModel;
+	engine: WorkspaceEngine;
+}
+
+export const PanelContent: React.FC<PanelContentProps> = (props) => {
+	return (
+		<S.PanelContent>
+			{props.engine.getFactory(props.model).generateContent({
+				model: props.model,
+				engine: props.engine
+			})}
+		</S.PanelContent>
+	);
+};
+
+export const TrayContentExpanded: React.FC<TrayWidgetProps> = (props) => {
+	return (
+		<S.Content>
+			<S.MicroLayoutShrink
+				node={props.node}
+				engine={props.engine}
+				factory={props.factory}
+				width={props.node.options.iconWidth}
+			/>
+			<PanelContent engine={props.engine} model={props.node.getSelectedModel()} />
+		</S.Content>
+	);
+};
+
+export const TrayContentShrink: React.FC<TrayWidgetProps> = (props) => {
+	return <S.MicroLayout node={props.node} engine={props.engine} factory={props.factory} />;
+};
+
 export class TrayWidget extends React.Component<TrayWidgetProps, TrayWidgetState> {
 	headerRef: React.RefObject<HTMLDivElement>;
-	observer: ResizeObserver;
 
 	constructor(props) {
 		super(props);
@@ -57,30 +103,15 @@ export class TrayWidget extends React.Component<TrayWidgetProps, TrayWidgetState
 		);
 	}
 
-	componentWillUnmount() {
-		this.observer && this.observer.disconnect();
-	}
-
-	componentDidMount(): void {
-		if (this.headerRef.current) {
-			this.observer = new ResizeObserver(() => {
-				this.setState({
-					height: this.headerRef.current.getBoundingClientRect().height
-				});
-			});
-			this.observer.observe(this.headerRef.current);
-		}
-	}
-
 	render() {
 		const expand = this.props.node.shouldExpand() && this.props.node.mode === WorkspaceTrayMode.NORMAL;
 		return (
 			<S.Container width={this.props.node.size.width} className={this.props.className} expand={expand}>
 				{this.getHeader()}
-				{this.props.node.mode === 'micro' ? (
-					<S.MicroLayout node={this.props.node} engine={this.props.engine} factory={this.props.factory} />
+				{this.props.node.mode === WorkspaceTrayMode.NORMAL ? (
+					<TrayContentExpanded {...this.props} />
 				) : (
-					<WorkspaceNodeWidget model={this.props.node} engine={this.props.engine} factory={this.props.factory} />
+					<TrayContentShrink {...this.props} />
 				)}
 			</S.Container>
 		);

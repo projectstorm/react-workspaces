@@ -28,8 +28,8 @@ namespace S {
 	`;
 
 	export const ChildContainer = styled.div<{ width: number; height: number; expand: boolean }>`
-		${(p) => (p.width ? `width: ${p.width}px` : '')};
-		${(p) => (p.height ? `height: ${p.height}px` : '')};
+		${(p) => (p.width ? `min-width: ${p.width}px; width: ${p.width}px` : '')};
+		${(p) => (p.height ? `min-height: ${p.height}px; height: ${p.height}px` : '')};
 		flex-shrink: ${(p) => (p.expand ? 1 : 0)};
 		flex-grow: ${(p) => (p.expand ? 1 : 0)};
 	`;

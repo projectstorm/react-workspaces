@@ -15,7 +15,7 @@ export class DefaultSubComponentRenderer
 		TrayModelPanelRenderer<DefaultWorkspacePanelModel>
 {
 	renderIcon(event: TrayModelPanelRendererEvent<DefaultWorkspacePanelModel>): JSX.Element {
-		return <DefaultPanelMicroButtonWidget selected={false} icon={event.model.icon} />;
+		return <DefaultPanelMicroButtonWidget selected={event.selected} icon={event.model.icon} />;
 	}
 
 	renderTitleBar(model: RenderTitleBarEvent<DefaultWorkspacePanelModel>): JSX.Element {
