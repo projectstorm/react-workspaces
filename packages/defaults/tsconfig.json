@@ -6,9 +6,6 @@
     "outDir": "dist",
     "tsBuildInfoFile": "dist/tsconfig.tsbuildinfo"
   },
-  "exclude": [
-    "./dist"
-  ],
   "references": [
     {
       "path": "../core"

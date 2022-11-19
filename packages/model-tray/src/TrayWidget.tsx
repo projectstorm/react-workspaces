@@ -1,11 +1,9 @@
 import * as React from 'react';
 import { WorkspaceTrayMode, WorkspaceTrayModel } from './WorkspaceTrayModel';
 import styled from '@emotion/styled';
-import { DraggableWidget, StandardLayoutWidget, WorkspaceEngine } from '@projectstorm/react-workspaces-core';
+import { DraggableWidget, WorkspaceEngine, WorkspaceModel } from '@projectstorm/react-workspaces-core';
 import { MicroLayoutWidget } from './MicroLayoutWidget';
 import { WorkspaceTrayFactory } from './WorkspaceTrayFactory';
-import { WorkspaceNodeWidget } from '@projectstorm/react-workspaces-core';
-import { WorkspaceModel } from '@projectstorm/react-workspaces-core/dist';
 
 export interface TrayWidgetProps {
 	node: WorkspaceTrayModel;
@@ -28,7 +26,7 @@ namespace S {
 		width: 100%;
 	`;
 
-	export const MicroLayout = styled(MicroLayoutWidget)<{ width: number }>`
+	export const MicroLayout = styled(MicroLayoutWidget)`
 		flex-grow: 1;
 	`;
 
@@ -85,19 +83,9 @@ export const TrayContentShrink: React.FC<TrayWidgetProps> = (props) => {
 };
 
 export class TrayWidget extends React.Component<TrayWidgetProps, TrayWidgetState> {
-	headerRef: React.RefObject<HTMLDivElement>;
-
-	constructor(props) {
-		super(props);
-		this.state = {
-			height: 0
-		};
-		this.headerRef = React.createRef();
-	}
-
 	getHeader() {
 		return (
-			<DraggableWidget forwardRef={this.headerRef} model={this.props.node} engine={this.props.engine}>
+			<DraggableWidget model={this.props.node} engine={this.props.engine}>
 				{this.props.header}
 			</DraggableWidget>
 		);

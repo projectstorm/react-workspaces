@@ -6,8 +6,8 @@
   "dependencies": {
     "@projectstorm/react-workspaces-core": "2.0.0-alpha",
     "@projectstorm/react-workspaces-model-floating-window": "2.0.0-alpha",
-    "react": "^18.2.0",
     "@emotion/styled": "^11.10.5",
+    "react": "^18.2.0",
     "lodash": "^4.17.21"
   },
   "devDependencies": {
