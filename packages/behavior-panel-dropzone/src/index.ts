@@ -37,39 +37,32 @@ export const draggingItemBehavior = (options: DraggingItemBehaviorOptions) => {
 export const getDirectiveForWorkspaceNode = (node: WorkspaceModel): DropZonePanelDirective | null => {
 	if (!(node instanceof WorkspaceCollectionModel) && node.parent instanceof WorkspaceNodeModel) {
 		return {
-			splitZones: node.parent.vertical
-				? [
-						{
-							alignment: Alignment.LEFT,
-							handleDrop: (model) => {
-								const m = new WorkspaceNodeModel();
-								m.setVertical(false);
-								m.addModel(model);
-								(node.parent as WorkspaceNodeModel).replaceModel(node, m);
-								m.addModel(node);
-							}
-						},
-						{
-							alignment: Alignment.RIGHT,
-							handleDrop: (model) => {
-								const m = new WorkspaceNodeModel();
-								m.setVertical(false);
-								m.addModel(model);
-								(node.parent as WorkspaceNodeModel).replaceModel(node, m);
-								m.addModel(node, 0);
-							}
-						}
-				  ]
-				: [
-						{
-							alignment: Alignment.TOP,
-							handleDrop: (model) => {}
-						},
-						{
-							alignment: Alignment.BOTTOM,
-							handleDrop: (model) => {}
-						}
-				  ]
+			splitZones: [
+				{
+					alignment: node.parent.vertical ? Alignment.LEFT : Alignment.TOP,
+					handleDrop: (model) => {
+						const parent = node.parent as WorkspaceNodeModel;
+						const m = new WorkspaceNodeModel();
+						m.setVertical(!parent.vertical);
+						m.setExpand(model.expandHorizontal, model.expandHorizontal);
+						m.addModel(model);
+						parent.replaceModel(node, m);
+						m.addModel(node);
+					}
+				},
+				{
+					alignment: node.parent.vertical ? Alignment.RIGHT : Alignment.BOTTOM,
+					handleDrop: (model) => {
+						const parent = node.parent as WorkspaceNodeModel;
+						const m = new WorkspaceNodeModel();
+						m.setVertical(!parent.vertical);
+						m.setExpand(model.expandHorizontal, model.expandHorizontal);
+						m.addModel(model);
+						parent.replaceModel(node, m);
+						m.addModel(node, 0);
+					}
+				}
+			]
 		};
 	}
 };

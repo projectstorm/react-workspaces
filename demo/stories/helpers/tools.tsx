@@ -23,6 +23,7 @@ import {
 import { draggingItemDividerBehavior } from '@projectstorm/react-workspaces-behavior-divider-dropzone';
 import { WorkspaceTabFactory } from '@projectstorm/react-workspaces-model-tabs';
 import { resizingBehavior } from '@projectstorm/react-workspaces-behavior-resize';
+import { RootWorkspaceModel } from '@projectstorm/react-workspaces-model-floating-window';
 
 export const genVerticalNode = () => {
 	const node = new WorkspaceNodeModel()
@@ -33,12 +34,26 @@ export const genVerticalNode = () => {
 	return node;
 };
 
+export enum DebugOptions {
+	DebugDividers = 'DebugDividers',
+	DebugPanels = 'DebugPanels',
+	DebugResizers = 'DebugResizers',
+	DebugWindows = 'DebugWindows'
+}
+
+export const useRootModel = (model: RootWorkspaceModel, args) => {
+	useEffect(() => {
+		model.setDebug(args[DebugOptions.DebugWindows]);
+	}, [args[DebugOptions.DebugWindows]]);
+	return model;
+};
+
 export const useEngine = (args: { DebugDividers?: boolean; DebugResizers?: boolean; DebugPanels?: boolean } = {}) => {
 	const [debugLayer] = useState(() => {
 		return new DebugLayer({
-			dividers: args.DebugDividers,
-			resizeDividers: args.DebugResizers,
-			panels: args.DebugPanels
+			dividers: args[DebugOptions.DebugDividers],
+			resizeDividers: args[DebugOptions.DebugResizers],
+			panels: args[DebugOptions.DebugPanels]
 		});
 	});
 	const [engine] = useState(() => {

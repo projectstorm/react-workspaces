@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useState } from 'react';
 import 'typeface-open-sans';
 import { WorkspaceNodeModel } from '@projectstorm/react-workspaces-core';
-import { CompInternal, genVerticalNode, useEngine } from './helpers/tools';
+import { CompInternal, DebugOptions, useEngine, useRootModel } from './helpers/tools';
 import { DefaultWorkspacePanelModel } from '@projectstorm/react-workspaces-defaults';
 
 export const AffinityStories = function (args) {
@@ -24,9 +24,9 @@ export const AffinityStories = function (args) {
 }.bind({});
 
 AffinityStories.args = {
-	DebugDividers: false,
-	DebugPanels: false,
-	DebugResizers: false
+	[DebugOptions.DebugPanels]: false,
+	[DebugOptions.DebugDividers]: false,
+	[DebugOptions.DebugResizers]: false
 };
 
 export default {

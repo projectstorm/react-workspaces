@@ -4,7 +4,7 @@ import 'typeface-open-sans';
 import { WorkspaceNodeModel } from '@projectstorm/react-workspaces-core';
 import { DefaultWorkspacePanelModel } from '@projectstorm/react-workspaces-defaults';
 import { WorkspaceTabModel } from '@projectstorm/react-workspaces-model-tabs';
-import { CompInternal, genVerticalNode, useEngine } from './helpers/tools';
+import { CompInternal, DebugOptions, genVerticalNode, useEngine } from './helpers/tools';
 
 export const MinMax = function (args) {
 	const engine = useEngine(args);
@@ -51,9 +51,9 @@ export const MinMax = function (args) {
 }.bind(this);
 
 MinMax.args = {
-	DebugDividers: false,
-	DebugPanels: false,
-	DebugResizers: false
+	[DebugOptions.DebugPanels]: false,
+	[DebugOptions.DebugDividers]: false,
+	[DebugOptions.DebugResizers]: false
 };
 
 export default {

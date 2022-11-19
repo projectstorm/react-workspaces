@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useState } from 'react';
 import 'typeface-open-sans';
 import { WorkspaceNodeModel } from '@projectstorm/react-workspaces-core';
-import { CompInternal, genVerticalNode, useEngine } from './helpers/tools';
+import { CompInternal, DebugOptions, genVerticalNode, useEngine } from './helpers/tools';
 
 export const Basic = function (args) {
 	const engine = useEngine(args);
@@ -23,9 +23,9 @@ export const Basic = function (args) {
 }.bind({});
 
 Basic.args = {
-	DebugDividers: false,
-	DebugPanels: false,
-	DebugResizers: false
+	[DebugOptions.DebugPanels]: false,
+	[DebugOptions.DebugDividers]: false,
+	[DebugOptions.DebugResizers]: false
 };
 
 export default {

@@ -7,7 +7,7 @@ export class RootWorkspaceModel extends WorkspaceNodeModel {
 	floatingWindows: Set<FloatingWindowModel>;
 	layerListener: () => any;
 
-	constructor(public engine: WorkspaceEngine, protected debug: boolean = false) {
+	constructor(public engine: WorkspaceEngine, public debug: boolean = false) {
 		super();
 		this.floatingWindows = new Set<FloatingWindowModel>();
 
@@ -34,6 +34,11 @@ export class RootWorkspaceModel extends WorkspaceNodeModel {
 		});
 	}
 
+	setDebug(debug: boolean) {
+		this.debug = debug;
+		this.engine.fireRepaintListeners();
+	}
+
 	flatten() {
 		return super.flatten().concat(Array.from(this.floatingWindows.values()).flatMap((v) => [v, v.child]));
 	}
@@ -53,7 +58,7 @@ export class RootWorkspaceModel extends WorkspaceNodeModel {
 			toggleAnimation: (animate) => {
 				layer.setAnimate(animate);
 			},
-			debug: this.debug
+			root: this
 		});
 		this.engine.layerManager.addLayer(layer);
 		this.engine.layerManager.addLayer(resize);

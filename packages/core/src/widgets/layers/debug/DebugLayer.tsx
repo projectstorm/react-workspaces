@@ -1,5 +1,6 @@
-import { Layer } from '../LayerManager';
+import { Layer, LayerManager } from '../LayerManager';
 import * as React from 'react';
+import * as _ from 'lodash';
 import styled from '@emotion/styled';
 import { WorkspaceEngine } from '../../../core/WorkspaceEngine';
 import { WorkspaceModel } from '../../../core-models/WorkspaceModel';
@@ -16,9 +17,30 @@ export interface DebugLayerOptions {
 }
 
 export class DebugLayer extends Layer {
+	private l1: () => void;
+
 	constructor(public debugOptions: DebugLayerOptions = { panels: true }) {
 		super({
 			mouseEvents: false
+		});
+
+		const l2 = this.registerListener({
+			removed: () => {
+				this.l1();
+				l2();
+			}
+		});
+	}
+
+	setLayerManager(manager: LayerManager) {
+		super.setLayerManager(manager);
+		this.l1 = this.layerManager.registerListener({
+			layerAdded: () => {
+				// we defer this since other plugins might move stuff to the top
+				_.defer(() => {
+					this.moveToTop();
+				});
+			}
 		});
 	}
 

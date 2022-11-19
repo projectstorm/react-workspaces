@@ -3,7 +3,7 @@ import { useState } from 'react';
 import 'typeface-open-sans';
 import { DefaultWindowModelFactory, DefaultWorkspacePanelModel } from '@projectstorm/react-workspaces-defaults';
 import { WorkspaceTabModel } from '@projectstorm/react-workspaces-model-tabs';
-import { CompInternal, genVerticalNode, useEngine } from './helpers/tools';
+import { CompInternal, DebugOptions, genVerticalNode, useEngine, useRootModel } from './helpers/tools';
 import { WorkspaceTrayMode, WorkspaceTrayModel } from '@projectstorm/react-workspaces-model-tray';
 import { RootWorkspaceModel } from '@projectstorm/react-workspaces-model-floating-window';
 
@@ -57,13 +57,15 @@ export const ComplexLayout = function (args) {
 			.addModel(genVerticalNode());
 		return model;
 	});
+	useRootModel(model, args);
 	return <CompInternal model={model} engine={engine} />;
 }.bind({});
 
 ComplexLayout.args = {
-	DebugDividers: false,
-	DebugPanels: false,
-	DebugResizers: false
+	[DebugOptions.DebugPanels]: false,
+	[DebugOptions.DebugDividers]: false,
+	[DebugOptions.DebugResizers]: false,
+	[DebugOptions.DebugWindows]: false
 };
 
 export default {

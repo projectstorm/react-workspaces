@@ -48,7 +48,7 @@ export const DropzoneDividersLayerWidget: React.FC<DropzoneDividersLayerWidgetPr
 							<DropzoneDividerWidget
 								engine={props.engine}
 								dimension={division}
-								key={m.id}
+								key={division.id}
 								handleDrop={(model) => {
 									m.addModel(model, index);
 								}}

@@ -1,12 +1,13 @@
-import { Layer, RenderLayerEvent, WorkspaceModel } from '@projectstorm/react-workspaces-core';
+import { Layer, RenderLayerEvent } from '@projectstorm/react-workspaces-core';
 import * as React from 'react';
 import { FloatingWindowModel } from '../../core/FloatingWindowModel';
 import { FloatingWindowResizeLayerWidget } from './FloatingWindowResizeLayerWidget';
+import { RootWorkspaceModel } from '../../core/RootWorkspaceModel';
 
 export interface FloatingWindowResizeLayerOptions {
 	model: FloatingWindowModel;
-	debug: boolean;
 	toggleAnimation: (animate: boolean) => any;
+	root: RootWorkspaceModel;
 }
 
 export class FloatingWindowResizeLayer extends Layer {
@@ -19,7 +20,7 @@ export class FloatingWindowResizeLayer extends Layer {
 	renderLayer(event: RenderLayerEvent): JSX.Element {
 		return (
 			<FloatingWindowResizeLayerWidget
-				debug={this.options2.debug}
+				debug={this.options2.root.debug}
 				window={this.options2.model}
 				toggleAnimation={this.options2.toggleAnimation}
 			/>
