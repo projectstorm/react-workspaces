@@ -7,6 +7,7 @@ import { DividerWidget } from '../primitives/DividerWidget';
 import { DimensionContainer } from '../../core/dimensions/DimensionContainer';
 import { useEffect } from 'react';
 import { useForceUpdate } from '../hooks/useForceUpdate';
+import { WorkspaceNodeModel } from '../../entities/node/WorkspaceNodeModel';
 
 export interface DirectionalLayoutWidgetProps {
 	vertical: boolean;
@@ -40,24 +41,30 @@ namespace S {
 const ChildContainerWidget: React.FC<{
 	vertical: boolean;
 	model: WorkspaceModel;
+	childrenLength: number;
 	generateElement: (model: WorkspaceModel) => JSX.Element;
 }> = (props) => {
 	let width = null;
 	let height = null;
 	let expand: boolean = false;
-	if (props.vertical) {
-		if (!props.model.expandVertical) {
-			height = props.model.size.height;
-		} else {
-			expand = true;
-		}
+	if (props.childrenLength === 1) {
+		expand = true;
 	} else {
-		if (!props.model.expandHorizontal) {
-			width = props.model.size.width;
+		if (props.vertical) {
+			if (!props.model.expandVertical) {
+				height = props.model.size.height;
+			} else {
+				expand = true;
+			}
 		} else {
-			expand = true;
+			if (!props.model.expandHorizontal) {
+				width = props.model.size.width;
+			} else {
+				expand = true;
+			}
 		}
 	}
+
 	const forceUpdate = useForceUpdate();
 	useEffect(() => {
 		return props.model.size.registerListener({
@@ -75,22 +82,16 @@ const ChildContainerWidget: React.FC<{
 };
 
 export const DirectionalLayoutWidget: React.FC<DirectionalLayoutWidgetProps> = (props) => {
+	const firstDivider = props.dimensionContainerForDivider(0);
 	return (
 		<S.Container ref={props.forwardRef} className={props.className} expand={props.expand} vertical={props.vertical}>
-			<DividerWidget
-				engine={props.engine}
-				dimensionContainer={props.dimensionContainerForDivider(0)}
-				key="drop-first"
-			/>
+			<DividerWidget engine={props.engine} dimensionContainer={firstDivider} key={firstDivider.id} />
 			{_.map(props.data, (model: WorkspaceModel, index) => {
+				const dimension = props.dimensionContainerForDivider(index + 1);
 				return (
 					<React.Fragment key={model.id}>
-						<ChildContainerWidget {...props} model={model} />
-						<DividerWidget
-							engine={props.engine}
-							dimensionContainer={props.dimensionContainerForDivider(index + 1)}
-							key="drop-first"
-						/>
+						<ChildContainerWidget {...props} childrenLength={props.data.length} model={model} />
+						<DividerWidget engine={props.engine} dimensionContainer={dimension} key={dimension.id} />
 					</React.Fragment>
 				);
 			})}

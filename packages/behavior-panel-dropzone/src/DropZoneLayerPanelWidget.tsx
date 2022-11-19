@@ -11,9 +11,17 @@ import {
 } from '@projectstorm/react-workspaces-core';
 import { DropZoneAlignmentButtonWidget } from './DropZoneAlignmentButtonWidget';
 
+export interface DropZonePanelDirective {
+	splitZones: {
+		alignment: Alignment;
+		handleDrop: (model: WorkspaceModel) => any;
+	}[];
+}
+
 export interface DropZoneLayerPanelWidgetProps {
 	model: WorkspaceModel;
 	engine: WorkspaceEngine;
+	directive: DropZonePanelDirective;
 }
 
 export const DropZoneLayerPanelWidget: React.FC<DropZoneLayerPanelWidgetProps> = (props) => {
@@ -33,10 +41,17 @@ export const DropZoneLayerPanelWidget: React.FC<DropZoneLayerPanelWidgetProps> =
 			<S.DimensionTracking entered={show} dimension={props.model.r_dimensions}>
 				<S.Inside ref={ref}>
 					<S.Layer visible={show}>
-						<DropZoneAlignmentButtonWidget model={props.model} engine={props.engine} alignment={Alignment.TOP} />
-						<DropZoneAlignmentButtonWidget model={props.model} engine={props.engine} alignment={Alignment.LEFT} />
-						<DropZoneAlignmentButtonWidget model={props.model} engine={props.engine} alignment={Alignment.BOTTOM} />
-						<DropZoneAlignmentButtonWidget model={props.model} engine={props.engine} alignment={Alignment.RIGHT} />
+						{props.directive.splitZones.map((d) => {
+							return (
+								<DropZoneAlignmentButtonWidget
+									key={d.alignment}
+									model={props.model}
+									engine={props.engine}
+									alignment={d.alignment}
+									handleDrop={d.handleDrop}
+								/>
+							);
+						})}
 					</S.Layer>
 					<S.Layer2 visible={show}>
 						<S.ButtonBar>

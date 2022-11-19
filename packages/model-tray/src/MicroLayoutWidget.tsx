@@ -11,6 +11,7 @@ import {
 } from '@projectstorm/react-workspaces-core';
 import { WorkspaceTrayFactory } from './WorkspaceTrayFactory';
 import { useRef } from 'react';
+import { useResizeObserver } from '@projectstorm/react-workspaces-core';
 
 export interface MicroLayoutWidgetProps {
 	node: WorkspaceTrayModel;
@@ -49,9 +50,10 @@ export interface MicroWrapperProps {
 }
 
 export const MicroWrapper: React.FC<MicroWrapperProps> = (props) => {
-	const ref = useModelElement({
-		model: props.model,
-		engine: props.engine
+	const ref = useRef<HTMLDivElement>();
+	useResizeObserver({
+		forwardRef: ref,
+		dimension: props.model.r_dimensions
 	});
 	useScrollObserver({
 		forwardRef: props.scrollRef,

@@ -1,4 +1,8 @@
-import { WorkspaceCollectionModel } from '../../core-models/WorkspaceCollectionModel';
+import {
+	SerializedCollectionModel,
+	WorkspaceCollectionModel,
+	WorkspaceCollectionModelListener
+} from '../../core-models/WorkspaceCollectionModel';
 import { WorkspaceEngine } from '../../core/WorkspaceEngine';
 import { WorkspaceModel } from '../../core-models/WorkspaceModel';
 import { Alignment } from '../../core/tools';
@@ -11,7 +15,14 @@ export interface ResizeDivision {
 	vertical: boolean;
 }
 
-export class WorkspaceNodeModel extends WorkspaceCollectionModel {
+export interface WorkspaceNodeModelListener extends WorkspaceCollectionModelListener {
+	divisionsRecomputed: () => any;
+}
+
+export class WorkspaceNodeModel extends WorkspaceCollectionModel<
+	SerializedCollectionModel,
+	WorkspaceNodeModelListener
+> {
 	static NAME = 'srw-node';
 
 	vertical: boolean;
@@ -74,6 +85,7 @@ export class WorkspaceNodeModel extends WorkspaceCollectionModel {
 				return new DimensionContainer();
 			})
 			.concat(new DimensionContainer());
+		this.iterateListeners((cb) => cb.divisionsRecomputed?.());
 	}
 
 	addModel(model: WorkspaceModel, position: number = null): this {

@@ -1,22 +1,34 @@
 import * as React from 'react';
-import { Layer, useForceUpdate, WorkspaceCollectionModel, WorkspaceEngine } from '@projectstorm/react-workspaces-core';
 import { useEffect } from 'react';
-import { DropZoneLayerPanelWidget } from './DropZoneLayerPanelWidget';
+import { Layer, useForceUpdate, WorkspaceEngine, WorkspaceModel } from '@projectstorm/react-workspaces-core';
+import { DropZoneLayerPanelWidget, DropZonePanelDirective } from './DropZoneLayerPanelWidget';
+
+export interface DropZoneLayerOptions {
+	getDropZoneForModel: (model: WorkspaceModel) => DropZonePanelDirective | null;
+	modelID: string;
+}
 
 export class DropZoneLayer extends Layer {
-	constructor(public modelID: string) {
+	constructor(private options2: DropZoneLayerOptions) {
 		super({
 			mouseEvents: false
 		});
 	}
 
 	renderLayer(event): JSX.Element {
-		return <DropZoneLayerWidget engine={event.engine} draggingModel={this.modelID} />;
+		return (
+			<DropZoneLayerWidget
+				engine={event.engine}
+				draggingModel={this.options2.modelID}
+				getDropZoneForModel={this.options2.getDropZoneForModel}
+			/>
+		);
 	}
 }
 
 export interface DropZoneLayerWidgetProps {
 	engine: WorkspaceEngine;
+	getDropZoneForModel: (model: WorkspaceModel) => DropZonePanelDirective | null;
 	draggingModel: string;
 }
 
@@ -55,10 +67,13 @@ export const DropZoneLayerWidget: React.FC<DropZoneLayerWidgetProps> = (props) =
 				// dont show a drop zone for the same model
 				// .filter((m) => m.id !== props.draggingModel.id)
 				.map((m) => {
-					if (!(m instanceof WorkspaceCollectionModel)) {
-						return <DropZoneLayerPanelWidget engine={props.engine} model={m} key={m.id} />;
+					const directive = props.getDropZoneForModel(m);
+
+					if (!directive) {
+						return null;
 					}
-					return null;
+
+					return <DropZoneLayerPanelWidget directive={directive} engine={props.engine} model={m} key={m.id} />;
 				})}
 		</>
 	);

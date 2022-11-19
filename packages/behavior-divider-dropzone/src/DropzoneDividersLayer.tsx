@@ -1,6 +1,12 @@
 import * as React from 'react';
 import { useEffect } from 'react';
-import { Layer, useForceUpdate, WorkspaceEngine, WorkspaceNodeModel } from '@projectstorm/react-workspaces-core';
+import {
+	Layer,
+	useForceUpdate,
+	WorkspaceEngine,
+	WorkspaceModel,
+	WorkspaceNodeModel
+} from '@projectstorm/react-workspaces-core';
 import { DropzoneDividerWidget } from './DropzoneDividerWidget';
 
 export class DropzoneDividersLayer extends Layer {
@@ -24,16 +30,11 @@ export const DropzoneDividersLayerWidget: React.FC<DropzoneDividersLayerWidgetPr
 
 	// TODO rerun this when models added
 	useEffect(() => {
-		const listeners = props.engine.rootModel.flatten().map((m) =>
-			m.registerListener({
-				visibilityChanged: () => {
-					forceUpdate();
-				}
-			})
-		);
-		return () => {
-			listeners.forEach((l) => l());
-		};
+		return props.engine.registerListener({
+			layoutInvalidated: () => {
+				forceUpdate();
+			}
+		});
 	}, []);
 
 	return (
@@ -41,9 +42,19 @@ export const DropzoneDividersLayerWidget: React.FC<DropzoneDividersLayerWidgetPr
 			{props.engine.rootModel
 				.flatten()
 				.filter((p) => p instanceof WorkspaceNodeModel)
-				.flatMap((m: WorkspaceNodeModel) => m.r_divisons)
-				.map((m) => {
-					return <DropzoneDividerWidget engine={props.engine} dimension={m} key={m.id} />;
+				.flatMap((m: WorkspaceNodeModel) => {
+					return m.r_divisons.map((division, index) => {
+						return (
+							<DropzoneDividerWidget
+								engine={props.engine}
+								dimension={division}
+								key={m.id}
+								handleDrop={(model) => {
+									m.addModel(model, index);
+								}}
+							/>
+						);
+					});
 				})}
 		</>
 	);

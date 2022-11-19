@@ -4,6 +4,7 @@ import { SerializedModel, WorkspaceModel } from '../../../core-models/WorkspaceM
 import { useDraggable } from '../dnd/useDraggable';
 import { log, regenerateIDs } from '../../../core/tools';
 import { useDragOverModel } from './useDragOverModel';
+import * as _ from 'lodash';
 
 export const WORKSPACE_MODEL_MIME = 'srw/model';
 export const WORKSPACE_MODEL_ID_MIME = 'srw/modelid/';
@@ -26,7 +27,9 @@ export const useDraggableModel = (props: UseDraggableModelOptions) => {
 		},
 		dragend: ({ copy, success }) => {
 			if (success && !copy) {
-				props.model.delete();
+				_.defer(() => {
+					props.model.delete();
+				});
 			}
 		},
 		forwardRef: props.forwardRef

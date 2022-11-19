@@ -1,28 +1,25 @@
 import * as React from 'react';
 import { useRef, useState } from 'react';
 import styled from '@emotion/styled';
-import { Alignment, useDroppableModel, useMouseDragEvents, WorkspaceEngine } from '@projectstorm/react-workspaces-core';
-import { WorkspaceModel } from '@projectstorm/react-workspaces-core';
+import {
+	Alignment,
+	useDroppableModel,
+	useMouseDragEvents,
+	WorkspaceEngine,
+	WorkspaceModel
+} from '@projectstorm/react-workspaces-core';
 
 export interface DropZoneAlignmentButtonWidgetProps {
 	alignment: Alignment;
 	engine: WorkspaceEngine;
 	model: WorkspaceModel;
+	handleDrop: (model: WorkspaceModel) => any;
 }
 
 const SPLIT_THICK = 13;
 const SPLIT_LENGTH = 60;
 
 export const DropZoneAlignmentButtonWidget: React.FC<DropZoneAlignmentButtonWidgetProps> = (props) => {
-	// if there is a sibling for this widget, don't display it, rather use the 'insert-between' zones
-	const sibling = props.model.getSibling(props.alignment);
-	if (sibling) {
-		return null;
-	}
-	return <DropZoneAlignmentButtonWidgetInner {...props} />;
-};
-
-export const DropZoneAlignmentButtonWidgetInner: React.FC<DropZoneAlignmentButtonWidgetProps> = (props) => {
 	const [entered, setEntered] = useState(false);
 	const ref = useRef<HTMLDivElement>();
 	useMouseDragEvents({
@@ -37,7 +34,7 @@ export const DropZoneAlignmentButtonWidgetInner: React.FC<DropZoneAlignmentButto
 	useDroppableModel({
 		forwardRef: ref,
 		engine: props.engine,
-		onDrop: (model) => {}
+		onDrop: props.handleDrop
 	});
 
 	const vertical = props.alignment === Alignment.LEFT || props.alignment === Alignment.RIGHT;

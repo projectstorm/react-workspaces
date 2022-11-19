@@ -12,11 +12,14 @@ import {
 import {
 	DefaultSubComponentRenderer,
 	DefaultTrayFactory,
+	DefaultWindowModelFactory,
 	DefaultWorkspacePanelFactory,
-	DefaultWorkspacePanelModel,
-	DefaultWindowModelFactory
+	DefaultWorkspacePanelModel
 } from '@projectstorm/react-workspaces-defaults';
-import { draggingItemBehavior } from '@projectstorm/react-workspaces-behavior-panel-dropzone';
+import {
+	draggingItemBehavior,
+	getDirectiveForWorkspaceNode
+} from '@projectstorm/react-workspaces-behavior-panel-dropzone';
 import { draggingItemDividerBehavior } from '@projectstorm/react-workspaces-behavior-divider-dropzone';
 import { WorkspaceTabFactory } from '@projectstorm/react-workspaces-model-tabs';
 import { resizingBehavior } from '@projectstorm/react-workspaces-behavior-resize';
@@ -61,7 +64,12 @@ export const useEngine = (args: { DebugDividers?: boolean; DebugResizers?: boole
 		e.registerFactory(workspaceNodeFactory);
 		e.registerFactory(windowFactory);
 
-		draggingItemBehavior(e);
+		draggingItemBehavior({
+			engine: e,
+			getDropZoneForModel: (model) => {
+				return getDirectiveForWorkspaceNode(model);
+			}
+		});
 		draggingItemDividerBehavior(e);
 		resizingBehavior(e);
 

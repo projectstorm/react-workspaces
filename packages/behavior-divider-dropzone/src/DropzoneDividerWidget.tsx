@@ -8,10 +8,12 @@ import {
 	useMouseDragEvents,
 	WorkspaceEngine
 } from '@projectstorm/react-workspaces-core';
+import { WorkspaceModel } from '@projectstorm/react-workspaces-core/dist';
 
 export interface DropzoneDividerWidgetProps {
 	dimension: DimensionContainer;
 	engine: WorkspaceEngine;
+	handleDrop: (model: WorkspaceModel) => any;
 }
 
 export const DropzoneDividerWidget: React.FC<DropzoneDividerWidgetProps> = (props) => {
@@ -29,7 +31,7 @@ export const DropzoneDividerWidget: React.FC<DropzoneDividerWidgetProps> = (prop
 	useDroppableModel({
 		forwardRef: ref,
 		engine: props.engine,
-		onDrop: () => {}
+		onDrop: props.handleDrop
 	});
 
 	const PULL_INSET = 30;
