@@ -43,7 +43,14 @@ export const ResizeDividersLayerWidget: React.FC<ResizeDividersLayerWidgetProps>
 				.filter((p) => p instanceof WorkspaceNodeModel)
 				.flatMap((m: WorkspaceNodeModel) => m.getResizeDivisions())
 				.map((m) => {
-					return <ResizeDividerWidget engine={props.engine} dividerContainer={m} key={m.dimensions.id} />;
+					return (
+						<ResizeDividerWidget
+							parent={m.before.parent as WorkspaceNodeModel}
+							engine={props.engine}
+							dividerContainer={m}
+							key={m.dimensions.id}
+						/>
+					);
 				})}
 		</>
 	);

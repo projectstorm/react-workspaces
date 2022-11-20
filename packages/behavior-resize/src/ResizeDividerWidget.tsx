@@ -4,15 +4,19 @@ import styled from '@emotion/styled';
 import {
 	Alignment,
 	DimensionTrackingWidget,
+	getAlignmentInverted,
 	ResizeDivision,
 	useMouseDragDistance,
 	UseMouseDragDistanceProps,
-	WorkspaceEngine
+	WorkspaceEngine,
+	WorkspaceModel,
+	WorkspaceNodeModel
 } from '@projectstorm/react-workspaces-core';
 
 export interface ResizeDividerWidgetProps {
 	dividerContainer: ResizeDivision;
 	engine: WorkspaceEngine;
+	parent: WorkspaceNodeModel;
 }
 
 const isAligned = (divider: ResizeDivision, aligned: Alignment) => {
@@ -35,83 +39,79 @@ const isAligned = (divider: ResizeDivision, aligned: Alignment) => {
 	return false;
 };
 
-const getResizeStrategy = (divider: ResizeDivision): Pick<UseMouseDragDistanceProps, 'startMove' | 'moved'> => {
-	let initial1 = 0;
-	let initial2 = 0;
-
-	const { before, after } = divider;
-
-	if (divider.vertical) {
-		// shrink|expand OR left aligned
-		if ((!before.expandHorizontal && after.expandHorizontal) || isAligned(divider, Alignment.LEFT)) {
-			return {
-				startMove: () => {
-					initial1 = before.size.width;
-				},
-				moved: ({ distanceX }) => {
-					before.setWidth(initial1 + distanceX);
-				}
-			};
-		}
-		// expand|shrink OR right aligned
-		else if ((!after.expandHorizontal && before.expandHorizontal) || !isAligned(divider, Alignment.LEFT)) {
-			return {
-				startMove: () => {
-					initial1 = after.size.width;
-				},
-				moved: ({ distanceX }) => {
-					after.setWidth(initial1 - distanceX);
-				}
-			};
-		}
-		// shrink|shrink
-		else if (!before.expandHorizontal && !after.expandHorizontal) {
-			return {
-				startMove: () => {
-					initial1 = before.size.width;
-					initial2 = after.size.width;
-				},
-				moved: ({ distanceX }) => {
-					before.setWidth(initial1 + distanceX);
-					after.setWidth(initial2 - distanceX);
-				}
-			};
-		}
+const getAvailableElement = (model: WorkspaceModel, aligned: Alignment) => {
+	let width = [Alignment.LEFT, Alignment.RIGHT].indexOf(aligned);
+	const sibling = model.getSibling(aligned);
+	if (!sibling) {
+		return model;
 	}
-
-	// !------ VERTICAL ------
-	// shrink|expand OR top aligned
-	if ((!before.expandHorizontal && after.expandHorizontal) || isAligned(divider, Alignment.TOP)) {
-		return {
-			startMove: () => {
-				initial1 = before.size.height;
-			},
-			moved: ({ distanceY }) => {
-				before.setHeight(initial1 + distanceY);
-			}
-		};
+	if (
+		width &&
+		[model.size.width, model.minimumSize.width, model.maximumSize.width].every((v, index, arr) => v === arr[0])
+	) {
+		return getAvailableElement(sibling, aligned);
 	}
-	// shrink|expand OR bottom aligned
-	else if ((!after.expandHorizontal && before.expandHorizontal) || !isAligned(divider, Alignment.TOP)) {
-		return {
-			startMove: () => {
-				initial1 = after.size.height;
-			},
-			moved: ({ distanceY }) => {
-				after.setHeight(initial1 - distanceY);
-			}
-		};
+	if (
+		!width &&
+		[model.size.height, model.minimumSize.height, model.maximumSize.height].every((v, index, arr) => v === arr[0])
+	) {
+		return getAvailableElement(sibling, aligned);
 	}
+	return model;
+};
 
-	// shrink|shrink
+const getResizeStrategy = (
+	divider: ResizeDivision,
+	parent: WorkspaceNodeModel
+): Pick<UseMouseDragDistanceProps, 'startMove' | 'moved'> => {
+	let sizeSnapshot = new Map<WorkspaceModel, number>();
+
+	const isExpand = (model: WorkspaceModel) => {
+		if (divider.vertical) {
+			return model.expandHorizontal;
+		}
+		return model.expandVertical;
+	};
+
+	const setSize = (model: WorkspaceModel, val: number) => {
+		if (divider.vertical) {
+			model.setWidth(val);
+		} else {
+			model.setHeight(val);
+		}
+	};
+
 	return {
 		startMove: () => {
-			initial1 = before.size.height;
-			initial2 = after.size.height;
+			sizeSnapshot = new Map(
+				parent.children.map((c) => {
+					if (parent.vertical) {
+						return [c, c.size.height];
+					}
+					return [c, c.size.width];
+				})
+			);
 		},
-		moved: ({ distanceY }) => {
-			before.setHeight(initial1 + distanceY);
-			after.setHeight(initial2 - distanceY);
+		moved: ({ distanceX, distanceY }) => {
+			const distance = divider.vertical ? distanceX : distanceY;
+			const alignment = divider.vertical ? Alignment.LEFT : Alignment.TOP;
+
+			let { before, after } = divider;
+
+			// shrink|expand OR left aligned
+			if ((!isExpand(before) && isExpand(after)) || isAligned(divider, alignment)) {
+				before = getAvailableElement(before, alignment);
+				setSize(before, sizeSnapshot.get(before) + distance);
+			}
+			// expand|shrink OR right aligned
+			if ((isExpand(before) && !isExpand(after)) || !isAligned(divider, alignment)) {
+				after = getAvailableElement(after, getAlignmentInverted(alignment));
+				setSize(after, sizeSnapshot.get(after) - distance);
+			}
+			// shrink|shrink
+			else {
+				setSize(before, sizeSnapshot.get(before) + distance);
+			}
 		}
 	};
 };
@@ -121,7 +121,7 @@ export const ResizeDividerWidget: React.FC<ResizeDividerWidgetProps> = (props) =
 	const vertical = props.dividerContainer.vertical;
 	const ref = useRef<HTMLDivElement>();
 	const [strategy] = useState(() => {
-		return getResizeStrategy(props.dividerContainer);
+		return getResizeStrategy(props.dividerContainer, props.parent);
 	});
 
 	useEffect(() => {

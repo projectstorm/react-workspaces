@@ -21,6 +21,15 @@ export enum Alignment {
 	RIGHT = 'right'
 }
 
+export const getAlignmentInverted = (alignment: Alignment) => {
+	return {
+		[Alignment.TOP]: Alignment.BOTTOM,
+		[Alignment.BOTTOM]: Alignment.TOP,
+		[Alignment.LEFT]: Alignment.RIGHT,
+		[Alignment.RIGHT]: Alignment.LEFT
+	}[alignment];
+};
+
 export enum Corner {
 	TOP_LEFT = 'nw',
 	TOP_RIGHT = 'ne',
