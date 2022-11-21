@@ -5,7 +5,11 @@ import { DefaultPanelTitleWidget } from './widgets/DefaultPanelTitleWidget';
 import { DefaultWorkspacePanelModel } from './panel/DefaultWorkspacePanelModel';
 import { DefaultPanelTabWidget } from './widgets/DefaultPanelTabWidget';
 import { DefaultWorkspacePanelFactory } from './panel/DefaultWorkspacePanelFactory';
-import { TrayModelPanelRenderer, TrayModelPanelRendererEvent } from '@projectstorm/react-workspaces-model-tray';
+import {
+	TrayModelPanelRenderer,
+	TrayModelPanelRendererEvent,
+	WorkspaceTrayMode
+} from '@projectstorm/react-workspaces-model-tray';
 import { DefaultPanelMicroButtonWidget } from './widgets/DefaultPanelMicroButtonWidget';
 
 export class DefaultSubComponentRenderer
@@ -15,7 +19,13 @@ export class DefaultSubComponentRenderer
 		TrayModelPanelRenderer<DefaultWorkspacePanelModel>
 {
 	renderIcon(event: TrayModelPanelRendererEvent<DefaultWorkspacePanelModel>): JSX.Element {
-		return <DefaultPanelMicroButtonWidget selected={event.selected} icon={event.model.icon} />;
+		return (
+			<DefaultPanelMicroButtonWidget
+				smaller={event.parent.mode === WorkspaceTrayMode.NORMAL}
+				selected={event.selected}
+				icon={event.model.icon}
+			/>
+		);
 	}
 
 	renderTitleBar(model: RenderTitleBarEvent<DefaultWorkspacePanelModel>): JSX.Element {

@@ -23,7 +23,8 @@ export const DraggableWidget: React.FC<React.PropsWithChildren<DraggableWidgetPr
 	const ref = useRef<HTMLDivElement>();
 	useDraggableModel({
 		forwardRef: props.forwardRef || ref,
-		model: props.model
+		model: props.model,
+		engine: props.engine
 	});
 	return (
 		<S.Draggable

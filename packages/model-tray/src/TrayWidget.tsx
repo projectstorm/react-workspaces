@@ -1,16 +1,17 @@
 import * as React from 'react';
+import { useEffect } from 'react';
 import { WorkspaceTrayMode, WorkspaceTrayModel } from './WorkspaceTrayModel';
 import styled from '@emotion/styled';
-import { DraggableWidget, WorkspaceEngine, WorkspaceModel } from '@projectstorm/react-workspaces-core';
+import { DraggableWidget, useForceUpdate, WorkspaceEngine, WorkspaceModel } from '@projectstorm/react-workspaces-core';
 import { MicroLayoutWidget } from './MicroLayoutWidget';
 import { WorkspaceTrayFactory } from './WorkspaceTrayFactory';
 
 export interface TrayWidgetProps {
-	node: WorkspaceTrayModel;
-	engine: WorkspaceEngine;
-	header: JSX.Element;
-	className?: any;
-	factory: WorkspaceTrayFactory;
+  node: WorkspaceTrayModel;
+  engine: WorkspaceEngine;
+  header: JSX.Element;
+  className?: any;
+  factory: WorkspaceTrayFactory;
 }
 
 export interface TrayWidgetState {
@@ -67,12 +68,7 @@ export const PanelContent: React.FC<PanelContentProps> = (props) => {
 export const TrayContentExpanded: React.FC<TrayWidgetProps> = (props) => {
 	return (
 		<S.Content>
-			<S.MicroLayoutShrink
-				node={props.node}
-				engine={props.engine}
-				factory={props.factory}
-				width={props.node.options.iconWidth}
-			/>
+			<S.MicroLayoutShrink node={props.node} engine={props.engine} factory={props.factory} />
 			<PanelContent engine={props.engine} model={props.node.getSelectedModel()} />
 		</S.Content>
 	);
@@ -82,26 +78,28 @@ export const TrayContentShrink: React.FC<TrayWidgetProps> = (props) => {
 	return <S.MicroLayout node={props.node} engine={props.engine} factory={props.factory} />;
 };
 
-export class TrayWidget extends React.Component<TrayWidgetProps, TrayWidgetState> {
-	getHeader() {
-		return (
-			<DraggableWidget model={this.props.node} engine={this.props.engine}>
-				{this.props.header}
-			</DraggableWidget>
-		);
-	}
-
-	render() {
-		const expand = this.props.node.shouldExpand() && this.props.node.mode === WorkspaceTrayMode.NORMAL;
-		return (
-			<S.Container width={this.props.node.size.width} className={this.props.className} expand={expand}>
-				{this.getHeader()}
-				{this.props.node.mode === WorkspaceTrayMode.NORMAL ? (
-					<TrayContentExpanded {...this.props} />
-				) : (
-					<TrayContentShrink {...this.props} />
-				)}
-			</S.Container>
-		);
-	}
-}
+export const TrayWidget: React.FC<TrayWidgetProps> = (props) => {
+	const forceUpdate = useForceUpdate();
+	useEffect(() => {
+		return props.node.registerListener({
+			selectionChanged: () => {
+				forceUpdate();
+			}
+		});
+	}, []);
+	const expand = props.node.shouldExpand() && props.node.mode === WorkspaceTrayMode.NORMAL;
+	return (
+		<S.Container width={props.node.size.width} className={props.className} expand={expand}>
+			{
+				<DraggableWidget model={props.node} engine={props.engine}>
+					{props.header}
+				</DraggableWidget>
+			}
+			{props.node.mode === WorkspaceTrayMode.NORMAL ? (
+				<TrayContentExpanded {...props} />
+			) : (
+				<TrayContentShrink {...props} />
+			)}
+		</S.Container>
+	);
+};

@@ -1,4 +1,10 @@
-import { WorkspaceEngine, WorkspaceModel, WorkspaceNodeModel } from '@projectstorm/react-workspaces-core';
+import {
+	SerializedCollectionModel,
+	WorkspaceEngine,
+	WorkspaceModel,
+	WorkspaceNodeModel,
+	WorkspaceNodeModelListener
+} from '@projectstorm/react-workspaces-core';
 import {
 	FloatingWindowFactory,
 	FloatingWindowModel,
@@ -12,10 +18,17 @@ export enum WorkspaceTrayMode {
 
 export interface WorkspaceTrayModelOptions {
 	iconWidth: number;
+	expandedWidth: number;
 	factory: FloatingWindowFactory;
 }
 
-export class WorkspaceTrayModel extends WorkspaceNodeModel {
+export interface WorkspaceTrayModelListener extends WorkspaceNodeModelListener {
+	selectionChanged: () => any;
+}
+
+export interface SerializedWorkspaceTrayModel extends SerializedCollectionModel {}
+
+export class WorkspaceTrayModel extends WorkspaceNodeModel<SerializedWorkspaceTrayModel, WorkspaceTrayModelListener> {
 	mode: WorkspaceTrayMode;
 	selectedModel: WorkspaceModel;
 	floatingWindow: FloatingWindowModel;
@@ -27,9 +40,8 @@ export class WorkspaceTrayModel extends WorkspaceNodeModel {
 
 	constructor(public options: WorkspaceTrayModelOptions) {
 		super(WorkspaceTrayModel.NAME);
-		this.floatingModel = null;
+		this.selectedModel = null;
 		this.floatingWindow = options.factory.generateModel();
-
 		this.floatingWindow.registerListener({
 			childUpdated: () => {
 				this.floatingWindow.minimumSize.update({
@@ -45,7 +57,7 @@ export class WorkspaceTrayModel extends WorkspaceNodeModel {
 				});
 			}
 		});
-
+		this.normalSize = options.expandedWidth;
 		this.size.registerListener({
 			updated: () => {
 				if (this.mode === WorkspaceTrayMode.NORMAL) {
@@ -57,12 +69,15 @@ export class WorkspaceTrayModel extends WorkspaceNodeModel {
 	}
 
 	getSelectedModel() {
-		return this.selectedModel || this.children[0];
+		return this.selectedModel;
 	}
 
 	setSelectedModel(child: WorkspaceModel) {
 		this.selectedModel = child;
-		this.invalidateLayout();
+		if (this.mode === WorkspaceTrayMode.COLLAPSED) {
+			this.setFloatingModel(child);
+		}
+		this.iterateListeners((cb) => cb.selectionChanged?.());
 	}
 
 	updateWindowPosition(child: WorkspaceModel) {
@@ -89,12 +104,25 @@ export class WorkspaceTrayModel extends WorkspaceNodeModel {
 		this.setMode(payload['mode']);
 	}
 
+	addModel(model: WorkspaceModel, position: number = null): this {
+		super.addModel(model, position);
+		this.normalizeSelectedModel();
+		return this;
+	}
+
 	removeModel(model: WorkspaceModel, runNormalizationChecks: boolean = true): this {
 		super.removeModel(model, runNormalizationChecks);
-		if (this.floatingModel && this.floatingModel === model) {
-			this.floatingModel = null;
+		if (this.selectedModel && this.selectedModel === model) {
+			this.selectedModel = null;
 		}
+		this.normalizeSelectedModel();
 		return this;
+	}
+
+	normalizeSelectedModel() {
+		if (this.mode === WorkspaceTrayMode.NORMAL && this.selectedModel == null) {
+			this.setSelectedModel(this.children[0]);
+		}
 	}
 
 	setMode(mode: WorkspaceTrayMode): this {
@@ -102,6 +130,7 @@ export class WorkspaceTrayModel extends WorkspaceNodeModel {
 
 		//lock in all the sizes when collapsed
 		if (this.mode === WorkspaceTrayMode.COLLAPSED) {
+			this.setSelectedModel(null);
 			this.size.update({
 				width: this.options.iconWidth
 			});
@@ -112,6 +141,7 @@ export class WorkspaceTrayModel extends WorkspaceNodeModel {
 				width: this.options.iconWidth
 			});
 		} else {
+			this.normalizeSelectedModel();
 			this.setFloatingModel(null);
 			this.maximumSize.update({
 				width: 0
@@ -132,7 +162,6 @@ export class WorkspaceTrayModel extends WorkspaceNodeModel {
 	}
 
 	setFloatingModel(model: WorkspaceModel | null): this {
-		this.floatingModel = model;
 		if (model === null) {
 			this.floatingWindow.delete();
 			return this;
@@ -141,7 +170,9 @@ export class WorkspaceTrayModel extends WorkspaceNodeModel {
 
 		// add the window
 		const root = this._getRootModel();
-		root.addFloatingWindow(this.floatingWindow);
+		if (root?.addFloatingWindow) {
+			root.addFloatingWindow(this.floatingWindow);
+		}
 		return this;
 	}
 }

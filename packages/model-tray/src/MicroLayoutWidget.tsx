@@ -59,23 +59,24 @@ export const MicroWrapper: React.FC<MicroWrapperProps> = (props) => {
 		forwardRef: props.scrollRef,
 		dimension: props.model.r_dimensions
 	});
-	let selected = props.node.floatingModel && props.node.floatingModel.id === props.model.id;
+	let selected = props.node.selectedModel && props.node.selectedModel.id === props.model.id;
 	const renderer = props.factory.getRendererForModel(props.model);
 	return (
 		<DraggableWidget model={props.model} engine={props.engine}>
 			<div
 				ref={ref}
 				onClick={() => {
-					if (props.node.floatingModel === props.model) {
-						props.node.setFloatingModel(null);
+					if (props.node.selectedModel === props.model) {
+						props.node.setSelectedModel(null);
 					} else {
-						props.node.setFloatingModel(props.model);
+						props.node.setSelectedModel(props.model);
 					}
 				}}
 			>
 				{renderer?.renderIcon({
 					model: props.model,
-					selected: selected
+					selected: selected,
+					parent: props.node
 				}) || <span>?</span>}
 			</div>
 		</DraggableWidget>

@@ -11,6 +11,7 @@ import { FloatingWindowFactory } from '@projectstorm/react-workspaces-model-floa
 
 export interface TrayModelPanelRendererEvent<T extends WorkspaceModel> {
 	model: T;
+	parent: WorkspaceTrayModel;
 	selected: boolean;
 }
 
@@ -33,6 +34,7 @@ export class WorkspaceTrayFactory<T extends WorkspaceTrayModel = WorkspaceTrayMo
 	generateModel(): T {
 		return new WorkspaceTrayModel({
 			iconWidth: 50,
+			expandedWidth: 200,
 			factory: this.options.windowFactory
 		}) as T;
 	}

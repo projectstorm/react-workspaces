@@ -4,7 +4,6 @@ import { SerializedModel, WorkspaceModel } from '../../../core-models/WorkspaceM
 import { useDraggable } from '../dnd/useDraggable';
 import { log, regenerateIDs } from '../../../core/tools';
 import { useDragOverModel } from './useDragOverModel';
-import * as _ from 'lodash';
 
 export const WORKSPACE_MODEL_MIME = 'srw/model';
 export const WORKSPACE_MODEL_ID_MIME = 'srw/modelid/';
@@ -15,6 +14,7 @@ export interface WorkspaceModelDragEncoded {
 export interface UseDraggableModelOptions {
 	forwardRef: React.RefObject<HTMLDivElement>;
 	model: WorkspaceModel;
+	engine: WorkspaceEngine;
 }
 
 export const useDraggableModel = (props: UseDraggableModelOptions) => {
@@ -29,6 +29,7 @@ export const useDraggableModel = (props: UseDraggableModelOptions) => {
 			if (success && !copy) {
 				props.model.delete();
 			}
+			props.engine.setDraggingNode(null);
 		},
 		forwardRef: props.forwardRef
 	});
@@ -60,7 +61,6 @@ export const useDroppableModel = (props: UseDroppableModelOptions) => {
 			}
 
 			log(`workspace model dropped`, draggingNode);
-			props.engine.setDraggingNode(null);
 			props.onDrop(draggingNode);
 		},
 		forwardRef: props.forwardRef

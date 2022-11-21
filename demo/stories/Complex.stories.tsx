@@ -16,6 +16,7 @@ export const ComplexLayout = function (args) {
 
 		const largeTray = new WorkspaceTrayModel({
 			iconWidth: 50,
+			expandedWidth: 250,
 			factory: windowFactory
 		})
 			.setMode(WorkspaceTrayMode.COLLAPSED)
@@ -46,6 +47,7 @@ export const ComplexLayout = function (args) {
 			.addModel(
 				new WorkspaceTrayModel({
 					iconWidth: 50,
+					expandedWidth: 250,
 					factory: windowFactory
 				})
 					.setMode(WorkspaceTrayMode.NORMAL)

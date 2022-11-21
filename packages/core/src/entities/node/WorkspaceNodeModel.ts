@@ -19,20 +19,18 @@ export interface WorkspaceNodeModelListener extends WorkspaceCollectionModelList
 	divisionsRecomputed: () => any;
 }
 
-export class WorkspaceNodeModel extends WorkspaceCollectionModel<
-	SerializedCollectionModel,
-	WorkspaceNodeModelListener
-> {
+export class WorkspaceNodeModel<
+	T extends SerializedCollectionModel = SerializedCollectionModel,
+	L extends WorkspaceNodeModelListener = WorkspaceNodeModelListener
+> extends WorkspaceCollectionModel<T, L> {
 	static NAME = 'srw-node';
 
 	vertical: boolean;
-	floatingModel: WorkspaceModel;
 	r_divisons: DimensionContainer[];
 
 	constructor(type: string = WorkspaceNodeModel.NAME) {
 		super(type);
 		this.vertical = true;
-		this.floatingModel = null;
 		this.r_divisons = [];
 	}
 
