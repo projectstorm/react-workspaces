@@ -22,6 +22,7 @@ export interface DropZoneLayerPanelWidgetProps {
 	model: WorkspaceModel;
 	engine: WorkspaceEngine;
 	directive: DropZonePanelDirective;
+	debug: boolean;
 }
 
 export const DropZoneLayerPanelWidget: React.FC<DropZoneLayerPanelWidgetProps> = (props) => {
@@ -59,6 +60,7 @@ export const DropZoneLayerPanelWidget: React.FC<DropZoneLayerPanelWidgetProps> =
 							<DropZoneLayerButtonWidget engine={props.engine} text="Tabs" icon="copy" />
 							<DropZoneLayerButtonWidget engine={props.engine} text="Tray" icon="copy" />
 						</S.ButtonBar>
+						{props.debug ? <S.Debug>{props.model.id.substring(0, 7)}</S.Debug> : null}
 					</S.Layer2>
 				</S.Inside>
 			</S.DimensionTracking>
@@ -74,6 +76,11 @@ namespace S {
 		border: solid 2px ${(p) => (p.entered ? '#0096ff' : 'transparent')};
 		transition: border 0.5s, background 0.5s;
 		pointer-events: all;
+	`;
+
+	export const Debug = styled.span`
+		font-size: 10px;
+		color: white;
 	`;
 
 	export const ButtonBar = styled.div`

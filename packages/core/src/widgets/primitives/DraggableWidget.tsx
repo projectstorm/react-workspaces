@@ -35,7 +35,6 @@ export const DraggableWidget: React.FC<React.PropsWithChildren<DraggableWidgetPr
 				});
 			}}
 			onDragEnd={(event) => {
-				props.engine.setDraggingNode(null);
 				props.engine.iterateListeners((list) => {
 					list.draggingElement && list.draggingElement(props.model, false);
 				});

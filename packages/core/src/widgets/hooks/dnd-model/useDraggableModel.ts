@@ -27,9 +27,7 @@ export const useDraggableModel = (props: UseDraggableModelOptions) => {
 		},
 		dragend: ({ copy, success }) => {
 			if (success && !copy) {
-				_.defer(() => {
-					props.model.delete();
-				});
+				props.model.delete();
 			}
 		},
 		forwardRef: props.forwardRef
@@ -62,6 +60,7 @@ export const useDroppableModel = (props: UseDroppableModelOptions) => {
 			}
 
 			log(`workspace model dropped`, draggingNode);
+			props.engine.setDraggingNode(null);
 			props.onDrop(draggingNode);
 		},
 		forwardRef: props.forwardRef

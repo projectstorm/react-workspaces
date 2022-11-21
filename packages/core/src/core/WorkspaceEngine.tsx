@@ -123,10 +123,8 @@ export class WorkspaceEngine extends BaseObserver<WorkspaceEngineListener> imple
 		if (this.draggingID !== id) {
 			this.draggingID = id;
 			this.iterateListeners((cb) => cb.modelDragStart?.());
-			this.fireRepaintListeners();
 		} else if (id === null) {
 			this.iterateListeners((cb) => cb.modelDragEnd?.());
-			this.fireRepaintListeners();
 		}
 	}
 }

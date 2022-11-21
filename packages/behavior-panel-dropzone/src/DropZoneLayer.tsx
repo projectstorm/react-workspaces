@@ -6,6 +6,7 @@ import { DropZoneLayerPanelWidget, DropZonePanelDirective } from './DropZoneLaye
 export interface DropZoneLayerOptions {
 	getDropZoneForModel: (model: WorkspaceModel) => DropZonePanelDirective | null;
 	modelID: string;
+	debugModels: boolean;
 }
 
 export class DropZoneLayer extends Layer {
@@ -18,6 +19,7 @@ export class DropZoneLayer extends Layer {
 	renderLayer(event): JSX.Element {
 		return (
 			<DropZoneLayerWidget
+				debugModels={this.options2.debugModels}
 				engine={event.engine}
 				draggingModel={this.options2.modelID}
 				getDropZoneForModel={this.options2.getDropZoneForModel}
@@ -30,25 +32,10 @@ export interface DropZoneLayerWidgetProps {
 	engine: WorkspaceEngine;
 	getDropZoneForModel: (model: WorkspaceModel) => DropZonePanelDirective | null;
 	draggingModel: string;
+	debugModels: boolean;
 }
 
 export const DropZoneLayerWidget: React.FC<DropZoneLayerWidgetProps> = (props) => {
-	const forceUpdate = useForceUpdate(true);
-
-	// TODO rerun this when models added
-	useEffect(() => {
-		const listeners = props.engine.rootModel.flatten().map((m) =>
-			m.registerListener({
-				visibilityChanged: () => {
-					forceUpdate();
-				}
-			})
-		);
-		return () => {
-			listeners.forEach((l) => l());
-		};
-	}, []);
-
 	const draggingModelFlattened =
 		props.engine.rootModel
 			.flatten()
@@ -73,7 +60,15 @@ export const DropZoneLayerWidget: React.FC<DropZoneLayerWidgetProps> = (props) =
 						return null;
 					}
 
-					return <DropZoneLayerPanelWidget directive={directive} engine={props.engine} model={m} key={m.id} />;
+					return (
+						<DropZoneLayerPanelWidget
+							debug={props.debugModels}
+							directive={directive}
+							engine={props.engine}
+							model={m}
+							key={m.id}
+						/>
+					);
 				})}
 		</>
 	);

@@ -129,6 +129,7 @@ export class WorkspaceCollectionModel<
 		if (runNormalizationChecks) {
 			this.normalize();
 		}
+		this.invalidateLayout();
 		return this;
 	}
 
@@ -159,6 +160,7 @@ export class WorkspaceCollectionModel<
 		} else {
 			this.children.splice(position, 0, model);
 		}
+		this.invalidateLayout();
 		return this;
 	}
 

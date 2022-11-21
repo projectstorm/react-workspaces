@@ -17,7 +17,7 @@ export const useResizeObserver = (props: UseResizeObserverProps) => {
 			}
 			let dims = props.forwardRef.current.getBoundingClientRect();
 			props.dimension.update(dims);
-		}, 100),
+		}, 500),
 		[]
 	);
 

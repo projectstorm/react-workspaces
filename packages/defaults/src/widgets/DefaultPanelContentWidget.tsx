@@ -30,6 +30,7 @@ export const DefaultPanelContentWidget: React.FC<DefaultPanelContentWidgetProps>
 	return (
 		<S.Container>
 			<Meta label="Title" value={props.model.displayName} />
+			<Meta label="ID" value={props.model.id.substring(0, 7)} />
 			<Meta label="Expand horizontal" value={props.model.expandHorizontal ? 'true' : 'false'} />
 			<Meta label="Expand vertical" value={props.model.expandVertical ? 'true' : 'false'} />
 			<S.Rendering ref={ref}>rendering</S.Rendering>

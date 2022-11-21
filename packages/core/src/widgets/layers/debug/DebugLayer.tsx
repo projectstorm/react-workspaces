@@ -80,7 +80,11 @@ export const DebugLayerWidget: React.FC<DebugLayerWidgetProps> = (props) => {
 						.flatten()
 						.filter((p) => !(p instanceof WorkspaceCollectionModel))
 						.map((m) => {
-							return <S.Outline2 dimension={m.r_dimensions} key={m.id} />;
+							return (
+								<S.Outline2 dimension={m.r_dimensions} key={m.id}>
+									<S.DebugID>{m.id.substring(0, 7)}</S.DebugID>
+								</S.Outline2>
+							);
 						})
 				: []}
 
@@ -116,5 +120,16 @@ namespace S {
 	export const Outline2 = styled(DimensionTrackingWidget)`
 		box-sizing: border-box;
 		border: solid cyan 1px;
+	`;
+
+	export const DebugID = styled.div`
+		background: cyan;
+		color: black;
+		font-size: 10px;
+		padding: 2px;
+		display: inline-block;
+		top: 0;
+		right: 0;
+		position: absolute;
 	`;
 }

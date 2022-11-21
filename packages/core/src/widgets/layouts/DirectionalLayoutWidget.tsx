@@ -1,13 +1,12 @@
 import * as React from 'react';
+import { useEffect } from 'react';
 import * as _ from 'lodash';
 import { WorkspaceModel } from '../../core-models/WorkspaceModel';
 import { WorkspaceEngine } from '../../core/WorkspaceEngine';
 import styled from '@emotion/styled';
 import { DividerWidget } from '../primitives/DividerWidget';
 import { DimensionContainer } from '../../core/dimensions/DimensionContainer';
-import { useEffect } from 'react';
 import { useForceUpdate } from '../hooks/useForceUpdate';
-import { WorkspaceNodeModel } from '../../entities/node/WorkspaceNodeModel';
 
 export interface DirectionalLayoutWidgetProps {
 	vertical: boolean;

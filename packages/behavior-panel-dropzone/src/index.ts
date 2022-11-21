@@ -11,6 +11,7 @@ import { DropZonePanelDirective } from './DropZoneLayerPanelWidget';
 export interface DraggingItemBehaviorOptions {
 	getDropZoneForModel: (model: WorkspaceModel) => DropZonePanelDirective | null;
 	engine: WorkspaceEngine;
+	debug?: boolean;
 }
 
 export const draggingItemBehavior = (options: DraggingItemBehaviorOptions) => {
@@ -23,7 +24,8 @@ export const draggingItemBehavior = (options: DraggingItemBehaviorOptions) => {
 			}
 			layer = new DropZoneLayer({
 				modelID: engine.draggingID,
-				getDropZoneForModel: options.getDropZoneForModel
+				getDropZoneForModel: options.getDropZoneForModel,
+				debugModels: options.debug
 			});
 			engine.layerManager.addLayer(layer);
 		},
