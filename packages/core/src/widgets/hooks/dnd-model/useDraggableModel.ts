@@ -27,7 +27,11 @@ export const useDraggableModel = (props: UseDraggableModelOptions) => {
 		},
 		dragend: ({ copy, success }) => {
 			if (success && !copy) {
-				props.model.delete();
+				// if we get here, then the drop was on a different window, so we should remove the element
+				if (!props.engine.draggingID) {
+					props.model.delete();
+					props.engine.normalize();
+				}
 			}
 			props.engine.setDraggingNode(null);
 		},
@@ -51,13 +55,16 @@ export const useDroppableModel = (props: UseDroppableModelOptions) => {
 	useDroppable<WorkspaceModelDragEncoded>({
 		dropped: (model, opts) => {
 			const factory = props.engine.getFactory(model[WORKSPACE_MODEL_MIME].type);
-			const draggingNode = factory.generateModel();
+			let draggingNode = factory.generateModel();
 			draggingNode.fromArray(model[WORKSPACE_MODEL_MIME], props.engine);
 
 			// recursively update models because this is a clone operation
 			if (opts.isCopy) {
 				log(`was a copy operation, regenerating ids`);
 				regenerateIDs(draggingNode);
+			} else {
+				const found = props.engine.rootModel.flatten().find((m) => m.id === draggingNode.id);
+				draggingNode = found || draggingNode;
 			}
 
 			log(`workspace model dropped`, draggingNode);

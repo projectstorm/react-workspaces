@@ -110,8 +110,8 @@ export class WorkspaceTrayModel extends WorkspaceNodeModel<SerializedWorkspaceTr
 		return this;
 	}
 
-	removeModel(model: WorkspaceModel, runNormalizationChecks: boolean = true): this {
-		super.removeModel(model, runNormalizationChecks);
+	removeModel(model: WorkspaceModel): this {
+		super.removeModel(model);
 		if (this.selectedModel && this.selectedModel === model) {
 			this.selectedModel = null;
 		}

@@ -92,17 +92,8 @@ export class WorkspaceNodeModel<
 		return this;
 	}
 
-	removeModel(model: WorkspaceModel, runNormalizationChecks: boolean = true): this {
-		super.removeModel(model, runNormalizationChecks);
-		if (
-			runNormalizationChecks &&
-			this.parent &&
-			this.parent instanceof WorkspaceCollectionModel &&
-			this.children.length === 1
-		) {
-			this.parent.replaceModel(this, this.children[0]);
-			return this;
-		}
+	removeModel(model: WorkspaceModel): this {
+		super.removeModel(model);
 		this.recomputeDivisions();
 		return this;
 	}

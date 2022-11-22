@@ -1,36 +1,17 @@
 import * as React from 'react';
-import { useRef, useState } from 'react';
 import styled from '@emotion/styled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { useDroppableModel, useMouseDragEvents } from '@projectstorm/react-workspaces-core';
-import { WorkspaceEngine } from '@projectstorm/react-workspaces-core';
 
 export interface DropZoneLayerButtonWidgetProps {
 	icon: IconProp;
 	text: string;
-	engine: WorkspaceEngine;
+	entered: boolean;
 }
 
 export const DropZoneLayerButtonWidget: React.FC<DropZoneLayerButtonWidgetProps> = (props) => {
-	const [entered, setEntered] = useState(false);
-	const ref = useRef<HTMLDivElement>();
-	useMouseDragEvents({
-		forwardRef: ref,
-		mouseEnter: () => {
-			setEntered(true);
-		},
-		mouseExit: () => {
-			setEntered(false);
-		}
-	});
-	useDroppableModel({
-		forwardRef: ref,
-		engine: props.engine,
-		onDrop: () => {}
-	});
 	return (
-		<S.Container ref={ref} entered={entered}>
+		<S.Container entered={props.entered}>
 			<S.Icon icon={props.icon} />
 			<S.Text>{props.text}</S.Text>
 		</S.Container>

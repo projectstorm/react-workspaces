@@ -5,6 +5,8 @@ import { WorkspaceEngineInterface } from './WorkspaceEngineInterface';
 import { BaseListener, BaseObserver } from './BaseObserver';
 import { LayerManager } from '../widgets/layers/LayerManager';
 import { DimensionContainer } from './dimensions/DimensionContainer';
+import { WorkspaceNodeModel } from '../entities/node/WorkspaceNodeModel';
+import { WorkspaceCollectionModel } from '../core-models/WorkspaceCollectionModel';
 
 export interface WorkspaceEngineListener extends BaseListener {
 	repaint?: () => any;
@@ -103,6 +105,13 @@ export class WorkspaceEngine extends BaseObserver<WorkspaceEngineListener> imple
 		this.iterateListeners((list) => {
 			list.repaint?.();
 		});
+	}
+
+	normalize() {
+		this.rootModel
+			.flatten()
+			.filter((m) => m instanceof WorkspaceCollectionModel)
+			.forEach((m: WorkspaceCollectionModel) => m.normalize());
 	}
 
 	registerFactory(factory: WorkspaceModelFactory) {

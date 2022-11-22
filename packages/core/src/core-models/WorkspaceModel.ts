@@ -167,7 +167,7 @@ export class WorkspaceModel<
 		this.parent = parent;
 	}
 
-	getRootModel() {
+	getRootModel(): WorkspaceModel {
 		if (!this.parent) {
 			return this;
 		}

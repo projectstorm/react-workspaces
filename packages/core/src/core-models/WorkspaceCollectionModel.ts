@@ -4,7 +4,6 @@ import { WorkspaceCollectionInterface } from './WorkspaceCollectionInterface';
 import { WorkspaceModelFactory } from '../core/WorkspaceModelFactory';
 import * as _ from 'lodash';
 import { Alignment } from '../core/tools';
-import { DimensionContainer } from '../core/dimensions/DimensionContainer';
 
 export interface SerializedCollectionModel extends SerializedModel {
 	children: SerializedModel[];
@@ -83,7 +82,7 @@ export class WorkspaceCollectionModel<
 
 	replaceModel(oldModel: WorkspaceModel, newModel): this {
 		let index = this.children.indexOf(oldModel);
-		this.removeModel(oldModel, false);
+		oldModel.delete();
 		this.addModel(newModel, index);
 		return this;
 	}
@@ -114,51 +113,65 @@ export class WorkspaceCollectionModel<
 	}
 
 	normalize() {
-		if (this.parent && this.parent instanceof WorkspaceCollectionModel && this.children.length === 0) {
-			this.parent.removeModel(this);
+		if (this.parent && this.parent instanceof WorkspaceCollectionModel) {
+			if (this.children.length === 0) {
+				this.parent.removeModel(this);
+			} else if (this.children.length === 1) {
+				this.parent.replaceModel(this, this.children[0]);
+			}
 		}
 	}
 
-	removeModel(model: WorkspaceModel, runNormalizationChecks: boolean = true): this {
+	removeModel(model: WorkspaceModel): this {
 		let index = this.children.indexOf(model);
 		if (index === -1) {
 			console.log('could not find model');
 			return this;
 		}
 		this.children.splice(index, 1);
-		if (runNormalizationChecks) {
-			this.normalize();
-		}
 		this.invalidateLayout();
 		return this;
 	}
 
 	addModel(model: WorkspaceModel, position: number = null): this {
-		model.setParent(this);
-
-		// allow a child to remove itself
-		const listener = model.registerListener({
-			removed: () => {
-				listener();
-				this.childrenListeners.delete(listener);
-				this.removeModel(model);
-				this.iterateListeners((list) => {
-					list.childRemoved?.(model);
-				});
-			},
-			layoutInvalidated: () => {
-				this.invalidateLayout();
-			},
-			dimensionsInvalidated: () => {
-				this.invalidateDimensions();
+		if (this.children.indexOf(model) !== -1) {
+			const pos = this.children.indexOf(model);
+			this.children.splice(pos, 1);
+			if (pos > position) {
+				this.children.splice(position, 0, model);
+			} else {
+				this.children.splice(position - 1, 0, model);
 			}
-		});
-		this.childrenListeners.add(listener);
-
-		if (position === null) {
-			this.children.push(model);
 		} else {
-			this.children.splice(position, 0, model);
+			if (model.parent) {
+				model.delete();
+			}
+			model.setParent(this);
+
+			// allow a child to remove itself
+			const listener = model.registerListener({
+				removed: () => {
+					listener();
+					this.childrenListeners.delete(listener);
+					this.removeModel(model);
+					this.iterateListeners((list) => {
+						list.childRemoved?.(model);
+					});
+				},
+				layoutInvalidated: () => {
+					this.invalidateLayout();
+				},
+				dimensionsInvalidated: () => {
+					this.invalidateDimensions();
+				}
+			});
+			this.childrenListeners.add(listener);
+
+			if (position === null) {
+				this.children.push(model);
+			} else {
+				this.children.splice(position, 0, model);
+			}
 		}
 		this.invalidateLayout();
 		return this;

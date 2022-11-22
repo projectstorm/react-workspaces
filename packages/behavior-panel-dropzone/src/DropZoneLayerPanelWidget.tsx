@@ -10,12 +10,28 @@ import {
 	WorkspaceModel
 } from '@projectstorm/react-workspaces-core';
 import { DropZoneAlignmentButtonWidget } from './DropZoneAlignmentButtonWidget';
+import { DropZoneTransformWidget } from './DropZoneTransformWidget';
+
+export interface TransformZoneEvent {
+	model: WorkspaceModel;
+	zoneModel: WorkspaceModel;
+	engine: WorkspaceEngine;
+}
+
+export interface TransformZone {
+	transform: (event: TransformZoneEvent) => any;
+	render: (options: { entered: boolean }) => any;
+	key: string;
+}
+
+export interface SplitZone {
+	alignment: Alignment;
+	handleDrop: (model: WorkspaceModel) => any;
+}
 
 export interface DropZonePanelDirective {
-	splitZones: {
-		alignment: Alignment;
-		handleDrop: (model: WorkspaceModel) => any;
-	}[];
+	splitZones: SplitZone[];
+	transformZones: TransformZone[];
 }
 
 export interface DropZoneLayerPanelWidgetProps {
@@ -56,9 +72,9 @@ export const DropZoneLayerPanelWidget: React.FC<DropZoneLayerPanelWidgetProps> =
 					</S.Layer>
 					<S.Layer2 visible={show}>
 						<S.ButtonBar>
-							<DropZoneLayerButtonWidget engine={props.engine} text="Replace" icon="copy" />
-							<DropZoneLayerButtonWidget engine={props.engine} text="Tabs" icon="copy" />
-							<DropZoneLayerButtonWidget engine={props.engine} text="Tray" icon="copy" />
+							{props.directive.transformZones.map((zone) => {
+								return <DropZoneTransformWidget model={props.model} zone={zone} engine={props.engine} key={zone.key} />;
+							})}
 						</S.ButtonBar>
 						{props.debug ? <S.Debug>{props.model.id.substring(0, 7)}</S.Debug> : null}
 					</S.Layer2>

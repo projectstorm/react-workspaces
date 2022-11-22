@@ -7,11 +7,11 @@ import { MicroLayoutWidget } from './MicroLayoutWidget';
 import { WorkspaceTrayFactory } from './WorkspaceTrayFactory';
 
 export interface TrayWidgetProps {
-  node: WorkspaceTrayModel;
-  engine: WorkspaceEngine;
-  header: JSX.Element;
-  className?: any;
-  factory: WorkspaceTrayFactory;
+	node: WorkspaceTrayModel;
+	engine: WorkspaceEngine;
+	header: JSX.Element;
+	className?: any;
+	factory: WorkspaceTrayFactory;
 }
 
 export interface TrayWidgetState {

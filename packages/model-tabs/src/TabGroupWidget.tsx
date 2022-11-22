@@ -1,12 +1,6 @@
 import * as React from 'react';
 import styled from '@emotion/styled';
-import {
-	DraggableWidget,
-	PerformanceWidget,
-	useForceUpdate,
-	useModelElement,
-	WorkspaceEngine
-} from '@projectstorm/react-workspaces-core';
+import { DraggableWidget, useForceUpdate, useModelElement, WorkspaceEngine } from '@projectstorm/react-workspaces-core';
 import { WorkspaceTabModel } from './WorkspaceTabModel';
 import { useEffect } from 'react';
 
@@ -60,16 +54,10 @@ export const TabGroupWidget: React.FC<TabGroupWidgetProps> = (props) => {
 				{props.tabs}
 			</S.Draggable>
 			<S.Content ref={ref}>
-				<PerformanceWidget
-					data={selected.toArray()}
-					engine={props.engine}
-					children={() => {
-						return selectedFactory.generateContent({
-							model: selected,
-							engine: props.engine
-						});
-					}}
-				/>
+				{selectedFactory.generateContent({
+					model: selected,
+					engine: props.engine
+				})}
 			</S.Content>
 		</S.Container>
 	);

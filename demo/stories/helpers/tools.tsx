@@ -18,7 +18,8 @@ import {
 } from '@projectstorm/react-workspaces-defaults';
 import {
 	draggingItemBehavior,
-	getDirectiveForWorkspaceNode
+	getDirectiveForWorkspaceNode,
+	ReplaceZone
 } from '@projectstorm/react-workspaces-behavior-panel-dropzone';
 import { draggingItemDividerBehavior } from '@projectstorm/react-workspaces-behavior-divider-dropzone';
 import { WorkspaceTabFactory } from '@projectstorm/react-workspaces-model-tabs';
@@ -82,7 +83,7 @@ export const useEngine = (args: { DebugDividers?: boolean; DebugResizers?: boole
 		draggingItemBehavior({
 			engine: e,
 			getDropZoneForModel: (model) => {
-				return getDirectiveForWorkspaceNode(model);
+				return getDirectiveForWorkspaceNode(model, [ReplaceZone]);
 			},
 			debug: true
 		});
