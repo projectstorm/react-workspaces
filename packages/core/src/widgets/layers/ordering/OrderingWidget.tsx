@@ -127,7 +127,18 @@ export const SmartOrderingWidget: React.FC<SmartOrderingWidgetProps> = (props) =
 	}, []);
 	return (
 		<S.Container className={props.className} ref={props.forwardRef}>
-			{dragging ? <OrderingWidget {...props} /> : props.children}
+			{dragging ? (
+				<OrderingWidget
+					{...props}
+					dropped={(event) => {
+						// eagerly set to false so the smart zone unmounts
+						setDragging(false);
+						props.dropped?.(event);
+					}}
+				/>
+			) : (
+				props.children
+			)}
 		</S.Container>
 	);
 };
@@ -139,11 +150,13 @@ namespace S {
 		width: ${(p) => (p.expand ? 40 : 0)}px;
 		height: 100%;
 		transition: width 0.3s;
+		flex-shrink: 0;
 	`;
 
 	export const ExpandVertical = styled.div<{ expand: boolean }>`
 		height: ${(p) => (p.expand ? 40 : 0)}px;
 		width: 100%;
 		transition: height 0.3s;
+		flex-shrink: 0;
 	`;
 }

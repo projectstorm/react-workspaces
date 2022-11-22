@@ -11,6 +11,7 @@ export interface UseDraggableProps<T extends { [key: string]: any }> {
 export const useDraggable = <T>(props: UseDraggableProps<T>) => {
 	useEffect(() => {
 		const dragStart = (event: DragEvent) => {
+			event.stopPropagation();
 			const object = props.encode();
 			if (!object) {
 				return;

@@ -47,7 +47,10 @@ export class WorkspaceTabFactory<T extends WorkspaceTabModel = WorkspaceTabModel
 	generateTabs(event: WorkspaceModelFactoryEvent<T>) {
 		return (
 			<S.TabGroup
-				dropped={() => {}}
+				dropped={({ model, index }) => {
+					event.model.addModel(model, index);
+					event.engine.normalize();
+				}}
 				engine={event.engine}
 				vertical={false}
 				children={_.map(event.model.children, (child) => {

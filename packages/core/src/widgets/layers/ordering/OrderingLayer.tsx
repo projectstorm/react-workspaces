@@ -33,6 +33,6 @@ export class OrderingLayer extends Layer<OrderingLayerListener> {
 	}
 
 	renderLayer(event: RenderLayerEvent): JSX.Element {
-		return <OrderingLayerWidget layer={this} />;
+		return <OrderingLayerWidget engine={event.engine} layer={this} />;
 	}
 }

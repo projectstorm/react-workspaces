@@ -88,7 +88,15 @@ export const MicroLayoutWidget: React.FC<MicroLayoutWidgetProps> = (props) => {
 
 	return (
 		<S.MicroLayout className={props.className}>
-			<S.Scrollable forwardRef={ref} vertical={true} engine={props.engine} dropped={() => {}}>
+			<S.Scrollable
+				forwardRef={ref}
+				vertical={true}
+				engine={props.engine}
+				dropped={({ model, index }) => {
+					props.node.addModel(model, index);
+					props.engine.normalize();
+				}}
+			>
 				{_.map(props.node.getFlattened(), (child) => {
 					return <MicroWrapper scrollRef={ref} {...props} model={child} key={child.id} />;
 				})}
