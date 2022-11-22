@@ -10,6 +10,10 @@ import { DefaultFloatingWindowWidget } from '../widgets/DefaultFloatingWindowWid
 export class DefaultWindowModel extends FloatingWindowModel {
 	constructor(child?: WorkspaceModel) {
 		super(DefaultWindowModelFactory.TYPE, child);
+		this.setSize({
+			width: 200,
+			height: 200
+		});
 	}
 }
 

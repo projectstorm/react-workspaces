@@ -1,15 +1,16 @@
 import { TabGroupWidget } from './TabGroupWidget';
 import * as React from 'react';
 import * as _ from 'lodash';
-import { TabButtonWidget } from './TabButtonWidget';
 import {
-	DropzoneOrderWidget,
+	SmartOrderingWidget,
 	SubComponentModelFactory,
 	SubComponentRenderer,
 	WorkspaceModel,
 	WorkspaceModelFactoryEvent
 } from '@projectstorm/react-workspaces-core';
 import { WorkspaceTabModel } from './WorkspaceTabModel';
+import { TabButtonWidget } from './TabButtonWidget';
+import styled from '@emotion/styled';
 
 export interface TabRendererEvent<T extends WorkspaceModel> {
 	model: T;
@@ -45,18 +46,14 @@ export class WorkspaceTabFactory<T extends WorkspaceTabModel = WorkspaceTabModel
 
 	generateTabs(event: WorkspaceModelFactoryEvent<T>) {
 		return (
-			<DropzoneOrderWidget
-				size={50}
+			<S.TabGroup
+				dropped={() => {}}
 				engine={event.engine}
 				vertical={false}
-				dropped={(element, index) => {
-					event.model.addModel(element, index);
-				}}
-			>
-				{_.map(event.model.children, (child) => {
+				children={_.map(event.model.children, (child) => {
 					return <TabButtonWidget factory={this} model={child} engine={event.engine} key={child.id} />;
 				})}
-			</DropzoneOrderWidget>
+			/>
 		);
 	}
 
@@ -65,4 +62,10 @@ export class WorkspaceTabFactory<T extends WorkspaceTabModel = WorkspaceTabModel
 			<TabGroupWidget tabs={this.generateTabs(event)} key={event.model.id} model={event.model} engine={event.engine} />
 		);
 	}
+}
+
+namespace S {
+	export const TabGroup = styled(SmartOrderingWidget)`
+		display: flex;
+	`;
 }

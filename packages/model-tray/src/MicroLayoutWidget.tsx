@@ -1,17 +1,17 @@
 import * as React from 'react';
+import { useRef } from 'react';
 import * as _ from 'lodash';
 import styled from '@emotion/styled';
 import { WorkspaceTrayModel } from './WorkspaceTrayModel';
 import {
 	DraggableWidget,
-	useModelElement,
+	SmartOrderingWidget,
+	useResizeObserver,
 	useScrollObserver,
 	WorkspaceEngine,
 	WorkspaceModel
 } from '@projectstorm/react-workspaces-core';
 import { WorkspaceTrayFactory } from './WorkspaceTrayFactory';
-import { useRef } from 'react';
-import { useResizeObserver } from '@projectstorm/react-workspaces-core';
 
 export interface MicroLayoutWidgetProps {
 	node: WorkspaceTrayModel;
@@ -29,7 +29,7 @@ namespace S {
 		overflow: hidden;
 	`;
 
-	export const Scrollable = styled.div`
+	export const Scrollable = styled(SmartOrderingWidget)`
 		display: flex;
 		flex-direction: column;
 		overflow-y: scroll;
@@ -88,7 +88,7 @@ export const MicroLayoutWidget: React.FC<MicroLayoutWidgetProps> = (props) => {
 
 	return (
 		<S.MicroLayout className={props.className}>
-			<S.Scrollable ref={ref}>
+			<S.Scrollable forwardRef={ref} vertical={true} engine={props.engine} dropped={() => {}}>
 				{_.map(props.node.getFlattened(), (child) => {
 					return <MicroWrapper scrollRef={ref} {...props} model={child} key={child.id} />;
 				})}

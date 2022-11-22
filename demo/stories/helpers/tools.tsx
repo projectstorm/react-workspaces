@@ -85,7 +85,7 @@ export const useEngine = (args: { DebugDividers?: boolean; DebugResizers?: boole
 			getDropZoneForModel: (model) => {
 				return getDirectiveForWorkspaceNode(model, [ReplaceZone]);
 			},
-			debug: true
+			debug: false
 		});
 		draggingItemDividerBehavior(e);
 		resizingBehavior(e);

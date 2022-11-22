@@ -17,7 +17,7 @@ export * from './widgets/primitives/DividerWidget';
 export * from './widgets/primitives/DraggableWidget';
 export * from './widgets/primitives/DropzoneLogicWidget';
 
-export * from './widgets/dropzone/DropzoneOrderWidget';
+export * from './widgets/layers/ordering/OrderingWidget';
 
 export * from './widgets/layers/debug/DebugLayer';
 export * from './widgets/layers/LayerManager';

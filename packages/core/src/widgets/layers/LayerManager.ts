@@ -18,7 +18,7 @@ export interface LayerOptions {
 	mouseEvents: boolean;
 }
 
-export abstract class Layer extends BaseObserver<LayerListener> {
+export abstract class Layer<T extends LayerListener = LayerListener> extends BaseObserver<T> {
 	id: string;
 	layerManager: LayerManager;
 

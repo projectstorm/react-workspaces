@@ -7,19 +7,32 @@ import { DimensionContainer } from '../../core/dimensions/DimensionContainer';
 export interface UseResizeObserverProps {
 	dimension: DimensionContainer;
 	forwardRef: React.RefObject<HTMLDivElement>;
+	ignoreDebounce?: boolean;
 }
 
 export const useResizeObserver = (props: UseResizeObserverProps) => {
-	const update = useCallback(
+	const updateLogic = useCallback(() => {
+		if (!props.forwardRef.current) {
+			return;
+		}
+		let dims = props.forwardRef.current.getBoundingClientRect();
+		props.dimension.update(dims);
+	}, []);
+
+	const updateDebounced = useCallback(
 		_.debounce(() => {
-			if (!props.forwardRef.current) {
-				return;
-			}
-			let dims = props.forwardRef.current.getBoundingClientRect();
-			props.dimension.update(dims);
+			updateLogic();
 		}, 500),
 		[]
 	);
+
+	const update = useCallback(() => {
+		if (props.ignoreDebounce) {
+			updateLogic();
+		} else {
+			updateDebounced();
+		}
+	}, [props.ignoreDebounce]);
 
 	useEffect(() => {
 		return props.dimension.registerListener({
