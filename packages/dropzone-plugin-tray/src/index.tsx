@@ -7,9 +7,9 @@ import {
 } from '@projectstorm/react-workspaces-behavior-panel-dropzone';
 import { WorkspaceTrayFactory, WorkspaceTrayModel } from '@projectstorm/react-workspaces-model-tray';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faLayerGroup, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faTableList, faPlus } from '@fortawesome/free-solid-svg-icons';
 
-library.add(faPlus, faLayerGroup);
+library.add(faPlus, faTableList);
 
 export const TrayZone: TransformZone = {
 	key: 'ADD_ITEM',
@@ -26,7 +26,7 @@ export const ConvertToTrayZone = (trayFactory: WorkspaceTrayFactory): TransformZ
 	return {
 		key: 'MAKE_TRAY',
 		render: ({ entered }) => {
-			return <DropZoneLayerButtonWidget entered={entered} text="Tray group" icon="layer-group" />;
+			return <DropZoneLayerButtonWidget entered={entered} text="Tray" icon="table-list" />;
 		},
 		transform: ({ model, zoneModel, engine }) => {
 			const trayModel = trayFactory.generateModel();

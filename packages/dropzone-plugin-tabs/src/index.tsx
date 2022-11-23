@@ -26,7 +26,7 @@ export const ConvertToTabZone = (factory: WorkspaceTabFactory): TransformZone =>
 	return {
 		key: 'MAKE_TABS',
 		render: ({ entered }) => {
-			return <DropZoneLayerButtonWidget entered={entered} text="Tab group" icon="layer-group" />;
+			return <DropZoneLayerButtonWidget entered={entered} text="Tabs" icon="layer-group" />;
 		},
 		transform: ({ model, zoneModel, engine }) => {
 			const tabs = factory.generateModel();
