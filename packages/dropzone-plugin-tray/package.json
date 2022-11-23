@@ -1,0 +1,16 @@
+{
+  "name": "@projectstorm/react-workspaces-dropzone-plugin-tray",
+  "version": "2.0.0-alpha",
+  "main": "./dist/index.js",
+  "types": "./dist/@types/index.d.ts",
+  "dependencies": {
+    "@projectstorm/react-workspaces-core": "2.0.0-alpha",
+    "@projectstorm/react-workspaces-model-tray": "2.0.0-alpha",
+    "@projectstorm/react-workspaces-behavior-panel-dropzone": "2.0.0-alpha",
+    "@fortawesome/free-solid-svg-icons": "^6.2.1",
+    "@fortawesome/fontawesome-svg-core": "^6.2.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.25"
+  }
+}

@@ -21,6 +21,7 @@ importers:
       '@projectstorm/react-workspaces-core': 2.0.0-alpha
       '@projectstorm/react-workspaces-defaults': 2.0.0-alpha
       '@projectstorm/react-workspaces-dropzone-plugin-tabs': 2.0.0-alpha
+      '@projectstorm/react-workspaces-dropzone-plugin-tray': 2.0.0-alpha
       '@projectstorm/react-workspaces-model-floating-window': 2.0.0-alpha
       '@projectstorm/react-workspaces-model-tabs': 2.0.0-alpha
       '@projectstorm/react-workspaces-model-tray': 2.0.0-alpha
@@ -48,6 +49,7 @@ importers:
       '@projectstorm/react-workspaces-core': link:../packages/core
       '@projectstorm/react-workspaces-defaults': link:../packages/defaults
       '@projectstorm/react-workspaces-dropzone-plugin-tabs': link:../packages/dropzone-plugin-tabs
+      '@projectstorm/react-workspaces-dropzone-plugin-tray': link:../packages/dropzone-plugin-tray
       '@projectstorm/react-workspaces-model-floating-window': link:../packages/model-floating-window
       '@projectstorm/react-workspaces-model-tabs': link:../packages/model-tabs
       '@projectstorm/react-workspaces-model-tray': link:../packages/model-tray
@@ -186,6 +188,23 @@ importers:
       '@projectstorm/react-workspaces-behavior-panel-dropzone': link:../behavior-panel-dropzone
       '@projectstorm/react-workspaces-core': link:../core
       '@projectstorm/react-workspaces-model-tabs': link:../model-tabs
+    devDependencies:
+      '@types/react': 18.0.25
+
+  packages/dropzone-plugin-tray:
+    specifiers:
+      '@fortawesome/fontawesome-svg-core': ^6.2.1
+      '@fortawesome/free-solid-svg-icons': ^6.2.1
+      '@projectstorm/react-workspaces-behavior-panel-dropzone': 2.0.0-alpha
+      '@projectstorm/react-workspaces-core': 2.0.0-alpha
+      '@projectstorm/react-workspaces-model-tray': 2.0.0-alpha
+      '@types/react': ^18.0.25
+    dependencies:
+      '@fortawesome/fontawesome-svg-core': 6.2.1
+      '@fortawesome/free-solid-svg-icons': 6.2.1
+      '@projectstorm/react-workspaces-behavior-panel-dropzone': link:../behavior-panel-dropzone
+      '@projectstorm/react-workspaces-core': link:../core
+      '@projectstorm/react-workspaces-model-tray': link:../model-tray
     devDependencies:
       '@types/react': 18.0.25
 

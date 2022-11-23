@@ -25,8 +25,16 @@ import { draggingItemDividerBehavior } from '@projectstorm/react-workspaces-beha
 import { WorkspaceTabFactory } from '@projectstorm/react-workspaces-model-tabs';
 import { resizingBehavior } from '@projectstorm/react-workspaces-behavior-resize';
 import { RootWorkspaceModel } from '@projectstorm/react-workspaces-model-floating-window';
-import { getDirectiveForTabModel, TabZone } from '@projectstorm/react-workspaces-dropzone-plugin-tabs';
-import { ConvertToTabZone } from '@projectstorm/react-workspaces-dropzone-plugin-tabs/dist';
+import {
+	ConvertToTabZone,
+	getDirectiveForTabModel,
+	TabZone
+} from '@projectstorm/react-workspaces-dropzone-plugin-tabs';
+import {
+	ConvertToTrayZone,
+	getDirectiveForTrayModel,
+	TrayZone
+} from '@projectstorm/react-workspaces-dropzone-plugin-tray';
 
 export const genVerticalNode = () => {
 	const node = new WorkspaceNodeModel()
@@ -86,7 +94,12 @@ export const useEngine = (args: { DebugDividers?: boolean; DebugResizers?: boole
 			engine: e,
 			getDropZoneForModel: (model) => {
 				return (
-					getDirectiveForWorkspaceNode(model, [ReplaceZone, ConvertToTabZone]) ||
+					getDirectiveForTrayModel(model, [ReplaceZone, TrayZone]) ||
+					getDirectiveForWorkspaceNode(model, [
+						ReplaceZone,
+						ConvertToTabZone(tabFactory),
+						ConvertToTrayZone(trayFactory)
+					]) ||
 					getDirectiveForTabModel(model, [TabZone, ReplaceZone])
 				);
 			},

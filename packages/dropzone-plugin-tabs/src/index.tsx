@@ -5,9 +5,9 @@ import {
 	DropZonePanelDirective,
 	TransformZone
 } from '@projectstorm/react-workspaces-behavior-panel-dropzone';
-import { WorkspaceTabModel } from '@projectstorm/react-workspaces-model-tabs';
+import { WorkspaceTabFactory, WorkspaceTabModel } from '@projectstorm/react-workspaces-model-tabs';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faPlus, faLayerGroup } from '@fortawesome/free-solid-svg-icons';
+import { faLayerGroup, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 library.add(faPlus, faLayerGroup);
 
@@ -22,18 +22,20 @@ export const TabZone: TransformZone = {
 	}
 };
 
-export const ConvertToTabZone: TransformZone = {
-	key: 'MAKE_TABS',
-	render: ({ entered }) => {
-		return <DropZoneLayerButtonWidget entered={entered} text="Tab group" icon="layer-group" />;
-	},
-	transform: ({ model, zoneModel, engine }) => {
-		const tabs = new WorkspaceTabModel();
-		(zoneModel.parent as WorkspaceCollectionModel).replaceModel(zoneModel, tabs);
-		tabs.addModel(zoneModel);
-		tabs.addModel(model);
-		engine.normalize();
-	}
+export const ConvertToTabZone = (factory: WorkspaceTabFactory): TransformZone => {
+	return {
+		key: 'MAKE_TABS',
+		render: ({ entered }) => {
+			return <DropZoneLayerButtonWidget entered={entered} text="Tab group" icon="layer-group" />;
+		},
+		transform: ({ model, zoneModel, engine }) => {
+			const tabs = factory.generateModel();
+			(zoneModel.parent as WorkspaceCollectionModel).replaceModel(zoneModel, tabs);
+			tabs.addModel(zoneModel);
+			tabs.addModel(model);
+			engine.normalize();
+		}
+	};
 };
 
 export const getDirectiveForTabModel = (

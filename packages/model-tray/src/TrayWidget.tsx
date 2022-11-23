@@ -2,7 +2,13 @@ import * as React from 'react';
 import { useEffect } from 'react';
 import { WorkspaceTrayMode, WorkspaceTrayModel } from './WorkspaceTrayModel';
 import styled from '@emotion/styled';
-import { DraggableWidget, useForceUpdate, WorkspaceEngine, WorkspaceModel } from '@projectstorm/react-workspaces-core';
+import {
+	DraggableWidget,
+	useForceUpdate,
+	useModelElement,
+	WorkspaceEngine,
+	WorkspaceModel
+} from '@projectstorm/react-workspaces-core';
 import { MicroLayoutWidget } from './MicroLayoutWidget';
 import { WorkspaceTrayFactory } from './WorkspaceTrayFactory';
 
@@ -55,8 +61,12 @@ export interface PanelContentProps {
 }
 
 export const PanelContent: React.FC<PanelContentProps> = (props) => {
+	const ref = useModelElement({
+		model: props.model,
+		engine: props.engine
+	});
 	return (
-		<S.PanelContent>
+		<S.PanelContent ref={ref}>
 			{props.engine.getFactory(props.model).generateContent({
 				model: props.model,
 				engine: props.engine

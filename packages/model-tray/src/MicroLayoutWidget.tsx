@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useRef } from 'react';
 import * as _ from 'lodash';
 import styled from '@emotion/styled';
-import { WorkspaceTrayModel } from './WorkspaceTrayModel';
+import { WorkspaceTrayMode, WorkspaceTrayModel } from './WorkspaceTrayModel';
 import {
 	DraggableWidget,
 	SmartOrderingWidget,
@@ -51,14 +51,16 @@ export interface MicroWrapperProps {
 
 export const MicroWrapper: React.FC<MicroWrapperProps> = (props) => {
 	const ref = useRef<HTMLDivElement>();
-	useResizeObserver({
-		forwardRef: ref,
-		dimension: props.model.r_dimensions
-	});
-	useScrollObserver({
-		forwardRef: props.scrollRef,
-		dimension: props.model.r_dimensions
-	});
+	if (props.node.mode === WorkspaceTrayMode.COLLAPSED) {
+		useResizeObserver({
+			forwardRef: ref,
+			dimension: props.model.r_dimensions
+		});
+		useScrollObserver({
+			forwardRef: props.scrollRef,
+			dimension: props.model.r_dimensions
+		});
+	}
 	let selected = props.node.selectedModel && props.node.selectedModel.id === props.model.id;
 	const renderer = props.factory.getRendererForModel(props.model);
 	return (
@@ -66,7 +68,7 @@ export const MicroWrapper: React.FC<MicroWrapperProps> = (props) => {
 			<div
 				ref={ref}
 				onClick={() => {
-					if (props.node.selectedModel === props.model) {
+					if (props.node.selectedModel === props.model && props.node.mode === WorkspaceTrayMode.COLLAPSED) {
 						props.node.setSelectedModel(null);
 					} else {
 						props.node.setSelectedModel(props.model);

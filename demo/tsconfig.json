@@ -33,6 +33,9 @@
     },
     {
       "path": "../packages/dropzone-plugin-tabs"
+    },
+    {
+      "path": "../packages/dropzone-plugin-tray"
     }
   ]
 }
