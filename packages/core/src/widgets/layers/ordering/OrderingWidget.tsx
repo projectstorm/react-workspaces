@@ -95,12 +95,14 @@ export const OrderingWidget: React.FC<OrderingWidgetProps> = (props) => {
 				return (
 					<React.Fragment>
 						{c}
-						<OrderingWidgetZone
-							container={containers[index + 1]}
-							layer={layer}
-							vertical={props.vertical}
-							index={index + 1}
-						/>
+						{containers[index + 1] ? (
+							<OrderingWidgetZone
+								container={containers[index + 1]}
+								layer={layer}
+								vertical={props.vertical}
+								index={index + 1}
+							/>
+						) : null}
 					</React.Fragment>
 				);
 			})}
@@ -132,7 +134,6 @@ export const SmartOrderingWidget: React.FC<SmartOrderingWidgetProps> = (props) =
 					{...props}
 					dropped={(event) => {
 						// eagerly set to false so the smart zone unmounts
-						setDragging(false);
 						props.dropped?.(event);
 					}}
 				/>

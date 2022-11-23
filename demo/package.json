@@ -15,7 +15,8 @@
     "@projectstorm/react-workspaces-defaults": "2.0.0-alpha",
     "@projectstorm/react-workspaces-behavior-resize": "2.0.0-alpha",
     "@projectstorm/react-workspaces-behavior-divider-dropzone": "2.0.0-alpha",
-    "@projectstorm/react-workspaces-behavior-panel-dropzone": "2.0.0-alpha"
+    "@projectstorm/react-workspaces-behavior-panel-dropzone": "2.0.0-alpha",
+    "@projectstorm/react-workspaces-dropzone-plugin-tabs": "2.0.0-alpha"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.189",

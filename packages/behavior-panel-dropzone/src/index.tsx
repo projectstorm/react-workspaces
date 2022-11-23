@@ -9,6 +9,10 @@ import {
 import { DropZoneLayer, DropZoneLayerWidgetProps } from './DropZoneLayer';
 import { DropZonePanelDirective, TransformZone } from './DropZoneLayerPanelWidget';
 import { DropZoneLayerButtonWidget } from './DropZoneLayerButtonWidget';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faCopy, faCube } from '@fortawesome/free-solid-svg-icons';
+
+library.add(faCopy);
 
 export interface DraggingItemBehaviorOptions {
 	getDropZoneForModel: (model: WorkspaceModel) => DropZonePanelDirective | null;
@@ -88,5 +92,6 @@ export const getDirectiveForWorkspaceNode = (
 
 export * from './DropZoneLayerPanelWidget';
 export * from './DropZoneLayerButtonWidget';
+export * from './DropZoneTransformWidget';
 export * from './DropZoneAlignmentButtonWidget';
 export * from './DropZoneLayer';

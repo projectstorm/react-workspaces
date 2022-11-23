@@ -17,6 +17,9 @@
       "path": "./packages/behavior-resize"
     },
     {
+      "path": "./packages/dropzone-plugin-tabs"
+    },
+    {
       "path": "./packages/core"
     },
     {

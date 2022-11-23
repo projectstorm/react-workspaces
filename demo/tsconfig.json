@@ -30,6 +30,9 @@
     },
     {
       "path": "../packages/behavior-divider-dropzone"
+    },
+    {
+      "path": "../packages/dropzone-plugin-tabs"
     }
   ]
 }

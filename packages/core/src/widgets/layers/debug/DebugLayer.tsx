@@ -63,11 +63,33 @@ export interface DebugLayerWidgetProps {
 	options: DebugLayerOptions;
 }
 
+export const DebugPanel: React.FC<{ model: WorkspaceModel }> = (props) => {
+	const forceUpdate = useForceUpdate();
+	useEffect(() => {
+		return props.model.registerListener({
+			visibilityChanged: () => {
+				forceUpdate();
+			}
+		});
+	}, []);
+	if (!props.model.r_visible) {
+		return null;
+	}
+	return (
+		<S.Outline2 dimension={props.model.r_dimensions}>
+			<S.DebugID>{props.model.id.substring(0, 7)}</S.DebugID>
+		</S.Outline2>
+	);
+};
+
 export const DebugLayerWidget: React.FC<DebugLayerWidgetProps> = (props) => {
 	const forceUpdate = useForceUpdate(true);
 	useEffect(() => {
 		props.model.registerListener({
 			layoutInvalidated: () => {
+				forceUpdate();
+			},
+			dimensionsInvalidated: () => {
 				forceUpdate();
 			}
 		});
@@ -80,11 +102,7 @@ export const DebugLayerWidget: React.FC<DebugLayerWidgetProps> = (props) => {
 						.flatten()
 						.filter((p) => !(p instanceof WorkspaceCollectionModel))
 						.map((m) => {
-							return (
-								<S.Outline2 dimension={m.r_dimensions} key={m.id}>
-									<S.DebugID>{m.id.substring(0, 7)}</S.DebugID>
-								</S.Outline2>
-							);
+							return <DebugPanel model={m} key={m.id} />;
 						})
 				: []}
 
