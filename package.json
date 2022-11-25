@@ -26,6 +26,7 @@
   },
   "devDependencies": {
     "typescript": "^4.9.3",
+    "@changesets/cli": "^2.25.2",
     "webpack-cli": "^4.10.0",
     "webpack-node-externals": "^3.0.0"
   }
