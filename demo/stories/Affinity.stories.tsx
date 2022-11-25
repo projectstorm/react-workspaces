@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useState } from 'react';
 import 'typeface-open-sans';
 import { WorkspaceNodeModel } from '@projectstorm/react-workspaces-core';
-import { CompInternal, DebugOptions, useEngine, useRootModel } from './helpers/tools';
+import { CompInternal, DebugOptions, useEngine } from './helpers/tools';
 import { DefaultWorkspacePanelModel } from '@projectstorm/react-workspaces-defaults';
 
 export const AffinityStories = function (args) {
