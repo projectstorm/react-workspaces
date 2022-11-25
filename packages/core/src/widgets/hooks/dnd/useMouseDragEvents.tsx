@@ -1,11 +1,10 @@
 import * as React from 'react';
 import { useContext, useEffect, useRef } from 'react';
 
-export const DropZoneDragContext =
-	React.createContext<{
-		increment: () => any;
-		decrement: () => any;
-	}>(null);
+export const DropZoneDragContext = React.createContext<{
+	increment: () => any;
+	decrement: () => any;
+}>(null);
 
 export interface UseMouseDragEventsProps {
 	forwardRef: React.RefObject<HTMLDivElement>;

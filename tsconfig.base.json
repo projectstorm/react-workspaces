@@ -9,9 +9,9 @@
     "preserveSymlinks": true,
     "composite": true,
     "incremental": true,
-    "jsx": "react",
+    "jsx": "preserve",
     "target": "ES6",
-    "module": "commonjs",
+    "module": "ES6",
     "moduleResolution": "node",
     "lib": [
       "ESNext",
