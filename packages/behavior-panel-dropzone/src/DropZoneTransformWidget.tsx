@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { useDroppableModel, useMouseDragEvents, WorkspaceEngine } from '@projectstorm/react-workspaces-core';
 import { useRef, useState } from 'react';
 import { TransformZone } from './DropZoneLayerPanelWidget';
-import { WorkspaceModel } from '@projectstorm/react-workspaces-core/dist';
+import { WorkspaceModel } from '@projectstorm/react-workspaces-core';
 
 export interface DropZoneTransformWidgetProps {
 	engine: WorkspaceEngine;

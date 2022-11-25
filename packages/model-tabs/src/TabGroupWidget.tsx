@@ -1,18 +1,18 @@
 import * as React from 'react';
+import { useEffect } from 'react';
 import styled from '@emotion/styled';
 import {
 	DraggableWidget,
 	SmartOrderingWidget,
 	useForceUpdate,
 	useModelElement,
-	WorkspaceEngine
+	WorkspaceEngine,
+	WorkspaceModel
 } from '@projectstorm/react-workspaces-core';
 import { WorkspaceTabModel } from './WorkspaceTabModel';
-import { useEffect } from 'react';
 import { TabButtonWidget } from './TabButtonWidget';
 import * as _ from 'lodash';
 import { WorkspaceTabFactory } from './WorkspaceTabFactory';
-import { WorkspaceModel } from '@projectstorm/react-workspaces-core/dist';
 
 export interface TabGroupWidgetProps {
 	model: WorkspaceTabModel;

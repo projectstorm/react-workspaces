@@ -23,9 +23,16 @@
   "scripts": {
     "ncu": "ncu -u && pnpm recursive exec -- ncu -u",
     "format": "prettier --use-tabs --write \"**/*.{ts,tsx,scss}\"",
-    "clean": "rm -rf packages/*/dist"
+    "clean": "rm -rf packages/*/dist",
+    "build": "tsc --build && pnpm run -r build",
+    "build:prod": "NODE_ENV=production yarn build"
   },
   "devDependencies": {
+    "babel-loader": "^9.1.0",
+    "source-map-loader": "^4.0.1",
+    "@babel/core": "^7.20.2",
+    "@babel/preset-react": "^7.18.6",
+    "@babel/preset-env": "^7.20.2",
     "prettier": "^2.8.0",
     "typescript": "^4.9.3",
     "@changesets/cli": "^2.25.2",

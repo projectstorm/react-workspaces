@@ -6,11 +6,11 @@ import {
 	WorkspaceModel,
 	WorkspaceNodeModel
 } from '@projectstorm/react-workspaces-core';
-import { DropZoneLayer, DropZoneLayerWidgetProps } from './DropZoneLayer';
+import { DropZoneLayer } from './DropZoneLayer';
 import { DropZonePanelDirective, TransformZone } from './DropZoneLayerPanelWidget';
 import { DropZoneLayerButtonWidget } from './DropZoneLayerButtonWidget';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faCopy, faCube } from '@fortawesome/free-solid-svg-icons';
+import { faCopy } from '@fortawesome/free-solid-svg-icons';
 
 library.add(faCopy);
 

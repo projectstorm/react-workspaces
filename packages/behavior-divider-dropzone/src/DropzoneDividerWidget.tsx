@@ -6,9 +6,9 @@ import {
 	DimensionTrackingWidget,
 	useDroppableModel,
 	useMouseDragEvents,
-	WorkspaceEngine
+	WorkspaceEngine,
+	WorkspaceModel
 } from '@projectstorm/react-workspaces-core';
-import { WorkspaceModel } from '@projectstorm/react-workspaces-core/dist';
 
 export interface DropzoneDividerWidgetProps {
 	dimension: DimensionContainer;

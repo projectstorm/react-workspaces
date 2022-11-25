@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from '@emotion/styled';
 import { WorkspaceEngine } from '@projectstorm/react-workspaces-core';
-import { FloatingWindowModel } from '@projectstorm/react-workspaces-model-floating-window/dist';
+import { FloatingWindowModel } from '@projectstorm/react-workspaces-model-floating-window';
 
 export interface DefaultFloatingWindowWidgetProps {
 	model: FloatingWindowModel;
