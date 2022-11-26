@@ -26,7 +26,6 @@ export * from './widgets/layers/LayerManagerWidget';
 export * from './widgets/layouts/StandardLayoutWidget';
 export * from './widgets/layouts/DirectionalLayoutWidget';
 
-export * from './widgets/PerformanceWidget';
 export * from './widgets/WorkspaceWidget';
 
 export * from './core-models/WorkspaceCollectionModel';
