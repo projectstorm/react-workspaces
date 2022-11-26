@@ -124,12 +124,7 @@ export const useEngine = (args: { DebugDividers?: boolean; DebugResizers?: boole
 export const CompInternal: React.FC<{ model: WorkspaceNodeModel; engine: WorkspaceEngine }> = (props) => {
 	return (
 		<S.Container>
-			<WorkspaceWidget
-				engine={props.engine}
-				model={props.model}
-				dividerColor="rgb(0,192,255)"
-				dividerColorActive="rgb(192,255,0)"
-			/>
+			<WorkspaceWidget engine={props.engine} model={props.model} />
 		</S.Container>
 	);
 };

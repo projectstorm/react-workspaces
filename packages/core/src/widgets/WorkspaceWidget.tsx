@@ -1,8 +1,7 @@
 import * as React from 'react';
-import { WorkspaceEngine } from '../core/WorkspaceEngine';
-import { StandardLayoutWidget } from './layouts/StandardLayoutWidget';
-import styled from '@emotion/styled';
 import { useEffect, useRef, useState } from 'react';
+import { WorkspaceEngine } from '../core/WorkspaceEngine';
+import styled from '@emotion/styled';
 import { useForceUpdate } from './hooks/useForceUpdate';
 import { useResizeObserver } from './hooks/useResizeObserver';
 import { LayerManagerWidget } from './layers/LayerManagerWidget';
@@ -14,8 +13,6 @@ import { DimensionContainer } from '../core/dimensions/DimensionContainer';
 export interface WorkspaceWidgetProps {
 	model: WorkspaceNodeModel;
 	engine: WorkspaceEngine;
-	dividerColor?: string;
-	dividerColorActive?: string;
 }
 
 namespace S {
@@ -23,13 +20,6 @@ namespace S {
 		display: flex;
 		height: 100%;
 		position: relative;
-	`;
-
-	export const Floating = styled.div`
-		position: absolute;
-		pointer-events: none;
-		width: 100%;
-		height: 100%;
 	`;
 
 	export const LayerManager = styled(LayerManagerWidget)`

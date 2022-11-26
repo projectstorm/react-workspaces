@@ -10,8 +10,10 @@ module.exports = (directory) => {
     output: {
       filename: 'index.umd.js',
       path: path.join(directory, 'dist'),
-      libraryTarget: 'global',
-      library: packageFile.name
+      library: {
+        name: packageFile.name,
+        type: "umd"
+      },
     },
     module: {
       rules: [
