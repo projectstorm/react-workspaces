@@ -23,8 +23,8 @@ export * from './widgets/layers/debug/DebugLayer';
 export * from './widgets/layers/LayerManager';
 export * from './widgets/layers/LayerManagerWidget';
 
-export * from './widgets/layouts/StandardLayoutWidget';
 export * from './widgets/layouts/DirectionalLayoutWidget';
+export * from './widgets/layouts/DirectionalChildWidget';
 
 export * from './widgets/WorkspaceWidget';
 
@@ -40,6 +40,8 @@ export * from './core/WorkspaceEngine';
 export * from './core/WorkspaceEngineInterface';
 
 export * from './entities/node/WorkspaceNodeModel';
+export * from './entities/node/ExpandNodeModel';
 export * from './entities/node/WorkspaceNodeFactory';
 export * from './entities/node/WorkspaceNodeWidget';
+export * from './entities/SubComponentModelFactory';
 export * from './entities/SubComponentModelFactory';
