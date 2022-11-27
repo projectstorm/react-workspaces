@@ -48,6 +48,7 @@ export class ExpandNodeModel extends WorkspaceNodeModel {
 
 	addModel(model: WorkspaceModel, position: number = null): this {
 		super.addModel(model, position);
+    // model want to expand, store their original sizes so we can revert when we add them somewhere else
 		if ((this.vertical && model.expandVertical) || (!this.vertical && model.expandHorizontal)) {
 			this.dimensions.set(model, {
 				originalWidth: model.size.width,
@@ -64,6 +65,13 @@ export class ExpandNodeModel extends WorkspaceNodeModel {
 				}
 			});
 		}
+    // model wants to shrink, reset its size so it renders as small as possible (initially)
+    else if((this.vertical && !model.expandVertical) || (!this.vertical && !model.expandHorizontal)){
+      model.setSize({
+        width: 0,
+        height: 0
+      })
+    }
 		this.recomputeInitialSizes();
 		return this;
 	}

@@ -39,7 +39,7 @@ import {
 
 export const genVerticalNode = () => {
 	const node = new ExpandNodeModel()
-		.setExpand(false)
+		.setExpand(false, true)
 		.setVertical(true)
 		.addModel(new DefaultWorkspacePanelModel('Panel 1'))
 		.addModel(new DefaultWorkspacePanelModel('Panel 2'));
