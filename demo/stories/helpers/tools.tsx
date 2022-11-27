@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 import 'typeface-open-sans';
 import {
 	DebugLayer,
+	ExpandNodeModel,
 	WorkspaceEngine,
 	WorkspaceNodeFactory,
 	WorkspaceNodeModel,
@@ -37,10 +38,10 @@ import {
 } from '@projectstorm/react-workspaces-dropzone-plugin-tray';
 
 export const genVerticalNode = () => {
-	const node = new WorkspaceNodeModel()
+	const node = new ExpandNodeModel()
 		.setExpand(false)
 		.setVertical(true)
-		.addModel(new DefaultWorkspacePanelModel('Panel 1').setExpand(false, false))
+		.addModel(new DefaultWorkspacePanelModel('Panel 1'))
 		.addModel(new DefaultWorkspacePanelModel('Panel 2'));
 	return node;
 };

@@ -30,9 +30,9 @@ export const DirectionChildWidget: React.FC<DirectionChildWidgetProps> = (props)
 	let height = null;
 	let expand = props.directive.expand;
 
-	if (props.vertical) {
+	if (!expand && props.vertical) {
 		height = props.model.size.height;
-	} else {
+	} else if (!expand) {
 		width = props.model.size.width;
 	}
 
@@ -46,7 +46,7 @@ export const DirectionChildWidget: React.FC<DirectionChildWidgetProps> = (props)
 	}, []);
 
 	return (
-		<S.ChildContainer expand={expand} width={expand ? 0 : width} height={expand ? 0 : height}>
+		<S.ChildContainer expand={expand} width={width} height={height}>
 			{props.generateElement(props.model)}
 		</S.ChildContainer>
 	);

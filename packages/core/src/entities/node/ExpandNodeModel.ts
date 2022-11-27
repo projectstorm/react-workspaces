@@ -18,14 +18,6 @@ export class ExpandNodeModel extends WorkspaceNodeModel {
 	constructor() {
 		super();
 		this.dimensions = new Map();
-		this.r_dimensions.size.registerListener({
-			updated: () => {
-				if (this.dimensions.size > 1) {
-					for (let [model, directive] of this.dimensions.entries()) {
-					}
-				}
-			}
-		});
 	}
 
 	addModel(model: WorkspaceModel, position: number = null): this {
