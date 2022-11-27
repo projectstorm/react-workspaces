@@ -14,10 +14,36 @@ export interface ExpandNodeModelChild {
  */
 export class ExpandNodeModel extends WorkspaceNodeModel {
 	dimensions: Map<WorkspaceModel, ExpandNodeModelChild>;
+	rendered: Set<WorkspaceModel>;
+	queuedForInitialSizeCheck: Set<WorkspaceModel>;
 
 	constructor() {
 		super();
 		this.dimensions = new Map();
+		this.rendered = new Set();
+		this.queuedForInitialSizeCheck = new Set();
+	}
+
+	recomputeInitialSizes() {
+		this.rendered.clear();
+		this.children.forEach((model) => {
+			if (this.queuedForInitialSizeCheck.has(model)) {
+				return;
+			}
+			this.queuedForInitialSizeCheck.add(model);
+			const l1 = model.r_dimensions.registerListener({
+				updated: () => {
+					l1();
+					this.queuedForInitialSizeCheck.delete(model);
+					this.rendered.add(model);
+					if (this.queuedForInitialSizeCheck.size === 0) {
+						this.recomputeSizes();
+						this.invalidateLayout();
+					}
+				}
+			});
+		});
+		this.invalidateLayout();
 	}
 
 	addModel(model: WorkspaceModel, position: number = null): this {
@@ -27,29 +53,28 @@ export class ExpandNodeModel extends WorkspaceNodeModel {
 				originalWidth: model.size.width,
 				originalHeight: model.size.height
 			});
-			const listener = model.registerListener({
+			const l2 = model.registerListener({
 				removed: () => {
-					listener?.();
+					l2?.();
 					model.setSize({
 						width: this.dimensions.get(model).originalWidth,
 						height: this.dimensions.get(model).originalHeight
 					});
 					this.dimensions.delete(model);
-					this.recomputeSizes();
 				}
 			});
-			this.recomputeSizes();
 		}
+		this.recomputeInitialSizes();
 		return this;
 	}
 
 	recomputeSizes() {
 		const dims = Array.from(this.dimensions.keys());
 		for (let i = 0; i < dims.length - 1; i++) {
-			if (this.vertical && dims[i].size.height === 0) {
-				dims[i].setHeight(200);
-			} else if (!this.vertical && dims[i].size.width === 0) {
-				dims[i].setWidth(200);
+			if (this.vertical) {
+				dims[i].setHeight(dims[i].r_dimensions.size.height);
+			} else {
+				dims[i].setWidth(dims[i].r_dimensions.size.width);
 			}
 		}
 	}
@@ -74,9 +99,12 @@ export class ExpandNodeModel extends WorkspaceNodeModel {
 				...super.getPanelDirective(child),
 				expand: true
 			};
-		} else if (
+		}
+		// make the first expand nodes operate like a normal node
+		else if (
 			this.dimensions.size > 1 &&
-			Array.from(this.dimensions.keys()).indexOf(child) < this.dimensions.size - 1
+			Array.from(this.dimensions.keys()).indexOf(child) < this.dimensions.size - 1 &&
+			this.rendered.has(child)
 		) {
 			return {
 				...super.getPanelDirective(child),
