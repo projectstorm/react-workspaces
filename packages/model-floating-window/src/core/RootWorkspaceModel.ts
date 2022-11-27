@@ -1,9 +1,9 @@
-import { WorkspaceEngine, WorkspaceNodeModel } from '@projectstorm/react-workspaces-core';
+import { ExpandNodeModel, WorkspaceEngine } from '@projectstorm/react-workspaces-core';
 import { FloatingWindowModel } from './FloatingWindowModel';
 import { FloatingWindowLayer } from '../layer/window/FloatingWindowLayer';
 import { FloatingWindowResizeLayer } from '../layer/resize/FloatingWindowResizeLayer';
 
-export class RootWorkspaceModel extends WorkspaceNodeModel {
+export class RootWorkspaceModel extends ExpandNodeModel {
 	floatingWindows: Set<FloatingWindowModel>;
 	layerListener: () => any;
 

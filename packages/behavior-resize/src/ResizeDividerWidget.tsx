@@ -19,8 +19,10 @@ export interface ResizeDividerWidgetProps {
 	parent: WorkspaceNodeModel;
 }
 
-const isAligned = (divider: ResizeDivision, aligned: Alignment) => {
-	if (divider.before.expandHorizontal !== divider.after.expandHorizontal) {
+const isAligned = (divider: ResizeDivision, aligned: Alignment, parent: WorkspaceNodeModel) => {
+	let beforeDirective = parent.getPanelDirective(divider.before);
+	const afterDirective = parent.getPanelDirective(divider.after);
+	if (beforeDirective.expand !== afterDirective.expand) {
 		return false;
 	}
 	let before = divider.before;
@@ -29,10 +31,8 @@ const isAligned = (divider: ResizeDivision, aligned: Alignment) => {
 		if (!before) {
 			return true;
 		}
-		if (aligned === Alignment.LEFT && before.expandHorizontal) {
-			return false;
-		}
-		if (aligned === Alignment.TOP && before.expandVertical) {
+		let beforeDirective = parent.getPanelDirective(before);
+		if (beforeDirective.expand) {
 			return false;
 		}
 	} while (before);
@@ -40,7 +40,7 @@ const isAligned = (divider: ResizeDivision, aligned: Alignment) => {
 };
 
 const getAvailableElement = (model: WorkspaceModel, aligned: Alignment) => {
-	let width = [Alignment.LEFT, Alignment.RIGHT].indexOf(aligned);
+	let width = [Alignment.LEFT, Alignment.RIGHT].indexOf(aligned) !== -1;
 	const sibling = model.getSibling(aligned);
 	if (!sibling) {
 		return model;
@@ -67,10 +67,7 @@ const getResizeStrategy = (
 	let sizeSnapshot = new Map<WorkspaceModel, number>();
 
 	const isExpand = (model: WorkspaceModel) => {
-		if (divider.vertical) {
-			return model.expandHorizontal;
-		}
-		return model.expandVertical;
+		return parent.getPanelDirective(model).expand;
 	};
 
 	const setSize = (model: WorkspaceModel, val: number) => {
@@ -99,12 +96,12 @@ const getResizeStrategy = (
 			let { before, after } = divider;
 
 			// shrink|expand OR left aligned
-			if ((!isExpand(before) && isExpand(after)) || isAligned(divider, alignment)) {
+			if ((!isExpand(before) && isExpand(after)) || isAligned(divider, alignment, parent)) {
 				before = getAvailableElement(before, alignment);
 				setSize(before, sizeSnapshot.get(before) + distance);
 			}
 			// expand|shrink OR right aligned
-			if ((isExpand(before) && !isExpand(after)) || !isAligned(divider, alignment)) {
+			if ((isExpand(before) && !isExpand(after)) || !isAligned(divider, alignment, parent)) {
 				after = getAvailableElement(after, getAlignmentInverted(alignment));
 				setSize(after, sizeSnapshot.get(after) - distance);
 			}

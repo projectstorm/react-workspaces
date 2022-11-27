@@ -86,11 +86,15 @@ export const WorkspaceWidget: React.FC<WorkspaceWidgetProps> = (props) => {
 	return (
 		<UseMouseDragEventsRootWidget forwardRef={ref_container}>
 			<S.Container ref={ref_container}>
-				{props.engine.getFactory(props.model).generateContent({
+				{props.engine.getFactory(props.model.getRootModel()).generateContent({
 					engine: props.engine,
-					model: props.model
+					model: props.model.getRootModel()
 				})}
-				<S.LayerManager engine={props.engine} layerManager={props.engine.layerManager} model={props.model} />
+				<S.LayerManager
+					engine={props.engine}
+					layerManager={props.engine.layerManager}
+					model={props.model.getRootModel()}
+				/>
 			</S.Container>
 		</UseMouseDragEventsRootWidget>
 	);
