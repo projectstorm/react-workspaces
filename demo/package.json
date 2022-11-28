@@ -1,5 +1,6 @@
 {
   "name": "@projectstorm/react-workspaces-demos",
+  "private": "true",
   "scripts": {
     "storybook": "start-storybook"
   },

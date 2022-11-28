@@ -1,5 +1,4 @@
 ---
-'@projectstorm/react-workspaces-demo': major
 '@projectstorm/react-workspaces-behavior-divider-dropzone': major
 '@projectstorm/react-workspaces-behavior-panel-dropzone': major
 '@projectstorm/react-workspaces-behavior-resize': major
