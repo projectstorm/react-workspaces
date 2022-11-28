@@ -19,7 +19,8 @@ export const FloatingWindows = function (args) {
       //tab panel
       .addModel(
         new WorkspaceTabModel()
-          .addModel(new DefaultWorkspacePanelModel('Tab 4'))
+
+          .addModel( new DefaultWorkspacePanelModel('Tab 4'))
           .addModel(new DefaultWorkspacePanelModel('Tab 5'))
           .addModel(new DefaultWorkspacePanelModel('Tab 6'))
       )
