@@ -22,7 +22,7 @@
   ],
   "scripts": {
     "ncu": "ncu -u && pnpm recursive exec -- ncu -u",
-    "format": "prettier --use-tabs --write \"**/*.{ts,tsx,scss}\"",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx}\"",
     "clean": "rm -rf packages/*/dist",
     "build": "tsc --build && pnpm run -r build",
     "build:prod": "NODE_ENV=production yarn build"

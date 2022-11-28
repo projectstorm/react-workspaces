@@ -6,25 +6,25 @@ import { WorkspaceEngine } from '../../core/WorkspaceEngine';
 import { useDimensionLayoutInvalidator } from './useDimensionLayoutInvalidator';
 
 export interface UseModelElementProps {
-	model: WorkspaceModel;
-	engine: WorkspaceEngine;
+  model: WorkspaceModel;
+  engine: WorkspaceEngine;
 }
 
 export const useModelElement = (props: UseModelElementProps) => {
-	const ref = React.useRef<HTMLDivElement>();
-	useDimensionLayoutInvalidator({
-		engine: props.engine,
-		dimension: props.model.r_dimensions
-	});
-	useResizeObserver({
-		forwardRef: ref,
-		dimension: props.model.r_dimensions
-	});
-	useEffect(() => {
-		props.model.setVisible(true);
-		return () => {
-			props.model.setVisible(false);
-		};
-	}, []);
-	return ref;
+  const ref = React.useRef<HTMLDivElement>();
+  useDimensionLayoutInvalidator({
+    engine: props.engine,
+    dimension: props.model.r_dimensions
+  });
+  useResizeObserver({
+    forwardRef: ref,
+    dimension: props.model.r_dimensions
+  });
+  useEffect(() => {
+    props.model.setVisible(true);
+    return () => {
+      props.model.setVisible(false);
+    };
+  }, []);
+  return ref;
 };

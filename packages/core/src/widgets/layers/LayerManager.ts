@@ -4,94 +4,94 @@ import { WorkspaceEngine } from '../../core/WorkspaceEngine';
 import { WorkspaceModel } from '../../core-models/WorkspaceModel';
 
 export interface LayerListener extends BaseListener {
-	removed: () => any;
-	moveToTop: () => any;
-	repaint: () => any;
+  removed: () => any;
+  moveToTop: () => any;
+  repaint: () => any;
 }
 
 export interface RenderLayerEvent {
-	engine: WorkspaceEngine;
-	model: WorkspaceModel;
+  engine: WorkspaceEngine;
+  model: WorkspaceModel;
 }
 
 export interface LayerOptions {
-	mouseEvents: boolean;
+  mouseEvents: boolean;
 }
 
 export abstract class Layer<T extends LayerListener = LayerListener> extends BaseObserver<T> {
-	id: string;
-	layerManager: LayerManager;
+  id: string;
+  layerManager: LayerManager;
 
-	constructor(public options: LayerOptions) {
-		super();
-		this.id = v4();
-		this.layerManager = null;
-	}
+  constructor(public options: LayerOptions) {
+    super();
+    this.id = v4();
+    this.layerManager = null;
+  }
 
-	abstract renderLayer(event: RenderLayerEvent): JSX.Element;
+  abstract renderLayer(event: RenderLayerEvent): JSX.Element;
 
-	setLayerManager(manager: LayerManager) {
-		this.layerManager = manager;
-	}
+  setLayerManager(manager: LayerManager) {
+    this.layerManager = manager;
+  }
 
-	isInserted() {
-		return !!this.layerManager;
-	}
+  isInserted() {
+    return !!this.layerManager;
+  }
 
-	remove() {
-		this.iterateListeners((cb) => cb.removed?.());
-	}
+  remove() {
+    this.iterateListeners((cb) => cb.removed?.());
+  }
 
-	moveToTop() {
-		this.iterateListeners((cb) => cb.moveToTop?.());
-	}
+  moveToTop() {
+    this.iterateListeners((cb) => cb.moveToTop?.());
+  }
 
-	repaint() {
-		this.iterateListeners((cb) => cb.repaint?.());
-	}
+  repaint() {
+    this.iterateListeners((cb) => cb.repaint?.());
+  }
 }
 
 export interface LayerManagerListener extends BaseListener {
-	layersChanged: () => any;
-	layerAdded: () => any;
+  layersChanged: () => any;
+  layerAdded: () => any;
 }
 
 export class LayerManager extends BaseObserver<LayerManagerListener> {
-	private _layers: Set<Layer>;
+  private _layers: Set<Layer>;
 
-	constructor() {
-		super();
-		this._layers = new Set();
-	}
+  constructor() {
+    super();
+    this._layers = new Set();
+  }
 
-	get layers() {
-		return Array.from(this._layers.values());
-	}
+  get layers() {
+    return Array.from(this._layers.values());
+  }
 
-	fireUpdated() {
-		this.iterateListeners((cb) => cb.layersChanged?.());
-	}
+  fireUpdated() {
+    this.iterateListeners((cb) => cb.layersChanged?.());
+  }
 
-	addLayer(layer: Layer) {
-		layer.setLayerManager(this);
-		this._layers.add(layer);
-		const l = layer.registerListener({
-			removed: () => {
-				this._layers.delete(layer);
-				layer.setLayerManager(null);
-				l();
-				this.fireUpdated();
-			},
-			moveToTop: () => {
-				// remove from current position
-				this._layers.delete(layer);
+  addLayer(layer: Layer) {
+    layer.setLayerManager(this);
+    this._layers.add(layer);
+    const l = layer.registerListener({
+      removed: () => {
+        this._layers.delete(layer);
+        layer.setLayerManager(null);
+        l();
+        this.fireUpdated();
+      },
+      moveToTop: () => {
+        // remove from current position
+        this._layers.delete(layer);
 
-				// add to the top
-				this._layers.add(layer);
-				this.fireUpdated();
-			}
-		});
-		this.iterateListeners((cb) => cb.layerAdded?.());
-		this.fireUpdated();
-	}
+        // add to the top
+        this._layers.add(layer);
+        this.fireUpdated();
+      }
+    });
+    this.iterateListeners((cb) => cb.layerAdded?.());
+    this.fireUpdated();
+  }
 }

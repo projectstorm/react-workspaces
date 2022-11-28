@@ -8,7 +8,7 @@ import {
   WorkspaceNodeModel,
   WorkspaceWidget
 } from '@projectstorm/react-workspaces-core';
-import {resizingBehavior} from "@projectstorm/react-workspaces-behavior-resize";
+import { resizingBehavior } from '@projectstorm/react-workspaces-behavior-resize';
 import { MyCustomPanelModel, MyCustomPanelModelFactory } from './MyCustomPanelModel';
 
 const s_global = css`
@@ -25,13 +25,12 @@ const s_global = css`
 `;
 
 const Root = styled.div`
-  background: rgb(240,240,240);
+  background: rgb(240, 240, 240);
   height: 100%;
   box-sizing: border-box;
-`
+`;
 
 export const BodyWidget = () => {
-
   const [model] = useState(() => {
     const m = new WorkspaceNodeModel();
 
@@ -43,7 +42,7 @@ export const BodyWidget = () => {
     m.addModel(new MyCustomPanelModel('i am content').setExpand(true, true));
 
     return m;
-  })
+  });
   const [engine] = useState(() => {
     const e = new WorkspaceEngine();
 
@@ -63,5 +62,5 @@ export const BodyWidget = () => {
         <WorkspaceWidget model={model} engine={engine} />
       </Root>
     </>
-  )
-}
+  );
+};

@@ -4,7 +4,7 @@ const production = process.env.NODE_ENV === 'production';
 const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = (directory) => {
-  const packageFile = require(path.join(directory, 'package.json'))
+  const packageFile = require(path.join(directory, 'package.json'));
   return {
     entry: path.join(directory, 'dist/index.jsx'),
     output: {
@@ -12,8 +12,8 @@ module.exports = (directory) => {
       path: path.join(directory, 'dist'),
       library: {
         name: packageFile.name,
-        type: "umd"
-      },
+        type: 'umd'
+      }
     },
     module: {
       rules: [

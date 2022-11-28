@@ -1,68 +1,68 @@
 import { BaseListener, BaseObserver } from '../BaseObserver';
 
 export interface SizeListener extends BaseListener {
-	updated: () => any;
+  updated: () => any;
 }
 
 export interface ISize {
-	width: number;
-	height: number;
+  width: number;
+  height: number;
 }
 
 export class Size extends BaseObserver<SizeListener> implements ISize {
-	protected _width: number;
-	protected _height: number;
+  protected _width: number;
+  protected _height: number;
 
-	constructor() {
-		super();
-		this._width = 0;
-		this._height = 0;
-	}
+  constructor() {
+    super();
+    this._width = 0;
+    this._height = 0;
+  }
 
-	get width() {
-		return this._width;
-	}
+  get width() {
+    return this._width;
+  }
 
-	get height() {
-		return this._height;
-	}
+  get height() {
+    return this._height;
+  }
 
-	set width(width: number) {
-		this.update({
-			width
-		});
-	}
+  set width(width: number) {
+    this.update({
+      width
+    });
+  }
 
-	valid() {
-		return this.getVolume() > 0;
-	}
+  valid() {
+    return this.getVolume() > 0;
+  }
 
-	set height(height: number) {
-		this.update({
-			height
-		});
-	}
+  set height(height: number) {
+    this.update({
+      height
+    });
+  }
 
-	isPortrait() {
-		return this.height > this.width;
-	}
+  isPortrait() {
+    return this.height > this.width;
+  }
 
-	getVolume() {
-		return this.width * this.height;
-	}
+  getVolume() {
+    return this.width * this.height;
+  }
 
-	update(size: Partial<ISize>) {
-		let updated = false;
-		if (size.width != null && size.width !== this.width) {
-			this._width = size.width;
-			updated = true;
-		}
-		if (size.height != null && size.height !== this.height) {
-			this._height = size.height;
-			updated = true;
-		}
-		if (updated) {
-			this.iterateListeners((cb) => cb.updated?.());
-		}
-	}
+  update(size: Partial<ISize>) {
+    let updated = false;
+    if (size.width != null && size.width !== this.width) {
+      this._width = size.width;
+      updated = true;
+    }
+    if (size.height != null && size.height !== this.height) {
+      this._height = size.height;
+      updated = true;
+    }
+    if (updated) {
+      this.iterateListeners((cb) => cb.updated?.());
+    }
+  }
 }

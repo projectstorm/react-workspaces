@@ -6,37 +6,37 @@ import { DefaultWorkspacePanelModel } from './panel/DefaultWorkspacePanelModel';
 import { DefaultPanelTabWidget } from './widgets/DefaultPanelTabWidget';
 import { DefaultWorkspacePanelFactory } from './panel/DefaultWorkspacePanelFactory';
 import {
-	TrayModelPanelRenderer,
-	TrayModelPanelRendererEvent,
-	WorkspaceTrayMode
+  TrayModelPanelRenderer,
+  TrayModelPanelRendererEvent,
+  WorkspaceTrayMode
 } from '@projectstorm/react-workspaces-model-tray';
 import { DefaultPanelMicroButtonWidget } from './widgets/DefaultPanelMicroButtonWidget';
 
 export class DefaultSubComponentRenderer
-	implements
-		TabRenderer<DefaultWorkspacePanelModel>,
-		WorkspaceNodePanelRenderer<DefaultWorkspacePanelModel>,
-		TrayModelPanelRenderer<DefaultWorkspacePanelModel>
+  implements
+    TabRenderer<DefaultWorkspacePanelModel>,
+    WorkspaceNodePanelRenderer<DefaultWorkspacePanelModel>,
+    TrayModelPanelRenderer<DefaultWorkspacePanelModel>
 {
-	renderIcon(event: TrayModelPanelRendererEvent<DefaultWorkspacePanelModel>): JSX.Element {
-		return (
-			<DefaultPanelMicroButtonWidget
-				smaller={event.parent.mode === WorkspaceTrayMode.NORMAL}
-				selected={event.selected}
-				icon={event.model.icon}
-			/>
-		);
-	}
+  renderIcon(event: TrayModelPanelRendererEvent<DefaultWorkspacePanelModel>): JSX.Element {
+    return (
+      <DefaultPanelMicroButtonWidget
+        smaller={event.parent.mode === WorkspaceTrayMode.NORMAL}
+        selected={event.selected}
+        icon={event.model.icon}
+      />
+    );
+  }
 
-	renderTitleBar(model: RenderTitleBarEvent<DefaultWorkspacePanelModel>): JSX.Element {
-		return <DefaultPanelTitleWidget title={model.model.displayName} />;
-	}
+  renderTitleBar(model: RenderTitleBarEvent<DefaultWorkspacePanelModel>): JSX.Element {
+    return <DefaultPanelTitleWidget title={model.model.displayName} />;
+  }
 
-	renderTab(event: TabRendererEvent<DefaultWorkspacePanelModel>): JSX.Element {
-		return <DefaultPanelTabWidget name={event.model.displayName} selected={event.selected} />;
-	}
+  renderTab(event: TabRendererEvent<DefaultWorkspacePanelModel>): JSX.Element {
+    return <DefaultPanelTabWidget name={event.model.displayName} selected={event.selected} />;
+  }
 
-	matchModel(model: DefaultWorkspacePanelModel): boolean {
-		return model.type === DefaultWorkspacePanelFactory.TYPE;
-	}
+  matchModel(model: DefaultWorkspacePanelModel): boolean {
+    return model.type === DefaultWorkspacePanelFactory.TYPE;
+  }
 }

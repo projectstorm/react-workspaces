@@ -1,1 +1,1 @@
-module.exports = require('../../webpack.shared')(__dirname)
+module.exports = require('../../webpack.shared')(__dirname);
