@@ -18,8 +18,9 @@ jobs:
           # Make sure the actual branch is checked out when running on pull requests
           ref: ${{ github.head_ref }}
 
-      - uses: actions/checkout@v2 # Check out the repository first.
-      - uses: actionsx/prettier@v2
+      - name: Prettify code
+        uses: creyD/prettier_action@v4.2
         with:
-          # prettier CLI arguments.
-          args:  --write "**/*.{ts,tsx,js,jsx}" --ignore-path .prettierignore --config .prettierrc
+          # This part is also where you can pass other options, for example:
+          dry: true
+          prettier_options: --write "**/*.{ts,tsx,js,jsx}" --ignore-path .prettierignore --config .prettierrc
