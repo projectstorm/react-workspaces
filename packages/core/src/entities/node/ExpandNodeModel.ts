@@ -1,7 +1,6 @@
 import { DirectionLayoutChildDirective } from '../../widgets/layouts/DirectionalChildWidget';
 import { ResizeDivision, WorkspaceNodeModel } from './WorkspaceNodeModel';
 import { WorkspaceModel } from '../../core-models/WorkspaceModel';
-import * as _ from 'lodash';
 
 export interface ExpandNodeModelChild {
 	originalWidth: number;
