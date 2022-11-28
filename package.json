@@ -25,7 +25,8 @@
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx}\"",
     "clean": "rm -rf packages/*/dist",
     "build": "tsc --build && pnpm run -r build",
-    "build:prod": "NODE_ENV=production yarn build"
+    "build:prod": "NODE_ENV=production pnpm build",
+    "release": "pnpm build:prod && pnpm changeset publish"
   },
   "devDependencies": {
     "babel-loader": "^9.1.0",
