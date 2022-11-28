@@ -11,6 +11,8 @@ applications that have window management similar to Adobe / Jetbrains and Netbea
 
 ![Demo1](./images/screenshot1.png)
 
+![Demo1](./images/animated1.gif)
+
 ## Usage
 
 Take a look at the demos URL as well as the demos folder (docs will follow soon)

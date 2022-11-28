@@ -1,0 +1,41 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "declarationDir": "dist/@types",
+    "rootDir": ".",
+    "outDir": "dist",
+    "tsBuildInfoFile": "dist/tsconfig.tsbuildinfo"
+  },
+  "references": [
+    {
+      "path": "../packages/core"
+    },
+    {
+      "path": "../packages/defaults"
+    },
+    {
+      "path": "../packages/model-floating-window"
+    },
+    {
+      "path": "../packages/model-tabs"
+    },
+    {
+      "path": "../packages/model-tray"
+    },
+    {
+      "path": "../packages/behavior-resize"
+    },
+    {
+      "path": "../packages/behavior-panel-dropzone"
+    },
+    {
+      "path": "../packages/behavior-divider-dropzone"
+    },
+    {
+      "path": "../packages/dropzone-plugin-tabs"
+    },
+    {
+      "path": "../packages/dropzone-plugin-tray"
+    }
+  ]
+}
