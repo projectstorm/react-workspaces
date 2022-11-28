@@ -4,6 +4,9 @@
   "main": "./dist/index.umd.js",
   "module": "./dist/index.jsx",
   "types": "./dist/@types/index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "../../node_modules/.bin/webpack"
   },
