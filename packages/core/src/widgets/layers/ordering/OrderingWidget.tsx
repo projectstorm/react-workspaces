@@ -12,6 +12,7 @@ export interface OrderingWidgetZoneProps {
   layer: OrderingLayer;
   vertical: boolean;
   container: DimensionContainer;
+  engine: WorkspaceEngine;
 }
 
 export const OrderingWidgetZone: React.FC<OrderingWidgetZoneProps> = (props) => {
@@ -20,7 +21,8 @@ export const OrderingWidgetZone: React.FC<OrderingWidgetZoneProps> = (props) => 
   useResizeObserver({
     forwardRef: ref,
     dimension: props.container,
-    ignoreDebounce: true
+    ignoreDebounce: true,
+    engine: props.engine
   });
   useEffect(() => {
     return props.layer.registerListener({
@@ -90,13 +92,20 @@ export const OrderingWidget: React.FC<OrderingWidgetProps> = (props) => {
   }, []);
   return (
     <>
-      <OrderingWidgetZone container={containers[0]} layer={layer} vertical={props.vertical} index={0} />
+      <OrderingWidgetZone
+        engine={props.engine}
+        container={containers[0]}
+        layer={layer}
+        vertical={props.vertical}
+        index={0}
+      />
       {props.children.map((c, index: number) => {
         return (
           <React.Fragment>
             {c}
             {containers[index + 1] ? (
               <OrderingWidgetZone
+                engine={props.engine}
                 container={containers[index + 1]}
                 layer={layer}
                 vertical={props.vertical}

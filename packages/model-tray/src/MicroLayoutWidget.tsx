@@ -54,7 +54,8 @@ export const MicroWrapper: React.FC<MicroWrapperProps> = (props) => {
   if (props.node.mode === WorkspaceTrayMode.COLLAPSED) {
     useResizeObserver({
       forwardRef: ref,
-      dimension: props.model.r_dimensions
+      dimension: props.model.r_dimensions,
+      engine: props.engine
     });
     useScrollObserver({
       forwardRef: props.scrollRef,

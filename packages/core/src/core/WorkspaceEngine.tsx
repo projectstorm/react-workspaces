@@ -34,7 +34,6 @@ export class WorkspaceEngine extends BaseObserver<WorkspaceEngineListener> imple
   draggingID: string;
   fullscreenModel: WorkspaceModel;
   layerManager: LayerManager;
-  fireModelUpdateEvent: boolean;
   repainting: boolean;
   dragAndDropEnabled: boolean;
 
@@ -53,6 +52,7 @@ export class WorkspaceEngine extends BaseObserver<WorkspaceEngineListener> imple
     this.fullscreenModel = null;
     this.dragAndDropEnabled = true;
     this.layerManager = new LayerManager();
+    this.workspaceContainer = new DimensionContainer();
     this.rootModel = null;
   }
 
@@ -80,10 +80,6 @@ export class WorkspaceEngine extends BaseObserver<WorkspaceEngineListener> imple
 
   invalidateDimensions() {
     this.iterateListeners((cb) => cb.dimensionsInvalidated?.());
-  }
-
-  setWorkspaceContainer(workspaceContainer: DimensionContainer) {
-    this.workspaceContainer = workspaceContainer;
   }
 
   setDragAndDropEnabled(drag: boolean = true) {

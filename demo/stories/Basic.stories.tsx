@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useState } from 'react';
 import 'typeface-open-sans';
 import { ExpandNodeModel } from '@projectstorm/react-workspaces-core';
-import { CompInternal, DebugOptions, genVerticalNode, useEngine } from './helpers/tools';
+import { CompInternal, DebugOptions, genVerticalNode, SharedArgs, useEngine } from './helpers/tools';
 
 export const Basic = function (args) {
   const engine = useEngine(args);
@@ -22,11 +22,7 @@ export const Basic = function (args) {
   return <CompInternal model={model} engine={engine} />;
 }.bind({});
 
-Basic.args = {
-  [DebugOptions.DebugPanels]: false,
-  [DebugOptions.DebugDividers]: false,
-  [DebugOptions.DebugResizers]: false
-};
+Basic.args = SharedArgs;
 
 export default {
   title: 'Workspace',

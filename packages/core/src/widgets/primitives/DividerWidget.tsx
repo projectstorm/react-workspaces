@@ -19,7 +19,8 @@ export const DividerWidget: React.FC<DividerWidgetProps> = (props) => {
   });
   useResizeObserver({
     forwardRef: ref,
-    dimension: props.dimensionContainer
+    dimension: props.dimensionContainer,
+    engine: props.engine
   });
   return <S.Container ref={ref}></S.Container>;
 };
