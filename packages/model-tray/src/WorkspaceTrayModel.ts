@@ -82,7 +82,7 @@ export class WorkspaceTrayModel extends WorkspaceNodeModel<SerializedWorkspaceTr
 
   updateWindowPosition(child: WorkspaceModel) {
     this.floatingWindow.position.update({
-      left: -this.floatingWindow.size.width + child.r_dimensions.position.right - child.r_dimensions.size.width,
+      left: -this.floatingWindow.size.width + child.r_dimensions.position.left,
       top: child.r_dimensions.position.top
     });
   }

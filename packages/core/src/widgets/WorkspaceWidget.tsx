@@ -1,14 +1,13 @@
 import * as React from 'react';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { WorkspaceEngine } from '../core/WorkspaceEngine';
 import styled from '@emotion/styled';
 import { useForceUpdate } from './hooks/useForceUpdate';
-import { useResizeObserver } from './hooks/useResizeObserver';
 import { LayerManagerWidget } from './layers/LayerManagerWidget';
 import { useDragOverModel } from './hooks/dnd-model/useDragOverModel';
 import { UseMouseDragEventsRootWidget } from './hooks/dnd/useMouseDragEvents';
 import { WorkspaceNodeModel } from '../entities/node/WorkspaceNodeModel';
-import { DimensionContainer } from '../core/dimensions/DimensionContainer';
+import { useBaseResizeObserver } from './hooks/useBaseResizeObserver';
 
 export interface WorkspaceWidgetProps {
   model: WorkspaceNodeModel;
@@ -33,9 +32,6 @@ export const WorkspaceWidget: React.FC<WorkspaceWidgetProps> = (props) => {
   const timerListener = useRef(null);
 
   const forceUpdate = useForceUpdate();
-  const [dimensionContainer] = useState(() => {
-    return new DimensionContainer();
-  });
 
   useEffect(() => {
     props.engine.fireRepainted();
@@ -45,13 +41,12 @@ export const WorkspaceWidget: React.FC<WorkspaceWidgetProps> = (props) => {
     props.engine.setRootModel(props.model);
   }, [props.model]);
 
-  useResizeObserver({
+  useBaseResizeObserver({
     forwardRef: ref_container,
-    dimension: dimensionContainer
+    dimension: props.engine.workspaceContainer
   });
 
   useEffect(() => {
-    props.engine.setWorkspaceContainer(dimensionContainer);
     props.engine.registerListener({
       layoutInvalidated: () => {
         forceUpdate();

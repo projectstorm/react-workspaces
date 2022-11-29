@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useState } from 'react';
 import 'typeface-open-sans';
 import { WorkspaceNodeModel } from '@projectstorm/react-workspaces-core';
-import { CompInternal, DebugOptions, useEngine } from './helpers/tools';
+import { CompInternal, SharedArgs, useEngine } from './helpers/tools';
 import { DefaultWorkspacePanelModel } from '@projectstorm/react-workspaces-defaults';
 
 export const AffinityStories = function (args) {
@@ -23,11 +23,7 @@ export const AffinityStories = function (args) {
   return <CompInternal model={model} engine={engine} />;
 }.bind({});
 
-AffinityStories.args = {
-  [DebugOptions.DebugPanels]: false,
-  [DebugOptions.DebugDividers]: false,
-  [DebugOptions.DebugResizers]: false
-};
+AffinityStories.args = SharedArgs;
 
 export default {
   title: 'Workspace',

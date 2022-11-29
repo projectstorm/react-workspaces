@@ -53,6 +53,13 @@ export enum DebugOptions {
   DebugWindows = 'DebugWindows'
 }
 
+export const SharedArgs = {
+  [DebugOptions.DebugPanels]: false,
+  [DebugOptions.DebugDividers]: false,
+  [DebugOptions.DebugResizers]: false,
+  [DebugOptions.DebugWindows]: false
+};
+
 export const useRootModel = (model: RootWorkspaceModel, args) => {
   useEffect(() => {
     model.setDebug(args[DebugOptions.DebugWindows]);
@@ -132,8 +139,10 @@ export const CompInternal: React.FC<{ model: WorkspaceNodeModel; engine: Workspa
 
 namespace S {
   export const Container = styled.div`
+    padding: 40px;
     background: rgb(70, 70, 70);
     position: absolute;
+    box-sizing: border-box;
     height: 100%;
     width: 100%;
     overflow: hidden;

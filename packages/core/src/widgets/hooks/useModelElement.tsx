@@ -18,7 +18,8 @@ export const useModelElement = (props: UseModelElementProps) => {
   });
   useResizeObserver({
     forwardRef: ref,
-    dimension: props.model.r_dimensions
+    dimension: props.model.r_dimensions,
+    engine: props.engine
   });
   useEffect(() => {
     props.model.setVisible(true);
