@@ -26,7 +26,8 @@
     "clean": "rm -rf packages/*/dist",
     "build": "tsc --build && pnpm run -r build",
     "build:prod": "NODE_ENV=production pnpm build",
-    "release": "pnpm build:prod && pnpm changeset publish"
+    "release": "pnpm build:prod && pnpm changeset publish",
+    "release:storybook": "tsc --build && cd demo && pnpm storybook:build && ../node_modules/.bin/storybook-to-ghpages --existing-output-dir .out"
   },
   "devDependencies": {
     "babel-loader": "^9.1.0",

@@ -1,8 +1,10 @@
 {
   "name": "@projectstorm/react-workspaces-demos",
   "private": "true",
+  "version": null,
   "scripts": {
-    "storybook": "start-storybook"
+    "storybook": "start-storybook",
+    "storybook:build": "./node_modules/.bin/build-storybook -c .storybook -o .out"
   },
   "dependencies": {
     "react": "^18.2.0",
@@ -25,6 +27,7 @@
     "@storybook/addon-essentials": "^6.5.13",
     "@storybook/addons": "^6.5.13",
     "@storybook/builder-webpack5": "^6.5.13",
+    "@storybook/storybook-deployer": "^2.8.16",
     "@storybook/manager-webpack5": "^6.5.13",
     "@storybook/react": "^6.5.13",
     "@storybook/theming": "^6.5.13",
@@ -34,6 +37,5 @@
     "react-dom": "18.2.0",
     "source-map-loader": "^4.0.1",
     "webpack": "^5.75.0"
-  },
-  "version": null
+  }
 }
