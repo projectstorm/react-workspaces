@@ -1,9 +1,7 @@
 name: Build
 
 on:
-  push:
-    branches:
-      - master
+  pull_request:
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 

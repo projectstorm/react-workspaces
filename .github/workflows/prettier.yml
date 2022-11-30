@@ -3,9 +3,6 @@ name: Prettier check
 # This action works with pull requests and pushes
 on:
   pull_request:
-  push:
-    branches:
-      - main
 
 jobs:
   prettier:
