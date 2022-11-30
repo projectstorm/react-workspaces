@@ -5,7 +5,6 @@
 __NOTE: V2 is still WIP but nearly ready__
 
 TODO still:
-* get serialization up to date
 * emotion theme support for all the packages
 
 ---
