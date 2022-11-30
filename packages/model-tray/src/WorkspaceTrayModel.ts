@@ -1,9 +1,9 @@
 import {
-  SerializedCollectionModel,
   WorkspaceEngine,
   WorkspaceModel,
   WorkspaceNodeModel,
-  WorkspaceNodeModelListener
+  WorkspaceNodeModelListener,
+  WorkspaceNodeModelSerialized
 } from '@projectstorm/react-workspaces-core';
 import {
   FloatingWindowFactory,
@@ -26,7 +26,10 @@ export interface WorkspaceTrayModelListener extends WorkspaceNodeModelListener {
   selectionChanged: () => any;
 }
 
-export interface SerializedWorkspaceTrayModel extends SerializedCollectionModel {}
+export interface SerializedWorkspaceTrayModel extends WorkspaceNodeModelSerialized {
+  selected: string;
+  mode: WorkspaceTrayMode;
+}
 
 export class WorkspaceTrayModel extends WorkspaceNodeModel<SerializedWorkspaceTrayModel, WorkspaceTrayModelListener> {
   mode: WorkspaceTrayMode;
@@ -92,10 +95,11 @@ export class WorkspaceTrayModel extends WorkspaceNodeModel<SerializedWorkspaceTr
     this.childListener?.();
   }
 
-  toArray() {
+  toArray(): SerializedWorkspaceTrayModel {
     return {
       ...super.toArray(),
-      mode: this.mode
+      mode: this.mode,
+      selected: this.selectedModel?.id
     };
   }
 

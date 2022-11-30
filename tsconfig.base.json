@@ -6,7 +6,6 @@
     "skipLibCheck": true,
     "sourceMap": true,
     "inlineSources": true,
-    "preserveSymlinks": true,
     "composite": true,
     "incremental": true,
     "jsx": "preserve",

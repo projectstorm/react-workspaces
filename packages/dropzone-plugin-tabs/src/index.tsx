@@ -3,6 +3,7 @@ import { WorkspaceCollectionModel, WorkspaceModel } from '@projectstorm/react-wo
 import {
   DropZoneLayerButtonWidget,
   DropZonePanelDirective,
+  ReplaceZone,
   TransformZone
 } from '@projectstorm/react-workspaces-behavior-panel-dropzone';
 import { WorkspaceTabFactory, WorkspaceTabModel } from '@projectstorm/react-workspaces-model-tabs';
@@ -11,7 +12,7 @@ import { faLayerGroup, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 library.add(faPlus, faLayerGroup);
 
-export const TabZone: TransformZone = {
+export const AppendToTabGroupZone: TransformZone = {
   key: 'ADD_TAB',
   render: ({ entered }) => {
     return <DropZoneLayerButtonWidget entered={entered} text="Add Tab" icon="plus" />;
@@ -40,11 +41,11 @@ export const ConvertToTabZone = (factory: WorkspaceTabFactory): TransformZone =>
 
 export const getDirectiveForTabModel = (
   node: WorkspaceModel,
-  transformZones: TransformZone[]
+  transformZones: TransformZone[] = []
 ): DropZonePanelDirective | null => {
   if (!(node instanceof WorkspaceCollectionModel) && node.parent instanceof WorkspaceTabModel) {
     return {
-      transformZones: transformZones,
+      transformZones: [ReplaceZone, AppendToTabGroupZone, ...transformZones],
       splitZones: []
     };
   }

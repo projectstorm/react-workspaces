@@ -20,10 +20,6 @@ export interface TrayWidgetProps {
   factory: WorkspaceTrayFactory;
 }
 
-export interface TrayWidgetState {
-  height: number;
-}
-
 namespace S {
   export const Container = styled.div<{ expand: boolean; width: number }>`
     display: flex;
@@ -37,9 +33,7 @@ namespace S {
     flex-grow: 1;
   `;
 
-  export const MicroLayoutShrink = styled(MicroLayoutWidget)<{ width: number }>`
-    min-width: ${(p) => p.width}px;
-    max-width: ${(p) => p.width}px;
+  export const MicroLayoutShrink = styled(MicroLayoutWidget)`
     flex-grow: 0;
   `;
 
