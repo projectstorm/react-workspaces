@@ -59,7 +59,7 @@ export const getDirectiveForWorkspaceNode = (
 ): DropZonePanelDirective | null => {
   if (!(node instanceof WorkspaceCollectionModel) && node.parent instanceof WorkspaceNodeModel) {
     return {
-      transformZones: transformZones,
+      transformZones: [ReplaceZone, ...transformZones],
       splitZones: [
         {
           alignment: node.parent.vertical ? Alignment.LEFT : Alignment.TOP,

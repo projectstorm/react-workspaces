@@ -1,7 +1,9 @@
 import {
   DimensionContainer,
+  IDimension,
   Position,
   SerializedModel,
+  WorkspaceEngineInterface,
   WorkspaceModel,
   WorkspaceModelListener
 } from '@projectstorm/react-workspaces-core';
@@ -10,19 +12,22 @@ export interface FloatingWindowModelListener extends WorkspaceModelListener {
   childUpdated: () => any;
 }
 
-export interface FloatingWindowModelSerialized extends SerializedModel {
-  // TODO position INFO
+export interface SerializedFloatingWindowModel extends SerializedModel {
+  dimensions: IDimension;
+  model: SerializedModel;
 }
 
-export class FloatingWindowModel extends WorkspaceModel<FloatingWindowModelSerialized, FloatingWindowModelListener> {
+export class FloatingWindowModel extends WorkspaceModel<SerializedFloatingWindowModel, FloatingWindowModelListener> {
   position: Position;
   dimension: DimensionContainer;
+  serializeToRoot: boolean;
 
   static TYPE = 'floating-window';
   private parentListener: () => any;
 
   constructor(type: string, public child: WorkspaceModel) {
     super(type);
+    this.serializeToRoot = true;
     this.position = new Position();
     this.dimension = new DimensionContainer({
       position: this.position,
@@ -34,6 +39,22 @@ export class FloatingWindowModel extends WorkspaceModel<FloatingWindowModelSeria
         this.normalizePosition();
       }
     });
+  }
+
+  fromArray(payload: SerializedFloatingWindowModel, engine: WorkspaceEngineInterface) {
+    super.fromArray(payload, engine);
+    this.dimension.update(payload.dimensions);
+    const model = engine.getFactory(payload.model.type).generateModel();
+    model.fromArray(payload.model, engine);
+    this.setChild(model);
+  }
+
+  toArray(): SerializedFloatingWindowModel {
+    return {
+      ...super.toArray(),
+      dimensions: this.dimension.dimensions,
+      model: this.child.toArray()
+    };
   }
 
   setParent(parent: WorkspaceModel) {

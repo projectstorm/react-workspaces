@@ -1,9 +1,9 @@
 import {
-  SerializedCollectionModel,
   WorkspaceEngine,
   WorkspaceModel,
   WorkspaceNodeModel,
-  WorkspaceNodeModelListener
+  WorkspaceNodeModelListener,
+  WorkspaceNodeModelSerialized
 } from '@projectstorm/react-workspaces-core';
 import {
   FloatingWindowFactory,
@@ -26,7 +26,10 @@ export interface WorkspaceTrayModelListener extends WorkspaceNodeModelListener {
   selectionChanged: () => any;
 }
 
-export interface SerializedWorkspaceTrayModel extends SerializedCollectionModel {}
+export interface SerializedWorkspaceTrayModel extends WorkspaceNodeModelSerialized {
+  selected: string;
+  mode: WorkspaceTrayMode;
+}
 
 export class WorkspaceTrayModel extends WorkspaceNodeModel<SerializedWorkspaceTrayModel, WorkspaceTrayModelListener> {
   mode: WorkspaceTrayMode;
@@ -42,6 +45,9 @@ export class WorkspaceTrayModel extends WorkspaceNodeModel<SerializedWorkspaceTr
     super(WorkspaceTrayModel.NAME);
     this.selectedModel = null;
     this.floatingWindow = options.factory.generateModel();
+
+    // the tray model will handle this
+    this.floatingWindow.serializeToRoot = false;
     this.floatingWindow.registerListener({
       childUpdated: () => {
         this.floatingWindow.minimumSize.update({
@@ -92,16 +98,20 @@ export class WorkspaceTrayModel extends WorkspaceNodeModel<SerializedWorkspaceTr
     this.childListener?.();
   }
 
-  toArray() {
+  toArray(): SerializedWorkspaceTrayModel {
     return {
       ...super.toArray(),
-      mode: this.mode
+      mode: this.mode,
+      selected: this.selectedModel?.id
     };
   }
 
-  fromArray(payload: any, engine: WorkspaceEngine) {
+  fromArray(payload: SerializedWorkspaceTrayModel, engine: WorkspaceEngine) {
     super.fromArray(payload, engine);
     this.setMode(payload['mode']);
+    if (payload.selected) {
+      this.setSelectedModel(this.children.find((m) => m.id === payload.selected) || null);
+    }
   }
 
   addModel(model: WorkspaceModel, position: number = null): this {

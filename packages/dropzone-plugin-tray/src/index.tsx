@@ -3,15 +3,16 @@ import { WorkspaceCollectionModel, WorkspaceModel } from '@projectstorm/react-wo
 import {
   DropZoneLayerButtonWidget,
   DropZonePanelDirective,
+  ReplaceZone,
   TransformZone
 } from '@projectstorm/react-workspaces-behavior-panel-dropzone';
 import { WorkspaceTrayFactory, WorkspaceTrayModel } from '@projectstorm/react-workspaces-model-tray';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faTableList, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faTableList } from '@fortawesome/free-solid-svg-icons';
 
 library.add(faPlus, faTableList);
 
-export const TrayZone: TransformZone = {
+export const AppendToTrayZone: TransformZone = {
   key: 'ADD_ITEM',
   render: ({ entered }) => {
     return <DropZoneLayerButtonWidget entered={entered} text="Add item" icon="plus" />;
@@ -40,11 +41,11 @@ export const ConvertToTrayZone = (trayFactory: WorkspaceTrayFactory): TransformZ
 
 export const getDirectiveForTrayModel = (
   node: WorkspaceModel,
-  transformZones: TransformZone[]
+  transformZones: TransformZone[] = []
 ): DropZonePanelDirective | null => {
   if (!(node instanceof WorkspaceCollectionModel) && node.parent instanceof WorkspaceTrayModel) {
     return {
-      transformZones: transformZones,
+      transformZones: [ReplaceZone, AppendToTrayZone, ...transformZones],
       splitZones: []
     };
   }

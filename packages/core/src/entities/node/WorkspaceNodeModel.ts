@@ -20,8 +20,12 @@ export interface WorkspaceNodeModelListener extends WorkspaceCollectionModelList
   divisionsRecomputed: () => any;
 }
 
+export interface WorkspaceNodeModelSerialized extends SerializedCollectionModel {
+  vertical: boolean;
+}
+
 export class WorkspaceNodeModel<
-  T extends SerializedCollectionModel = SerializedCollectionModel,
+  T extends WorkspaceNodeModelSerialized = WorkspaceNodeModelSerialized,
   L extends WorkspaceNodeModelListener = WorkspaceNodeModelListener
 > extends WorkspaceCollectionModel<T, L> {
   static NAME = 'srw-node';
@@ -37,14 +41,14 @@ export class WorkspaceNodeModel<
 
   // !----------- serialize ---------
 
-  toArray() {
+  toArray(): T {
     return {
       ...super.toArray(),
       vertical: this.vertical
     };
   }
 
-  fromArray(payload: any, engine: WorkspaceEngine) {
+  fromArray(payload: T, engine: WorkspaceEngine) {
     super.fromArray(payload, engine);
     this.vertical = payload['vertical'];
   }

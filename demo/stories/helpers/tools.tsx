@@ -19,23 +19,14 @@ import {
 } from '@projectstorm/react-workspaces-defaults';
 import {
   draggingItemBehavior,
-  getDirectiveForWorkspaceNode,
-  ReplaceZone
+  getDirectiveForWorkspaceNode
 } from '@projectstorm/react-workspaces-behavior-panel-dropzone';
 import { draggingItemDividerBehavior } from '@projectstorm/react-workspaces-behavior-divider-dropzone';
 import { WorkspaceTabFactory } from '@projectstorm/react-workspaces-model-tabs';
 import { resizingBehavior } from '@projectstorm/react-workspaces-behavior-resize';
 import { RootWorkspaceModel } from '@projectstorm/react-workspaces-model-floating-window';
-import {
-  ConvertToTabZone,
-  getDirectiveForTabModel,
-  TabZone
-} from '@projectstorm/react-workspaces-dropzone-plugin-tabs';
-import {
-  ConvertToTrayZone,
-  getDirectiveForTrayModel,
-  TrayZone
-} from '@projectstorm/react-workspaces-dropzone-plugin-tray';
+import { ConvertToTabZone, getDirectiveForTabModel } from '@projectstorm/react-workspaces-dropzone-plugin-tabs';
+import { ConvertToTrayZone, getDirectiveForTrayModel } from '@projectstorm/react-workspaces-dropzone-plugin-tray';
 
 export const genVerticalNode = () => {
   const node = new ExpandNodeModel()
@@ -102,13 +93,9 @@ export const useEngine = (args: { DebugDividers?: boolean; DebugResizers?: boole
       engine: e,
       getDropZoneForModel: (model) => {
         return (
-          getDirectiveForTrayModel(model, [ReplaceZone, TrayZone]) ||
-          getDirectiveForWorkspaceNode(model, [
-            ReplaceZone,
-            ConvertToTabZone(tabFactory),
-            ConvertToTrayZone(trayFactory)
-          ]) ||
-          getDirectiveForTabModel(model, [TabZone, ReplaceZone])
+          getDirectiveForTrayModel(model) ||
+          getDirectiveForWorkspaceNode(model, [ConvertToTabZone(tabFactory), ConvertToTrayZone(trayFactory)]) ||
+          getDirectiveForTabModel(model)
         );
       },
       debug: false
