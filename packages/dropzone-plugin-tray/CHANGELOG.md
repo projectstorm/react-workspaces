@@ -1,5 +1,18 @@
 # @projectstorm/react-workspaces-dropzone-plugin-tray
 
+## 2.0.1
+
+### Patch Changes
+
+- be7d88c: - Added serialization to the various models
+  - Improved the defaults of the transform zone functions
+  - some consistency things
+- Updated dependencies [48951aa]
+- Updated dependencies [be7d88c]
+  - @projectstorm/react-workspaces-core@2.0.1
+  - @projectstorm/react-workspaces-model-tray@2.0.1
+  - @projectstorm/react-workspaces-behavior-panel-dropzone@2.0.1
+
 ## 2.0.0
 
 ### Major Changes
