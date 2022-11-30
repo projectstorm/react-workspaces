@@ -1,9 +1,13 @@
-import { ExpandNodeModel, WorkspaceEngine } from '@projectstorm/react-workspaces-core';
-import { FloatingWindowModel } from './FloatingWindowModel';
+import { ExpandNodeModel, WorkspaceEngine, WorkspaceNodeModelSerialized } from '@projectstorm/react-workspaces-core';
+import { FloatingWindowModel, SerializedFloatingWindowModel } from './FloatingWindowModel';
 import { FloatingWindowLayer } from '../layer/window/FloatingWindowLayer';
 import { FloatingWindowResizeLayer } from '../layer/resize/FloatingWindowResizeLayer';
 
-export class RootWorkspaceModel extends ExpandNodeModel {
+export interface SerializedRootWorkspaceModel extends WorkspaceNodeModelSerialized {
+  floatingWindows: SerializedFloatingWindowModel[];
+}
+
+export class RootWorkspaceModel extends ExpandNodeModel<SerializedRootWorkspaceModel> {
   floatingWindows: Set<FloatingWindowModel>;
   layerListener: () => any;
 
@@ -31,6 +35,24 @@ export class RootWorkspaceModel extends ExpandNodeModel {
             });
         });
       }
+    });
+  }
+
+  toArray(): SerializedRootWorkspaceModel {
+    return {
+      ...super.toArray(),
+      floatingWindows: Array.from(this.floatingWindows.values())
+        .filter((w) => w.serializeToRoot)
+        .map((c) => c.toArray())
+    };
+  }
+
+  fromArray(payload: SerializedRootWorkspaceModel, engine: WorkspaceEngine) {
+    super.fromArray(payload, engine);
+    payload.floatingWindows.forEach((window) => {
+      const model = engine.getFactory(window.type).generateModel();
+      model.fromArray(window, engine);
+      this.addModel(model);
     });
   }
 

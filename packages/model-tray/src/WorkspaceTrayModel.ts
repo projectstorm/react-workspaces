@@ -45,6 +45,9 @@ export class WorkspaceTrayModel extends WorkspaceNodeModel<SerializedWorkspaceTr
     super(WorkspaceTrayModel.NAME);
     this.selectedModel = null;
     this.floatingWindow = options.factory.generateModel();
+
+    // the tray model will handle this
+    this.floatingWindow.serializeToRoot = false;
     this.floatingWindow.registerListener({
       childUpdated: () => {
         this.floatingWindow.minimumSize.update({
@@ -103,9 +106,12 @@ export class WorkspaceTrayModel extends WorkspaceNodeModel<SerializedWorkspaceTr
     };
   }
 
-  fromArray(payload: any, engine: WorkspaceEngine) {
+  fromArray(payload: SerializedWorkspaceTrayModel, engine: WorkspaceEngine) {
     super.fromArray(payload, engine);
     this.setMode(payload['mode']);
+    if (payload.selected) {
+      this.setSelectedModel(this.children.find((m) => m.id === payload.selected) || null);
+    }
   }
 
   addModel(model: WorkspaceModel, position: number = null): this {

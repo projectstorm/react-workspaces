@@ -1,5 +1,5 @@
 import { DirectionLayoutChildDirective } from '../../widgets/layouts/DirectionalChildWidget';
-import { ResizeDivision, WorkspaceNodeModel } from './WorkspaceNodeModel';
+import { ResizeDivision, WorkspaceNodeModel, WorkspaceNodeModelSerialized } from './WorkspaceNodeModel';
 import { WorkspaceModel } from '../../core-models/WorkspaceModel';
 
 export interface ExpandNodeModelChild {
@@ -11,7 +11,9 @@ export interface ExpandNodeModelChild {
  * This is a smarter version of the standard Node model which can work with
  * panels that expand, and treats them like standard panels, allowing them to resize
  */
-export class ExpandNodeModel extends WorkspaceNodeModel {
+export class ExpandNodeModel<
+  S extends WorkspaceNodeModelSerialized = WorkspaceNodeModelSerialized
+> extends WorkspaceNodeModel<S> {
   dimensions: Map<WorkspaceModel, ExpandNodeModelChild>;
   rendered: Set<WorkspaceModel>;
   queuedForInitialSizeCheck: Set<WorkspaceModel>;
