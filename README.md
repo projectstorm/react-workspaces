@@ -11,7 +11,7 @@ A React library which provides a complete workspace management system to power a
 
 ## Features
 
-* Pluggable model and behavior system, implemented as a monorepo with separate npm packages (monorepo)
+* Pluggable model and behavior system, implemented as a monorepo with separate npm packages
 * Fully native drag and drop (even across multiple browser windows)
 * Resizable everything, including split panels and floating windows
 * Drop-zones which transform panels into other models (such as trays and tabs)
@@ -21,6 +21,8 @@ A React library which provides a complete workspace management system to power a
 * Layer based, with all interaction controls such as resize dividers and controls implemented as top-level layers
 * Complete debug system, to draw all hidden controls and show reported panel sizes
 * Written in TS with exported types in published packages
+
+---
 
 ![Demo1](./images/screenshot1.png)
 
