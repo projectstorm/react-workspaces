@@ -22,7 +22,7 @@
   "devDependencies": {
     "@types/react": "^18.0.25",
     "@types/react-dom": "^18.0.9",
-    "@types/lodash": "^4.14.190",
-    "@types/uuid": "^8.3.4"
+    "@types/lodash": "^4.14.191",
+    "@types/uuid": "^9.0.0"
   }
 }
