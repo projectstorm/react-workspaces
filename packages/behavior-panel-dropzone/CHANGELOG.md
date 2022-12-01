@@ -1,5 +1,16 @@
 # @projectstorm/react-workspaces-behavior-panel-dropzone
 
+## 2.1.0
+
+### Minor Changes
+
+- 136b0a6: Theme support for all the internal widgets and behaviors
+
+### Patch Changes
+
+- Updated dependencies [136b0a6]
+  - @projectstorm/react-workspaces-core@2.1.0
+
 ## 2.0.1
 
 ### Patch Changes
