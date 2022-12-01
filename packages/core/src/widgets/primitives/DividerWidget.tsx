@@ -9,6 +9,7 @@ import { WorkspaceEngine } from '../../core/WorkspaceEngine';
 export interface DividerWidgetProps {
   dimensionContainer: DimensionContainer;
   engine: WorkspaceEngine;
+  thickness?: number;
 }
 
 export const DividerWidget: React.FC<DividerWidgetProps> = (props) => {
@@ -22,10 +23,10 @@ export const DividerWidget: React.FC<DividerWidgetProps> = (props) => {
     dimension: props.dimensionContainer,
     engine: props.engine
   });
-  return <S.Container ref={ref}></S.Container>;
+  return <S.Container thickness={props.thickness ?? 4} ref={ref}></S.Container>;
 };
 namespace S {
-  export const Container = styled.div`
+  export const Container = styled.div<{ thickness: number }>`
     min-width: 4px;
     min-height: 4px;
   `;

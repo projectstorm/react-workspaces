@@ -94,13 +94,19 @@ export const useEngine = (args: { DebugDividers?: boolean; DebugResizers?: boole
       getDropZoneForModel: (model) => {
         return (
           getDirectiveForTrayModel(model) ||
-          getDirectiveForWorkspaceNode(model, [ConvertToTabZone(tabFactory), ConvertToTrayZone(trayFactory)]) ||
+          getDirectiveForWorkspaceNode({
+            node: model,
+            transformZones: [ConvertToTabZone(tabFactory), ConvertToTrayZone(trayFactory)],
+            generateParentNode: () => new ExpandNodeModel()
+          }) ||
           getDirectiveForTabModel(model)
         );
       },
       debug: false
     });
-    draggingItemDividerBehavior(e);
+    draggingItemDividerBehavior({
+      engine: e
+    });
     resizingBehavior(e);
 
     e.layerManager.addLayer(debugLayer);

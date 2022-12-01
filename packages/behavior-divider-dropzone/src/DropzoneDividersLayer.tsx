@@ -1,34 +1,32 @@
 import * as React from 'react';
 import { useEffect } from 'react';
-import {
-  Layer,
-  useForceUpdate,
-  WorkspaceEngine,
-  WorkspaceModel,
-  WorkspaceNodeModel
-} from '@projectstorm/react-workspaces-core';
-import { DropzoneDividerWidget } from './DropzoneDividerWidget';
+import { Layer, useForceUpdate, WorkspaceEngine, WorkspaceNodeModel } from '@projectstorm/react-workspaces-core';
+import { DropzoneDividerTheme, DropzoneDividerWidget } from './DropzoneDividerWidget';
+
+export interface DropzoneDividersLayerOptions {
+  theme?: DropzoneDividerTheme;
+}
 
 export class DropzoneDividersLayer extends Layer {
-  constructor(public modelID: string) {
+  constructor(protected options2: DropzoneDividersLayerOptions) {
     super({
       mouseEvents: false
     });
   }
 
   renderLayer(event): JSX.Element {
-    return <DropzoneDividersLayerWidget engine={event.engine} />;
+    return <DropzoneDividersLayerWidget engine={event.engine} theme={this.options2.theme} />;
   }
 }
 
 export interface DropzoneDividersLayerWidgetProps {
   engine: WorkspaceEngine;
+  theme?: DropzoneDividerTheme;
 }
 
 export const DropzoneDividersLayerWidget: React.FC<DropzoneDividersLayerWidgetProps> = (props) => {
   const forceUpdate = useForceUpdate(true);
 
-  // TODO rerun this when models added
   useEffect(() => {
     return props.engine.registerListener({
       layoutInvalidated: () => {

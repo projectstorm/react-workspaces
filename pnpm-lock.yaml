@@ -146,7 +146,9 @@ importers:
       '@fortawesome/free-solid-svg-icons': ^6.2.1
       '@fortawesome/react-fontawesome': ^0.2.0
       '@projectstorm/react-workspaces-core': workspace:*
+      '@types/lodash': ^4.14.191
       '@types/react': ^18.0.25
+      lodash: ^4.17.21
       react: ^18.2.0
     dependencies:
       '@emotion/styled': 11.10.5_fan5qbzahqtxlm5dzefqlqx5ia
@@ -154,8 +156,10 @@ importers:
       '@fortawesome/free-solid-svg-icons': 6.2.1
       '@fortawesome/react-fontawesome': 0.2.0_z27bm67dtmuyyvss23ckjdrcuy
       '@projectstorm/react-workspaces-core': link:../core
+      lodash: 4.17.21
       react: 18.2.0
     devDependencies:
+      '@types/lodash': 4.14.191
       '@types/react': 18.0.25
 
   packages/behavior-resize:
@@ -4650,7 +4654,7 @@ packages:
       '@babel/preset-env': 7.20.2
       '@babel/types': 7.20.2
       '@mdx-js/mdx': 1.6.22
-      '@types/lodash': 4.14.190
+      '@types/lodash': 4.14.191
       js-string-escape: 1.0.1
       loader-utils: 2.0.4
       lodash: 4.17.21
@@ -4669,7 +4673,7 @@ packages:
       '@babel/preset-env': 7.20.2_@babel+core@7.20.2
       '@babel/types': 7.20.2
       '@mdx-js/mdx': 1.6.22
-      '@types/lodash': 4.14.190
+      '@types/lodash': 4.14.191
       js-string-escape: 1.0.1
       loader-utils: 2.0.4
       lodash: 4.17.21
@@ -5062,6 +5066,10 @@ packages:
 
   /@types/lodash/4.14.190:
     resolution: {integrity: sha512-5iJ3FBJBvQHQ8sFhEhJfjUP+G+LalhavTkYyrAYqz5MEJG+erSv0k9KJLb6q7++17Lafk1scaTIFXcMJlwK8Mw==}
+    dev: true
+
+  /@types/lodash/4.14.191:
+    resolution: {integrity: sha512-BdZ5BCCvho3EIXw6wUCXHe7rS53AIDPLE+JzwgT+OsJk53oBfbSmZZ7CX4VaRoN78N+TJpFi9QPlfIVNmJYWxQ==}
     dev: true
 
   /@types/mdast/3.0.10:

@@ -7,11 +7,13 @@ import { DraggableWidget } from '../../widgets/primitives/DraggableWidget';
 import { WorkspaceModel } from '../../core-models/WorkspaceModel';
 import { useModelElement } from '../../widgets/hooks/useModelElement';
 import { DirectionalLayoutWidget } from '../../widgets/layouts/DirectionalLayoutWidget';
+import { DimensionContainer } from '../../core/dimensions/DimensionContainer';
 
 export interface WorkspaceNodeWidgetProps {
   engine: WorkspaceEngine;
   factory: WorkspaceNodeFactory;
   model: WorkspaceNodeModel;
+  generateDivider?: (divider: DimensionContainer) => JSX.Element;
   className?: any;
 }
 
@@ -31,6 +33,7 @@ export const WorkspaceNodeWidget: React.FC<WorkspaceNodeWidgetProps> = (props) =
       }}
       className={props.className}
       data={props.model.children}
+      generateDivider={props.generateDivider}
       generateElement={(m) => {
         return (
           <WorkspaceNodePanelWidget model={m} renderer={props.factory.getRendererForModel(m)} engine={props.engine} />

@@ -7,7 +7,7 @@ import {
   WorkspaceNodeModel
 } from '@projectstorm/react-workspaces-core';
 import { DropZoneLayer } from './DropZoneLayer';
-import { DropZonePanelDirective, TransformZone } from './DropZoneLayerPanelWidget';
+import { DropZoneLayerPanelTheme, DropZonePanelDirective, TransformZone } from './DropZoneLayerPanelWidget';
 import { DropZoneLayerButtonWidget } from './DropZoneLayerButtonWidget';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faCopy } from '@fortawesome/free-solid-svg-icons';
@@ -18,6 +18,7 @@ export interface DraggingItemBehaviorOptions {
   getDropZoneForModel: (model: WorkspaceModel) => DropZonePanelDirective | null;
   engine: WorkspaceEngine;
   debug?: boolean;
+  getTheme?: () => DropZoneLayerPanelTheme;
 }
 
 export const draggingItemBehavior = (options: DraggingItemBehaviorOptions) => {
@@ -31,7 +32,8 @@ export const draggingItemBehavior = (options: DraggingItemBehaviorOptions) => {
       layer = new DropZoneLayer({
         modelID: engine.draggingID,
         getDropZoneForModel: options.getDropZoneForModel,
-        debugModels: options.debug
+        debugModels: options.debug,
+        theme: options.getTheme?.()
       });
       engine.layerManager.addLayer(layer);
     },
@@ -53,19 +55,25 @@ export const ReplaceZone: TransformZone = {
   }
 };
 
+export interface GetDirectiveForWorkspaceNodeOptions {
+  node: WorkspaceModel;
+  transformZones?: TransformZone[];
+  generateParentNode?: () => WorkspaceNodeModel;
+}
+
 export const getDirectiveForWorkspaceNode = (
-  node: WorkspaceModel,
-  transformZones: TransformZone[]
+  options: GetDirectiveForWorkspaceNodeOptions
 ): DropZonePanelDirective | null => {
+  const { node, transformZones, generateParentNode } = options;
   if (!(node instanceof WorkspaceCollectionModel) && node.parent instanceof WorkspaceNodeModel) {
     return {
-      transformZones: [ReplaceZone, ...transformZones],
+      transformZones: [ReplaceZone, ...(transformZones || [])],
       splitZones: [
         {
           alignment: node.parent.vertical ? Alignment.LEFT : Alignment.TOP,
           handleDrop: (model) => {
             const parent = node.parent as WorkspaceNodeModel;
-            const m = new WorkspaceNodeModel();
+            const m = generateParentNode?.() || new WorkspaceNodeModel();
             m.setVertical(!parent.vertical);
             m.setExpand(model.expandHorizontal, model.expandHorizontal);
             m.addModel(model);
@@ -77,7 +85,7 @@ export const getDirectiveForWorkspaceNode = (
           alignment: node.parent.vertical ? Alignment.RIGHT : Alignment.BOTTOM,
           handleDrop: (model) => {
             const parent = node.parent as WorkspaceNodeModel;
-            const m = new WorkspaceNodeModel();
+            const m = generateParentNode?.() || new WorkspaceNodeModel();
             m.setVertical(!parent.vertical);
             m.setExpand(model.expandHorizontal, model.expandHorizontal);
             m.addModel(model);
