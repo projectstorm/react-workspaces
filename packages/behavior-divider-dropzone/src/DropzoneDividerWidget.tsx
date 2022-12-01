@@ -10,10 +10,18 @@ import {
   WorkspaceModel
 } from '@projectstorm/react-workspaces-core';
 
+export interface DropzoneDividerTheme {
+  pullInsetLength?: number;
+  pullInsetWidth?: number;
+  color?: string;
+  colorEnter?: string;
+}
+
 export interface DropzoneDividerWidgetProps {
   dimension: DimensionContainer;
   engine: WorkspaceEngine;
   handleDrop: (model: WorkspaceModel) => any;
+  theme?: DropzoneDividerTheme;
 }
 
 export const DropzoneDividerWidget: React.FC<DropzoneDividerWidgetProps> = (props) => {
@@ -34,8 +42,8 @@ export const DropzoneDividerWidget: React.FC<DropzoneDividerWidgetProps> = (prop
     onDrop: props.handleDrop
   });
 
-  const PULL_INSET = 30;
-  const PULL_OUTER = 6;
+  const PULL_INSET = props.theme?.pullInsetLength || 30;
+  const PULL_OUTER = props.theme?.pullInsetWidth || 6;
 
   let insetsVertical = -1 * PULL_OUTER;
   let insetsHorizontal = PULL_INSET;
@@ -52,6 +60,8 @@ export const DropzoneDividerWidget: React.FC<DropzoneDividerWidgetProps> = (prop
   return (
     <S.DimensionTracker dimension={props.dimension}>
       <S.Container
+        colorEnter={props.theme?.colorEnter || 'orange'}
+        color={props.theme?.color || '#0096ff'}
         ref={ref}
         enter={entered}
         insetsVertical={insetsVertical}
@@ -63,10 +73,16 @@ export const DropzoneDividerWidget: React.FC<DropzoneDividerWidgetProps> = (prop
 namespace S {
   export const DimensionTracker = styled(DimensionTrackingWidget)``;
 
-  export const Container = styled.div<{ insetsVertical: number; insetsHorizontal: number; enter: boolean }>`
+  export const Container = styled.div<{
+    insetsVertical: number;
+    insetsHorizontal: number;
+    enter: boolean;
+    colorEnter: string;
+    color: string;
+  }>`
     pointer-events: all;
     position: absolute;
-    background: ${(p) => (p.enter ? 'orange' : '#0096ff')};
+    background: ${(p) => (p.enter ? p.colorEnter : p.color)};
     border-radius: 5px;
     transition: background 0.3s, opacity 0.3s, left 0.3s, top 0.3s, bottom 0.3s, right 0.3s;
     transition-delay: 0.1s;

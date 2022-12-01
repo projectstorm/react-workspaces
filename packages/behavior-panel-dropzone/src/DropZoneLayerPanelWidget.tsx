@@ -1,7 +1,7 @@
 import * as React from 'react';
+import * as _ from 'lodash';
 import { useRef, useState } from 'react';
 import styled from '@emotion/styled';
-import { DropZoneLayerButtonWidget } from './DropZoneLayerButtonWidget';
 import {
   Alignment,
   DimensionTrackingWidget,
@@ -9,7 +9,7 @@ import {
   WorkspaceEngine,
   WorkspaceModel
 } from '@projectstorm/react-workspaces-core';
-import { DropZoneAlignmentButtonWidget } from './DropZoneAlignmentButtonWidget';
+import { DropZoneAlignmentButtonWidget, DropZoneAlignmentTheme } from './DropZoneAlignmentButtonWidget';
 import { DropZoneTransformWidget } from './DropZoneTransformWidget';
 
 export interface TransformZoneEvent {
@@ -34,16 +34,37 @@ export interface DropZonePanelDirective {
   transformZones: TransformZone[];
 }
 
+export interface DropZoneLayerPanelTheme {
+  border?: number;
+  borderColor?: string;
+  borderColorEntered?: string;
+  background?: string;
+  backgroundEntered?: string;
+  splitButtonTheme?: DropZoneAlignmentTheme;
+}
+
+export const DefaultDropZoneLayerPanelTheme: DropZoneLayerPanelTheme = {
+  border: 2,
+  borderColor: 'transparent',
+  borderColorEntered: '#0096ff',
+  background: 'transparent',
+  backgroundEntered: 'rgba(0, 0, 0, 0.4)'
+};
+
+// !------------------------------------------
+
 export interface DropZoneLayerPanelWidgetProps {
   model: WorkspaceModel;
   engine: WorkspaceEngine;
   directive: DropZonePanelDirective;
   debug: boolean;
+  theme?: DropZoneLayerPanelTheme;
 }
 
 export const DropZoneLayerPanelWidget: React.FC<DropZoneLayerPanelWidgetProps> = (props) => {
   const ref = useRef<HTMLDivElement>();
   const [show, setShow] = useState(false);
+  const theme = _.merge({}, DefaultDropZoneLayerPanelTheme, props.theme || {});
 
   return (
     <UseMouseDragEventsRootWidget
@@ -55,7 +76,7 @@ export const DropZoneLayerPanelWidget: React.FC<DropZoneLayerPanelWidgetProps> =
         setShow(false);
       }}
     >
-      <S.DimensionTracking entered={show} dimension={props.model.r_dimensions}>
+      <S.DimensionTracking theme={theme} entered={show} dimension={props.model.r_dimensions}>
         <S.Inside ref={ref}>
           <S.Layer visible={show}>
             {props.directive.splitZones.map((d) => {
@@ -66,6 +87,7 @@ export const DropZoneLayerPanelWidget: React.FC<DropZoneLayerPanelWidgetProps> =
                   engine={props.engine}
                   alignment={d.alignment}
                   handleDrop={d.handleDrop}
+                  theme={theme.splitButtonTheme}
                 />
               );
             })}
@@ -85,11 +107,13 @@ export const DropZoneLayerPanelWidget: React.FC<DropZoneLayerPanelWidgetProps> =
 };
 
 namespace S {
-  export const DimensionTracking = styled(DimensionTrackingWidget)<{ entered: boolean }>`
-    border: solid 2px transparent;
+  export const DimensionTracking = styled(DimensionTrackingWidget)<{
+    entered: boolean;
+    theme: DropZoneLayerPanelTheme;
+  }>`
     box-sizing: border-box;
-    background: ${(p) => (p.entered ? 'rgba(0, 0, 0, 0.4)' : 'transparent')};
-    border: solid 2px ${(p) => (p.entered ? '#0096ff' : 'transparent')};
+    background: ${(p) => (p.entered ? p.theme.backgroundEntered : p.theme.background)};
+    border: solid ${(p) => p.theme.border}px ${(p) => (p.entered ? p.theme.borderColorEntered : p.theme.borderColor)};
     transition: border 0.5s, background 0.5s;
     pointer-events: all;
   `;

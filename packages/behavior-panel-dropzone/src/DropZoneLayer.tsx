@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { useEffect } from 'react';
-import { Layer, useForceUpdate, WorkspaceEngine, WorkspaceModel } from '@projectstorm/react-workspaces-core';
-import { DropZoneLayerPanelWidget, DropZonePanelDirective } from './DropZoneLayerPanelWidget';
+import { Layer, WorkspaceEngine, WorkspaceModel } from '@projectstorm/react-workspaces-core';
+import { DropZoneLayerPanelTheme, DropZoneLayerPanelWidget, DropZonePanelDirective } from './DropZoneLayerPanelWidget';
 
 export interface DropZoneLayerOptions {
   getDropZoneForModel: (model: WorkspaceModel) => DropZonePanelDirective | null;
+  theme?: DropZoneLayerPanelTheme;
   modelID: string;
   debugModels: boolean;
 }
@@ -23,16 +23,20 @@ export class DropZoneLayer extends Layer {
         engine={event.engine}
         draggingModel={this.options2.modelID}
         getDropZoneForModel={this.options2.getDropZoneForModel}
+        theme={this.options2.theme}
       />
     );
   }
 }
+
+//!--------------- widget ----------------
 
 export interface DropZoneLayerWidgetProps {
   engine: WorkspaceEngine;
   getDropZoneForModel: (model: WorkspaceModel) => DropZonePanelDirective | null;
   draggingModel: string;
   debugModels: boolean;
+  theme?: DropZoneLayerPanelTheme;
 }
 
 export const DropZoneLayerWidget: React.FC<DropZoneLayerWidgetProps> = (props) => {
@@ -66,6 +70,7 @@ export const DropZoneLayerWidget: React.FC<DropZoneLayerWidgetProps> = (props) =
               directive={directive}
               engine={props.engine}
               model={m}
+              theme={props.theme}
               key={m.id}
             />
           );
