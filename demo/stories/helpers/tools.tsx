@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as _ from 'lodash';
 import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import 'typeface-open-sans';
@@ -27,6 +28,7 @@ import { resizingBehavior } from '@projectstorm/react-workspaces-behavior-resize
 import { RootWorkspaceModel } from '@projectstorm/react-workspaces-model-floating-window';
 import { ConvertToTabZone, getDirectiveForTabModel } from '@projectstorm/react-workspaces-dropzone-plugin-tabs';
 import { ConvertToTrayZone, getDirectiveForTrayModel } from '@projectstorm/react-workspaces-dropzone-plugin-tray';
+import { css, Global } from '@storybook/theming';
 
 export const genVerticalNode = () => {
   const node = new ExpandNodeModel()
@@ -124,17 +126,77 @@ export const useEngine = (args: { DebugDividers?: boolean; DebugResizers?: boole
 
 export const CompInternal: React.FC<{ model: WorkspaceNodeModel; engine: WorkspaceEngine }> = (props) => {
   return (
-    <S.Container>
-      <WorkspaceWidget engine={props.engine} model={props.model} />
-    </S.Container>
+    <>
+      <Global
+        styles={css`
+          html,
+          body,
+          #root {
+            height: 100%;
+          }
+        `}
+      />
+      <S.Container>
+        <WorkspaceWidget engine={props.engine} model={props.model} />
+      </S.Container>
+    </>
+  );
+};
+
+export const Buttons: React.FC<React.PropsWithChildren<{ btns: { [key: string]: () => any } }>> = (props) => {
+  return (
+    <S.Container2>
+      <S.Buttons>
+        {_.map(props.btns, (btnCallback, btn) => {
+          return (
+            <S.Button onClick={btnCallback} key={btn}>
+              {btn}
+            </S.Button>
+          );
+        })}
+      </S.Buttons>
+      {props.children}
+    </S.Container2>
   );
 };
 
 namespace S {
+  export const Container2 = styled.div`
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background: rgb(30, 30, 30);
+    box-sizing: border-box;
+  `;
+
+  export const Buttons = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 5px;
+    padding-left: 40px;
+  `;
+
+  export const Button = styled.div`
+    padding: 5px 10px;
+    color: white;
+    background: black;
+    cursor: pointer;
+    font-size: 12px;
+    font-family: 'Open Sans';
+    margin-right: 5px;
+    user-select: none;
+
+    &:hover {
+      background: rgb(0, 192, 255);
+    }
+  `;
+
   export const Container = styled.div`
+    flex-grow: 1;
     padding: 40px;
     background: rgb(70, 70, 70);
-    position: absolute;
     box-sizing: border-box;
     height: 100%;
     width: 100%;

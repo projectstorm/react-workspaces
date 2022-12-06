@@ -5,7 +5,6 @@ import { WorkspaceEngineInterface } from './WorkspaceEngineInterface';
 import { BaseListener, BaseObserver } from './BaseObserver';
 import { LayerManager } from '../widgets/layers/LayerManager';
 import { DimensionContainer } from './dimensions/DimensionContainer';
-import { WorkspaceNodeModel } from '../entities/node/WorkspaceNodeModel';
 import { WorkspaceCollectionModel } from '../core-models/WorkspaceCollectionModel';
 
 export interface WorkspaceEngineListener extends BaseListener {
@@ -32,7 +31,6 @@ export class WorkspaceEngine extends BaseObserver<WorkspaceEngineListener> imple
   // factories
   factories: { [type: string]: WorkspaceModelFactory };
   draggingID: string;
-  fullscreenModel: WorkspaceModel;
   layerManager: LayerManager;
   repainting: boolean;
   dragAndDropEnabled: boolean;
@@ -49,7 +47,6 @@ export class WorkspaceEngine extends BaseObserver<WorkspaceEngineListener> imple
     this.factories = {};
     this.listeners = {};
     this.draggingID = null;
-    this.fullscreenModel = null;
     this.dragAndDropEnabled = true;
     this.layerManager = new LayerManager();
     this.workspaceContainer = new DimensionContainer();
@@ -68,6 +65,7 @@ export class WorkspaceEngine extends BaseObserver<WorkspaceEngineListener> imple
     });
     this.rootModel = model;
     this.iterateListeners((cb) => cb.modelUpdated?.());
+    this.iterateListeners((cb) => cb.layoutInvalidated?.());
   }
 
   fireRepainted() {
@@ -79,16 +77,19 @@ export class WorkspaceEngine extends BaseObserver<WorkspaceEngineListener> imple
   }
 
   invalidateDimensions() {
+    this.rootModel
+      .flatten()
+      .flatMap((m) => {
+        return m.getAllRenderDimensions();
+      })
+      .forEach((d) => {
+        d.invalidate();
+      });
     this.iterateListeners((cb) => cb.dimensionsInvalidated?.());
   }
 
   setDragAndDropEnabled(drag: boolean = true) {
     this.dragAndDropEnabled = drag;
-    this.fireRepaintListeners();
-  }
-
-  setFullscreenModel(model: WorkspaceModel | null) {
-    this.fullscreenModel = model;
     this.fireRepaintListeners();
   }
 

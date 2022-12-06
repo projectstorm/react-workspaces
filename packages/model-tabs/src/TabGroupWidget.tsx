@@ -96,19 +96,23 @@ export const TabGroupWidget: React.FC<TabGroupWidgetProps> = (props) => {
   return (
     <S.Container ref={ref}>
       <S.Draggable engine={props.engine} model={props.model}>
-        {props.factory.generateTabsContainer(
-          <S.TabGroup
-            dropped={({ model, index }) => {
-              props.model.addModel(model, index);
-              props.engine.normalize();
-            }}
-            engine={props.engine}
-            vertical={false}
-            children={_.map(props.model.children, (child) => {
-              return <TabButtonWidget factory={props.factory} model={child} engine={props.engine} key={child.id} />;
-            })}
-          />
-        )}
+        {props.factory.generateTabsContainer({
+          engine: props.engine,
+          model: props.model,
+          content: (
+            <S.TabGroup
+              dropped={({ model, index }) => {
+                props.model.addModel(model, index);
+                props.engine.normalize();
+              }}
+              engine={props.engine}
+              vertical={false}
+              children={_.map(props.model.children, (child) => {
+                return <TabButtonWidget factory={props.factory} model={child} engine={props.engine} key={child.id} />;
+              })}
+            />
+          )
+        })}
       </S.Draggable>
       <TabContent key={selected.id} model={selected} engine={props.engine} />
     </S.Container>

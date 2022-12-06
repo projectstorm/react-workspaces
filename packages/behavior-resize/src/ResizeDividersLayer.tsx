@@ -22,7 +22,14 @@ export interface ResizeDividersLayerWidgetProps {
 export const ResizeDividersLayerWidget: React.FC<ResizeDividersLayerWidgetProps> = (props) => {
   const forceUpdate = useForceUpdate(true);
 
-  // TODO rerun this when models added
+  useEffect(() => {
+    return props.engine.registerListener({
+      layoutInvalidated: () => {
+        forceUpdate();
+      }
+    });
+  }, []);
+
   useEffect(() => {
     const listeners = props.engine.rootModel.flatten().map((m) =>
       m.registerListener({
