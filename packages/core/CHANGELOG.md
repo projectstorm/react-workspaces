@@ -1,5 +1,15 @@
 # @projectstorm/react-workspaces-core
 
+## 2.2.0
+
+### Minor Changes
+
+- 8b3f970: - Tab sub-rendering now gets an event object with access to the parent model
+  - Fixes some React attribute warnings
+  - New demo for switching models
+  - Refactored some internal hooks around as some hooks were incorrectly being registered
+  - Layers should be absolutely positioned lol
+
 ## 2.1.0
 
 ### Minor Changes
