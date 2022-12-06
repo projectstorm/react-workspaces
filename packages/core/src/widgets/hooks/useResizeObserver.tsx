@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { WorkspaceEngine } from '../../core/WorkspaceEngine';
 import { Alignment } from '../../core/tools';
 import { UseBaseBaseResizeObserverProps, useBaseResizeObserver } from './useBaseResizeObserver';
+import { useDimensionLayoutInvalidator } from './useDimensionLayoutInvalidator';
 
 export interface UseResizeObserverProps extends UseBaseBaseResizeObserverProps {
   engine: WorkspaceEngine;
@@ -20,6 +21,12 @@ export const useResizeObserver = (props: UseResizeObserverProps) => {
         [Alignment.RIGHT]: dims[Alignment.RIGHT] - props.engine.workspaceContainer.position.right
       };
     }
+  });
+
+  //
+  useDimensionLayoutInvalidator({
+    engine: props.engine,
+    dimension: props.dimension
   });
 
   // listen to the workspace size changing

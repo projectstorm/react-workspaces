@@ -11,8 +11,8 @@ export interface DefaultPanelMicroButtonWidgetProps {
 }
 
 namespace S {
-  export const Icon = styled(FontAwesomeIcon)<{ smaller: boolean }>`
-    font-size: ${(p) => (p.smaller ? 14 : 20)}px;
+  export const Icon = styled(FontAwesomeIcon, { shouldForwardProp: (p) => p !== '$smaller' })<{ $smaller: boolean }>`
+    font-size: ${(p) => (p.$smaller ? 14 : 20)}px;
   `;
 
   const selected = css`
@@ -22,9 +22,9 @@ namespace S {
 
   const SMALL_SIZE = 30;
 
-  export const Container = styled.div<{ selected: boolean; smaller: boolean }>`
-    min-height: ${(p) => (p.smaller ? SMALL_SIZE : 45)}px;
-    ${(p) => (p.smaller ? `width: ${SMALL_SIZE}px` : '')};
+  export const Container = styled.div<{ selected: boolean; $smaller: boolean }>`
+    min-height: ${(p) => (p.$smaller ? SMALL_SIZE : 45)}px;
+    ${(p) => (p.$smaller ? `width: ${SMALL_SIZE}px` : '')};
     background-color: black;
     display: flex;
     justify-content: center;
@@ -38,8 +38,8 @@ namespace S {
 export class DefaultPanelMicroButtonWidget extends React.Component<DefaultPanelMicroButtonWidgetProps> {
   render() {
     return (
-      <S.Container smaller={this.props.smaller} selected={this.props.selected}>
-        <S.Icon smaller={this.props.smaller} icon={this.props.icon} />
+      <S.Container $smaller={this.props.smaller} selected={this.props.selected}>
+        <S.Icon $smaller={this.props.smaller} icon={this.props.icon} />
       </S.Container>
     );
   }

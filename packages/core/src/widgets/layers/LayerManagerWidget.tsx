@@ -68,5 +68,6 @@ namespace S {
     pointer-events: ${(p) => (p.$pointerEvents ? 'all' : 'none')};
     width: 100%;
     height: 100%;
+    position: absolute;
   `;
 }

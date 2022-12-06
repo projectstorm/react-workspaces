@@ -20,16 +20,6 @@ export const useDimensionLayoutInvalidator = (props: UseDimensionLayoutInvalidat
             props.dimension.invalidate();
           }
         });
-      },
-      dimensionsInvalidated: () => {
-        props.engine.rootModel
-          .flatten()
-          .flatMap((m) => {
-            return m.getAllRenderDimensions();
-          })
-          .forEach((d) => {
-            d.invalidate();
-          });
       }
     });
 

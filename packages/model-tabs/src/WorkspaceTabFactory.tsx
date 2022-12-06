@@ -8,14 +8,22 @@ import {
 } from '@projectstorm/react-workspaces-core';
 import { WorkspaceTabModel } from './WorkspaceTabModel';
 import styled from '@emotion/styled';
+import { WorkspaceEngine } from '../../core';
 
 export interface TabRendererEvent<T extends WorkspaceModel> {
   model: T;
   selected: boolean;
+  engine: WorkspaceEngine;
 }
 
 export interface TabRenderer<T extends WorkspaceModel = WorkspaceModel> extends SubComponentRenderer<T> {
   renderTab(event: TabRendererEvent<T>): JSX.Element;
+}
+
+export interface GenerateTabsContainerEvent<T extends WorkspaceTabModel = WorkspaceTabModel> {
+  engine: WorkspaceEngine;
+  model: T;
+  content: JSX.Element;
 }
 
 export class WorkspaceTabFactory<T extends WorkspaceTabModel = WorkspaceTabModel> extends SubComponentModelFactory<
@@ -30,19 +38,20 @@ export class WorkspaceTabFactory<T extends WorkspaceTabModel = WorkspaceTabModel
     return new WorkspaceTabModel() as T;
   }
 
-  renderTabForModel(model: WorkspaceModel, selected: boolean) {
+  renderTabForModel(model: WorkspaceModel, selected: boolean, engine: WorkspaceEngine) {
     const r = this.getRendererForModel(model);
     if (r) {
       return r.renderTab({
         model: model,
-        selected: selected
+        selected: selected,
+        engine: engine
       });
     }
     return <span>{model.type}</span>;
   }
 
-  generateTabsContainer(content: JSX.Element) {
-    return <S.TabHeader>{content}</S.TabHeader>;
+  generateTabsContainer(event: GenerateTabsContainerEvent) {
+    return <S.TabHeader>{event.content}</S.TabHeader>;
   }
 
   generateContent(event: WorkspaceModelFactoryEvent<T>): JSX.Element {

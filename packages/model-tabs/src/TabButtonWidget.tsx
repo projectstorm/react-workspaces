@@ -28,7 +28,7 @@ export const TabButtonWidget: React.FC<TabButtonWidgetProps> = (props) => {
       engine={props.engine}
       model={props.model}
     >
-      {props.factory.renderTabForModel(props.model, props.model.id === parent.getSelected().id)}
+      {props.factory.renderTabForModel(props.model, props.model.id === parent.getSelected().id, props.engine)}
     </DraggableWidget>
   );
 };

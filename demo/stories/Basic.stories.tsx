@@ -1,23 +1,13 @@
 import * as React from 'react';
 import { useState } from 'react';
 import 'typeface-open-sans';
-import { ExpandNodeModel } from '@projectstorm/react-workspaces-core';
-import { CompInternal, DebugOptions, genVerticalNode, SharedArgs, useEngine } from './helpers/tools';
+import { CompInternal, SharedArgs, useEngine } from './helpers/tools';
+import { createSimpleModel } from './helpers/simpleModel';
 
 export const Basic = function (args) {
   const engine = useEngine(args);
   const [model] = useState(() => {
-    let model = new ExpandNodeModel();
-    model.setHorizontal(true);
-    model
-
-      //left panel
-      .addModel(genVerticalNode())
-      .addModel(genVerticalNode())
-      .addModel(genVerticalNode())
-      .addModel(genVerticalNode())
-      .addModel(genVerticalNode());
-    return model;
+    return createSimpleModel();
   });
   return <CompInternal model={model} engine={engine} />;
 }.bind({});
