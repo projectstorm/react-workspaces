@@ -101,7 +101,7 @@ export const OrderingWidget: React.FC<OrderingWidgetProps> = (props) => {
       />
       {props.children.map((c, index: number) => {
         return (
-          <React.Fragment>
+          <React.Fragment key={containers[index + 1]?.id || `${index}`}>
             {c}
             {containers[index + 1] ? (
               <OrderingWidgetZone
