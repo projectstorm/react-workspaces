@@ -1,5 +1,11 @@
 # @projectstorm/react-workspaces-model-floating-window
 
+## 2.0.4
+
+### Patch Changes
+
+- 75365b9: Fixed an issues with deserialization of floating windows on the root model when the initial serialization payload was wrong (would effect legacy models prior to v2)
+
 ## 2.0.3
 
 ### Patch Changes
