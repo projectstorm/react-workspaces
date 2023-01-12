@@ -49,7 +49,7 @@ export class RootWorkspaceModel extends ExpandNodeModel<SerializedRootWorkspaceM
 
   fromArray(payload: SerializedRootWorkspaceModel, engine: WorkspaceEngine) {
     super.fromArray(payload, engine);
-    payload.floatingWindows.forEach((window) => {
+    payload.floatingWindows?.forEach((window) => {
       const model = engine.getFactory(window.type).generateModel();
       model.fromArray(window, engine);
       this.addModel(model);
