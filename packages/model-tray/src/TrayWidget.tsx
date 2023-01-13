@@ -35,6 +35,7 @@ namespace S {
 
   export const MicroLayoutShrink = styled(MicroLayoutWidget)`
     flex-grow: 0;
+    flex-shrink: 0;
   `;
 
   export const Content = styled.div`

@@ -1,28 +1,33 @@
 import { DirectionLayoutChildDirective } from '../../widgets/layouts/DirectionalChildWidget';
 import { ResizeDivision, WorkspaceNodeModel, WorkspaceNodeModelSerialized } from './WorkspaceNodeModel';
 import { WorkspaceModel } from '../../core-models/WorkspaceModel';
+import { WorkspaceEngine } from '../../core/WorkspaceEngine';
 
 export interface ExpandNodeModelChild {
   originalWidth: number;
   originalHeight: number;
 }
 
+export interface ExpandNodeModelSerialized extends WorkspaceNodeModelSerialized {}
+
 /**
  * This is a smarter version of the standard Node model which can work with
  * panels that expand, and treats them like standard panels, allowing them to resize
  */
 export class ExpandNodeModel<
-  S extends WorkspaceNodeModelSerialized = WorkspaceNodeModelSerialized
+  S extends ExpandNodeModelSerialized = ExpandNodeModelSerialized
 > extends WorkspaceNodeModel<S> {
   dimensions: Map<WorkspaceModel, ExpandNodeModelChild>;
   rendered: Set<WorkspaceModel>;
   queuedForInitialSizeCheck: Set<WorkspaceModel>;
+  private allowSizeRecomputation: boolean;
 
   constructor() {
     super();
     this.dimensions = new Map();
     this.rendered = new Set();
     this.queuedForInitialSizeCheck = new Set();
+    this.allowSizeRecomputation = true;
   }
 
   recomputeInitialSizes() {
@@ -47,6 +52,13 @@ export class ExpandNodeModel<
     this.invalidateLayout();
   }
 
+  fromArray(payload: S, engine: WorkspaceEngine) {
+    // we disable recomputation since the panels should have their correct sizes
+    this.allowSizeRecomputation = false;
+    super.fromArray(payload, engine);
+    this.allowSizeRecomputation = true;
+  }
+
   addModel(model: WorkspaceModel, position: number = null): this {
     super.addModel(model, position);
     // model want to expand, store their original sizes so we can revert when we add them somewhere else
@@ -68,10 +80,12 @@ export class ExpandNodeModel<
     }
     // model wants to shrink, reset its size so it renders as small as possible (initially)
     else if ((this.vertical && !model.expandVertical) || (!this.vertical && !model.expandHorizontal)) {
-      model.setSize({
-        width: 0,
-        height: 0
-      });
+      if (this.allowSizeRecomputation) {
+        model.setSize({
+          width: 0,
+          height: 0
+        });
+      }
     }
     this.recomputeInitialSizes();
     return this;

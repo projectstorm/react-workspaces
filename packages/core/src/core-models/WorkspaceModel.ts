@@ -28,8 +28,8 @@ export class WorkspaceModel<
   L extends WorkspaceModelListener = WorkspaceModelListener
 > extends BaseObserver<L> {
   id: string;
-  expandVertical: boolean;
-  expandHorizontal: boolean;
+  private _expandVertical: boolean;
+  private _expandHorizontal: boolean;
 
   size: Size;
   minimumSize: Size;
@@ -47,8 +47,8 @@ export class WorkspaceModel<
     this.type = type;
     this.id = v4();
     this.parent = null;
-    this.expandHorizontal = true;
-    this.expandVertical = true;
+    this._expandHorizontal = true;
+    this._expandVertical = true;
     this.size = new Size();
     this.maximumSize = new Size();
     this.minimumSize = new Size();
@@ -80,6 +80,22 @@ export class WorkspaceModel<
         this.invalidateDimensions();
       }
     });
+  }
+
+  get expandHorizontal(): boolean {
+    return this._expandHorizontal;
+  }
+
+  set expandHorizontal(value: boolean) {
+    this._expandHorizontal = value;
+  }
+
+  get expandVertical(): boolean {
+    return this._expandVertical;
+  }
+
+  set expandVertical(value: boolean) {
+    this._expandVertical = value;
   }
 
   private normalizeSize() {
@@ -175,8 +191,8 @@ export class WorkspaceModel<
   }
 
   setExpand(horizontal: boolean = true, vertical: boolean = true): this {
-    this.expandHorizontal = horizontal;
-    this.expandVertical = vertical;
+    this._expandHorizontal = horizontal;
+    this._expandVertical = vertical;
     return this;
   }
 
@@ -188,8 +204,8 @@ export class WorkspaceModel<
     return {
       id: this.id,
       type: this.type,
-      expandHorizontal: this.expandHorizontal,
-      expandVertical: this.expandVertical,
+      expandHorizontal: this._expandHorizontal,
+      expandVertical: this._expandVertical,
       width: this.size.width,
       height: this.size.height
     } as T;
@@ -197,8 +213,8 @@ export class WorkspaceModel<
 
   fromArray(payload: T, engine: WorkspaceEngineInterface) {
     this.id = payload.id;
-    this.expandHorizontal = payload.expandHorizontal;
-    this.expandVertical = payload.expandVertical;
+    this._expandHorizontal = payload.expandHorizontal;
+    this._expandVertical = payload.expandVertical;
     this.size.update({
       width: payload.width,
       height: payload.height
