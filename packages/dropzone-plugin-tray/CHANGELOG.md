@@ -1,5 +1,12 @@
 # @projectstorm/react-workspaces-dropzone-plugin-tray
 
+## 2.0.6
+
+### Patch Changes
+
+- Updated dependencies [444c988]
+  - @projectstorm/react-workspaces-model-tray@2.0.6
+
 ## 2.0.5
 
 ### Patch Changes
