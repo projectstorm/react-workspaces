@@ -1,5 +1,12 @@
 # @projectstorm/react-workspaces-core
 
+## 2.2.1
+
+### Patch Changes
+
+- fa6ae0f: - tray now works correctly when shrunk in an ExpandParentNode
+  - deserialization of the ExpandParentNode doesnt force initial recomputation of children if they have widths and heights set already
+
 ## 2.2.0
 
 ### Minor Changes

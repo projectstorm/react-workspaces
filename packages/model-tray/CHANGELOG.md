@@ -1,5 +1,15 @@
 # @projectstorm/react-workspaces-model-tray
 
+## 2.0.5
+
+### Patch Changes
+
+- fa6ae0f: - tray now works correctly when shrunk in an ExpandParentNode
+  - deserialization of the ExpandParentNode doesnt force initial recomputation of children if they have widths and heights set already
+- Updated dependencies [fa6ae0f]
+  - @projectstorm/react-workspaces-core@2.2.1
+  - @projectstorm/react-workspaces-model-floating-window@2.0.5
+
 ## 2.0.4
 
 ### Patch Changes
