@@ -1,5 +1,11 @@
 # @projectstorm/react-workspaces-model-tray
 
+## 2.0.6
+
+### Patch Changes
+
+- 444c988: Fix floating window positioning when tray was left aligned to the root workspace model
+
 ## 2.0.5
 
 ### Patch Changes
