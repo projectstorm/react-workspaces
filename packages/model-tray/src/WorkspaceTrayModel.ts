@@ -93,6 +93,13 @@ export class WorkspaceTrayModel extends WorkspaceNodeModel<SerializedWorkspaceTr
     });
   }
 
+  get expandHorizontal(): boolean {
+    if (this.mode === WorkspaceTrayMode.COLLAPSED) {
+      return false;
+    }
+    return super.expandHorizontal;
+  }
+
   delete() {
     super.delete();
     this.childListener?.();

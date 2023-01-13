@@ -1,9 +1,9 @@
-import { ExpandNodeModel, WorkspaceEngine, WorkspaceNodeModelSerialized } from '@projectstorm/react-workspaces-core';
+import { ExpandNodeModel, ExpandNodeModelSerialized, WorkspaceEngine } from '@projectstorm/react-workspaces-core';
 import { FloatingWindowModel, SerializedFloatingWindowModel } from './FloatingWindowModel';
 import { FloatingWindowLayer } from '../layer/window/FloatingWindowLayer';
 import { FloatingWindowResizeLayer } from '../layer/resize/FloatingWindowResizeLayer';
 
-export interface SerializedRootWorkspaceModel extends WorkspaceNodeModelSerialized {
+export interface SerializedRootWorkspaceModel extends ExpandNodeModelSerialized {
   floatingWindows: SerializedFloatingWindowModel[];
 }
 
