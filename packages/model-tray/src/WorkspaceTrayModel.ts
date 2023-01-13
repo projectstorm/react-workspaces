@@ -1,4 +1,5 @@
 import {
+  Alignment,
   WorkspaceEngine,
   WorkspaceModel,
   WorkspaceNodeModel,
@@ -87,10 +88,22 @@ export class WorkspaceTrayModel extends WorkspaceNodeModel<SerializedWorkspaceTr
   }
 
   updateWindowPosition(child: WorkspaceModel) {
-    this.floatingWindow.position.update({
-      left: -this.floatingWindow.size.width + child.r_dimensions.position.left,
-      top: child.r_dimensions.position.top
-    });
+    const root = this.getRootModel();
+    const dims = root.r_dimensions.getRelativePosition(this.r_dimensions.position);
+    // left aligned
+    if (dims[Alignment.LEFT] < root.r_dimensions.size.width / 2) {
+      this.floatingWindow.position.update({
+        left: child.r_dimensions.position.left + child.r_dimensions.size.width,
+        top: child.r_dimensions.position.top
+      });
+    }
+    // right aligned
+    else {
+      this.floatingWindow.position.update({
+        left: -this.floatingWindow.size.width + child.r_dimensions.position.left,
+        top: child.r_dimensions.position.top
+      });
+    }
   }
 
   get expandHorizontal(): boolean {

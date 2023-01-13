@@ -4,7 +4,7 @@ import 'typeface-open-sans';
 import { DefaultWindowModel, DefaultWorkspacePanelModel } from '@projectstorm/react-workspaces-defaults';
 import { WorkspaceTabModel } from '@projectstorm/react-workspaces-model-tabs';
 import { RootWorkspaceModel } from '@projectstorm/react-workspaces-model-floating-window';
-import { CompInternal, DebugOptions, genVerticalNode, SharedArgs, useEngine, useRootModel } from './helpers/tools';
+import { CompInternal, genVerticalNode, SharedArgs, useEngine, useRootModel } from './helpers/tools';
 
 export const FloatingWindows = function (args) {
   const engine = useEngine(args);

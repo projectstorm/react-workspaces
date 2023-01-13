@@ -22,12 +22,24 @@ export const createComplexModel = (engine: WorkspaceEngine) => {
     largeTray.addModel(new DefaultWorkspacePanelModel('Tray panel ' + i));
   }
 
-  const expandTray = genVerticalNode();
-  expandTray.setExpand(true, true);
+  const expandNode = genVerticalNode();
+  expandNode.setExpand(true, true);
 
   model
 
     //left panel
+    .addModel(
+      new WorkspaceTrayModel({
+        iconWidth: 50,
+        expandedWidth: 250,
+        factory: windowFactory
+      })
+        .setMode(WorkspaceTrayMode.COLLAPSED)
+        .setExpand(false, true)
+        .addModel(new DefaultWorkspacePanelModel('Tray panel 1'))
+        .addModel(new DefaultWorkspacePanelModel('Tray panel 2'))
+        .addModel(new DefaultWorkspacePanelModel('Tray panel 3'))
+    )
     .addModel(genVerticalNode())
     .addModel(genVerticalNode())
 
@@ -38,7 +50,7 @@ export const createComplexModel = (engine: WorkspaceEngine) => {
         .addModel(new DefaultWorkspacePanelModel('Tab 2'))
         .addModel(new DefaultWorkspacePanelModel('Tab 3'))
     )
-    .addModel(expandTray)
+    .addModel(expandNode)
 
     .addModel(largeTray)
     .addModel(
