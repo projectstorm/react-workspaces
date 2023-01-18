@@ -1,6 +1,7 @@
 import {
   SubComponentModelFactory,
   SubComponentRenderer,
+  WorkspaceEngine,
   WorkspaceModel,
   WorkspaceModelFactoryEvent
 } from '@projectstorm/react-workspaces-core';
@@ -12,12 +13,13 @@ export interface FloatingWindowRendererEvent<T extends FloatingWindowModel = Flo
   content: JSX.Element;
 }
 
-export interface FloatingWindowSubRendererEvent {
-  model: WorkspaceModel;
+export interface FloatingWindowSubRendererEvent<T extends WorkspaceModel> {
+  model: T;
+  engine: WorkspaceEngine;
 }
 
 export interface FloatingWindowRenderer<T extends WorkspaceModel = WorkspaceModel> extends SubComponentRenderer<T> {
-  renderWindowTitle: (event: FloatingWindowSubRendererEvent) => any;
+  renderWindowTitle: (event: FloatingWindowSubRendererEvent<T>) => any;
 }
 
 export abstract class FloatingWindowFactory<

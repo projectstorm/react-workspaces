@@ -86,6 +86,7 @@ export const useEngine = (args: { DebugDividers?: boolean; DebugResizers?: boole
     tabFactory.addRenderer(commonRenderer);
     trayFactory.addRenderer(commonRenderer);
     workspaceNodeFactory.addRenderer(commonRenderer);
+    windowFactory.addRenderer(commonRenderer);
 
     e.registerFactory(tabFactory);
     e.registerFactory(trayFactory);
