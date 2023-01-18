@@ -1,5 +1,17 @@
 # @projectstorm/react-workspaces-model-tray
 
+## 2.2.0
+
+### Minor Changes
+
+- d01ffa3: - floating windows can now sub render title bars for their children
+  - we now serialize the tray icon position
+
+### Patch Changes
+
+- Updated dependencies [d01ffa3]
+  - @projectstorm/react-workspaces-model-floating-window@2.1.0
+
 ## 2.1.0
 
 ### Minor Changes
