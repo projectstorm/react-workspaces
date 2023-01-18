@@ -3,7 +3,7 @@ import * as _ from 'lodash';
 import { ISize, Size } from './Size';
 import { IPosition, Position } from './Position';
 import { BaseListener, BaseObserver } from '../BaseObserver';
-import { MousePosition } from '../tools';
+import { Alignment, MousePosition } from '../tools';
 
 export interface DimensionContainerListener extends BaseListener {
   updated: () => any;
@@ -71,19 +71,27 @@ export class DimensionContainer extends BaseObserver<DimensionContainerListener>
     this.position.update(dim);
   }
 
-  getRelativePosition(rect: IPosition) {
-    return this.position.getRelativePosition(rect);
+  getRelativeToPosition(rect: IPosition) {
+    return this.position.getRelativeToPosition(rect);
   }
 
-  getRelativeMousePosition(position: MousePosition) {
-    return this.position.getRelativeMousePosition(position);
+  getRelativeToMousePosition(position: MousePosition) {
+    return this.position.getRelativeToMousePosition(position);
   }
 
-  getRelativeElementPosition(element: HTMLElement) {
-    return this.position.getRelativeElementPosition(element);
-  }
-
-  isRight(element: HTMLDivElement) {
-    return this.getRelativeElementPosition(element).left > this.dimensions.width / 2;
+  isAligned(parent: DimensionContainer, alignment: Alignment) {
+    const rel = this.getRelativeToPosition(parent.position)[alignment];
+    if (alignment === Alignment.LEFT) {
+      return rel <= this.dimensions.width / 2;
+    }
+    if (alignment === Alignment.RIGHT) {
+      return rel > this.dimensions.width / 2;
+    }
+    if (alignment === Alignment.TOP) {
+      return rel <= this.dimensions.height / 2;
+    }
+    if (alignment === Alignment.BOTTOM) {
+      return rel > this.dimensions.height / 2;
+    }
   }
 }

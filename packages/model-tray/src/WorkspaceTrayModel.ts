@@ -17,6 +17,11 @@ export enum WorkspaceTrayMode {
   NORMAL = 'expand'
 }
 
+export enum TrayIconPosition {
+  LEFT = 'left',
+  RIGHT = 'right'
+}
+
 export interface WorkspaceTrayModelOptions {
   iconWidth: number;
   expandedWidth: number;
@@ -25,6 +30,7 @@ export interface WorkspaceTrayModelOptions {
 
 export interface WorkspaceTrayModelListener extends WorkspaceNodeModelListener {
   selectionChanged: () => any;
+  iconPositionChanged: () => any;
 }
 
 export interface SerializedWorkspaceTrayModel extends WorkspaceNodeModelSerialized {
@@ -34,6 +40,7 @@ export interface SerializedWorkspaceTrayModel extends WorkspaceNodeModelSerializ
 
 export class WorkspaceTrayModel extends WorkspaceNodeModel<SerializedWorkspaceTrayModel, WorkspaceTrayModelListener> {
   mode: WorkspaceTrayMode;
+  iconBarPosition: TrayIconPosition;
   selectedModel: WorkspaceModel;
   floatingWindow: FloatingWindowModel;
 
@@ -44,7 +51,9 @@ export class WorkspaceTrayModel extends WorkspaceNodeModel<SerializedWorkspaceTr
 
   constructor(public options: WorkspaceTrayModelOptions) {
     super(WorkspaceTrayModel.NAME);
+    this.setExpand(false, true);
     this.selectedModel = null;
+    this.iconBarPosition = TrayIconPosition.LEFT;
     this.floatingWindow = options.factory.generateModel();
 
     // the tray model will handle this
@@ -75,6 +84,14 @@ export class WorkspaceTrayModel extends WorkspaceNodeModel<SerializedWorkspaceTr
     this.setMode(WorkspaceTrayMode.NORMAL);
   }
 
+  setIconPosition(position: TrayIconPosition) {
+    if (this.iconBarPosition === position) {
+      return;
+    }
+    this.iconBarPosition = position;
+    this.iterateListeners((cb) => cb.iconPositionChanged?.());
+  }
+
   getSelectedModel() {
     return this.selectedModel;
   }
@@ -89,7 +106,7 @@ export class WorkspaceTrayModel extends WorkspaceNodeModel<SerializedWorkspaceTr
 
   updateWindowPosition(child: WorkspaceModel) {
     const root = this.getRootModel();
-    const dims = root.r_dimensions.getRelativePosition(this.r_dimensions.position);
+    const dims = this.r_dimensions.getRelativeToPosition(root.r_dimensions.position);
     // left aligned
     if (dims[Alignment.LEFT] < root.r_dimensions.size.width / 2) {
       this.floatingWindow.position.update({
