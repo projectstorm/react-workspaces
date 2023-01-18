@@ -35,6 +35,7 @@ export interface WorkspaceTrayModelListener extends WorkspaceNodeModelListener {
 
 export interface SerializedWorkspaceTrayModel extends WorkspaceNodeModelSerialized {
   selected: string;
+  iconPosition: TrayIconPosition;
   mode: WorkspaceTrayMode;
 }
 
@@ -139,13 +140,15 @@ export class WorkspaceTrayModel extends WorkspaceNodeModel<SerializedWorkspaceTr
     return {
       ...super.toArray(),
       mode: this.mode,
-      selected: this.selectedModel?.id
+      selected: this.selectedModel?.id,
+      iconPosition: this.iconBarPosition
     };
   }
 
   fromArray(payload: SerializedWorkspaceTrayModel, engine: WorkspaceEngine) {
     super.fromArray(payload, engine);
-    this.setMode(payload['mode']);
+    this.setMode(payload['mode'] || WorkspaceTrayMode.NORMAL);
+    this.setIconPosition(payload['iconPosition'] || TrayIconPosition.LEFT);
     if (payload.selected) {
       this.setSelectedModel(this.children.find((m) => m.id === payload.selected) || null);
     }

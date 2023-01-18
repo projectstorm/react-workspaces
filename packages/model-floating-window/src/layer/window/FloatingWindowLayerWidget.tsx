@@ -89,7 +89,13 @@ export const FloatingWindowLayerWidget: React.FC<FloatingWindowLayerWidgetProps>
           engine: props.engine,
           model: props.window.child
         }),
-        titlebar: <S.Title ref={ref}>Menubar</S.Title>,
+        titlebar: (
+          <S.Title ref={ref}>
+            {windowFactory
+              .getRendererForModel(props.window.child)
+              .renderWindowTitle({ model: props.window.child, engine: props.engine })}
+          </S.Title>
+        ),
         engine: props.engine,
         model: props.window
       })}
@@ -108,9 +114,6 @@ namespace S {
   `;
 
   export const Title = styled.div`
-    background: rgba(0, 0, 0, 0.9);
-    color: white;
-    padding: 5px;
     cursor: move;
     user-select: none;
     flex-shrink: 0;

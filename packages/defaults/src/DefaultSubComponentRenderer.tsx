@@ -11,12 +11,17 @@ import {
   WorkspaceTrayMode
 } from '@projectstorm/react-workspaces-model-tray';
 import { DefaultPanelMicroButtonWidget } from './widgets/DefaultPanelMicroButtonWidget';
+import {
+  FloatingWindowRenderer,
+  FloatingWindowSubRendererEvent
+} from '@projectstorm/react-workspaces-model-floating-window';
 
 export class DefaultSubComponentRenderer
   implements
     TabRenderer<DefaultWorkspacePanelModel>,
     WorkspaceNodePanelRenderer<DefaultWorkspacePanelModel>,
-    TrayModelPanelRenderer<DefaultWorkspacePanelModel>
+    TrayModelPanelRenderer<DefaultWorkspacePanelModel>,
+    FloatingWindowRenderer<DefaultWorkspacePanelModel>
 {
   renderIcon(event: TrayModelPanelRendererEvent<DefaultWorkspacePanelModel>): JSX.Element {
     return (
@@ -38,5 +43,9 @@ export class DefaultSubComponentRenderer
 
   matchModel(model: DefaultWorkspacePanelModel): boolean {
     return model.type === DefaultWorkspacePanelFactory.TYPE;
+  }
+
+  renderWindowTitle(event: FloatingWindowSubRendererEvent<DefaultWorkspacePanelModel>): any {
+    return <DefaultPanelTitleWidget title={event.model.displayName} />;
   }
 }
