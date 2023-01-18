@@ -1,6 +1,5 @@
 import { Alignment, MousePosition } from '../tools';
 import { BaseListener, BaseObserver } from '../BaseObserver';
-import * as _ from 'lodash';
 
 export interface PositionListener extends BaseListener {
   updated: () => any;
@@ -43,25 +42,20 @@ export class Position extends BaseObserver<PositionListener> implements IPositio
     return this._right;
   }
 
-  getRelativePosition(rect: IPosition): IPosition {
+  getRelativeToPosition(rect: IPosition): IPosition {
     return {
-      top: rect.top - this._top,
-      left: rect.left - this._left,
-      right: rect.right - this._right,
-      bottom: rect.bottom - this._bottom
+      top: this._top - rect.top,
+      left: this._left - rect.left,
+      right: this._right - rect.right,
+      bottom: this._bottom - rect.bottom
     };
   }
 
-  getRelativeMousePosition(position: MousePosition): MousePosition {
+  getRelativeToMousePosition(position: MousePosition): MousePosition {
     return {
-      clientX: position.clientX - this._left,
-      clientY: position.clientY - this._top
+      clientX: this._left - position.clientX,
+      clientY: this._top - position.clientY
     };
-  }
-
-  getRelativeElementPosition(element: HTMLElement): IPosition {
-    let rect = element.getBoundingClientRect();
-    return this.getRelativePosition(_.pick(rect, _.values(Alignment)));
   }
 
   update(position: Partial<IPosition>) {

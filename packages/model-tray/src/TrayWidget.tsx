@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useEffect } from 'react';
-import { WorkspaceTrayMode, WorkspaceTrayModel } from './WorkspaceTrayModel';
+import { TrayIconPosition, WorkspaceTrayMode, WorkspaceTrayModel } from './WorkspaceTrayModel';
 import styled from '@emotion/styled';
 import {
   DraggableWidget,
@@ -71,12 +71,22 @@ export const PanelContent: React.FC<PanelContentProps> = (props) => {
 };
 
 export const TrayContentExpanded: React.FC<TrayWidgetProps> = (props) => {
-  return (
-    <S.Content>
-      <S.MicroLayoutShrink node={props.node} engine={props.engine} factory={props.factory} />
-      <PanelContent engine={props.engine} model={props.node.getSelectedModel()} />
-    </S.Content>
-  );
+  const forceUpdate = useForceUpdate();
+  let cont = [
+    <S.MicroLayoutShrink key="a" node={props.node} engine={props.engine} factory={props.factory} />,
+    <PanelContent key="b" engine={props.engine} model={props.node.getSelectedModel()} />
+  ];
+  if (props.node.iconBarPosition === TrayIconPosition.RIGHT) {
+    cont.reverse();
+  }
+  useEffect(() => {
+    return props.node.registerListener({
+      iconPositionChanged: () => {
+        forceUpdate();
+      }
+    });
+  }, []);
+  return <S.Content>{cont}</S.Content>;
 };
 
 export const TrayContentShrink: React.FC<TrayWidgetProps> = (props) => {

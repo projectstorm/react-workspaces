@@ -8,6 +8,7 @@ import {
   WorkspaceNodePanelRenderer
 } from '@projectstorm/react-workspaces-core';
 import { FloatingWindowFactory } from '@projectstorm/react-workspaces-model-floating-window';
+import { setupIconPositionBehavior } from './iconPositionBehavior';
 
 export interface TrayModelPanelRendererEvent<T extends WorkspaceModel> {
   model: T;
@@ -21,6 +22,7 @@ export interface TrayModelPanelRenderer<T extends WorkspaceModel = WorkspaceMode
 
 export interface WorkspaceTrayFactoryOptions {
   windowFactory: FloatingWindowFactory;
+  installIconPositionListener?: boolean;
 }
 
 export class WorkspaceTrayFactory<T extends WorkspaceTrayModel = WorkspaceTrayModel> extends WorkspaceNodeFactory<
@@ -32,11 +34,15 @@ export class WorkspaceTrayFactory<T extends WorkspaceTrayModel = WorkspaceTrayMo
   }
 
   generateModel(): T {
-    return new WorkspaceTrayModel({
+    const model = new WorkspaceTrayModel({
       iconWidth: 50,
       expandedWidth: 200,
       factory: this.options.windowFactory
     }) as T;
+    if (this.options.installIconPositionListener) {
+      setupIconPositionBehavior(model);
+    }
+    return model;
   }
 
   generateTrayHeader(event: WorkspaceModelFactoryEvent<T>) {
