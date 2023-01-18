@@ -1,5 +1,19 @@
 # @projectstorm/react-workspaces-model-tray
 
+## 2.1.0
+
+### Minor Changes
+
+- c5f49ec: - Tray models can now set their icon bar alignment
+  - New behavior for having trays listen to the root model to adjust the alignment automatically
+  - changes to the relative positioning APIs to be more clear in terms of what they do, and how they should be used relative to other positions
+
+### Patch Changes
+
+- Updated dependencies [c5f49ec]
+  - @projectstorm/react-workspaces-core@2.3.0
+  - @projectstorm/react-workspaces-model-floating-window@2.0.6
+
 ## 2.0.6
 
 ### Patch Changes
