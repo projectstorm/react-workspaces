@@ -1,7 +1,7 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faCube } from '@fortawesome/free-solid-svg-icons';
+import { faCube, faTimes } from '@fortawesome/free-solid-svg-icons';
 
-library.add(faCube);
+library.add(faCube, faTimes);
 
 export * from './tray/DefaultTrayFactory';
 

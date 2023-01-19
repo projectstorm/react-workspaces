@@ -21,12 +21,16 @@ export class FloatingWindowModel extends WorkspaceModel<SerializedFloatingWindow
   position: Position;
   dimension: DimensionContainer;
   serializeToRoot: boolean;
+  child: WorkspaceModel;
 
   static TYPE = 'floating-window';
   private parentListener: () => any;
 
-  constructor(type: string, public child: WorkspaceModel) {
+  constructor(type: string, child: WorkspaceModel) {
     super(type);
+    if (child) {
+      this.setChild(child);
+    }
     this.serializeToRoot = true;
     this.position = new Position();
     this.dimension = new DimensionContainer({

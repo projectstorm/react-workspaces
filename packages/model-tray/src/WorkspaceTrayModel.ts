@@ -56,10 +56,16 @@ export class WorkspaceTrayModel extends WorkspaceNodeModel<SerializedWorkspaceTr
     this.selectedModel = null;
     this.iconBarPosition = TrayIconPosition.LEFT;
     this.floatingWindow = options.factory.generateModel();
+    this.floatingWindow.setParent(this);
 
     // the tray model will handle this
     this.floatingWindow.serializeToRoot = false;
     this.floatingWindow.registerListener({
+      removed: () => {
+        // if the floating window is removed, update the selected item back to null
+        // this can happen if a close button on the window deletes the window\
+        this.setSelectedModel(null);
+      },
       childUpdated: () => {
         this.floatingWindow.minimumSize.update({
           width: 100,
@@ -98,6 +104,9 @@ export class WorkspaceTrayModel extends WorkspaceNodeModel<SerializedWorkspaceTr
   }
 
   setSelectedModel(child: WorkspaceModel) {
+    if (this.selectedModel === child) {
+      return;
+    }
     this.selectedModel = child;
     if (this.mode === WorkspaceTrayMode.COLLAPSED) {
       this.setFloatingModel(child);
@@ -147,11 +156,11 @@ export class WorkspaceTrayModel extends WorkspaceNodeModel<SerializedWorkspaceTr
 
   fromArray(payload: SerializedWorkspaceTrayModel, engine: WorkspaceEngine) {
     super.fromArray(payload, engine);
-    this.setMode(payload['mode'] || WorkspaceTrayMode.NORMAL);
     this.setIconPosition(payload['iconPosition'] || TrayIconPosition.LEFT);
     if (payload.selected) {
       this.setSelectedModel(this.children.find((m) => m.id === payload.selected) || null);
     }
+    this.setMode(payload['mode'] || WorkspaceTrayMode.NORMAL);
   }
 
   addModel(model: WorkspaceModel, position: number = null): this {

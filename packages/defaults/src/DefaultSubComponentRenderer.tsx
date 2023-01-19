@@ -33,8 +33,15 @@ export class DefaultSubComponentRenderer
     );
   }
 
-  renderTitleBar(model: RenderTitleBarEvent<DefaultWorkspacePanelModel>): JSX.Element {
-    return <DefaultPanelTitleWidget title={model.model.displayName} />;
+  renderTitleBar(event: RenderTitleBarEvent<DefaultWorkspacePanelModel>): JSX.Element {
+    return (
+      <DefaultPanelTitleWidget
+        title={event.model.displayName}
+        close={() => {
+          event.model.delete();
+        }}
+      />
+    );
   }
 
   renderTab(event: TabRendererEvent<DefaultWorkspacePanelModel>): JSX.Element {
@@ -46,6 +53,13 @@ export class DefaultSubComponentRenderer
   }
 
   renderWindowTitle(event: FloatingWindowSubRendererEvent<DefaultWorkspacePanelModel>): any {
-    return <DefaultPanelTitleWidget title={event.model.displayName} />;
+    return (
+      <DefaultPanelTitleWidget
+        title={event.model.displayName}
+        close={() => {
+          event.model.parent.delete();
+        }}
+      />
+    );
   }
 }
