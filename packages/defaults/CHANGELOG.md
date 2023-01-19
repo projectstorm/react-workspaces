@@ -1,5 +1,16 @@
 # @projectstorm/react-workspaces-defaults
 
+## 2.2.1
+
+### Patch Changes
+
+- 2aa5082: - Trays now work with floating windows a lot better
+  - Windows now correctly setup their children if passed via constructor
+  - added close icon to default panel sub rendering
+- Updated dependencies [2aa5082]
+  - @projectstorm/react-workspaces-model-floating-window@2.1.1
+  - @projectstorm/react-workspaces-model-tray@2.2.1
+
 ## 2.2.0
 
 ### Minor Changes
