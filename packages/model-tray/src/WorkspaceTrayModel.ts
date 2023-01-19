@@ -200,8 +200,9 @@ export class WorkspaceTrayModel extends WorkspaceNodeModel<SerializedWorkspaceTr
         width: this.options.iconWidth
       });
     } else {
-      this.normalizeSelectedModel();
+      // the order of these two calls are important
       this.setFloatingModel(null);
+      this.normalizeSelectedModel();
       this.maximumSize.update({
         width: 0
       });
