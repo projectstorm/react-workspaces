@@ -4,6 +4,15 @@
 
 ### Patch Changes
 
+- Updated dependencies [68938c1]
+  - @projectstorm/react-workspaces-model-tray@2.2.2
+  - @projectstorm/react-workspaces-defaults@2.2.2
+  - @projectstorm/react-workspaces-dropzone-plugin-tray@2.0.10
+
+## null
+
+### Patch Changes
+
 - Updated dependencies [2aa5082]
   - @projectstorm/react-workspaces-defaults@2.2.1
   - @projectstorm/react-workspaces-model-floating-window@2.1.1

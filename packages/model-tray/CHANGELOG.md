@@ -1,5 +1,11 @@
 # @projectstorm/react-workspaces-model-tray
 
+## 2.2.2
+
+### Patch Changes
+
+- 68938c1: Fixed issue with tray expanding and null pointers
+
 ## 2.2.1
 
 ### Patch Changes
