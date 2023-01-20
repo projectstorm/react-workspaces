@@ -1,5 +1,16 @@
 # @projectstorm/react-workspaces-core
 
+## 2.4.0
+
+### Minor Changes
+
+- 3945d18: - new method to waiting for initial rendering of any model
+  - new parameter to immediately run DimensionContainer invalidation
+  - fixed bug with determining if something left aligned by now checking parent container
+  - useResizeObserver now invalidates its hooks based off the dimension container
+  - trays now use their children and how they render to determine initial expand width
+  - tray icons now set their positioning correctly on boot (immediately)
+
 ## 2.3.0
 
 ### Minor Changes
