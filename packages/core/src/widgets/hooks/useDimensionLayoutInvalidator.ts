@@ -27,5 +27,5 @@ export const useDimensionLayoutInvalidator = (props: UseDimensionLayoutInvalidat
       l1();
       l2?.();
     };
-  }, []);
+  }, [props.dimension]);
 };

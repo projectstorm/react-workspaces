@@ -1,10 +1,9 @@
 import { WorkspaceEngineInterface } from '../core/WorkspaceEngineInterface';
-import { WorkspaceCollectionInterface } from './WorkspaceCollectionInterface';
 import { BaseListener, BaseObserver } from '../core/BaseObserver';
 import { Alignment } from '../core/tools';
 import { v4 } from 'uuid';
 import { ISize, Size } from '../core/dimensions/Size';
-import { DimensionContainer } from '../core/dimensions/DimensionContainer';
+import { DimensionContainer, IDimension } from '../core/dimensions/DimensionContainer';
 import { WorkspaceCollectionModel } from './WorkspaceCollectionModel';
 
 export interface SerializedModel {
@@ -96,6 +95,28 @@ export class WorkspaceModel<
 
   set expandVertical(value: boolean) {
     this._expandVertical = value;
+  }
+
+  async waitForInitialRenderedSize(): Promise<IDimension> {
+    return new Promise((resolve) => {
+      let l1, l2;
+      l1 = this.r_dimensions.registerListener({
+        updated: () => {
+          if (this.r_dimensions.size.width > 0) {
+            resolve(this.r_dimensions.dimensions);
+            l1?.();
+            l2?.();
+          }
+        }
+      });
+      l2 = this.registerListener({
+        visibilityChanged: () => {
+          if (this.r_visible) {
+            this.r_dimensions.invalidate(true);
+          }
+        }
+      } as Partial<L>);
+    });
   }
 
   private normalizeSize() {
