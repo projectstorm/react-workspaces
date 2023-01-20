@@ -7,7 +7,7 @@ import { Alignment, MousePosition } from '../tools';
 
 export interface DimensionContainerListener extends BaseListener {
   updated: () => any;
-  invalidate: () => any;
+  invalidate: (immediate?: boolean) => any;
 }
 
 export type IDimension = IPosition & ISize;
@@ -62,8 +62,8 @@ export class DimensionContainer extends BaseObserver<DimensionContainerListener>
     return this.size.getVolume();
   }
 
-  invalidate() {
-    this.iterateListeners((cb) => cb.invalidate?.());
+  invalidate(immediate?: boolean) {
+    this.iterateListeners((cb) => cb.invalidate?.(immediate));
   }
 
   update(dim: Partial<IDimension>) {
@@ -82,16 +82,16 @@ export class DimensionContainer extends BaseObserver<DimensionContainerListener>
   isAligned(parent: DimensionContainer, alignment: Alignment) {
     const rel = this.getRelativeToPosition(parent.position)[alignment];
     if (alignment === Alignment.LEFT) {
-      return rel <= this.dimensions.width / 2;
+      return rel <= parent.dimensions.width / 2;
     }
     if (alignment === Alignment.RIGHT) {
-      return rel > this.dimensions.width / 2;
+      return rel > parent.dimensions.width / 2;
     }
     if (alignment === Alignment.TOP) {
-      return rel <= this.dimensions.height / 2;
+      return rel <= parent.dimensions.height / 2;
     }
     if (alignment === Alignment.BOTTOM) {
-      return rel > this.dimensions.height / 2;
+      return rel > parent.dimensions.height / 2;
     }
   }
 }

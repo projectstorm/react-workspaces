@@ -21,6 +21,6 @@ export const useModelElement = (props: UseModelElementProps) => {
     return () => {
       props.model.setVisible(false);
     };
-  }, []);
+  }, [props.model]);
   return ref;
 };

@@ -24,7 +24,6 @@ export enum TrayIconPosition {
 
 export interface WorkspaceTrayModelOptions {
   iconWidth: number;
-  expandedWidth: number;
   factory: FloatingWindowFactory;
 }
 
@@ -37,6 +36,7 @@ export interface SerializedWorkspaceTrayModel extends WorkspaceNodeModelSerializ
   selected: string;
   iconPosition: TrayIconPosition;
   mode: WorkspaceTrayMode;
+  sizeExpanded: number;
 }
 
 export class WorkspaceTrayModel extends WorkspaceNodeModel<SerializedWorkspaceTrayModel, WorkspaceTrayModelListener> {
@@ -45,7 +45,7 @@ export class WorkspaceTrayModel extends WorkspaceNodeModel<SerializedWorkspaceTr
   selectedModel: WorkspaceModel;
   floatingWindow: FloatingWindowModel;
 
-  private normalSize: number;
+  private sizeExpanded: number;
   private childListener: () => any;
 
   static NAME = 'srw-tray';
@@ -80,15 +80,23 @@ export class WorkspaceTrayModel extends WorkspaceNodeModel<SerializedWorkspaceTr
         });
       }
     });
-    this.normalSize = options.expandedWidth;
+    this.setMode(WorkspaceTrayMode.NORMAL);
     this.size.registerListener({
       updated: () => {
-        if (this.mode === WorkspaceTrayMode.NORMAL) {
-          this.normalSize = this.size.width;
+        if (this.mode === WorkspaceTrayMode.NORMAL && this.r_visible) {
+          this.setExpandedSize(this.size.width);
         }
       }
     });
-    this.setMode(WorkspaceTrayMode.NORMAL);
+  }
+
+  setExpandedSize(size: number) {
+    if (size > this.options.iconWidth && size !== this.sizeExpanded) {
+      this.sizeExpanded = size;
+      this.size.update({
+        width: this.sizeExpanded
+      });
+    }
   }
 
   setIconPosition(position: TrayIconPosition) {
@@ -150,13 +158,15 @@ export class WorkspaceTrayModel extends WorkspaceNodeModel<SerializedWorkspaceTr
       ...super.toArray(),
       mode: this.mode,
       selected: this.selectedModel?.id,
-      iconPosition: this.iconBarPosition
+      iconPosition: this.iconBarPosition,
+      sizeExpanded: this.sizeExpanded
     };
   }
 
   fromArray(payload: SerializedWorkspaceTrayModel, engine: WorkspaceEngine) {
     super.fromArray(payload, engine);
     this.setIconPosition(payload['iconPosition'] || TrayIconPosition.LEFT);
+    this.sizeExpanded = payload.sizeExpanded;
     if (payload.selected) {
       this.setSelectedModel(this.children.find((m) => m.id === payload.selected) || null);
     }
@@ -179,8 +189,13 @@ export class WorkspaceTrayModel extends WorkspaceNodeModel<SerializedWorkspaceTr
   }
 
   normalizeSelectedModel() {
-    if (this.mode === WorkspaceTrayMode.NORMAL && this.selectedModel == null) {
+    if (this.mode === WorkspaceTrayMode.NORMAL && this.selectedModel == null && this.children[0]) {
       this.setSelectedModel(this.children[0]);
+
+      // set the default expand size
+      if (!this.sizeExpanded) {
+        this.setExpandedSize(this.children[0].size.width || this.children[0].minimumSize.width);
+      }
     }
   }
 
@@ -203,6 +218,14 @@ export class WorkspaceTrayModel extends WorkspaceNodeModel<SerializedWorkspaceTr
       // the order of these two calls are important
       this.setFloatingModel(null);
       this.normalizeSelectedModel();
+
+      // if we don't have an expanded size yet, lets wait for the model to render first (asyncronously)
+      if (!this.sizeExpanded && this.selectedModel) {
+        this.selectedModel.waitForInitialRenderedSize().then((dims) => {
+          this.setExpandedSize(dims.width + this.options.iconWidth);
+        });
+      }
+
       this.maximumSize.update({
         width: 0
       });
@@ -210,7 +233,7 @@ export class WorkspaceTrayModel extends WorkspaceNodeModel<SerializedWorkspaceTr
         width: 0
       });
       this.size.update({
-        width: this.normalSize
+        width: this.sizeExpanded
       });
     }
     this.invalidateLayout();

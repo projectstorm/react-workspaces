@@ -31,13 +31,13 @@ export const useBaseResizeObserver = (props: UseBaseBaseResizeObserverProps) => 
     };
 
     props.dimension.update(props.transformer?.(dimObject) || dimObject);
-  }, []);
+  }, [props.dimension]);
 
   const updateDebounced = useCallback(
     _.debounce(() => {
       updateLogic();
     }, 500),
-    []
+    [props.dimension]
   );
 
   const update = useCallback(() => {
@@ -46,16 +46,20 @@ export const useBaseResizeObserver = (props: UseBaseBaseResizeObserverProps) => 
     } else {
       updateDebounced();
     }
-  }, [props.ignoreDebounce]);
+  }, [props.dimension, props.ignoreDebounce]);
 
   // listen to invalidate directives
   useEffect(() => {
     return props.dimension.registerListener({
-      invalidate: () => {
-        update();
+      invalidate: (immediate) => {
+        if (immediate) {
+          updateLogic();
+        } else {
+          update();
+        }
       }
     });
-  }, []);
+  }, [props.dimension]);
 
   // window resized
   useWindowResize({
@@ -81,7 +85,7 @@ export const useBaseResizeObserver = (props: UseBaseBaseResizeObserverProps) => 
       }
       intersectionObserver.disconnect();
     };
-  }, []);
+  }, [props.dimension]);
 
   // native resize
   useEffect(() => {
@@ -96,5 +100,5 @@ export const useBaseResizeObserver = (props: UseBaseBaseResizeObserverProps) => 
       }
       resizeObserver.disconnect();
     };
-  }, []);
+  }, [props.dimension]);
 };

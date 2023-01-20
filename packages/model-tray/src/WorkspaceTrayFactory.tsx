@@ -36,7 +36,6 @@ export class WorkspaceTrayFactory<T extends WorkspaceTrayModel = WorkspaceTrayMo
   generateModel(): T {
     const model = new WorkspaceTrayModel({
       iconWidth: 50,
-      expandedWidth: 200,
       factory: this.options.windowFactory
     }) as T;
     if (this.options.installIconPositionListener) {
