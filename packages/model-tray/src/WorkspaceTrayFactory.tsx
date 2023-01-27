@@ -8,7 +8,8 @@ import {
   WorkspaceNodePanelRenderer
 } from '@projectstorm/react-workspaces-core';
 import { FloatingWindowFactory } from '@projectstorm/react-workspaces-model-floating-window';
-import { setupIconPositionBehavior } from './iconPositionBehavior';
+import { setupIconPositionBehavior } from './behaviors/iconPositionBehavior';
+import { setupTrayWindowDragLockBehavior } from './behaviors/trayWindowDragLockBehavior';
 
 export interface TrayModelPanelRendererEvent<T extends WorkspaceModel> {
   model: T;
@@ -22,7 +23,16 @@ export interface TrayModelPanelRenderer<T extends WorkspaceModel = WorkspaceMode
 
 export interface WorkspaceTrayFactoryOptions {
   windowFactory: FloatingWindowFactory;
+  /**
+   * When enabled, the icons will render on the left or right depending on where the tray is rendered relative to
+   * the root work space. If it is left-ish, the icons are rendered on the left and visa-versa
+   */
   installIconPositionListener?: boolean;
+  /**
+   * If enabled, locking the engine, will prevent the floating window associated with this tray, from
+   * being moved by the user directly. it will still move if the user selects an icon in the collapsed mode
+   */
+  installEngineLockListener?: boolean;
 }
 
 export class WorkspaceTrayFactory<T extends WorkspaceTrayModel = WorkspaceTrayModel> extends WorkspaceNodeFactory<
@@ -31,17 +41,23 @@ export class WorkspaceTrayFactory<T extends WorkspaceTrayModel = WorkspaceTrayMo
 > {
   constructor(protected options: WorkspaceTrayFactoryOptions) {
     super(WorkspaceTrayModel.NAME);
+    this.registerListener({
+      modelGenerated: ({ model }) => {
+        if (options.installIconPositionListener) {
+          setupIconPositionBehavior(model);
+        }
+        if (options.installEngineLockListener) {
+          setupTrayWindowDragLockBehavior(model, this.engine);
+        }
+      }
+    });
   }
 
-  generateModel(): T {
-    const model = new WorkspaceTrayModel({
+  protected _generateModel(): T {
+    return new WorkspaceTrayModel({
       iconWidth: 50,
       factory: this.options.windowFactory
     }) as T;
-    if (this.options.installIconPositionListener) {
-      setupIconPositionBehavior(model);
-    }
-    return model;
   }
 
   generateTrayHeader(event: WorkspaceModelFactoryEvent<T>) {

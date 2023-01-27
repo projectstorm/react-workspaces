@@ -34,6 +34,10 @@ export const FloatingWindowLayerWidget: React.FC<FloatingWindowLayerWidgetProps>
   useMouseDragDistance({
     forwardRef: ref,
     startMove: () => {
+      if (!props.window.draggable) {
+        return;
+      }
+
       props.layer.setAnimate(false);
       initialPos.current = {
         top: props.window.position.top,
@@ -41,23 +45,32 @@ export const FloatingWindowLayerWidget: React.FC<FloatingWindowLayerWidgetProps>
       };
     },
     moved: ({ distanceX, distanceY }) => {
+      if (!props.window.draggable) {
+        return;
+      }
       props.window.position.update({
         left: initialPos.current.left + distanceX,
         top: initialPos.current.top + distanceY
       });
     },
     endMove: () => {
+      if (!props.window.draggable) {
+        return;
+      }
       props.layer.setAnimate(true);
     }
   });
 
   useEffect(() => {
     return props.window.registerListener({
+      draggableUpdated: () => {
+        forceUpdate();
+      },
       childUpdated: () => {
         forceUpdate();
       }
     });
-  }, []);
+  }, [props.window]);
 
   useEffect(() => {
     return props.window.position.registerListener({

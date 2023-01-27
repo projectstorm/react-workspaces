@@ -34,7 +34,7 @@ export class WorkspaceTabFactory<T extends WorkspaceTabModel = WorkspaceTabModel
     super(WorkspaceTabModel.NAME);
   }
 
-  generateModel(): T {
+  protected _generateModel(): T {
     return new WorkspaceTabModel() as T;
   }
 

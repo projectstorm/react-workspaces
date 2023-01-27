@@ -77,7 +77,8 @@ export const useEngine = (args: { DebugDividers?: boolean; DebugResizers?: boole
     const tabFactory = new WorkspaceTabFactory();
     const trayFactory = new DefaultTrayFactory({
       windowFactory: windowFactory,
-      installIconPositionListener: true
+      installIconPositionListener: true,
+      installEngineLockListener: true
     });
     const workspaceNodeFactory = new WorkspaceNodeFactory();
 

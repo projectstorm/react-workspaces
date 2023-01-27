@@ -23,11 +23,11 @@ export class WorkspaceNodeFactory<
     super(type);
   }
 
-  generateModel(): T {
-    return new WorkspaceNodeModel() as T;
-  }
-
   generateContent(event: WorkspaceModelFactoryEvent<T>): JSX.Element {
     return <WorkspaceNodeWidget model={event.model} engine={event.engine} factory={this} />;
+  }
+
+  protected _generateModel(): T {
+    return new WorkspaceNodeModel() as T;
   }
 }

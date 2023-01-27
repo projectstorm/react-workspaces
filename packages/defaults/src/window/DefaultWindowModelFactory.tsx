@@ -24,11 +24,11 @@ export class DefaultWindowModelFactory extends FloatingWindowFactory<DefaultWind
     super(DefaultWindowModelFactory.TYPE);
   }
 
-  generateModel(): FloatingWindowModel {
-    return new DefaultWindowModel();
-  }
-
   generateContent(event: FloatingWindowRendererEvent<DefaultWindowModel>): JSX.Element {
     return <DefaultFloatingWindowWidget {...event} />;
+  }
+
+  protected _generateModel(): FloatingWindowModel {
+    return new DefaultWindowModel();
   }
 }

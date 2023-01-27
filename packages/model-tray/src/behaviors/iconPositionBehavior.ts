@@ -1,4 +1,4 @@
-import { TrayIconPosition, WorkspaceTrayModel } from './WorkspaceTrayModel';
+import { TrayIconPosition, WorkspaceTrayModel } from '../WorkspaceTrayModel';
 import { Alignment } from '@projectstorm/react-workspaces-core';
 
 /**
