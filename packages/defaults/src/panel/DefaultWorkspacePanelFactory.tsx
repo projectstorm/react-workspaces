@@ -14,7 +14,7 @@ export class DefaultWorkspacePanelFactory extends WorkspaceModelFactory<DefaultW
     return <DefaultPanelContentWidget model={event.model} />;
   }
 
-  generateModel(): DefaultWorkspacePanelModel {
+  protected _generateModel(): DefaultWorkspacePanelModel {
     return new DefaultWorkspacePanelModel('Test');
   }
 }

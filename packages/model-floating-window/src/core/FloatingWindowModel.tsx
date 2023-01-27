@@ -10,6 +10,7 @@ import {
 
 export interface FloatingWindowModelListener extends WorkspaceModelListener {
   childUpdated: () => any;
+  draggableUpdated: () => any;
 }
 
 export interface SerializedFloatingWindowModel extends SerializedModel {
@@ -22,6 +23,7 @@ export class FloatingWindowModel extends WorkspaceModel<SerializedFloatingWindow
   dimension: DimensionContainer;
   serializeToRoot: boolean;
   child: WorkspaceModel;
+  draggable: boolean;
 
   static TYPE = 'floating-window';
   private parentListener: () => any;
@@ -31,6 +33,7 @@ export class FloatingWindowModel extends WorkspaceModel<SerializedFloatingWindow
     if (child) {
       this.setChild(child);
     }
+    this.draggable = true;
     this.serializeToRoot = true;
     this.position = new Position();
     this.dimension = new DimensionContainer({
@@ -43,6 +46,14 @@ export class FloatingWindowModel extends WorkspaceModel<SerializedFloatingWindow
         this.normalizePosition();
       }
     });
+  }
+
+  setDraggable(dragEnable: boolean) {
+    if (this.draggable === dragEnable) {
+      return;
+    }
+    this.draggable = dragEnable;
+    this.iterateListeners((cb) => cb.draggableUpdated?.());
   }
 
   fromArray(payload: SerializedFloatingWindowModel, engine: WorkspaceEngineInterface) {

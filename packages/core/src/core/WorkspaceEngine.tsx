@@ -16,6 +16,7 @@ export interface WorkspaceEngineListener extends BaseListener {
   layoutRepainted: () => any;
   modelDragStart: () => any;
   modelDragEnd: () => any;
+  lockUpdated: () => any;
 }
 
 export class WorkspaceEngineError extends Error {
@@ -33,7 +34,7 @@ export class WorkspaceEngine extends BaseObserver<WorkspaceEngineListener> imple
   draggingID: string;
   layerManager: LayerManager;
   repainting: boolean;
-  dragAndDropEnabled: boolean;
+  locked: boolean;
 
   // dimensions
   workspaceContainer: DimensionContainer;
@@ -44,10 +45,10 @@ export class WorkspaceEngine extends BaseObserver<WorkspaceEngineListener> imple
 
   constructor() {
     super();
+    this.locked = false;
     this.factories = {};
     this.listeners = {};
     this.draggingID = null;
-    this.dragAndDropEnabled = true;
     this.layerManager = new LayerManager();
     this.workspaceContainer = new DimensionContainer();
     this.rootModel = null;
@@ -88,9 +89,12 @@ export class WorkspaceEngine extends BaseObserver<WorkspaceEngineListener> imple
     this.iterateListeners((cb) => cb.dimensionsInvalidated?.());
   }
 
-  setDragAndDropEnabled(drag: boolean = true) {
-    this.dragAndDropEnabled = drag;
-    this.fireRepaintListeners();
+  setLocked(locked: boolean = true) {
+    if (this.locked === locked) {
+      return;
+    }
+    this.locked = locked;
+    this.iterateListeners((cb) => cb.lockUpdated?.());
   }
 
   static namespaceMime(data: string) {
@@ -113,6 +117,7 @@ export class WorkspaceEngine extends BaseObserver<WorkspaceEngineListener> imple
 
   registerFactory(factory: WorkspaceModelFactory) {
     this.factories[factory.type] = factory;
+    factory.setEngine(this);
   }
 
   getFactory<T extends WorkspaceModelFactory>(model: WorkspaceModel | string): T {
