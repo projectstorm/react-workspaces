@@ -4,6 +4,22 @@
 
 ### Patch Changes
 
+- Updated dependencies [a810a3e]
+  - @projectstorm/react-workspaces-behavior-divider-dropzone@2.2.0
+  - @projectstorm/react-workspaces-behavior-panel-dropzone@2.2.0
+  - @projectstorm/react-workspaces-model-floating-window@2.2.0
+  - @projectstorm/react-workspaces-dropzone-plugin-tabs@2.1.0
+  - @projectstorm/react-workspaces-dropzone-plugin-tray@2.1.0
+  - @projectstorm/react-workspaces-behavior-resize@2.2.0
+  - @projectstorm/react-workspaces-model-tabs@2.2.0
+  - @projectstorm/react-workspaces-model-tray@2.4.0
+  - @projectstorm/react-workspaces-defaults@2.3.0
+  - @projectstorm/react-workspaces-core@2.5.0
+
+## null
+
+### Patch Changes
+
 - Updated dependencies [3945d18]
   - @projectstorm/react-workspaces-core@2.4.0
   - @projectstorm/react-workspaces-model-tray@2.3.0

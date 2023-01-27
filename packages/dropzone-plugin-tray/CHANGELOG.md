@@ -1,5 +1,24 @@
 # @projectstorm/react-workspaces-dropzone-plugin-tray
 
+## 2.1.0
+
+### Minor Changes
+
+- a810a3e: - [Added] Factories now emit events when models are created
+  - [changed] Factories now have a protected `_generateModel()` event which should be implemented instead of the `generateModel()` event
+  - [Added] `setLocked()` method on the engine which prevents dragging across all `<Draggable>` widgets
+  - [Added] `installEngineLockListener: boolean` to the tray factory options, which when enabled, will also prevent windows from being moved when locks are enabled
+  - [maintenance] Bumped all package dependencies
+  - [Added] `setupTrayWindowDragLockBehavior()` helper utility
+  - [Added] `setDraggable()` method on floating windows allowing the window to control whether it can be moved or not.
+
+### Patch Changes
+
+- Updated dependencies [a810a3e]
+  - @projectstorm/react-workspaces-behavior-panel-dropzone@2.2.0
+  - @projectstorm/react-workspaces-model-tray@2.4.0
+  - @projectstorm/react-workspaces-core@2.5.0
+
 ## 2.0.11
 
 ### Patch Changes
