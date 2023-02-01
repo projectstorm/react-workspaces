@@ -1,5 +1,11 @@
 # @projectstorm/react-workspaces-core
 
+## 2.5.1
+
+### Patch Changes
+
+- eeab809: Fixed a rare case where turning panels into a tray and then dragging them out again, would cause state issues
+
 ## 2.5.0
 
 ### Minor Changes

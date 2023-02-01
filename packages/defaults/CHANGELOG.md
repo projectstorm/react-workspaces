@@ -1,5 +1,16 @@
 # @projectstorm/react-workspaces-defaults
 
+## 2.3.1
+
+### Patch Changes
+
+- eeab809: Fixed a rare case where turning panels into a tray and then dragging them out again, would cause state issues
+- Updated dependencies [eeab809]
+  - @projectstorm/react-workspaces-core@2.5.1
+  - @projectstorm/react-workspaces-model-floating-window@2.2.1
+  - @projectstorm/react-workspaces-model-tabs@2.2.1
+  - @projectstorm/react-workspaces-model-tray@2.4.1
+
 ## 2.3.0
 
 ### Minor Changes
