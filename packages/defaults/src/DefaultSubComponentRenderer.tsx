@@ -39,6 +39,7 @@ export class DefaultSubComponentRenderer
         title={event.model.displayName}
         close={() => {
           event.model.delete();
+          event.engine.normalize();
         }}
       />
     );
@@ -58,6 +59,7 @@ export class DefaultSubComponentRenderer
         title={event.model.displayName}
         close={() => {
           event.model.parent.delete();
+          event.engine.normalize();
         }}
       />
     );
