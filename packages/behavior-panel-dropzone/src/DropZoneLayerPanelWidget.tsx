@@ -11,6 +11,7 @@ import {
 } from '@projectstorm/react-workspaces-core';
 import { DropZoneAlignmentButtonWidget, DropZoneAlignmentTheme } from './DropZoneAlignmentButtonWidget';
 import { DropZoneTransformWidget } from './DropZoneTransformWidget';
+import { DropZoneLayerButtonTheme } from './DropZoneLayerButtonWidget';
 
 export interface TransformZoneEvent {
   model: WorkspaceModel;
@@ -20,13 +21,13 @@ export interface TransformZoneEvent {
 
 export interface TransformZone {
   transform: (event: TransformZoneEvent) => any;
-  render: (options: { entered: boolean }) => any;
+  render: (options: { entered: boolean; theme: Partial<DropZoneLayerButtonTheme> }) => any;
   key: string;
 }
 
 export interface SplitZone {
   alignment: Alignment;
-  handleDrop: (model: WorkspaceModel) => any;
+  handleDrop: (model: WorkspaceModel, engine: WorkspaceEngine) => any;
 }
 
 export interface DropZonePanelDirective {
@@ -40,14 +41,19 @@ export interface DropZoneLayerPanelTheme {
   borderColorEntered?: string;
   background?: string;
   backgroundEntered?: string;
+  borderRadius?: number;
+  blur?: number;
   splitButtonTheme?: DropZoneAlignmentTheme;
+  transformButtonTheme?: Partial<DropZoneLayerButtonTheme>;
 }
 
 export const DefaultDropZoneLayerPanelTheme: DropZoneLayerPanelTheme = {
   border: 2,
+  blur: 5,
   borderColor: 'transparent',
   borderColorEntered: '#0096ff',
   background: 'transparent',
+  borderRadius: 10,
   backgroundEntered: 'rgba(0, 0, 0, 0.4)'
 };
 
@@ -86,7 +92,9 @@ export const DropZoneLayerPanelWidget: React.FC<DropZoneLayerPanelWidgetProps> =
                   model={props.model}
                   engine={props.engine}
                   alignment={d.alignment}
-                  handleDrop={d.handleDrop}
+                  handleDrop={(model) => {
+                    d.handleDrop(model, props.engine);
+                  }}
                   theme={theme.splitButtonTheme}
                 />
               );
@@ -95,7 +103,15 @@ export const DropZoneLayerPanelWidget: React.FC<DropZoneLayerPanelWidgetProps> =
           <S.Layer2 visible={show}>
             <S.ButtonBar>
               {props.directive.transformZones.map((zone) => {
-                return <DropZoneTransformWidget model={props.model} zone={zone} engine={props.engine} key={zone.key} />;
+                return (
+                  <DropZoneTransformWidget
+                    theme={theme.transformButtonTheme}
+                    model={props.model}
+                    zone={zone}
+                    engine={props.engine}
+                    key={zone.key}
+                  />
+                );
               })}
             </S.ButtonBar>
             {props.debug ? <S.Debug>{props.model.id.substring(0, 7)}</S.Debug> : null}
@@ -111,11 +127,13 @@ namespace S {
     entered: boolean;
     theme: DropZoneLayerPanelTheme;
   }>`
+    border-radius: ${(p) => p.theme.borderRadius}px;
     box-sizing: border-box;
     background: ${(p) => (p.entered ? p.theme.backgroundEntered : p.theme.background)};
     border: solid ${(p) => p.theme.border}px ${(p) => (p.entered ? p.theme.borderColorEntered : p.theme.borderColor)};
     transition: border 0.5s, background 0.5s;
     pointer-events: all;
+    backdrop-filter: blur(${(p) => p.theme.blur}px);
   `;
 
   export const Debug = styled.span`

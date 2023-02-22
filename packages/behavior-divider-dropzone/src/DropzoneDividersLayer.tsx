@@ -4,7 +4,7 @@ import { Layer, useForceUpdate, WorkspaceEngine, WorkspaceNodeModel } from '@pro
 import { DropzoneDividerTheme, DropzoneDividerWidget } from './DropzoneDividerWidget';
 
 export interface DropzoneDividersLayerOptions {
-  theme?: DropzoneDividerTheme;
+  theme?: () => DropzoneDividerTheme;
 }
 
 export class DropzoneDividersLayer extends Layer {
@@ -21,7 +21,7 @@ export class DropzoneDividersLayer extends Layer {
 
 export interface DropzoneDividersLayerWidgetProps {
   engine: WorkspaceEngine;
-  theme?: DropzoneDividerTheme;
+  theme?: () => DropzoneDividerTheme;
 }
 
 export const DropzoneDividersLayerWidget: React.FC<DropzoneDividersLayerWidgetProps> = (props) => {
@@ -44,6 +44,7 @@ export const DropzoneDividersLayerWidget: React.FC<DropzoneDividersLayerWidgetPr
           return m.r_divisons.map((division, index) => {
             return (
               <DropzoneDividerWidget
+                theme={props.theme?.()}
                 engine={props.engine}
                 dimension={division}
                 key={division.id}

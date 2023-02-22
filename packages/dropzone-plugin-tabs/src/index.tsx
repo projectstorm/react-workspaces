@@ -14,8 +14,8 @@ library.add(faPlus, faLayerGroup);
 
 export const AppendToTabGroupZone: TransformZone = {
   key: 'ADD_TAB',
-  render: ({ entered }) => {
-    return <DropZoneLayerButtonWidget entered={entered} text="Add Tab" icon="plus" />;
+  render: ({ entered, theme }) => {
+    return <DropZoneLayerButtonWidget theme={theme} entered={entered} text="Add Tab" icon="plus" />;
   },
   transform: ({ model, zoneModel, engine }) => {
     (zoneModel.parent as WorkspaceTabModel).addModel(model);
@@ -26,8 +26,8 @@ export const AppendToTabGroupZone: TransformZone = {
 export const ConvertToTabZone = (factory: WorkspaceTabFactory): TransformZone => {
   return {
     key: 'MAKE_TABS',
-    render: ({ entered }) => {
-      return <DropZoneLayerButtonWidget entered={entered} text="Tabs" icon="layer-group" />;
+    render: ({ entered, theme }) => {
+      return <DropZoneLayerButtonWidget theme={theme} entered={entered} text="Tabs" icon="layer-group" />;
     },
     transform: ({ model, zoneModel, engine }) => {
       const tabs = factory.generateModel();

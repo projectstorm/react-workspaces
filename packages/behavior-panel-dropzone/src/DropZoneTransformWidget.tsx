@@ -4,11 +4,13 @@ import { useDroppableModel, useMouseDragEvents, WorkspaceEngine } from '@project
 import { useRef, useState } from 'react';
 import { TransformZone } from './DropZoneLayerPanelWidget';
 import { WorkspaceModel } from '@projectstorm/react-workspaces-core';
+import { DropZoneLayerButtonTheme } from './DropZoneLayerButtonWidget';
 
 export interface DropZoneTransformWidgetProps {
   engine: WorkspaceEngine;
   zone: TransformZone;
   model: WorkspaceModel;
+  theme: Partial<DropZoneLayerButtonTheme>;
 }
 
 export const DropZoneTransformWidget: React.FC<DropZoneTransformWidgetProps> = (props) => {
@@ -34,7 +36,7 @@ export const DropZoneTransformWidget: React.FC<DropZoneTransformWidgetProps> = (
       });
     }
   });
-  return <S.Container ref={ref}>{props.zone.render({ entered })}</S.Container>;
+  return <S.Container ref={ref}>{props.zone.render({ entered, theme: props.theme })}</S.Container>;
 };
 namespace S {
   export const Container = styled.div``;

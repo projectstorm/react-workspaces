@@ -46,8 +46,8 @@ export const draggingItemBehavior = (options: DraggingItemBehaviorOptions) => {
 
 export const ReplaceZone: TransformZone = {
   key: 'REPLACE',
-  render: ({ entered }) => {
-    return <DropZoneLayerButtonWidget entered={entered} text="Replace" icon="copy" />;
+  render: ({ entered, theme }) => {
+    return <DropZoneLayerButtonWidget theme={theme} entered={entered} text="Replace" icon="copy" />;
   },
   transform: ({ model, zoneModel, engine }) => {
     (zoneModel.parent as WorkspaceCollectionModel).replaceModel(zoneModel, model);
@@ -71,7 +71,7 @@ export const getDirectiveForWorkspaceNode = (
       splitZones: [
         {
           alignment: node.parent.vertical ? Alignment.LEFT : Alignment.TOP,
-          handleDrop: (model) => {
+          handleDrop: (model, engine) => {
             const parent = node.parent as WorkspaceNodeModel;
             const m = generateParentNode?.() || new WorkspaceNodeModel();
             m.setVertical(!parent.vertical);
@@ -79,11 +79,12 @@ export const getDirectiveForWorkspaceNode = (
             m.addModel(model);
             parent.replaceModel(node, m);
             m.addModel(node);
+            engine.normalize();
           }
         },
         {
           alignment: node.parent.vertical ? Alignment.RIGHT : Alignment.BOTTOM,
-          handleDrop: (model) => {
+          handleDrop: (model, engine) => {
             const parent = node.parent as WorkspaceNodeModel;
             const m = generateParentNode?.() || new WorkspaceNodeModel();
             m.setVertical(!parent.vertical);
@@ -91,6 +92,7 @@ export const getDirectiveForWorkspaceNode = (
             m.addModel(model);
             parent.replaceModel(node, m);
             m.addModel(node, 0);
+            engine.normalize();
           }
         }
       ]
