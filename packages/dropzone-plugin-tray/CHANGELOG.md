@@ -1,5 +1,16 @@
 # @projectstorm/react-workspaces-dropzone-plugin-tray
 
+## 2.2.0
+
+### Minor Changes
+
+- 710460c: Added more theme capability wrt the dropzones. There are more options, and themes are now sent to the transform buttons
+
+### Patch Changes
+
+- Updated dependencies [710460c]
+  - @projectstorm/react-workspaces-behavior-panel-dropzone@2.3.0
+
 ## 2.1.1
 
 ### Patch Changes
