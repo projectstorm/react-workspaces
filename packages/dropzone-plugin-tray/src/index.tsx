@@ -14,8 +14,8 @@ library.add(faPlus, faTableList);
 
 export const AppendToTrayZone: TransformZone = {
   key: 'ADD_ITEM',
-  render: ({ entered }) => {
-    return <DropZoneLayerButtonWidget entered={entered} text="Add item" icon="plus" />;
+  render: ({ entered, theme }) => {
+    return <DropZoneLayerButtonWidget theme={theme} entered={entered} text="Add item" icon="plus" />;
   },
   transform: ({ model, zoneModel, engine }) => {
     (zoneModel.parent as WorkspaceTrayModel).addModel(model);
@@ -26,8 +26,8 @@ export const AppendToTrayZone: TransformZone = {
 export const ConvertToTrayZone = (trayFactory: WorkspaceTrayFactory): TransformZone => {
   return {
     key: 'MAKE_TRAY',
-    render: ({ entered }) => {
-      return <DropZoneLayerButtonWidget entered={entered} text="Tray" icon="table-list" />;
+    render: ({ entered, theme }) => {
+      return <DropZoneLayerButtonWidget theme={theme} entered={entered} text="Tray" icon="table-list" />;
     },
     transform: ({ model, zoneModel, engine }) => {
       const trayModel = trayFactory.generateModel();

@@ -4,7 +4,7 @@ import { DropzoneDividerTheme } from './DropzoneDividerWidget';
 
 export interface DraggingItemDividerBehaviorOptions {
   engine: WorkspaceEngine;
-  theme?: DropzoneDividerTheme;
+  theme?: () => DropzoneDividerTheme;
 }
 
 export const draggingItemDividerBehavior = (options: DraggingItemDividerBehaviorOptions) => {
