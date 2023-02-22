@@ -49,7 +49,7 @@ export interface DropZoneLayerPanelTheme {
 
 export const DefaultDropZoneLayerPanelTheme: DropZoneLayerPanelTheme = {
   border: 2,
-  blur: 5,
+  blur: 0,
   borderColor: 'transparent',
   borderColorEntered: '#0096ff',
   background: 'transparent',
@@ -133,7 +133,7 @@ namespace S {
     border: solid ${(p) => p.theme.border}px ${(p) => (p.entered ? p.theme.borderColorEntered : p.theme.borderColor)};
     transition: border 0.5s, background 0.5s;
     pointer-events: all;
-    backdrop-filter: blur(${(p) => p.theme.blur}px);
+    ${(p) => (p.theme.blur ? ` backdrop-filter: blur(${p.theme.blur}px)` : ``)};
   `;
 
   export const Debug = styled.span`
