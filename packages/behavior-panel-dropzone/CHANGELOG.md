@@ -1,5 +1,11 @@
 # @projectstorm/react-workspaces-behavior-panel-dropzone
 
+## 2.3.0
+
+### Minor Changes
+
+- 710460c: Added more theme capability wrt the dropzones. There are more options, and themes are now sent to the transform buttons
+
 ## 2.2.1
 
 ### Patch Changes
