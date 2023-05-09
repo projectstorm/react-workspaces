@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as _ from 'lodash';
 import { WorkspaceModelFactory } from './WorkspaceModelFactory';
 import { WorkspaceModel } from '../core-models/WorkspaceModel';
 import { WorkspaceEngineInterface } from './WorkspaceEngineInterface';
@@ -61,7 +62,7 @@ export class WorkspaceEngine extends BaseObserver<WorkspaceEngineListener> imple
         this.invalidateLayout();
       },
       dimensionsInvalidated: () => {
-        this.invalidateDimensions();
+        this.invalidateDimensionsDebounced();
       }
     });
     this.rootModel = model;
@@ -76,6 +77,10 @@ export class WorkspaceEngine extends BaseObserver<WorkspaceEngineListener> imple
   invalidateLayout() {
     this.iterateListeners((cb) => cb.layoutInvalidated?.());
   }
+
+  invalidateDimensionsDebounced = _.debounce(() => {
+    this.invalidateDimensions();
+  }, 200);
 
   invalidateDimensions() {
     this.rootModel

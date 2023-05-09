@@ -1,7 +1,7 @@
 import { BaseListener, BaseObserver } from '../BaseObserver';
 
 export interface SizeListener extends BaseListener {
-  updated: () => any;
+  updated: (event: { prev: ISize }) => any;
 }
 
 export interface ISize {
@@ -53,6 +53,10 @@ export class Size extends BaseObserver<SizeListener> implements ISize {
 
   update(size: Partial<ISize>) {
     let updated = false;
+    let old: ISize = {
+      width: this._width,
+      height: this._height
+    };
     if (size.width != null && size.width !== this.width) {
       this._width = size.width;
       updated = true;
@@ -62,7 +66,11 @@ export class Size extends BaseObserver<SizeListener> implements ISize {
       updated = true;
     }
     if (updated) {
-      this.iterateListeners((cb) => cb.updated?.());
+      this.iterateListeners((cb) =>
+        cb.updated?.({
+          prev: old
+        })
+      );
     }
   }
 }

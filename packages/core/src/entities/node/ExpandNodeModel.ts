@@ -13,6 +13,10 @@ export interface ExpandNodeModelSerialized extends WorkspaceNodeModelSerialized 
 /**
  * This is a smarter version of the standard Node model which can work with
  * panels that expand, and treats them like standard panels, allowing them to resize
+ *
+ * The magic happens in the getPanelDirective() method, which tells child to behave slightly differently.
+ * This means for example, we can cause the last panel in a set to expand, even if none of the children actually
+ * want to expand (expandHorizontal/Vertical == false)
  */
 export class ExpandNodeModel<
   S extends ExpandNodeModelSerialized = ExpandNodeModelSerialized
@@ -104,11 +108,11 @@ export class ExpandNodeModel<
 
   getResizeDivisions(): ResizeDivision[] {
     let divs: ResizeDivision[] = [];
-    for (let i = 1; i < this.r_divisons.length - 1; i++) {
+    for (let i = 1; i < this.r_divisions.length - 1; i++) {
       divs.push({
         before: this.children[i - 1],
         after: this.children[i],
-        dimensions: this.r_divisons[i],
+        dimensions: this.r_divisions[i],
         vertical: !this.vertical
       });
     }

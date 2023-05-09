@@ -8,6 +8,7 @@ import { WorkspaceModel } from '../../core-models/WorkspaceModel';
 import { useModelElement } from '../../widgets/hooks/useModelElement';
 import { DirectionalLayoutWidget } from '../../widgets/layouts/DirectionalLayoutWidget';
 import { DimensionContainer } from '../../core/dimensions/DimensionContainer';
+import { useEffect } from 'react';
 
 export interface WorkspaceNodeWidgetProps {
   engine: WorkspaceEngine;
@@ -22,11 +23,22 @@ export const WorkspaceNodeWidget: React.FC<WorkspaceNodeWidgetProps> = (props) =
     engine: props.engine,
     model: props.model
   });
+  useEffect(() => {
+    return props.model.r_dimensions.registerListener({
+      updated: () => {
+        if (props.model.vertical) {
+          props.model.setOverConstrained(ref.current.scrollHeight > props.model.r_dimensions.size.height);
+        } else {
+          props.model.setOverConstrained(ref.current.scrollWidth > props.model.r_dimensions.size.width);
+        }
+      }
+    });
+  }, []);
   return (
     <S.DirectionalLayout
       forwardRef={ref}
       dimensionContainerForDivider={(index: number) => {
-        return props.model.r_divisons[index];
+        return props.model.r_divisions[index];
       }}
       getChildSizeDirective={(model) => {
         return props.model.getPanelDirective(model);

@@ -110,7 +110,7 @@ export const DebugLayerWidget: React.FC<DebugLayerWidgetProps> = (props) => {
         ? props.model
             .flatten()
             .filter((p) => p instanceof WorkspaceNodeModel)
-            .flatMap((m: WorkspaceNodeModel) => m.r_divisons)
+            .flatMap((m: WorkspaceNodeModel) => m.r_divisions)
             .map((m) => {
               return <S.Outline dimension={m} key={m.id} />;
             })

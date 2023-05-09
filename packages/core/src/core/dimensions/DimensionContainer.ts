@@ -39,9 +39,9 @@ export class DimensionContainer extends BaseObserver<DimensionContainerListener>
     });
   }
 
-  protected fireUpdated = _.debounce(() => {
+  protected fireUpdated = () => {
     this.iterateListeners((cb) => cb.updated?.());
-  }, 0);
+  };
 
   get dimensions(): IDimension {
     return {
