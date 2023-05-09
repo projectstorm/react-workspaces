@@ -13,12 +13,12 @@
   "dependencies": {
     "@projectstorm/react-workspaces-core": "workspace:*",
     "@projectstorm/react-workspaces-model-floating-window": "workspace:*",
-    "@emotion/styled": "^11.10.5",
+    "@emotion/styled": "^11.11.0",
     "react": "^18.2.0",
     "lodash": "^4.17.21"
   },
   "devDependencies": {
-    "@types/react": "^18.0.27",
-    "@types/lodash": "^4.14.191"
+    "@types/react": "^18.2.6",
+    "@types/lodash": "^4.14.194"
   }
 }
