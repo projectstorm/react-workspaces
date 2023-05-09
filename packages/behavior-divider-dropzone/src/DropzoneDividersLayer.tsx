@@ -41,7 +41,7 @@ export const DropzoneDividersLayerWidget: React.FC<DropzoneDividersLayerWidgetPr
         .flatten()
         .filter((p) => p instanceof WorkspaceNodeModel)
         .flatMap((m: WorkspaceNodeModel) => {
-          return m.r_divisons.map((division, index) => {
+          return m.r_divisions.map((division, index) => {
             return (
               <DropzoneDividerWidget
                 theme={props.theme?.()}

@@ -7,6 +7,17 @@ import { WorkspaceEngine } from '@projectstorm/react-workspaces-core';
 
 export const createComplexModel = (engine: WorkspaceEngine) => {
   let model = new RootWorkspaceModel(engine);
+  model.registerListener({
+    overConstrainedChanged: () => {
+      console.log(`overconstrained: ${model.r_overConstrained ? 'true' : 'false'}`);
+
+      // when we overconstrained, we can use the directive below to cause the children layouts on the root model
+      // to be recomputed (this method exists on all ExpandNodeModels )
+      if (model.r_overConstrained) {
+        model.recomputeInitialSizes();
+      }
+    }
+  });
   model.setHorizontal(true);
 
   const trayFactory = engine.getFactory<WorkspaceTrayFactory>(WorkspaceTrayModel.NAME);

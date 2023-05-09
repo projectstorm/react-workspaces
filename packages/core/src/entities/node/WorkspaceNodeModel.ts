@@ -18,6 +18,7 @@ export interface ResizeDivision {
 
 export interface WorkspaceNodeModelListener extends WorkspaceCollectionModelListener {
   divisionsRecomputed: () => any;
+  overConstrainedChanged: () => any;
 }
 
 export interface WorkspaceNodeModelSerialized extends SerializedCollectionModel {
@@ -31,12 +32,24 @@ export class WorkspaceNodeModel<
   static NAME = 'srw-node';
 
   vertical: boolean;
-  r_divisons: DimensionContainer[];
+  r_divisions: DimensionContainer[];
+  r_overConstrained: boolean;
 
   constructor(type: string = WorkspaceNodeModel.NAME) {
     super(type);
     this.vertical = true;
-    this.r_divisons = [];
+    this.r_divisions = [];
+    this.r_overConstrained = false;
+  }
+
+  // !----------- additional renders ---------
+
+  setOverConstrained(overConstrainedChanged: boolean) {
+    if (this.r_overConstrained === overConstrainedChanged) {
+      return;
+    }
+    this.r_overConstrained = overConstrainedChanged;
+    this.iterateListeners((cb) => cb.overConstrainedChanged?.());
   }
 
   // !----------- serialize ---------
@@ -57,7 +70,7 @@ export class WorkspaceNodeModel<
 
   getResizeDivisions(): ResizeDivision[] {
     let divs: ResizeDivision[] = [];
-    for (let i = 1; i < this.r_divisons.length - 1; i++) {
+    for (let i = 1; i < this.r_divisions.length - 1; i++) {
       if (this.vertical) {
         if (this.children[i - 1].expandVertical && this.children[i].expandVertical) {
           continue;
@@ -71,7 +84,7 @@ export class WorkspaceNodeModel<
       divs.push({
         before: this.children[i - 1],
         after: this.children[i],
-        dimensions: this.r_divisons[i],
+        dimensions: this.r_divisions[i],
         vertical: !this.vertical
       });
     }
@@ -86,11 +99,11 @@ export class WorkspaceNodeModel<
   }
 
   getAllRenderDimensions(): DimensionContainer[] {
-    return super.getAllRenderDimensions().concat(Array.from(this.r_divisons.values()));
+    return super.getAllRenderDimensions().concat(Array.from(this.r_divisions.values()));
   }
 
   recomputeDivisions() {
-    this.r_divisons = this.children
+    this.r_divisions = this.children
       .map((c) => {
         return new DimensionContainer();
       })
