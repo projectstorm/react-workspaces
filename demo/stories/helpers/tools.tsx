@@ -134,7 +134,7 @@ export const CompInternal: React.FC<{ model: WorkspaceNodeModel; engine: Workspa
         styles={css`
           html,
           body,
-          #root {
+          #storybook-root {
             height: 100%;
           }
         `}

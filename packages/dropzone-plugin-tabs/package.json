@@ -15,10 +15,10 @@
     "@projectstorm/react-workspaces-core": "workspace:*",
     "@projectstorm/react-workspaces-model-tabs": "workspace:*",
     "@projectstorm/react-workspaces-behavior-panel-dropzone": "workspace:*",
-    "@fortawesome/free-solid-svg-icons": "^6.2.1",
-    "@fortawesome/fontawesome-svg-core": "^6.2.1"
+    "@fortawesome/free-solid-svg-icons": "^6.4.0",
+    "@fortawesome/fontawesome-svg-core": "^6.4.0"
   },
   "devDependencies": {
-    "@types/react": "^18.0.27"
+    "@types/react": "^18.2.6"
   }
 }

@@ -1,5 +1,5 @@
 module.exports = {
-  stories: ['../stories/*.stories.tsx'],
+  stories: ['../dist/stories/*.stories.js'],
   webpackFinal: async (config, { configType }) => {
     return {
       ...config,
@@ -17,12 +17,16 @@ module.exports = {
       }
     };
   },
-  core: {
-    builder: 'webpack5'
-  },
   addons: [
     {
       name: '@storybook/addon-essentials'
     }
-  ]
+  ],
+  framework: {
+    name: '@storybook/react-webpack5',
+    options: {}
+  },
+  docs: {
+    autodocs: false
+  }
 };

@@ -12,19 +12,19 @@
   },
   "dependencies": {
     "react": "^18.2.0",
-    "@emotion/styled": "^11.10.5",
-    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.11.0",
+    "@emotion/react": "^11.11.0",
     "lodash": "^4.17.21",
     "@projectstorm/react-workspaces-core": "workspace:*",
     "@projectstorm/react-workspaces-model-tabs": "workspace:*",
     "@projectstorm/react-workspaces-model-tray": "workspace:*",
     "@projectstorm/react-workspaces-model-floating-window": "workspace:*",
-    "@fortawesome/free-solid-svg-icons": "^6.2.1",
+    "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
-    "@fortawesome/fontawesome-svg-core": "^6.2.1"
+    "@fortawesome/fontawesome-svg-core": "^6.4.0"
   },
   "devDependencies": {
-    "@types/react": "^18.0.27",
-    "@types/lodash": "^4.14.191"
+    "@types/react": "^18.2.6",
+    "@types/lodash": "^4.14.194"
   }
 }
