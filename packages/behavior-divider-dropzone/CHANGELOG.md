@@ -1,5 +1,18 @@
 # @projectstorm/react-workspaces-behavior-divider-dropzone
 
+## 2.4.0
+
+### Minor Changes
+
+- 515640e: added r_overConstrained and fixed spelling mistake for internal r_dimensions field
+
+### Patch Changes
+
+- c7a4537: upgrade dependencies
+- Updated dependencies [515640e]
+- Updated dependencies [c7a4537]
+  - @projectstorm/react-workspaces-core@2.6.0
+
 ## 2.3.0
 
 ### Minor Changes
