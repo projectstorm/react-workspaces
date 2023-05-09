@@ -3,8 +3,8 @@
   "private": "true",
   "version": null,
   "scripts": {
-    "storybook": "storybook dev",
-    "storybook:build": "./node_modules/.bin/build-storybook -c .storybook -o .out"
+    "start": "storybook dev",
+    "storybook:build": "storybook build -o .out"
   },
   "dependencies": {
     "@emotion/styled": "^11.11.0",
