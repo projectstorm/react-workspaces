@@ -9,12 +9,13 @@ import { useModelElement } from '../../widgets/hooks/useModelElement';
 import { DirectionalLayoutWidget } from '../../widgets/layouts/DirectionalLayoutWidget';
 import { DimensionContainer } from '../../core/dimensions/DimensionContainer';
 import { useEffect } from 'react';
+import { ResizeDimensionContainer } from './ResizeDimensionContainer';
 
 export interface WorkspaceNodeWidgetProps {
   engine: WorkspaceEngine;
   factory: WorkspaceNodeFactory;
   model: WorkspaceNodeModel;
-  generateDivider?: (divider: DimensionContainer) => JSX.Element;
+  generateDivider?: (divider: ResizeDimensionContainer) => JSX.Element;
   className?: any;
 }
 

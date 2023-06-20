@@ -1,5 +1,4 @@
 import { v4 } from 'uuid';
-import * as _ from 'lodash';
 import { ISize, Size } from './Size';
 import { IPosition, Position } from './Position';
 import { BaseListener, BaseObserver } from '../BaseObserver';
@@ -17,7 +16,9 @@ export interface DimensionContainerOptions {
   size?: Size;
 }
 
-export class DimensionContainer extends BaseObserver<DimensionContainerListener> {
+export class DimensionContainer<
+  L extends DimensionContainerListener = DimensionContainerListener
+> extends BaseObserver<L> {
   position: Position;
   size: Size;
   id: string;

@@ -135,7 +135,25 @@ export const ResizeDividerWidget: React.FC<ResizeDividerWidgetProps> = (props) =
 
   return (
     <S.DimensionTracker dimension={container}>
-      <S.Container ref={ref} vertical={vertical}></S.Container>
+      <S.Container
+        onMouseEnter={() => {
+          container.setHover(true);
+        }}
+        onMouseLeave={() => {
+          container.setHover(false);
+        }}
+        onMouseDown={() => {
+          let l;
+          l = () => {
+            container.setActive(false);
+            window.removeEventListener('mouseup', l);
+          };
+          window.addEventListener('mouseup', l);
+          container.setActive(true);
+        }}
+        ref={ref}
+        vertical={vertical}
+      ></S.Container>
     </S.DimensionTracker>
   );
 };

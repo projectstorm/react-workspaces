@@ -4,9 +4,9 @@ import * as _ from 'lodash';
 import { WorkspaceModel } from '../../core-models/WorkspaceModel';
 import { WorkspaceEngine } from '../../core/WorkspaceEngine';
 import styled from '@emotion/styled';
-import { DimensionContainer } from '../../core/dimensions/DimensionContainer';
 import { DividerWidget } from '../../widgets/primitives/DividerWidget';
 import { DirectionChildWidget, DirectionLayoutChildDirective } from './DirectionalChildWidget';
+import { ResizeDimensionContainer } from '../../entities/node/ResizeDimensionContainer';
 
 export interface DirectionalLayoutWidgetProps {
   vertical: boolean;
@@ -14,8 +14,8 @@ export interface DirectionalLayoutWidgetProps {
   data: WorkspaceModel[];
   getChildSizeDirective: (model: WorkspaceModel) => DirectionLayoutChildDirective;
   generateElement: (model: WorkspaceModel) => JSX.Element;
-  generateDivider?: (divider: DimensionContainer) => JSX.Element;
-  dimensionContainerForDivider: (index: number) => DimensionContainer;
+  generateDivider: (divider: ResizeDimensionContainer) => JSX.Element;
+  dimensionContainerForDivider: (index: number) => ResizeDimensionContainer;
   forwardRef: React.RefObject<HTMLDivElement>;
   className?: any;
 }
@@ -31,11 +31,18 @@ namespace S {
 
 export const DirectionalLayoutWidget: React.FC<DirectionalLayoutWidgetProps> = (props) => {
   const firstDivider = props.dimensionContainerForDivider(0);
-  const generateDivider = useCallback((dimension: DimensionContainer) => {
+  const generateDivider = useCallback((dimension: ResizeDimensionContainer) => {
     if (props.generateDivider) {
       return props.generateDivider(dimension);
     }
-    return <DividerWidget engine={props.engine} dimensionContainer={dimension} />;
+    return (
+      <DividerWidget
+        activeColor={'transparent'}
+        hoverColor={'transparent'}
+        engine={props.engine}
+        dimensionContainer={dimension}
+      />
+    );
   }, []);
   return (
     <S.Container ref={props.forwardRef} className={props.className} vertical={props.vertical}>
