@@ -1,5 +1,11 @@
 # @projectstorm/react-workspaces-core
 
+## 2.7.0
+
+### Minor Changes
+
+- a32d183: add support for divider hover and active colors, and fix overflow scroll issues with expanded tray widgets
+
 ## 2.6.0
 
 ### Minor Changes
