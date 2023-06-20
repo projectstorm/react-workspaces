@@ -1,5 +1,17 @@
 # @projectstorm/react-workspaces-model-tray
 
+## 2.5.0
+
+### Minor Changes
+
+- a32d183: add support for divider hover and active colors, and fix overflow scroll issues with expanded tray widgets
+
+### Patch Changes
+
+- Updated dependencies [a32d183]
+  - @projectstorm/react-workspaces-core@2.7.0
+  - @projectstorm/react-workspaces-model-floating-window@2.2.3
+
 ## 2.4.2
 
 ### Patch Changes

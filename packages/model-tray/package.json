@@ -1,6 +1,6 @@
 {
   "name": "@projectstorm/react-workspaces-model-tray",
-  "version": "2.4.2",
+  "version": "2.5.0",
   "main": "./dist/index.umd.js",
   "module": "./dist/index.jsx",
   "types": "./dist/@types/index.d.ts",
