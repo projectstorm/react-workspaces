@@ -38,11 +38,15 @@ export const DirectionChildWidget: React.FC<DirectionChildWidgetProps> = (props)
 
   const forceUpdate = useForceUpdate();
   useEffect(() => {
-    return props.model.size.registerListener({
+    const l1 = props.model.size.registerListener({
       updated: () => {
         forceUpdate();
       }
     });
+
+    return () => {
+      l1();
+    };
   }, []);
 
   return (

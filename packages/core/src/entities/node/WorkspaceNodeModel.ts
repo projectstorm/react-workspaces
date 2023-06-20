@@ -8,11 +8,12 @@ import { WorkspaceModel } from '../../core-models/WorkspaceModel';
 import { Alignment } from '../../core/tools';
 import { DimensionContainer } from '../../core/dimensions/DimensionContainer';
 import { DirectionLayoutChildDirective } from '../../widgets/layouts/DirectionalChildWidget';
+import { ResizeDimensionContainer } from './ResizeDimensionContainer';
 
 export interface ResizeDivision {
   before: WorkspaceModel;
   after: WorkspaceModel;
-  dimensions: DimensionContainer;
+  dimensions: ResizeDimensionContainer;
   vertical: boolean;
 }
 
@@ -32,7 +33,7 @@ export class WorkspaceNodeModel<
   static NAME = 'srw-node';
 
   vertical: boolean;
-  r_divisions: DimensionContainer[];
+  r_divisions: ResizeDimensionContainer[];
   r_overConstrained: boolean;
 
   constructor(type: string = WorkspaceNodeModel.NAME) {
@@ -105,9 +106,9 @@ export class WorkspaceNodeModel<
   recomputeDivisions() {
     this.r_divisions = this.children
       .map((c) => {
-        return new DimensionContainer();
+        return new ResizeDimensionContainer();
       })
-      .concat(new DimensionContainer());
+      .concat(new ResizeDimensionContainer());
     this.iterateListeners((cb) => cb.divisionsRecomputed?.());
   }
 
