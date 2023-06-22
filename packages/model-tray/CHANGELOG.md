@@ -1,5 +1,11 @@
 # @projectstorm/react-workspaces-model-tray
 
+## 2.5.1
+
+### Patch Changes
+
+- e96fb83: small min-width fix for trays
+
 ## 2.5.0
 
 ### Minor Changes
