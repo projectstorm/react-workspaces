@@ -21,14 +21,13 @@ export interface TrayWidgetProps {
 }
 
 namespace S {
-  export const Container = styled.div<{ expand: boolean; width: number }>`
+  export const Container = styled.div`
     display: flex;
     flex-direction: column;
     position: relative;
     height: 100%;
     width: 100%;
     min-height: 0;
-    min-width: 0;
   `;
 
   export const MicroLayout = styled(MicroLayoutWidget)`
@@ -50,6 +49,7 @@ namespace S {
   export const PanelContent = styled.div`
     display: flex;
     flex-grow: 1;
+    min-width: 0;
   `;
 }
 
@@ -105,9 +105,8 @@ export const TrayWidget: React.FC<TrayWidgetProps> = (props) => {
       }
     });
   }, []);
-  const expand = props.node.shouldExpand() && props.node.mode === WorkspaceTrayMode.NORMAL;
   return (
-    <S.Container width={props.node.size.width} className={props.className} expand={expand}>
+    <S.Container className={props.className}>
       {
         <DraggableWidget model={props.node} engine={props.engine}>
           {props.header}

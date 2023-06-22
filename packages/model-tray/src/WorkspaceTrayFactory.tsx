@@ -2,9 +2,9 @@ import { WorkspaceTrayModel } from './WorkspaceTrayModel';
 import * as React from 'react';
 import { TrayWidget } from './TrayWidget';
 import {
+  SubComponentModelFactory,
   WorkspaceModel,
   WorkspaceModelFactoryEvent,
-  WorkspaceNodeFactory,
   WorkspaceNodePanelRenderer
 } from '@projectstorm/react-workspaces-core';
 import { FloatingWindowFactory } from '@projectstorm/react-workspaces-model-floating-window';
@@ -35,7 +35,7 @@ export interface WorkspaceTrayFactoryOptions {
   installEngineLockListener?: boolean;
 }
 
-export class WorkspaceTrayFactory<T extends WorkspaceTrayModel = WorkspaceTrayModel> extends WorkspaceNodeFactory<
+export class WorkspaceTrayFactory<T extends WorkspaceTrayModel = WorkspaceTrayModel> extends SubComponentModelFactory<
   T,
   TrayModelPanelRenderer
 > {

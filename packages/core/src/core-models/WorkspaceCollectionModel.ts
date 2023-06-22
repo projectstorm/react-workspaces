@@ -105,8 +105,6 @@ export class WorkspaceCollectionModel<
     if (this.parent && this.parent instanceof WorkspaceCollectionModel) {
       if (this.children.length === 0) {
         this.parent.removeModel(this);
-      } else if (this.children.length === 1) {
-        this.parent.replaceModel(this, this.children[0]);
       }
     }
   }

@@ -43,6 +43,15 @@ export class WorkspaceNodeModel<
     this.r_overConstrained = false;
   }
 
+  normalize() {
+    super.normalize();
+    if (this.parent && this.parent instanceof WorkspaceCollectionModel) {
+      if (this.children.length === 1) {
+        this.parent.replaceModel(this, this.children[0]);
+      }
+    }
+  }
+
   // !----------- additional renders ---------
 
   setOverConstrained(overConstrainedChanged: boolean) {
