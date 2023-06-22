@@ -1,5 +1,14 @@
 # @projectstorm/react-workspaces-model-tray
 
+## 2.5.2
+
+### Patch Changes
+
+- a4afcbe: more fixes to sizing and trays
+- Updated dependencies [a4afcbe]
+  - @projectstorm/react-workspaces-core@2.7.1
+  - @projectstorm/react-workspaces-model-floating-window@2.2.4
+
 ## 2.5.1
 
 ### Patch Changes

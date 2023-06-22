@@ -1,5 +1,11 @@
 # @projectstorm/react-workspaces-core
 
+## 2.7.1
+
+### Patch Changes
+
+- a4afcbe: more fixes to sizing and trays
+
 ## 2.7.0
 
 ### Minor Changes

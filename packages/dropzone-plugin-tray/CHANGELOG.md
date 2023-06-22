@@ -1,5 +1,15 @@
 # @projectstorm/react-workspaces-dropzone-plugin-tray
 
+## 2.2.4
+
+### Patch Changes
+
+- a4afcbe: more fixes to sizing and trays
+- Updated dependencies [a4afcbe]
+  - @projectstorm/react-workspaces-model-tray@2.5.2
+  - @projectstorm/react-workspaces-core@2.7.1
+  - @projectstorm/react-workspaces-behavior-panel-dropzone@2.3.3
+
 ## 2.2.3
 
 ### Patch Changes

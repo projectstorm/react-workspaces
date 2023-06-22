@@ -1,5 +1,14 @@
 # @projectstorm/react-workspaces-dropzone-plugin-tabs
 
+## 2.2.3
+
+### Patch Changes
+
+- Updated dependencies [a4afcbe]
+  - @projectstorm/react-workspaces-core@2.7.1
+  - @projectstorm/react-workspaces-behavior-panel-dropzone@2.3.3
+  - @projectstorm/react-workspaces-model-tabs@2.2.4
+
 ## 2.2.2
 
 ### Patch Changes
