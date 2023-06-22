@@ -1,8 +1,8 @@
 import {
   Alignment,
+  WorkspaceCollectionModel,
   WorkspaceEngine,
   WorkspaceModel,
-  WorkspaceNodeModel,
   WorkspaceNodeModelListener,
   WorkspaceNodeModelSerialized
 } from '@projectstorm/react-workspaces-core';
@@ -39,7 +39,10 @@ export interface SerializedWorkspaceTrayModel extends WorkspaceNodeModelSerializ
   sizeExpanded: number;
 }
 
-export class WorkspaceTrayModel extends WorkspaceNodeModel<SerializedWorkspaceTrayModel, WorkspaceTrayModelListener> {
+export class WorkspaceTrayModel extends WorkspaceCollectionModel<
+  SerializedWorkspaceTrayModel,
+  WorkspaceTrayModelListener
+> {
   mode: WorkspaceTrayMode;
   iconBarPosition: TrayIconPosition;
   selectedModel: WorkspaceModel;
