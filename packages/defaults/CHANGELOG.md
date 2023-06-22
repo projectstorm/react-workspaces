@@ -1,5 +1,12 @@
 # @projectstorm/react-workspaces-defaults
 
+## 2.3.4
+
+### Patch Changes
+
+- Updated dependencies [e96fb83]
+  - @projectstorm/react-workspaces-model-tray@2.5.1
+
 ## 2.3.3
 
 ### Patch Changes
