@@ -1,5 +1,11 @@
 # @projectstorm/react-workspaces-model-tabs
 
+## 2.3.0
+
+### Minor Changes
+
+- 9acdc10: collections dragged into a tab group are now exploded into their individual models each represented as a tab instead.
+
 ## 2.2.4
 
 ### Patch Changes
