@@ -5,7 +5,8 @@ import {
   DraggableWidget,
   SmartOrderingWidget,
   useForceUpdate,
-  useModelElement, WorkspaceCollectionModel,
+  useModelElement,
+  WorkspaceCollectionModel,
   WorkspaceEngine,
   WorkspaceModel
 } from '@projectstorm/react-workspaces-core';
@@ -102,9 +103,13 @@ export const TabGroupWidget: React.FC<TabGroupWidgetProps> = (props) => {
           content: (
             <S.TabGroup
               dropped={({ model, index }) => {
-                model.flatten().reverse().filter(m => !(m instanceof WorkspaceCollectionModel)).forEach(m => {
-                  props.model.addModel(m, index);
-                })
+                model
+                  .flatten()
+                  .reverse()
+                  .filter((m) => !(m instanceof WorkspaceCollectionModel))
+                  .forEach((m) => {
+                    props.model.addModel(m, index);
+                  });
                 props.engine.normalize();
               }}
               engine={props.engine}
