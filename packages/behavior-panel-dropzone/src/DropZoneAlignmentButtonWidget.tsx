@@ -100,7 +100,10 @@ namespace S {
   }>`
     border-radius: 2px;
     background: ${(p) => (p.hover ? p.theme.backgroundEntered : p.theme.background)};
-    transition: background 0.3s, width ease-out 0.3s, height ease-out 0.3s;
+    transition:
+      background 0.3s,
+      width ease-out 0.3s,
+      height ease-out 0.3s;
     transition-delay: 0.1s;
     pointer-events: none;
 

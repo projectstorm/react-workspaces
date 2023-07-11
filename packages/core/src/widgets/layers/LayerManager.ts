@@ -59,9 +59,20 @@ export interface LayerManagerListener extends BaseListener {
 export class LayerManager extends BaseObserver<LayerManagerListener> {
   private _layers: Set<Layer>;
 
+  initialZIndex: number;
+
   constructor() {
     super();
     this._layers = new Set();
+    this.initialZIndex = 1;
+  }
+
+  setInitialZIndex(index: number) {
+    if (index < 1) {
+      throw new Error('Index must be > 0');
+    }
+    this.initialZIndex = index;
+    this.fireUpdated();
   }
 
   get layers() {

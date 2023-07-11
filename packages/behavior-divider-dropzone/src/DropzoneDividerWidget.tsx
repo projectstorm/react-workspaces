@@ -84,7 +84,13 @@ namespace S {
     position: absolute;
     background: ${(p) => (p.enter ? p.colorEnter : p.color)};
     border-radius: 5px;
-    transition: background 0.3s, opacity 0.3s, left 0.3s, top 0.3s, bottom 0.3s, right 0.3s;
+    transition:
+      background 0.3s,
+      opacity 0.3s,
+      left 0.3s,
+      top 0.3s,
+      bottom 0.3s,
+      right 0.3s;
     transition-delay: 0.1s;
     opacity: ${(p) => (p.enter ? 1 : 0.1)};
     top: ${(p) => p.insetsVertical}px;

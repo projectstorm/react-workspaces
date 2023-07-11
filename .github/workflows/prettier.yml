@@ -17,7 +17,7 @@ jobs:
 
 
       - uses: actions/checkout@v2 # Check out the repository first.
-      - uses: actionsx/prettier@v2
+      - uses: actionsx/prettier@94c755de62c501c69236cda12f939d222142cd6d
         with:
           # prettier CLI arguments.
           args: --check --ignore-path .prettierignore --config .prettierrc '**/*.{ts,tsx,js,jsx}'

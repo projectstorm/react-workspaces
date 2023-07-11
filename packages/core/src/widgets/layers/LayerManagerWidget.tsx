@@ -51,7 +51,7 @@ export const LayerManagerWidget: React.FC<LayerManagerWidgetProps> = (props) => 
   return (
     <S.Container className={props.className}>
       {props.layerManager.layers.map((l, index) => {
-        return <LayerWidget {...props} layer={l} index={index} key={l.id} />;
+        return <LayerWidget {...props} layer={l} index={index + props.layerManager.initialZIndex} key={l.id} />;
       })}
     </S.Container>
   );
