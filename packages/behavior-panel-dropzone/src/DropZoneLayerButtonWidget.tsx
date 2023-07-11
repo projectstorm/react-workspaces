@@ -73,7 +73,9 @@ namespace S {
     border: solid 2px ${(p) => (p.entered ? p.theme.borderColorEntered : p.theme.borderColor)};
     box-sizing: border-box;
     background: ${(p) => (p.entered ? p.theme.backgroundEntered : p.theme.background)};
-    transition: border 0.3s, background 0.3s;
+    transition:
+      border 0.3s,
+      background 0.3s;
     pointer-events: all;
     width: 60px;
     height: 60px;

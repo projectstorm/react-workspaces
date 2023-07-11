@@ -11,7 +11,10 @@ export class RootWorkspaceModel extends ExpandNodeModel<SerializedRootWorkspaceM
   floatingWindows: Set<FloatingWindowModel>;
   layerListener: () => any;
 
-  constructor(public engine: WorkspaceEngine, public debug: boolean = false) {
+  constructor(
+    public engine: WorkspaceEngine,
+    public debug: boolean = false
+  ) {
     super();
     this.floatingWindows = new Set<FloatingWindowModel>();
 

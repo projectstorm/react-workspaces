@@ -67,9 +67,9 @@ export class LayerManager extends BaseObserver<LayerManagerListener> {
     this.initialZIndex = 1;
   }
 
-  setInitialZIndex(index: number){
-    if(index < 1){
-      throw new Error("Index must be > 0")
+  setInitialZIndex(index: number) {
+    if (index < 1) {
+      throw new Error('Index must be > 0');
     }
     this.initialZIndex = index;
     this.fireUpdated();

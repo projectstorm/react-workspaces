@@ -131,7 +131,9 @@ namespace S {
     box-sizing: border-box;
     background: ${(p) => (p.entered ? p.theme.backgroundEntered : p.theme.background)};
     border: solid ${(p) => p.theme.border}px ${(p) => (p.entered ? p.theme.borderColorEntered : p.theme.borderColor)};
-    transition: border 0.5s, background 0.5s;
+    transition:
+      border 0.5s,
+      background 0.5s;
     pointer-events: all;
     ${(p) => (p.theme.blur ? ` backdrop-filter: blur(${p.theme.blur}px)` : ``)};
   `;
