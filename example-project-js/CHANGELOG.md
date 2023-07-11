@@ -1,5 +1,14 @@
 # @projectstorm/react-workspaces-demo
 
+## 2.1.5
+
+### Patch Changes
+
+- 2362161: Added the ability to set the initial zIndex of the layer manager
+- Updated dependencies [2362161]
+  - @projectstorm/react-workspaces-core@2.8.0
+  - @projectstorm/react-workspaces-behavior-resize@2.3.2
+
 ## 2.1.4
 
 ### Patch Changes
