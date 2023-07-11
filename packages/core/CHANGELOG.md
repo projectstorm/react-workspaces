@@ -1,5 +1,11 @@
 # @projectstorm/react-workspaces-core
 
+## 2.8.0
+
+### Minor Changes
+
+- 2362161: Added the ability to set the initial zIndex of the layer manager
+
 ## 2.7.1
 
 ### Patch Changes

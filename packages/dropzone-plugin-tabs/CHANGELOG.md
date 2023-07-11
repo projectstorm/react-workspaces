@@ -1,5 +1,15 @@
 # @projectstorm/react-workspaces-dropzone-plugin-tabs
 
+## 2.2.5
+
+### Patch Changes
+
+- 2362161: Added the ability to set the initial zIndex of the layer manager
+- Updated dependencies [2362161]
+  - @projectstorm/react-workspaces-core@2.8.0
+  - @projectstorm/react-workspaces-behavior-panel-dropzone@2.3.4
+  - @projectstorm/react-workspaces-model-tabs@2.3.1
+
 ## 2.2.4
 
 ### Patch Changes

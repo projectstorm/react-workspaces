@@ -1,5 +1,16 @@
 # @projectstorm/react-workspaces-defaults
 
+## 2.3.7
+
+### Patch Changes
+
+- 2362161: Added the ability to set the initial zIndex of the layer manager
+- Updated dependencies [2362161]
+  - @projectstorm/react-workspaces-core@2.8.0
+  - @projectstorm/react-workspaces-model-floating-window@2.2.5
+  - @projectstorm/react-workspaces-model-tabs@2.3.1
+  - @projectstorm/react-workspaces-model-tray@2.5.3
+
 ## 2.3.6
 
 ### Patch Changes
