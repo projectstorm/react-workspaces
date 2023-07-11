@@ -13,7 +13,7 @@
   "dependencies": {
     "react": "^18.2.0",
     "@emotion/styled": "^11.11.0",
-    "@emotion/react": "^11.11.0",
+    "@emotion/react": "^11.11.1",
     "lodash": "^4.17.21",
     "@projectstorm/react-workspaces-core": "workspace:*",
     "@projectstorm/react-workspaces-model-tabs": "workspace:*",
@@ -24,7 +24,7 @@
     "@fortawesome/fontawesome-svg-core": "^6.4.0"
   },
   "devDependencies": {
-    "@types/react": "^18.2.6",
-    "@types/lodash": "^4.14.194"
+    "@types/react": "^18.2.14",
+    "@types/lodash": "^4.14.195"
   }
 }

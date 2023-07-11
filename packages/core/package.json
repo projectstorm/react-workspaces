@@ -14,15 +14,15 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "@emotion/styled": "^11.11.0",
-    "@emotion/react": "^11.11.0",
+    "@emotion/react": "^11.11.1",
     "lodash": "^4.17.21",
     "color": "^4.2.3",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
-    "@types/react": "^18.2.6",
-    "@types/react-dom": "^18.2.4",
-    "@types/lodash": "^4.14.194",
-    "@types/uuid": "^9.0.1"
+    "@types/react": "^18.2.14",
+    "@types/react-dom": "^18.2.6",
+    "@types/lodash": "^4.14.195",
+    "@types/uuid": "^9.0.2"
   }
 }

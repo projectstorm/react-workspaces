@@ -18,7 +18,7 @@
     "lodash": "^4.17.21"
   },
   "devDependencies": {
-    "@types/react": "^18.2.6",
-    "@types/lodash": "^4.14.194"
+    "@types/react": "^18.2.14",
+    "@types/lodash": "^4.14.195"
   }
 }
