@@ -1,5 +1,12 @@
 # @projectstorm/react-workspaces-defaults
 
+## 2.3.8
+
+### Patch Changes
+
+- Updated dependencies [43ca635]
+  - @projectstorm/react-workspaces-model-tabs@2.3.2
+
 ## 2.3.7
 
 ### Patch Changes

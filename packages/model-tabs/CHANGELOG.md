@@ -1,5 +1,11 @@
 # @projectstorm/react-workspaces-model-tabs
 
+## 2.3.2
+
+### Patch Changes
+
+- 43ca635: Tabs were not being serialized and deserialized
+
 ## 2.3.1
 
 ### Patch Changes
