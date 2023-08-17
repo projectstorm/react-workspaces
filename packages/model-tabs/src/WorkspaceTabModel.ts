@@ -2,7 +2,8 @@ import {
   SerializedCollectionModel,
   WorkspaceCollectionModel,
   WorkspaceCollectionModelListener,
-  WorkspaceModel
+  WorkspaceModel,
+  WorkspaceEngine
 } from '@projectstorm/react-workspaces-core';
 import * as _ from 'lodash';
 
@@ -25,6 +26,24 @@ export class WorkspaceTabModel extends WorkspaceCollectionModel<
   constructor() {
     super(WorkspaceTabModel.NAME);
     this.selected = null;
+  }
+
+  fromArray(payload: WorkspaceTabModelSerialized, engine: WorkspaceEngine) {
+    super.fromArray(payload, engine);
+    if (payload.selected && this.children.find((c) => c.id === payload.selected)) {
+      const found = this.children.find((c) => c.id === payload.selected);
+      if (!found) {
+        return;
+      }
+      this.setSelected(found);
+    }
+  }
+
+  toArray(): WorkspaceTabModelSerialized {
+    return {
+      ...super.toArray(),
+      selected: this.selected
+    };
   }
 
   addModel(model: WorkspaceModel, position: number = null): this {
