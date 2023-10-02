@@ -43,12 +43,28 @@ export class Size extends BaseObserver<SizeListener> implements ISize {
     });
   }
 
+  get value() {
+    return {
+      width: this._width,
+      height: this._height
+    };
+  }
+
   isPortrait() {
     return this.height > this.width;
   }
 
   getVolume() {
     return this.width * this.height;
+  }
+
+  trackSize(size: Size) {
+    this.update(size.value);
+    return size.registerListener({
+      updated: () => {
+        this.update(size.value);
+      }
+    });
   }
 
   update(size: Partial<ISize>) {
