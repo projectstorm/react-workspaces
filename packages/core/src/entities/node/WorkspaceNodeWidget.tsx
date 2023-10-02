@@ -7,7 +7,6 @@ import { DraggableWidget } from '../../widgets/primitives/DraggableWidget';
 import { WorkspaceModel } from '../../core-models/WorkspaceModel';
 import { useModelElement } from '../../widgets/hooks/useModelElement';
 import { DirectionalLayoutWidget } from '../../widgets/layouts/DirectionalLayoutWidget';
-import { DimensionContainer } from '../../core/dimensions/DimensionContainer';
 import { useEffect } from 'react';
 import { ResizeDimensionContainer } from './ResizeDimensionContainer';
 

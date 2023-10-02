@@ -20,12 +20,14 @@ export class WorkspaceTabModel extends WorkspaceCollectionModel<
   WorkspaceTabModelListener
 > {
   protected selected: string;
+  private childListener: () => any;
 
   static NAME = 'tabs';
 
   constructor() {
     super(WorkspaceTabModel.NAME);
     this.selected = null;
+    this.childListener = null;
   }
 
   fromArray(payload: WorkspaceTabModelSerialized, engine: WorkspaceEngine) {
@@ -65,7 +67,13 @@ export class WorkspaceTabModel extends WorkspaceCollectionModel<
   }
 
   setSelected(model: WorkspaceModel): this {
+    this.childListener?.();
     this.selected = model.id;
+
+    if (model) {
+      this.childListener = this.minimumSize.trackSize(model.minimumSize);
+    }
+
     this.iterateListeners((cb) => cb.selectionChanged?.());
     return this;
   }

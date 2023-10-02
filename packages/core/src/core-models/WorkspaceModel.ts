@@ -22,6 +22,45 @@ export interface WorkspaceModelListener extends BaseListener {
   visibilityChanged?: () => any;
 }
 
+export class WorkspaceModelSize extends Size {
+  constructor(
+    protected min: Size,
+    protected max: Size
+  ) {
+    super();
+
+    this.min.registerListener({
+      updated: () => {
+        this.update(this.value);
+      }
+    });
+    this.max.registerListener({
+      updated: () => {
+        this.update(this.value);
+      }
+    });
+  }
+
+  update(size: Partial<ISize>) {
+    if (size.width != null) {
+      if (size.width < this.min.width) {
+        size.width = this.min.width;
+      } else if (this.max.width > 0 && size.width > this.max.width) {
+        size.width = this.max.width;
+      }
+    }
+
+    if (size.height != null) {
+      if (size.height < this.min.height) {
+        size.height = this.min.height;
+      } else if (this.max.height > 0 && size.width > this.max.height) {
+        size.height = this.max.height;
+      }
+    }
+    super.update(size);
+  }
+}
+
 export class WorkspaceModel<
   T extends SerializedModel = SerializedModel,
   L extends WorkspaceModelListener = WorkspaceModelListener
@@ -48,9 +87,9 @@ export class WorkspaceModel<
     this.parent = null;
     this._expandHorizontal = true;
     this._expandVertical = true;
-    this.size = new Size();
-    this.maximumSize = new Size();
     this.minimumSize = new Size();
+    this.maximumSize = new Size();
+    this.size = new WorkspaceModelSize(this.minimumSize, this.maximumSize);
     this.r_visible = false;
     this.r_dimensions = new DimensionContainer();
     this.r_dimensions.registerListener({
@@ -63,19 +102,8 @@ export class WorkspaceModel<
         }
       }
     });
-    this.minimumSize.registerListener({
-      updated: () => {
-        this.normalizeSize();
-      }
-    });
-    this.maximumSize.registerListener({
-      updated: () => {
-        this.normalizeSize();
-      }
-    });
     this.size.registerListener({
       updated: () => {
-        this.normalizeSize();
         this.invalidateDimensions();
       }
     });
@@ -117,22 +145,6 @@ export class WorkspaceModel<
         }
       } as Partial<L>);
     });
-  }
-
-  private normalizeSize() {
-    if (this.size.width < this.minimumSize.width) {
-      this.size.width = this.minimumSize.width;
-    }
-    if (this.size.height < this.minimumSize.height) {
-      this.size.height = this.minimumSize.height;
-    }
-
-    if (this.maximumSize.width > 0 && this.size.width > this.maximumSize.width) {
-      this.size.width = this.maximumSize.width;
-    }
-    if (this.maximumSize.height > 0 && this.size.height > this.maximumSize.height) {
-      this.size.height = this.maximumSize.height;
-    }
   }
 
   setWidth(width: number) {
