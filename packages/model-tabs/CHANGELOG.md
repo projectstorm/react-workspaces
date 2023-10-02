@@ -1,5 +1,14 @@
 # @projectstorm/react-workspaces-model-tabs
 
+## 2.3.3
+
+### Patch Changes
+
+- 0d850e7: - Tabs will track the min width and height of the selected child (and will change as it tracks)
+  - better min and max size checks before applying size changes
+- Updated dependencies [0d850e7]
+  - @projectstorm/react-workspaces-core@2.8.1
+
 ## 2.3.2
 
 ### Patch Changes

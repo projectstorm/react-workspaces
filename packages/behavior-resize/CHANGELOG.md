@@ -1,5 +1,12 @@
 # @projectstorm/react-workspaces-behavior-resize
 
+## 2.3.3
+
+### Patch Changes
+
+- Updated dependencies [0d850e7]
+  - @projectstorm/react-workspaces-core@2.8.1
+
 ## 2.3.2
 
 ### Patch Changes
