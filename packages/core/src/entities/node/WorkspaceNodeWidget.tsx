@@ -110,5 +110,6 @@ namespace S {
     display: flex;
     max-height: 100%;
     overflow: hidden;
+    flex-direction: column;
   `;
 }

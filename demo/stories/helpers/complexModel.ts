@@ -14,7 +14,7 @@ export const createComplexModel = (engine: WorkspaceEngine) => {
       // when we overconstrained, we can use the directive below to cause the children layouts on the root model
       // to be recomputed (this method exists on all ExpandNodeModels )
       if (model.r_overConstrained) {
-        model.recomputeInitialSizes();
+        // model.recomputeInitialSizes();
       }
     }
   });

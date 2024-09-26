@@ -10,13 +10,13 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           # Make sure the actual branch is checked out when running on pull requests
           ref: ${{ github.head_ref }}
 
 
-      - uses: actions/checkout@v2 # Check out the repository first.
+      - uses: actions/checkout@v4 # Check out the repository first.
       - uses: actionsx/prettier@94c755de62c501c69236cda12f939d222142cd6d
         with:
           # prettier CLI arguments.
