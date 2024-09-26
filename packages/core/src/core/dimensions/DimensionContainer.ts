@@ -40,6 +40,22 @@ export class DimensionContainer<
     });
   }
 
+  async waitForSize() {
+    if (this.size.getVolume() == 0) {
+      await new Promise<void>((resolve) => {
+        const l1 = this.registerListener({
+          updated: () => {
+            if (this.size.getVolume() > 0) {
+              l1();
+              resolve();
+            }
+          }
+        } as L);
+      });
+    }
+    return this.size;
+  }
+
   protected fireUpdated = () => {
     this.iterateListeners((cb) => cb.updated?.());
   };

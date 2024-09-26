@@ -11,18 +11,18 @@
     "build": "../../node_modules/.bin/webpack"
   },
   "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "@emotion/styled": "^11.11.0",
-    "@emotion/react": "^11.11.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "@emotion/styled": "^11.13.0",
+    "@emotion/react": "^11.13.3",
     "lodash": "^4.17.21",
     "color": "^4.2.3",
-    "uuid": "^9.0.0"
+    "uuid": "^10.0.0"
   },
   "devDependencies": {
-    "@types/react": "^18.2.14",
-    "@types/react-dom": "^18.2.6",
-    "@types/lodash": "^4.14.195",
-    "@types/uuid": "^9.0.2"
+    "@types/react": "^18.3.9",
+    "@types/react-dom": "^18.3.0",
+    "@types/lodash": "^4.17.9",
+    "@types/uuid": "^10.0.0"
   }
 }

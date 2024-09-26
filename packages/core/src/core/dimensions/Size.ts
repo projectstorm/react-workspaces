@@ -82,11 +82,10 @@ export class Size extends BaseObserver<SizeListener> implements ISize {
       updated = true;
     }
     if (updated) {
-      this.iterateListeners(
-        (cb) =>
-          cb.updated?.({
-            prev: old
-          })
+      this.iterateListeners((cb) =>
+        cb.updated?.({
+          prev: old
+        })
       );
     }
   }

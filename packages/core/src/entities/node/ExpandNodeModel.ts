@@ -1,6 +1,7 @@
 import { DirectionLayoutChildDirective } from '../../widgets/layouts/DirectionalChildWidget';
 import { ResizeDivision, WorkspaceNodeModel, WorkspaceNodeModelSerialized } from './WorkspaceNodeModel';
 import { WorkspaceModel } from '../../core-models/WorkspaceModel';
+import * as _ from 'lodash';
 import { WorkspaceEngine } from '../../core/WorkspaceEngine';
 
 export interface ExpandNodeModelChild {
@@ -21,89 +22,62 @@ export interface ExpandNodeModelSerialized extends WorkspaceNodeModelSerialized 
 export class ExpandNodeModel<
   S extends ExpandNodeModelSerialized = ExpandNodeModelSerialized
 > extends WorkspaceNodeModel<S> {
-  dimensions: Map<WorkspaceModel, ExpandNodeModelChild>;
-  rendered: Set<WorkspaceModel>;
-  queuedForInitialSizeCheck: Set<WorkspaceModel>;
-  private allowSizeRecomputation: boolean;
+  busy: boolean;
 
   constructor() {
     super();
-    this.dimensions = new Map();
-    this.rendered = new Set();
-    this.queuedForInitialSizeCheck = new Set();
-    this.allowSizeRecomputation = true;
-  }
-
-  recomputeInitialSizes() {
-    this.rendered.clear();
-    this.children.forEach((model) => {
-      if (this.queuedForInitialSizeCheck.has(model)) {
-        return;
-      }
-      this.queuedForInitialSizeCheck.add(model);
-      const l1 = model.r_dimensions.registerListener({
-        updated: () => {
-          l1();
-          this.queuedForInitialSizeCheck.delete(model);
-          this.rendered.add(model);
-          if (this.queuedForInitialSizeCheck.size === 0) {
-            this.recomputeSizes();
-            this.invalidateLayout();
-          }
-        }
-      });
-    });
-    this.invalidateLayout();
-  }
-
-  fromArray(payload: S, engine: WorkspaceEngine) {
-    // we disable recomputation since the panels should have their correct sizes
-    this.allowSizeRecomputation = false;
-    super.fromArray(payload, engine);
-    this.allowSizeRecomputation = true;
+    this.busy = false;
   }
 
   addModel(model: WorkspaceModel, position: number = null): this {
     super.addModel(model, position);
-    // model want to expand, store their original sizes so we can revert when we add them somewhere else
-    if ((this.vertical && model.expandVertical) || (!this.vertical && model.expandHorizontal)) {
-      this.dimensions.set(model, {
-        originalWidth: model.size.width,
-        originalHeight: model.size.height
-      });
-      const l2 = model.registerListener({
-        removed: () => {
-          l2?.();
-          model.setSize({
-            width: this.dimensions.get(model).originalWidth,
-            height: this.dimensions.get(model).originalHeight
-          });
-          this.dimensions.delete(model);
-        }
-      });
-    }
-    // model wants to shrink, reset its size so it renders as small as possible (initially)
-    else if ((this.vertical && !model.expandVertical) || (!this.vertical && !model.expandHorizontal)) {
-      if (this.allowSizeRecomputation) {
-        model.setSize({
-          width: 0,
-          height: 0
-        });
-      }
-    }
-    this.recomputeInitialSizes();
+    this.recomputeSizes();
     return this;
   }
 
-  recomputeSizes() {
-    const dims = Array.from(this.dimensions.keys());
-    for (let i = 0; i < dims.length - 1; i++) {
-      if (this.vertical) {
-        dims[i].setHeight(dims[i].r_dimensions.size.height);
-      } else {
-        dims[i].setWidth(dims[i].r_dimensions.size.width);
+  fromArray(payload: S, engine: WorkspaceEngine) {
+    // we disable re-computation since the panels should have their correct sizes
+    this.busy = true;
+    super.fromArray(payload, engine);
+    this.busy = false;
+  }
+
+  async recomputeSizes() {
+    if (this.busy) {
+      return;
+    }
+    this.busy = true;
+
+    let length = await this.r_dimensions.waitForSize().then((size) => (this.vertical ? size.height : size.width));
+    const expand = this.getExpandNodes();
+    if (expand.length <= 1) {
+      return;
+    }
+    length = this.vertical ? this.r_dimensions.size.height : this.r_dimensions.size.width;
+
+    let static_lengths = await Promise.all(
+      this.children
+        .filter((c) => !expand.includes(c))
+        .map((d) => {
+          return d.r_dimensions.waitForSize().then((size) => (this.vertical ? size.height : size.width));
+        })
+    );
+
+    const static_length = _.sum(
+      this.r_divisions.map((d) => (this.vertical ? d.size.height : d.size.width)).concat(static_lengths)
+    );
+
+    if (length > static_length) {
+      let res = Math.round((length - static_length) / expand.length);
+      for (let i = 0; i < expand.length - 1; i++) {
+        if (this.vertical) {
+          expand[i].setHeight(res);
+        } else {
+          expand[i].setWidth(res);
+        }
       }
     }
+    this.busy = false;
   }
 
   getResizeDivisions(): ResizeDivision[] {
@@ -119,23 +93,28 @@ export class ExpandNodeModel<
     return divs;
   }
 
+  getExpandNodes() {
+    return this.children.filter((c) => {
+      return this.vertical ? c.expandVertical : c.expandHorizontal;
+    });
+  }
+
   getPanelDirective(child: WorkspaceModel): DirectionLayoutChildDirective {
+    const expandNodes = this.getExpandNodes();
+
     //no expand nodes, so treat the last one as the expand node
-    if (this.dimensions.size === 0 && this.children.indexOf(child) === this.children.length - 1) {
+    if (expandNodes.length === 0 && this.children.indexOf(child) === this.children.length - 1) {
       return {
         ...super.getPanelDirective(child),
         expand: true
       };
     }
-    // make the first expand nodes operate like a normal node
-    else if (
-      this.dimensions.size > 1 &&
-      Array.from(this.dimensions.keys()).indexOf(child) < this.dimensions.size - 1 &&
-      this.rendered.has(child)
-    ) {
+
+    // only expand the last one if there are multiple
+    if (expandNodes.length > 1) {
       return {
         ...super.getPanelDirective(child),
-        expand: false
+        expand: expandNodes.indexOf(child) === expandNodes.length - 1
       };
     }
 

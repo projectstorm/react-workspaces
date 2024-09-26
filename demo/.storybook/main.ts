@@ -1,4 +1,17 @@
-module.exports = {
+import type { StorybookConfig } from '@storybook/react-webpack5';
+
+const config: StorybookConfig = {
+  addons: [
+    {
+      name: '@storybook/addon-essentials'
+    },
+    {
+      name: '@storybook/addon-webpack5-compiler-babel'
+    }
+  ],
+  docs: {
+    autodocs: false
+  },
   stories: ['../dist/stories/*.stories.js'],
   webpackFinal: async (config, { configType }) => {
     return {
@@ -17,16 +30,10 @@ module.exports = {
       }
     };
   },
-  addons: [
-    {
-      name: '@storybook/addon-essentials'
-    }
-  ],
   framework: {
     name: '@storybook/react-webpack5',
     options: {}
-  },
-  docs: {
-    autodocs: false
   }
 };
+
+export default config;

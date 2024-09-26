@@ -41,6 +41,7 @@ namespace S {
     flex-grow: 1;
     display: flex;
     height: 100%;
+    min-height: 0;
   `;
 
   export const TabGroup = styled(SmartOrderingWidget)`
