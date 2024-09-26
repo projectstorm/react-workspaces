@@ -1,5 +1,16 @@
 # @projectstorm/react-workspaces-model-tray
 
+## 2.5.5
+
+### Patch Changes
+
+- 8273b13: - Fixed dragging panels sometimes causing a resize deadlock
+  - Reworked the logic for computing initial sizes when there are muliple expanding panels in a group
+  - Bumped all dependencies
+- Updated dependencies [8273b13]
+  - @projectstorm/react-workspaces-core@3.0.0
+  - @projectstorm/react-workspaces-model-floating-window@2.2.7
+
 ## 2.5.4
 
 ### Patch Changes
