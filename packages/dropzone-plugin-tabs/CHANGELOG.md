@@ -1,5 +1,17 @@
 # @projectstorm/react-workspaces-dropzone-plugin-tabs
 
+## 2.2.8
+
+### Patch Changes
+
+- 8273b13: - Fixed dragging panels sometimes causing a resize deadlock
+  - Reworked the logic for computing initial sizes when there are muliple expanding panels in a group
+  - Bumped all dependencies
+- Updated dependencies [8273b13]
+  - @projectstorm/react-workspaces-core@3.0.0
+  - @projectstorm/react-workspaces-behavior-panel-dropzone@2.3.6
+  - @projectstorm/react-workspaces-model-tabs@2.3.4
+
 ## 2.2.7
 
 ### Patch Changes

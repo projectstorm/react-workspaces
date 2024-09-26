@@ -1,6 +1,6 @@
 {
   "name": "@projectstorm/react-workspaces-dropzone-plugin-tabs",
-  "version": "2.2.7",
+  "version": "2.2.8",
   "main": "./dist/index.umd.js",
   "module": "./dist/index.jsx",
   "types": "./dist/@types/index.d.ts",
