@@ -4,11 +4,6 @@ import { WorkspaceModel } from '../../core-models/WorkspaceModel';
 import styled from '@emotion/styled';
 import { useForceUpdate } from '../../widgets/hooks/useForceUpdate';
 
-export interface DirectionLayoutChildDirective {
-  expand: boolean;
-  size: number;
-}
-
 namespace S {
   export const ChildContainer = styled.div<{ width: number; height: number; expand: boolean }>`
     ${(p) => (p.width ? `min-width: ${p.width}px; width: ${p.width}px` : '')};
@@ -21,14 +16,14 @@ namespace S {
 export interface DirectionChildWidgetProps {
   vertical: boolean;
   model: WorkspaceModel;
-  directive: DirectionLayoutChildDirective;
+  expand: boolean;
   generateElement: (model: WorkspaceModel) => JSX.Element;
 }
 
 export const DirectionChildWidget: React.FC<DirectionChildWidgetProps> = (props) => {
   let width = null;
   let height = null;
-  let expand = props.directive.expand;
+  let expand = props.expand;
 
   if (!expand && props.vertical) {
     height = props.model.size.height;

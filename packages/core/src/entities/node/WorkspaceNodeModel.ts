@@ -7,7 +7,6 @@ import { WorkspaceEngine } from '../../core/WorkspaceEngine';
 import { WorkspaceModel } from '../../core-models/WorkspaceModel';
 import { Alignment } from '../../core/tools';
 import { DimensionContainer } from '../../core/dimensions/DimensionContainer';
-import { DirectionLayoutChildDirective } from '../../widgets/layouts/DirectionalChildWidget';
 import { ResizeDimensionContainer } from './ResizeDimensionContainer';
 
 export interface ResizeDivision {
@@ -101,11 +100,8 @@ export class WorkspaceNodeModel<
     return divs;
   }
 
-  getPanelDirective(child: WorkspaceModel): DirectionLayoutChildDirective {
-    return {
-      expand: this.vertical ? child.expandVertical : child.expandHorizontal,
-      size: this.vertical ? child.size.height : child.size.width
-    };
+  shouldChildExpand(child: WorkspaceModel): boolean {
+    return this.vertical ? child.expandVertical : child.expandHorizontal;
   }
 
   getAllRenderDimensions(): DimensionContainer[] {

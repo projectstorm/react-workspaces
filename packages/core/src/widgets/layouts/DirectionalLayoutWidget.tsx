@@ -5,16 +5,16 @@ import { WorkspaceModel } from '../../core-models/WorkspaceModel';
 import { WorkspaceEngine } from '../../core/WorkspaceEngine';
 import styled from '@emotion/styled';
 import { DividerWidget } from '../../widgets/primitives/DividerWidget';
-import { DirectionChildWidget, DirectionLayoutChildDirective } from './DirectionalChildWidget';
+import { DirectionChildWidget } from './DirectionalChildWidget';
 import { ResizeDimensionContainer } from '../../entities/node/ResizeDimensionContainer';
 
 export interface DirectionalLayoutWidgetProps {
   vertical: boolean;
   engine: WorkspaceEngine;
   data: WorkspaceModel[];
-  getChildSizeDirective: (model: WorkspaceModel) => DirectionLayoutChildDirective;
-  generateElement: (model: WorkspaceModel) => JSX.Element;
-  generateDivider: (divider: ResizeDimensionContainer) => JSX.Element;
+  shouldModelExpand: (model: WorkspaceModel) => boolean;
+  generateElement: (model: WorkspaceModel) => React.JSX.Element;
+  generateDivider: (divider: ResizeDimensionContainer) => React.JSX.Element;
   dimensionContainerForDivider: (index: number) => ResizeDimensionContainer;
   forwardRef: React.RefObject<HTMLDivElement>;
   className?: any;
@@ -51,7 +51,7 @@ export const DirectionalLayoutWidget: React.FC<DirectionalLayoutWidgetProps> = (
         const dimension = props.dimensionContainerForDivider(index + 1);
         return (
           <React.Fragment key={model.id}>
-            <DirectionChildWidget {...props} directive={props.getChildSizeDirective(model)} model={model} />
+            <DirectionChildWidget {...props} expand={props.shouldModelExpand(model)} model={model} />
             <React.Fragment key={dimension.id}>{generateDivider(dimension)}</React.Fragment>
           </React.Fragment>
         );

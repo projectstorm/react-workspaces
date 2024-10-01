@@ -1,13 +1,7 @@
-import { DirectionLayoutChildDirective } from '../../widgets/layouts/DirectionalChildWidget';
 import { ResizeDivision, WorkspaceNodeModel, WorkspaceNodeModelSerialized } from './WorkspaceNodeModel';
 import { WorkspaceModel } from '../../core-models/WorkspaceModel';
 import * as _ from 'lodash';
 import { WorkspaceEngine } from '../../core/WorkspaceEngine';
-
-export interface ExpandNodeModelChild {
-  originalWidth: number;
-  originalHeight: number;
-}
 
 export interface ExpandNodeModelSerialized extends WorkspaceNodeModelSerialized {}
 
@@ -99,25 +93,19 @@ export class ExpandNodeModel<
     });
   }
 
-  getPanelDirective(child: WorkspaceModel): DirectionLayoutChildDirective {
+  shouldChildExpand(child: WorkspaceModel): boolean {
     const expandNodes = this.getExpandNodes();
 
     //no expand nodes, so treat the last one as the expand node
     if (expandNodes.length === 0 && this.children.indexOf(child) === this.children.length - 1) {
-      return {
-        ...super.getPanelDirective(child),
-        expand: true
-      };
+      return true;
     }
 
     // only expand the last one if there are multiple
     if (expandNodes.length > 1) {
-      return {
-        ...super.getPanelDirective(child),
-        expand: expandNodes.indexOf(child) === expandNodes.length - 1
-      };
+      return expandNodes.indexOf(child) === expandNodes.length - 1;
     }
 
-    return super.getPanelDirective(child);
+    return super.shouldChildExpand(child);
   }
 }

@@ -40,8 +40,8 @@ export const WorkspaceNodeWidget: React.FC<WorkspaceNodeWidgetProps> = (props) =
       dimensionContainerForDivider={(index: number) => {
         return props.model.r_divisions[index];
       }}
-      getChildSizeDirective={(model) => {
-        return props.model.getPanelDirective(model);
+      shouldModelExpand={(model) => {
+        return props.model.shouldChildExpand(model);
       }}
       className={props.className}
       data={props.model.children}
