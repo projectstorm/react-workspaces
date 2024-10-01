@@ -46,6 +46,7 @@ export class WorkspaceNodeModel<
     super.normalize();
     if (this.parent && this.parent instanceof WorkspaceCollectionModel) {
       if (this.children.length === 1) {
+        this.children[0].size.update(this.size.value);
         this.parent.replaceModel(this, this.children[0]);
       }
     }
