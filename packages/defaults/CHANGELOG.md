@@ -1,5 +1,16 @@
 # @projectstorm/react-workspaces-defaults
 
+## 2.3.11
+
+### Patch Changes
+
+- Updated dependencies [08103ef]
+- Updated dependencies [5a976f8]
+  - @projectstorm/react-workspaces-core@4.0.0
+  - @projectstorm/react-workspaces-model-floating-window@2.2.8
+  - @projectstorm/react-workspaces-model-tabs@2.3.5
+  - @projectstorm/react-workspaces-model-tray@2.5.6
+
 ## 2.3.10
 
 ### Patch Changes
