@@ -1,6 +1,6 @@
 import * as React from 'react';
-import * as _ from 'lodash';
 import { useEffect, useState } from 'react';
+import * as _ from 'lodash';
 import styled from '@emotion/styled';
 import 'typeface-open-sans';
 import {
@@ -31,12 +31,18 @@ import { ConvertToTrayZone, getDirectiveForTrayModel } from '@projectstorm/react
 import { css, Global } from '@storybook/theming';
 
 export const genVerticalNode = () => {
-  const node = new ExpandNodeModel()
-    .setExpand(false, true)
-    .setVertical(true)
-    .addModel(new DefaultWorkspacePanelModel('Panel 1'))
-    .addModel(new DefaultWorkspacePanelModel('Panel 2'));
-  return node;
+  const m1 = new DefaultWorkspacePanelModel('Panel 1');
+  m1.minimumSize.update({
+    width: 10,
+    height: 100
+  });
+
+  const m2 = new DefaultWorkspacePanelModel('Panel 2');
+  m2.minimumSize.update({
+    width: 10,
+    height: 100
+  });
+  return new ExpandNodeModel().setExpand(false, true).setVertical(true).addModel(m1).addModel(m2);
 };
 
 export enum DebugOptions {

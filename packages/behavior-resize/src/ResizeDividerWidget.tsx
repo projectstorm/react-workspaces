@@ -20,9 +20,9 @@ export interface ResizeDividerWidgetProps {
 }
 
 const isAligned = (divider: ResizeDivision, aligned: Alignment, parent: WorkspaceNodeModel) => {
-  let beforeDirective = parent.getPanelDirective(divider.before);
-  const afterDirective = parent.getPanelDirective(divider.after);
-  if (beforeDirective.expand !== afterDirective.expand) {
+  let beforeDirective = parent.shouldChildExpand(divider.before);
+  const afterDirective = parent.shouldChildExpand(divider.after);
+  if (beforeDirective !== afterDirective) {
     return false;
   }
   let before = divider.before;
@@ -31,8 +31,8 @@ const isAligned = (divider: ResizeDivision, aligned: Alignment, parent: Workspac
     if (!before) {
       return true;
     }
-    let beforeDirective = parent.getPanelDirective(before);
-    if (beforeDirective.expand) {
+    let beforeDirective = parent.shouldChildExpand(before);
+    if (beforeDirective) {
       return false;
     }
   } while (before);
@@ -66,10 +66,6 @@ const getResizeStrategy = (
 ): Pick<UseMouseDragDistanceProps, 'startMove' | 'moved'> => {
   let sizeSnapshot = new Map<WorkspaceModel, number>();
 
-  const isExpand = (model: WorkspaceModel) => {
-    return parent.getPanelDirective(model).expand;
-  };
-
   const setSize = (model: WorkspaceModel, val: number) => {
     if (divider.vertical) {
       model.setWidth(val);
@@ -96,12 +92,18 @@ const getResizeStrategy = (
       let { before, after } = divider;
 
       // shrink|expand OR left aligned
-      if ((!isExpand(before) && isExpand(after)) || isAligned(divider, alignment, parent)) {
+      if (
+        (!parent.shouldChildExpand(before) && parent.shouldChildExpand(after)) ||
+        isAligned(divider, alignment, parent)
+      ) {
         before = getAvailableElement(before, alignment);
         setSize(before, sizeSnapshot.get(before) + distance);
       }
       // expand|shrink OR right aligned
-      if ((isExpand(before) && !isExpand(after)) || !isAligned(divider, alignment, parent)) {
+      if (
+        (parent.shouldChildExpand(before) && !parent.shouldChildExpand(after)) ||
+        !isAligned(divider, alignment, parent)
+      ) {
         after = getAvailableElement(after, getAlignmentInverted(alignment));
         setSize(after, sizeSnapshot.get(after) - distance);
       }
