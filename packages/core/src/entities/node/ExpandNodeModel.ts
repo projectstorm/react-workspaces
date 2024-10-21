@@ -1,9 +1,20 @@
-import { ResizeDivision, WorkspaceNodeModel, WorkspaceNodeModelSerialized } from './WorkspaceNodeModel';
+import {
+  ResizeDivision,
+  WorkspaceNodeModel,
+  WorkspaceNodeModelListener,
+  WorkspaceNodeModelSerialized
+} from './WorkspaceNodeModel';
 import { WorkspaceModel } from '../../core-models/WorkspaceModel';
 import * as _ from 'lodash';
 import { WorkspaceEngine } from '../../core/WorkspaceEngine';
 
-export interface ExpandNodeModelSerialized extends WorkspaceNodeModelSerialized {}
+export interface ExpandNodeModelSerialized extends WorkspaceNodeModelSerialized {
+  computed_initial?: boolean;
+}
+
+export interface ExpandNodeModelListener extends WorkspaceNodeModelListener {
+  recomputed?: () => any;
+}
 
 /**
  * This is a smarter version of the standard Node model which can work with
@@ -14,13 +25,16 @@ export interface ExpandNodeModelSerialized extends WorkspaceNodeModelSerialized 
  * want to expand (expandHorizontal/Vertical == false)
  */
 export class ExpandNodeModel<
-  S extends ExpandNodeModelSerialized = ExpandNodeModelSerialized
-> extends WorkspaceNodeModel<S> {
+  S extends ExpandNodeModelSerialized = ExpandNodeModelSerialized,
+  L extends ExpandNodeModelListener = ExpandNodeModelListener
+> extends WorkspaceNodeModel<S, L> {
   busy: boolean;
+  computed_initial: boolean;
 
   constructor() {
     super();
     this.busy = false;
+    this.computed_initial = false;
   }
 
   addModel(model: WorkspaceModel, position: number = null): this {
@@ -29,9 +43,19 @@ export class ExpandNodeModel<
     return this;
   }
 
+  toArray(): S {
+    return {
+      ...super.toArray(),
+      computed_initial: this.computed_initial
+    };
+  }
+
   fromArray(payload: S, engine: WorkspaceEngine) {
-    // we disable re-computation since the panels should have their correct sizes
-    this.busy = true;
+    this.computed_initial = payload.computed_initial ?? false;
+    // we disable re-computation since the panels should have their correct sizes already
+    if (this.computed_initial) {
+      this.busy = true;
+    }
     super.fromArray(payload, engine);
     this.busy = false;
   }
@@ -41,10 +65,12 @@ export class ExpandNodeModel<
       return;
     }
     this.busy = true;
-
     let length = await this.r_dimensions.waitForSize().then((size) => (this.vertical ? size.height : size.width));
     const expand = this.getExpandNodes();
     if (expand.length <= 1) {
+      this.busy = false;
+      this.computed_initial = true;
+      this.iterateListeners((cb) => cb.recomputed?.());
       return;
     }
     length = this.vertical ? this.r_dimensions.size.height : this.r_dimensions.size.width;
@@ -72,6 +98,9 @@ export class ExpandNodeModel<
       }
     }
     this.busy = false;
+    this.computed_initial = true;
+
+    this.iterateListeners((cb) => cb.recomputed?.());
   }
 
   getResizeDivisions(): ResizeDivision[] {

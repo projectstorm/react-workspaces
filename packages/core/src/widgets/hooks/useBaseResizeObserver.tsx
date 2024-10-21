@@ -34,9 +34,13 @@ export const useBaseResizeObserver = (props: UseBaseBaseResizeObserverProps) => 
   }, [props.dimension]);
 
   const updateDebounced = useCallback(
-    _.debounce(() => {
-      updateLogic();
-    }, 500),
+    _.debounce(
+      () => {
+        updateLogic();
+      },
+      500,
+      { leading: true }
+    ),
     [props.dimension]
   );
 
@@ -46,6 +50,7 @@ export const useBaseResizeObserver = (props: UseBaseBaseResizeObserverProps) => 
     } else {
       updateDebounced();
     }
+    updateLogic();
   }, [props.dimension, props.ignoreDebounce]);
 
   // listen to invalidate directives

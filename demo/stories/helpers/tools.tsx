@@ -6,6 +6,7 @@ import 'typeface-open-sans';
 import {
   DebugLayer,
   ExpandNodeModel,
+  overConstrainRecomputeBehavior,
   WorkspaceEngine,
   WorkspaceNodeFactory,
   WorkspaceNodeModel,
@@ -99,6 +100,10 @@ export const useEngine = (args: { DebugDividers?: boolean; DebugResizers?: boole
     e.registerFactory(trayFactory);
     e.registerFactory(workspaceNodeFactory);
     e.registerFactory(windowFactory);
+
+    overConstrainRecomputeBehavior({
+      engine: e
+    });
 
     draggingItemBehavior({
       engine: e,

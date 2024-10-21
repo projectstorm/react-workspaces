@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useEffect } from 'react';
 import styled from '@emotion/styled';
 import { WorkspaceEngine } from '../../core/WorkspaceEngine';
 import { WorkspaceNodeFactory, WorkspaceNodePanelRenderer } from './WorkspaceNodeFactory';
@@ -7,14 +8,13 @@ import { DraggableWidget } from '../../widgets/primitives/DraggableWidget';
 import { WorkspaceModel } from '../../core-models/WorkspaceModel';
 import { useModelElement } from '../../widgets/hooks/useModelElement';
 import { DirectionalLayoutWidget } from '../../widgets/layouts/DirectionalLayoutWidget';
-import { useEffect } from 'react';
 import { ResizeDimensionContainer } from './ResizeDimensionContainer';
 
 export interface WorkspaceNodeWidgetProps {
   engine: WorkspaceEngine;
   factory: WorkspaceNodeFactory;
   model: WorkspaceNodeModel;
-  generateDivider?: (divider: ResizeDimensionContainer) => JSX.Element;
+  generateDivider?: (divider: ResizeDimensionContainer) => React.JSX.Element;
   className?: any;
 }
 
@@ -24,16 +24,30 @@ export const WorkspaceNodeWidget: React.FC<WorkspaceNodeWidgetProps> = (props) =
     model: props.model
   });
   useEffect(() => {
-    return props.model.r_dimensions.registerListener({
+    const checkOverConstrain = () => {
+      if (props.model.vertical) {
+        props.model.setOverConstrained(ref.current.scrollHeight > props.model.r_dimensions.size.height);
+      } else {
+        props.model.setOverConstrained(ref.current.scrollWidth > props.model.r_dimensions.size.width);
+      }
+    };
+
+    let l1 = props.model.r_dimensions.registerListener({
       updated: () => {
-        if (props.model.vertical) {
-          props.model.setOverConstrained(ref.current.scrollHeight > props.model.r_dimensions.size.height);
-        } else {
-          props.model.setOverConstrained(ref.current.scrollWidth > props.model.r_dimensions.size.width);
-        }
+        checkOverConstrain();
       }
     });
-  }, []);
+    let l2 = props.model.registerListener({
+      dimensionsInvalidated: () => {
+        checkOverConstrain();
+      }
+    });
+
+    return () => {
+      l1();
+      l2();
+    };
+  }, [props.model]);
   return (
     <S.DirectionalLayout
       forwardRef={ref}

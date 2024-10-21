@@ -43,5 +43,8 @@ export * from './entities/node/WorkspaceNodeModel';
 export * from './entities/node/ExpandNodeModel';
 export * from './entities/node/WorkspaceNodeFactory';
 export * from './entities/node/WorkspaceNodeWidget';
+export * from './entities/node/ExpandNodeWidget';
+export * from './entities/node/overConstrainRecomputeBehavior';
+
 export * from './entities/SubComponentModelFactory';
 export * from './entities/SubComponentModelFactory';
