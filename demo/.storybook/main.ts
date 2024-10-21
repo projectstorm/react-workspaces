@@ -17,6 +17,12 @@ const config: StorybookConfig = {
     return {
       ...config,
       devtool: 'inline-source-map',
+      resolve: {
+        ...config.resolve,
+        alias: {
+          '@emotion/react': require.resolve('@emotion/react')
+        }
+      },
       module: {
         ...config.module,
         rules: [

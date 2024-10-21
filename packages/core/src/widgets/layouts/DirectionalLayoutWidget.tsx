@@ -30,6 +30,9 @@ namespace S {
 }
 
 export const DirectionalLayoutWidget: React.FC<DirectionalLayoutWidgetProps> = (props) => {
+  if (props.data.length === 0) {
+    return <S.Container ref={props.forwardRef} className={props.className} vertical={props.vertical}></S.Container>;
+  }
   const firstDivider = props.dimensionContainerForDivider(0);
   const generateDivider = useCallback((dimension: ResizeDimensionContainer) => {
     if (props.generateDivider) {

@@ -5,6 +5,8 @@ import { WorkspaceModel } from '../../core-models/WorkspaceModel';
 import { SubComponentModelFactory, SubComponentRenderer } from '../SubComponentModelFactory';
 import { WorkspaceNodeWidget } from './WorkspaceNodeWidget';
 import { WorkspaceEngine } from '../../core/WorkspaceEngine';
+import { ExpandNodeModel } from './ExpandNodeModel';
+import { ExpandNodeWidget } from './ExpandNodeWidget';
 
 export interface RenderTitleBarEvent<T extends WorkspaceModel> {
   model: T;
@@ -23,7 +25,10 @@ export class WorkspaceNodeFactory<
     super(type);
   }
 
-  generateContent(event: WorkspaceModelFactoryEvent<T>): JSX.Element {
+  generateContent(event: WorkspaceModelFactoryEvent<T>): React.JSX.Element {
+    if (event.model instanceof ExpandNodeModel) {
+      return <ExpandNodeWidget model={event.model} engine={event.engine} factory={this} />;
+    }
     return <WorkspaceNodeWidget model={event.model} engine={event.engine} factory={this} />;
   }
 
