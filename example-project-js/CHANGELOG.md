@@ -1,5 +1,13 @@
 # @projectstorm/react-workspaces-demo
 
+## 2.1.9
+
+### Patch Changes
+
+- Updated dependencies [845b677]
+  - @projectstorm/react-workspaces-core@4.1.0
+  - @projectstorm/react-workspaces-behavior-resize@2.3.6
+
 ## 2.1.8
 
 ### Patch Changes
