@@ -1,5 +1,15 @@
 # @projectstorm/react-workspaces-core
 
+## 4.0.0
+
+### Major Changes
+
+- 5a976f8: Layout directives have been removed in favor of simple expand booleans
+
+### Patch Changes
+
+- 08103ef: Improved node normalization by updating the size of the child to the parent before completely removing the parent
+
 ## 3.0.0
 
 ### Major Changes

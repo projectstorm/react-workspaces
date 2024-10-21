@@ -1,5 +1,13 @@
 # @projectstorm/react-workspaces-behavior-divider-dropzone
 
+## 2.4.6
+
+### Patch Changes
+
+- Updated dependencies [08103ef]
+- Updated dependencies [5a976f8]
+  - @projectstorm/react-workspaces-core@4.0.0
+
 ## 2.4.5
 
 ### Patch Changes
