@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import { useEffect } from 'react';
 import { useForceUpdate } from '../hooks/useForceUpdate';
 import { DimensionContainer, IDimension } from '../../core/dimensions/DimensionContainer';
+import * as _ from 'lodash';
 
 export interface DimensionTrackingWidgetProps {
   dimension: DimensionContainer;
@@ -14,6 +15,9 @@ export interface DimensionTrackingWidgetProps {
 export const DimensionTrackingWidget: React.FC<React.PropsWithChildren<DimensionTrackingWidgetProps>> = (props) => {
   const forceUpdate = useForceUpdate();
   useEffect(() => {
+    _.defer(() => {
+      forceUpdate();
+    });
     return props.dimension.registerListener({
       updated: () => {
         forceUpdate();

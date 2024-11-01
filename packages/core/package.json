@@ -17,12 +17,12 @@
     "@emotion/react": "^11.13.3",
     "lodash": "^4.17.21",
     "color": "^4.2.3",
-    "uuid": "^10.0.0"
+    "uuid": "^11.0.2"
   },
   "devDependencies": {
-    "@types/react": "^18.3.9",
-    "@types/react-dom": "^18.3.0",
-    "@types/lodash": "^4.17.9",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@types/lodash": "^4.17.13",
     "@types/uuid": "^10.0.0"
   }
 }
