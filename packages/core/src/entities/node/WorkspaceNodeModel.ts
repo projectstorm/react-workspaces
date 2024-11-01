@@ -121,12 +121,14 @@ export class WorkspaceNodeModel<
   addModel(model: WorkspaceModel, position: number = null): this {
     super.addModel(model, position);
     this.recomputeDivisions();
+    this.invalidateLayout();
     return this;
   }
 
   removeModel(model: WorkspaceModel): this {
     super.removeModel(model);
     this.recomputeDivisions();
+    this.invalidateLayout();
     return this;
   }
 
