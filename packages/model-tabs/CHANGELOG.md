@@ -1,5 +1,12 @@
 # @projectstorm/react-workspaces-model-tabs
 
+## 2.3.7
+
+### Patch Changes
+
+- Updated dependencies [fbdb1d5]
+  - @projectstorm/react-workspaces-core@4.1.1
+
 ## 2.3.6
 
 ### Patch Changes

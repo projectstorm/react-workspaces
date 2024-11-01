@@ -1,5 +1,12 @@
 # @projectstorm/react-workspaces-model-floating-window
 
+## 2.2.10
+
+### Patch Changes
+
+- Updated dependencies [fbdb1d5]
+  - @projectstorm/react-workspaces-core@4.1.1
+
 ## 2.2.9
 
 ### Patch Changes

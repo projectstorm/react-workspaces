@@ -1,5 +1,12 @@
 # @projectstorm/react-workspaces-behavior-panel-dropzone
 
+## 2.3.9
+
+### Patch Changes
+
+- Updated dependencies [fbdb1d5]
+  - @projectstorm/react-workspaces-core@4.1.1
+
 ## 2.3.8
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @projectstorm/react-workspaces-core
 
+## 4.1.1
+
+### Patch Changes
+
+- fbdb1d5: Fix redraw issue with resize widgets in some cases when adding a model and a race condition occurs
+
 ## 4.1.0
 
 ### Minor Changes
