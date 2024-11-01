@@ -20,7 +20,7 @@
     "@emotion/styled": "^11.13.0"
   },
   "devDependencies": {
-    "@types/lodash": "^4.17.9",
-    "@types/react": "^18.3.9"
+    "@types/lodash": "^4.17.13",
+    "@types/react": "^18.3.12"
   }
 }

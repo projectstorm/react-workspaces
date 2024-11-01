@@ -23,22 +23,22 @@
     "typeface-open-sans": "^1.1.13"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.25.4",
-    "@babel/preset-react": "^7.24.7",
+    "@babel/preset-env": "^7.26.0",
+    "@babel/preset-react": "^7.25.9",
     "@storybook/addon-webpack5-compiler-babel": "^3.0.3",
-    "@storybook/addon-essentials": "^8.3.3",
+    "@storybook/addon-essentials": "^8.4.1",
     "@storybook/addons": "^7.6.17",
-    "@storybook/react": "^8.3.3",
-    "@storybook/react-webpack5": "^8.3.3",
+    "@storybook/react": "^8.4.1",
+    "@storybook/react-webpack5": "^8.4.1",
     "@storybook/storybook-deployer": "^2.8.16",
-    "@storybook/theming": "^8.3.3",
-    "@types/lodash": "^4.17.9",
-    "@types/node": "^22.7.1",
-    "@types/react": "18.3.9",
-    "@types/react-dom": "^18.3.0",
+    "@storybook/theming": "^8.4.1",
+    "@types/lodash": "^4.17.13",
+    "@types/node": "^22.8.6",
+    "@types/react": "18.3.12",
+    "@types/react-dom": "^18.3.1",
     "react-dom": "18.3.1",
     "source-map-loader": "^5.0.0",
-    "storybook": "^8.3.3",
-    "webpack": "^5.95.0"
+    "storybook": "^8.4.1",
+    "webpack": "^5.96.1"
   }
 }
