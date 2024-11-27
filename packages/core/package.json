@@ -13,11 +13,11 @@
   "dependencies": {
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "@emotion/styled": "^11.13.0",
-    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.5",
+    "@emotion/react": "^11.13.5",
     "lodash": "^4.17.21",
     "color": "^4.2.3",
-    "uuid": "^11.0.2"
+    "uuid": "^11.0.3"
   },
   "devDependencies": {
     "@types/react": "^18.3.12",

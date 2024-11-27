@@ -10,8 +10,8 @@
   "dependencies": {
     "@projectstorm/react-workspaces-core": "workspace:*",
     "@projectstorm/react-workspaces-behavior-resize": "workspace:*",
-    "@emotion/react": "^11.13.3",
-    "@emotion/styled": "^11.13.0",
+    "@emotion/react": "^11.13.5",
+    "@emotion/styled": "^11.13.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },

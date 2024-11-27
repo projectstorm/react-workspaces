@@ -7,7 +7,7 @@
     "storybook:build": "storybook build -o .out"
   },
   "dependencies": {
-    "@emotion/styled": "^11.13.0",
+    "@emotion/styled": "^11.13.5",
     "@projectstorm/react-workspaces-behavior-divider-dropzone": "workspace:*",
     "@projectstorm/react-workspaces-behavior-panel-dropzone": "workspace:*",
     "@projectstorm/react-workspaces-behavior-resize": "workspace:*",
@@ -26,19 +26,19 @@
     "@babel/preset-env": "^7.26.0",
     "@babel/preset-react": "^7.25.9",
     "@storybook/addon-webpack5-compiler-babel": "^3.0.3",
-    "@storybook/addon-essentials": "^8.4.1",
+    "@storybook/addon-essentials": "^8.4.5",
     "@storybook/addons": "^7.6.17",
-    "@storybook/react": "^8.4.1",
-    "@storybook/react-webpack5": "^8.4.1",
+    "@storybook/react": "^8.4.5",
+    "@storybook/react-webpack5": "^8.4.5",
     "@storybook/storybook-deployer": "^2.8.16",
-    "@storybook/theming": "^8.4.1",
+    "@storybook/theming": "^8.4.5",
     "@types/lodash": "^4.17.13",
-    "@types/node": "^22.8.6",
+    "@types/node": "^22.10.0",
     "@types/react": "18.3.12",
     "@types/react-dom": "^18.3.1",
     "react-dom": "18.3.1",
     "source-map-loader": "^5.0.0",
-    "storybook": "^8.4.1",
+    "storybook": "^8.4.5",
     "webpack": "^5.96.1"
   }
 }

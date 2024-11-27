@@ -59,7 +59,7 @@ export class WorkspaceEngine extends BaseObserver<WorkspaceEngineListener> imple
     this.rootModelListener?.();
     this.rootModelListener = model.registerListener({
       layoutInvalidated: () => {
-        this.invalidateLayout();
+        this.invalidateLayoutDebounced();
       },
       dimensionsInvalidated: () => {
         this.invalidateDimensionsDebounced();
@@ -77,6 +77,10 @@ export class WorkspaceEngine extends BaseObserver<WorkspaceEngineListener> imple
   invalidateLayout() {
     this.iterateListeners((cb) => cb.layoutInvalidated?.());
   }
+
+  invalidateLayoutDebounced = _.debounce(() => {
+    this.invalidateLayout();
+  }, 200);
 
   invalidateDimensionsDebounced = _.debounce(() => {
     this.invalidateDimensions();
