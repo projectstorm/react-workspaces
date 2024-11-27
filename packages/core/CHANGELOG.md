@@ -1,5 +1,11 @@
 # @projectstorm/react-workspaces-core
 
+## 4.2.0
+
+### Minor Changes
+
+- 4ff721f: Add debounce to layout invalidations
+
 ## 4.1.1
 
 ### Patch Changes
