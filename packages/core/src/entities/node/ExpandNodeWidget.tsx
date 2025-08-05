@@ -24,7 +24,7 @@ export const ExpandNodeWidget: React.FC<ExpandNodeWidgetProps> = (props) => {
         forceUpdate();
       }
     });
-  }, []);
+  }, [props.model]);
   return <S.WorkspaceNode {...props} computed_initial={props.model.computed_initial} />;
 };
 namespace S {
