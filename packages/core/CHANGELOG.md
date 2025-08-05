@@ -1,5 +1,11 @@
 # @projectstorm/react-workspaces-core
 
+## 4.2.2
+
+### Patch Changes
+
+- d43f0cd: Bumped all dependencies
+
 ## 4.2.1
 
 ### Patch Changes
