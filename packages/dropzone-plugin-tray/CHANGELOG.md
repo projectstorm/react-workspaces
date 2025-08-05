@@ -1,5 +1,14 @@
 # @projectstorm/react-workspaces-dropzone-plugin-tray
 
+## 2.2.12
+
+### Patch Changes
+
+- Updated dependencies [40afac4]
+  - @projectstorm/react-workspaces-core@4.2.1
+  - @projectstorm/react-workspaces-behavior-panel-dropzone@2.3.11
+  - @projectstorm/react-workspaces-model-tray@2.5.10
+
 ## 2.2.11
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
   "name": "@projectstorm/react-workspaces-defaults",
-  "version": "2.3.14",
+  "version": "2.3.15",
   "main": "./dist/index.umd.js",
   "module": "./dist/index.jsx",
   "types": "./dist/@types/index.d.ts",
