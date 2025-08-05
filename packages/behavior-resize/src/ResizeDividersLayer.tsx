@@ -10,7 +10,7 @@ export class ResizeDividersLayer extends Layer {
     });
   }
 
-  renderLayer(event): JSX.Element {
+  renderLayer(event): React.JSX.Element {
     return <ResizeDividersLayerWidget engine={event.engine} />;
   }
 }

@@ -12,10 +12,10 @@
   },
   "dependencies": {
     "@projectstorm/react-workspaces-core": "workspace:*",
-    "react": "^18.3.1",
-    "@emotion/styled": "^11.13.5"
+    "react": "^19.1.1",
+    "@emotion/styled": "^11.14.1"
   },
   "devDependencies": {
-    "@types/react": "^18.3.12"
+    "@types/react": "^19.1.9"
   }
 }

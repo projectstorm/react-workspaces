@@ -23,7 +23,7 @@ export class DefaultSubComponentRenderer
     TrayModelPanelRenderer<DefaultWorkspacePanelModel>,
     FloatingWindowRenderer<DefaultWorkspacePanelModel>
 {
-  renderIcon(event: TrayModelPanelRendererEvent<DefaultWorkspacePanelModel>): JSX.Element {
+  renderIcon(event: TrayModelPanelRendererEvent<DefaultWorkspacePanelModel>): React.JSX.Element {
     return (
       <DefaultPanelMicroButtonWidget
         smaller={event.parent.mode === WorkspaceTrayMode.NORMAL}
@@ -33,7 +33,7 @@ export class DefaultSubComponentRenderer
     );
   }
 
-  renderTitleBar(event: RenderTitleBarEvent<DefaultWorkspacePanelModel>): JSX.Element {
+  renderTitleBar(event: RenderTitleBarEvent<DefaultWorkspacePanelModel>): React.JSX.Element {
     return (
       <DefaultPanelTitleWidget
         title={event.model.displayName}
@@ -45,7 +45,7 @@ export class DefaultSubComponentRenderer
     );
   }
 
-  renderTab(event: TabRendererEvent<DefaultWorkspacePanelModel>): JSX.Element {
+  renderTab(event: TabRendererEvent<DefaultWorkspacePanelModel>): React.JSX.Element {
     return <DefaultPanelTabWidget name={event.model.displayName} selected={event.selected} />;
   }
 

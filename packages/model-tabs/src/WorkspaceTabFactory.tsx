@@ -17,13 +17,13 @@ export interface TabRendererEvent<T extends WorkspaceModel> {
 }
 
 export interface TabRenderer<T extends WorkspaceModel = WorkspaceModel> extends SubComponentRenderer<T> {
-  renderTab(event: TabRendererEvent<T>): JSX.Element;
+  renderTab(event: TabRendererEvent<T>): React.JSX.Element;
 }
 
 export interface GenerateTabsContainerEvent<T extends WorkspaceTabModel = WorkspaceTabModel> {
   engine: WorkspaceEngine;
   model: T;
-  content: JSX.Element;
+  content: React.JSX.Element;
 }
 
 export class WorkspaceTabFactory<T extends WorkspaceTabModel = WorkspaceTabModel> extends SubComponentModelFactory<
@@ -54,7 +54,7 @@ export class WorkspaceTabFactory<T extends WorkspaceTabModel = WorkspaceTabModel
     return <S.TabHeader>{event.content}</S.TabHeader>;
   }
 
-  generateContent(event: WorkspaceModelFactoryEvent<T>): JSX.Element {
+  generateContent(event: WorkspaceModelFactoryEvent<T>): React.JSX.Element {
     return <TabGroupWidget factory={this} key={event.model.id} model={event.model} engine={event.engine} />;
   }
 }

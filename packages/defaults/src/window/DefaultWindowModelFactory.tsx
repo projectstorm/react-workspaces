@@ -24,7 +24,7 @@ export class DefaultWindowModelFactory extends FloatingWindowFactory<DefaultWind
     super(DefaultWindowModelFactory.TYPE);
   }
 
-  generateContent(event: FloatingWindowRendererEvent<DefaultWindowModel>): JSX.Element {
+  generateContent(event: FloatingWindowRendererEvent<DefaultWindowModel>): React.JSX.Element {
     return <DefaultFloatingWindowWidget {...event} />;
   }
 

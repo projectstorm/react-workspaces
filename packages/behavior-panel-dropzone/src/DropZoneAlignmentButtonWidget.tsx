@@ -36,7 +36,7 @@ export interface DropZoneAlignmentButtonWidgetProps {
 
 export const DropZoneAlignmentButtonWidget: React.FC<DropZoneAlignmentButtonWidgetProps> = (props) => {
   const [entered, setEntered] = useState(false);
-  const ref = useRef<HTMLDivElement>();
+  const ref = useRef<HTMLDivElement>(null);
   const theme = _.merge({}, DefaultDropZoneAlignmentTheme, props.theme || {});
   useMouseDragEvents({
     forwardRef: ref,

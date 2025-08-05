@@ -17,7 +17,7 @@ export interface OrderingLayerWidgetDividerProps {
 }
 
 export const OrderingLayerWidgetDivider: React.FC<OrderingLayerWidgetDividerProps> = (props) => {
-  const ref = useRef<HTMLDivElement>();
+  const ref = useRef<HTMLDivElement>(null);
   useMouseDragEvents({
     forwardRef: ref,
     mouseEnter: () => {

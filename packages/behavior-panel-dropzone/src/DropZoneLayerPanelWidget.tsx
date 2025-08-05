@@ -68,7 +68,7 @@ export interface DropZoneLayerPanelWidgetProps {
 }
 
 export const DropZoneLayerPanelWidget: React.FC<DropZoneLayerPanelWidgetProps> = (props) => {
-  const ref = useRef<HTMLDivElement>();
+  const ref = useRef<HTMLDivElement>(null);
   const [show, setShow] = useState(false);
   const theme = _.merge({}, DefaultDropZoneLayerPanelTheme, props.theme || {});
 

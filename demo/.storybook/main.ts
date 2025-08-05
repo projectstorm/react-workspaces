@@ -1,45 +1,31 @@
 import type { StorybookConfig } from '@storybook/react-webpack5';
 
 const config: StorybookConfig = {
-  addons: [
-    {
-      name: '@storybook/addon-essentials'
-    },
-    {
-      name: '@storybook/addon-webpack5-compiler-babel'
-    }
-  ],
-  docs: {
-    autodocs: false
+  stories: ['../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
+  addons: ['@storybook/addon-webpack5-compiler-swc'],
+  framework: {
+    name: '@storybook/react-webpack5',
+    options: {}
   },
-  stories: ['../dist/stories/*.stories.js'],
   webpackFinal: async (config, { configType }) => {
     return {
       ...config,
       devtool: 'inline-source-map',
-      resolve: {
-        ...config.resolve,
-        alias: {
-          '@emotion/react': require.resolve('@emotion/react')
-        }
-      },
       module: {
         ...config.module,
         rules: [
+          ...config.module.rules,
           {
-            enforce: 'pre',
-            test: /\.js$/,
-            loader: 'source-map-loader'
+            test: /\.(woff|woff2|eot|ttf|otf|svg|png|gif|ico)$/,
+            type: 'asset/resource'
           },
-          ...config.module.rules
+          {
+            test: /\.xml$/,
+            type: 'asset/source'
+          }
         ]
       }
     };
-  },
-  framework: {
-    name: '@storybook/react-webpack5',
-    options: {}
   }
 };
-
 export default config;

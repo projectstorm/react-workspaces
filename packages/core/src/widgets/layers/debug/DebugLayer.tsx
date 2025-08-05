@@ -52,7 +52,7 @@ export class DebugLayer extends Layer {
     this.repaint();
   }
 
-  renderLayer(event): JSX.Element {
+  renderLayer(event): React.JSX.Element {
     return <DebugLayerWidget options={this.debugOptions} engine={event.engine} model={event.model} />;
   }
 }

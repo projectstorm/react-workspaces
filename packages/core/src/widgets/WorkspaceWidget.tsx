@@ -28,7 +28,7 @@ namespace S {
 }
 
 export const WorkspaceWidget: React.FC<WorkspaceWidgetProps> = (props) => {
-  const ref_container = useRef<HTMLDivElement>();
+  const ref_container = useRef<HTMLDivElement>(null);
   const timerListener = useRef(null);
 
   const forceUpdate = useForceUpdate();

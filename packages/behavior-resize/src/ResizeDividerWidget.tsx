@@ -118,7 +118,7 @@ const getResizeStrategy = (
 export const ResizeDividerWidget: React.FC<ResizeDividerWidgetProps> = (props) => {
   const container = props.dividerContainer.dimensions;
   const vertical = props.dividerContainer.vertical;
-  const ref = useRef<HTMLDivElement>();
+  const ref = useRef<HTMLDivElement>(null);
   const [strategy] = useState(() => {
     return getResizeStrategy(props.dividerContainer, props.parent);
   });

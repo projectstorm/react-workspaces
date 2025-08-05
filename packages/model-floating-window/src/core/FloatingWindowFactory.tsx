@@ -9,8 +9,8 @@ import { FloatingWindowModel } from './FloatingWindowModel';
 
 export interface FloatingWindowRendererEvent<T extends FloatingWindowModel = FloatingWindowModel>
   extends WorkspaceModelFactoryEvent<T> {
-  titlebar: JSX.Element;
-  content: JSX.Element;
+  titlebar: React.JSX.Element;
+  content: React.JSX.Element;
 }
 
 export interface FloatingWindowSubRendererEvent<T extends WorkspaceModel> {

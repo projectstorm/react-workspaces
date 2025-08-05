@@ -15,7 +15,7 @@ import { WorkspaceTrayFactory } from './WorkspaceTrayFactory';
 export interface TrayWidgetProps {
   node: WorkspaceTrayModel;
   engine: WorkspaceEngine;
-  header: JSX.Element;
+  header: React.JSX.Element;
   className?: any;
   factory: WorkspaceTrayFactory;
 }

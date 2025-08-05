@@ -15,7 +15,7 @@ export interface DividerWidgetProps {
 }
 
 export const DividerWidget: React.FC<DividerWidgetProps> = (props) => {
-  const ref = useRef<HTMLDivElement>();
+  const ref = useRef<HTMLDivElement>(null);
   const forceUpdate = useForceUpdate();
 
   useEffect(() => {

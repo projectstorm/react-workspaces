@@ -12,7 +12,7 @@ export interface FloatingWindowResizeEdgeWidgetProps {
 }
 
 export const FloatingWindowResizeEdgeWidget: React.FC<FloatingWindowResizeEdgeWidgetProps> = (props) => {
-  const ref = useRef();
+  const ref = useRef(null);
   const left = useRef<number>(0);
   const top = useRef<number>(0);
   const width = useRef<number>(0);

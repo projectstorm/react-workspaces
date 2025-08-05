@@ -26,7 +26,7 @@ export interface DropzoneDividerWidgetProps {
 
 export const DropzoneDividerWidget: React.FC<DropzoneDividerWidgetProps> = (props) => {
   const [entered, setEntered] = useState(false);
-  const ref = useRef<HTMLDivElement>();
+  const ref = useRef<HTMLDivElement>(null);
   useMouseDragEvents({
     forwardRef: ref,
     mouseEnter: () => {

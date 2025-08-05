@@ -14,7 +14,7 @@ export class DropzoneDividersLayer extends Layer {
     });
   }
 
-  renderLayer(event): JSX.Element {
+  renderLayer(event): React.JSX.Element {
     return <DropzoneDividersLayerWidget engine={event.engine} theme={this.options2.theme} />;
   }
 }

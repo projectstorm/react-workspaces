@@ -10,7 +10,7 @@ export interface UseModelElementProps {
 }
 
 export const useModelElement = (props: UseModelElementProps) => {
-  const ref = React.useRef<HTMLDivElement>();
+  const ref = React.useRef<HTMLDivElement>(null);
   useResizeObserver({
     forwardRef: ref,
     dimension: props.model.r_dimensions,

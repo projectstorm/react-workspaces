@@ -29,7 +29,7 @@ import { resizingBehavior } from '@projectstorm/react-workspaces-behavior-resize
 import { RootWorkspaceModel } from '@projectstorm/react-workspaces-model-floating-window';
 import { ConvertToTabZone, getDirectiveForTabModel } from '@projectstorm/react-workspaces-dropzone-plugin-tabs';
 import { ConvertToTrayZone, getDirectiveForTrayModel } from '@projectstorm/react-workspaces-dropzone-plugin-tray';
-import { css, Global } from '@storybook/theming';
+import { css, Global } from 'storybook/theming';
 
 export const genVerticalNode = () => {
   const m1 = new DefaultWorkspacePanelModel('Panel 1');

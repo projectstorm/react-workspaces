@@ -19,7 +19,7 @@ namespace S {
 
 export const DropzoneLogicWidget: React.FC<React.PropsWithChildren<DropzoneLogicWidgetProps>> = (props) => {
   const [enter, setEnter] = useState(false);
-  const ref = useRef<HTMLDivElement>();
+  const ref = useRef<HTMLDivElement>(null);
   useDroppableModel({
     onDrop: (model) => {
       props.onDrop(model);

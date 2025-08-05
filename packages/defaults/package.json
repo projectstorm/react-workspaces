@@ -11,20 +11,20 @@
     "build": "../../node_modules/.bin/webpack"
   },
   "dependencies": {
-    "react": "^18.3.1",
-    "@emotion/styled": "^11.13.5",
-    "@emotion/react": "^11.13.5",
+    "react": "^19.1.1",
+    "@emotion/styled": "^11.14.1",
+    "@emotion/react": "^11.14.0",
     "lodash": "^4.17.21",
     "@projectstorm/react-workspaces-core": "workspace:*",
     "@projectstorm/react-workspaces-model-tabs": "workspace:*",
     "@projectstorm/react-workspaces-model-tray": "workspace:*",
     "@projectstorm/react-workspaces-model-floating-window": "workspace:*",
-    "@fortawesome/free-solid-svg-icons": "^6.7.1",
-    "@fortawesome/react-fontawesome": "^0.2.2",
-    "@fortawesome/fontawesome-svg-core": "^6.7.1"
+    "@fortawesome/free-solid-svg-icons": "^7.0.0",
+    "@fortawesome/react-fontawesome": "^0.2.3",
+    "@fortawesome/fontawesome-svg-core": "^7.0.0"
   },
   "devDependencies": {
-    "@types/react": "^18.3.12",
-    "@types/lodash": "^4.17.13"
+    "@types/react": "^19.1.9",
+    "@types/lodash": "^4.17.20"
   }
 }

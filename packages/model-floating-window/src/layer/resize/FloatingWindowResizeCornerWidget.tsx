@@ -12,7 +12,7 @@ export interface FloatingWindowResizeCornerWidgetProps {
 }
 
 export const FloatingWindowResizeCornerWidget: React.FC<FloatingWindowResizeCornerWidgetProps> = (props) => {
-  const ref = useRef();
+  const ref = useRef(null);
   // horizontal
   const val1 = useRef<number>(0);
   // vertical
