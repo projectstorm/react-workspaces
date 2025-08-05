@@ -1,5 +1,11 @@
 # @projectstorm/react-workspaces-core
 
+## 4.2.1
+
+### Patch Changes
+
+- 40afac4: Fix cache boundary on useEffect
+
 ## 4.2.0
 
 ### Minor Changes
