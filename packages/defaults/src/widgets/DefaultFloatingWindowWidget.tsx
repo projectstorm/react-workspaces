@@ -6,8 +6,8 @@ import { FloatingWindowModel } from '@projectstorm/react-workspaces-model-floati
 export interface DefaultFloatingWindowWidgetProps {
   model: FloatingWindowModel;
   engine: WorkspaceEngine;
-  titlebar: JSX.Element;
-  content: JSX.Element;
+  titlebar: React.JSX.Element;
+  content: React.JSX.Element;
 }
 
 export const DefaultFloatingWindowWidget: React.FC<DefaultFloatingWindowWidgetProps> = (props) => {

@@ -16,7 +16,7 @@ export class DropZoneLayer extends Layer {
     });
   }
 
-  renderLayer(event): JSX.Element {
+  renderLayer(event): React.JSX.Element {
     return (
       <DropZoneLayerWidget
         debugModels={this.options2.debugModels}

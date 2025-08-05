@@ -17,7 +17,7 @@ export interface OrderingWidgetZoneProps {
 
 export const OrderingWidgetZone: React.FC<OrderingWidgetZoneProps> = (props) => {
   const [expand, setExpand] = useState(false);
-  const ref = useRef<HTMLDivElement>();
+  const ref = useRef<HTMLDivElement>(null);
   useResizeObserver({
     forwardRef: ref,
     dimension: props.container,
@@ -60,7 +60,7 @@ export interface OrderedDropEvent {
 }
 
 export interface OrderingWidgetProps {
-  children: JSX.Element[];
+  children: React.JSX.Element[];
   vertical: boolean;
   engine: WorkspaceEngine;
   dropped: (event: OrderedDropEvent) => any;

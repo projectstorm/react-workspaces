@@ -28,7 +28,7 @@ export abstract class Layer<T extends LayerListener = LayerListener> extends Bas
     this.layerManager = null;
   }
 
-  abstract renderLayer(event: RenderLayerEvent): JSX.Element;
+  abstract renderLayer(event: RenderLayerEvent): React.JSX.Element;
 
   setLayerManager(manager: LayerManager) {
     this.layerManager = manager;

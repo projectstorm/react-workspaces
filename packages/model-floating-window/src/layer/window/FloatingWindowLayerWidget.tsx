@@ -25,7 +25,7 @@ export const FloatingWindowLayerWidget: React.FC<FloatingWindowLayerWidgetProps>
   const factory = props.engine.getFactory(props.window.child);
 
   const forceUpdate = useForceUpdate();
-  const ref = useRef<HTMLDivElement>();
+  const ref = useRef<HTMLDivElement>(null);
   const initialPos = useRef<Pick<IPosition, Alignment.LEFT | Alignment.TOP>>({
     left: props.window.position.left,
     top: props.window.position.top

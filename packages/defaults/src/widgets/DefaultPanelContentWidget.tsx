@@ -17,7 +17,7 @@ export const Meta: React.FC<{ label: string; value: string }> = (props) => {
 };
 
 export const DefaultPanelContentWidget: React.FC<DefaultPanelContentWidgetProps> = (props) => {
-  const ref = useRef<HTMLDivElement>();
+  const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
     ref.current.style.opacity = '1';
     const res = setTimeout(() => {

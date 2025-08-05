@@ -32,7 +32,7 @@ export class OrderingLayer extends Layer<OrderingLayerListener> {
     this.iterateListeners((cb) => cb.dropped?.(model, index));
   }
 
-  renderLayer(event: RenderLayerEvent): JSX.Element {
+  renderLayer(event: RenderLayerEvent): React.JSX.Element {
     return <OrderingLayerWidget engine={event.engine} layer={this} />;
   }
 }

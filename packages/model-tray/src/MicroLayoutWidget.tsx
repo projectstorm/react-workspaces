@@ -50,7 +50,7 @@ export interface MicroWrapperProps {
 }
 
 export const MicroWrapper: React.FC<MicroWrapperProps> = (props) => {
-  const ref = useRef<HTMLDivElement>();
+  const ref = useRef<HTMLDivElement>(null);
   if (props.node.mode === WorkspaceTrayMode.COLLAPSED) {
     useResizeObserver({
       forwardRef: ref,
@@ -87,7 +87,7 @@ export const MicroWrapper: React.FC<MicroWrapperProps> = (props) => {
 };
 
 export const MicroLayoutWidget: React.FC<MicroLayoutWidgetProps> = (props) => {
-  const ref = useRef<HTMLDivElement>();
+  const ref = useRef<HTMLDivElement>(null);
 
   return (
     <S.MicroLayout className={props.className}>

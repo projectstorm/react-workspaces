@@ -11,7 +11,7 @@ namespace S {
 }
 
 export class DefaultTrayFactory extends WorkspaceTrayFactory {
-  generateTrayHeader(event: WorkspaceModelFactoryEvent<WorkspaceTrayModel>): JSX.Element {
+  generateTrayHeader(event: WorkspaceModelFactoryEvent<WorkspaceTrayModel>): React.JSX.Element {
     return (
       <S.Tray
         onDoubleClick={() => {

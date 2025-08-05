@@ -18,7 +18,7 @@ export interface TrayModelPanelRendererEvent<T extends WorkspaceModel> {
 }
 
 export interface TrayModelPanelRenderer<T extends WorkspaceModel = WorkspaceModel> extends WorkspaceNodePanelRenderer {
-  renderIcon(event: TrayModelPanelRendererEvent<T>): JSX.Element;
+  renderIcon(event: TrayModelPanelRendererEvent<T>): React.JSX.Element;
 }
 
 export interface WorkspaceTrayFactoryOptions {
@@ -64,7 +64,7 @@ export class WorkspaceTrayFactory<T extends WorkspaceTrayModel = WorkspaceTrayMo
     return null;
   }
 
-  generateContent(event: WorkspaceModelFactoryEvent<T>): JSX.Element {
+  generateContent(event: WorkspaceModelFactoryEvent<T>): React.JSX.Element {
     return (
       <TrayWidget factory={this} header={this.generateTrayHeader(event)} node={event.model} engine={event.engine} />
     );

@@ -17,7 +17,7 @@ export interface DirectionChildWidgetProps {
   vertical: boolean;
   model: WorkspaceModel;
   expand: boolean;
-  generateElement: (model: WorkspaceModel) => JSX.Element;
+  generateElement: (model: WorkspaceModel) => React.JSX.Element;
 }
 
 export const DirectionChildWidget: React.FC<DirectionChildWidgetProps> = (props) => {

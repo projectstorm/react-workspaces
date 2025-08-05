@@ -21,7 +21,7 @@ namespace S {
 }
 
 export const DraggableWidget: React.FC<React.PropsWithChildren<DraggableWidgetProps>> = (props) => {
-  const ref = useRef<HTMLDivElement>();
+  const ref = useRef<HTMLDivElement>(null);
   const forceUpdate = useForceUpdate();
   useDraggableModel({
     forwardRef: props.forwardRef || ref,

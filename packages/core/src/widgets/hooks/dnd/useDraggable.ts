@@ -58,5 +58,5 @@ export const useDraggable = <T>(props: UseDraggableProps<T>) => {
 
 export const DraggableWidget = <T>(props: React.PropsWithChildren<UseDraggableProps<T>>) => {
   useDraggable(props);
-  return props.children as JSX.Element;
+  return props.children as React.JSX.Element;
 };

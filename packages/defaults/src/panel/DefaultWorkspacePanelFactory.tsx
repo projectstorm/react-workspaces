@@ -10,7 +10,7 @@ export class DefaultWorkspacePanelFactory extends WorkspaceModelFactory<DefaultW
     super(DefaultWorkspacePanelFactory.TYPE);
   }
 
-  generateContent(event: WorkspaceModelFactoryEvent<DefaultWorkspacePanelModel>): JSX.Element {
+  generateContent(event: WorkspaceModelFactoryEvent<DefaultWorkspacePanelModel>): React.JSX.Element {
     return <DefaultPanelContentWidget model={event.model} />;
   }
 

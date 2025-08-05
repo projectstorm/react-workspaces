@@ -17,7 +17,7 @@ export class FloatingWindowResizeLayer extends Layer {
     });
   }
 
-  renderLayer(event: RenderLayerEvent): JSX.Element {
+  renderLayer(event: RenderLayerEvent): React.JSX.Element {
     return (
       <FloatingWindowResizeLayerWidget
         debug={this.options2.root.debug}

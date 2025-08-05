@@ -10,21 +10,21 @@
   "dependencies": {
     "@projectstorm/react-workspaces-core": "workspace:*",
     "@projectstorm/react-workspaces-behavior-resize": "workspace:*",
-    "@emotion/react": "^11.13.5",
-    "@emotion/styled": "^11.13.5",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
   },
   "devDependencies": {
     "html-webpack-plugin": "^5.6.3",
-    "@types/react": "^18.3.12",
-    "@types/react-dom": "^18.3.1",
-    "babel-loader": "^9.2.1",
-    "@babel/core": "^7.26.0",
-    "@babel/preset-env": "^7.26.0",
-    "@babel/preset-react": "^7.25.9",
-    "webpack": "^5.96.1",
-    "webpack-cli": "^5.1.4",
-    "webpack-dev-server": "^5.1.0"
+    "@types/react": "^19.1.9",
+    "@types/react-dom": "^19.1.7",
+    "babel-loader": "^10.0.0",
+    "@babel/core": "^7.28.0",
+    "@babel/preset-env": "^7.28.0",
+    "@babel/preset-react": "^7.27.1",
+    "webpack": "^5.101.0",
+    "webpack-cli": "^6.0.1",
+    "webpack-dev-server": "^5.2.2"
   }
 }

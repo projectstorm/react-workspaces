@@ -18,7 +18,7 @@ export class FloatingWindowLayer extends Layer {
     this.repaint();
   }
 
-  renderLayer(event: RenderLayerEvent): JSX.Element {
+  renderLayer(event: RenderLayerEvent): React.JSX.Element {
     return <FloatingWindowLayerWidget layer={this} animate={this.animate} window={this.model} engine={event.engine} />;
   }
 }

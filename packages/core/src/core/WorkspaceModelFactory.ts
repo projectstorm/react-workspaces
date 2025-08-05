@@ -35,5 +35,5 @@ export abstract class WorkspaceModelFactory<
 
   protected abstract _generateModel(): T;
 
-  abstract generateContent(event: E): JSX.Element;
+  abstract generateContent(event: E): React.JSX.Element;
 }

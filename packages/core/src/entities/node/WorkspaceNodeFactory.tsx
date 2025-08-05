@@ -14,7 +14,7 @@ export interface RenderTitleBarEvent<T extends WorkspaceModel> {
 }
 
 export interface WorkspaceNodePanelRenderer<T extends WorkspaceModel = WorkspaceModel> extends SubComponentRenderer<T> {
-  renderTitleBar(model: RenderTitleBarEvent<T>): JSX.Element;
+  renderTitleBar(model: RenderTitleBarEvent<T>): React.JSX.Element;
 }
 
 export class WorkspaceNodeFactory<
