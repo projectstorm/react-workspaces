@@ -25,6 +25,8 @@ namespace S {
     display: flex;
     flex-grow: 1;
     flex-direction: ${(p) => (p.vertical ? 'column' : 'row')};
+    min-height: 0;
+    min-width: 0;
     max-height: 100%;
   `;
 }
