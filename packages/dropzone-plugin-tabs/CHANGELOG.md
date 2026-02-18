@@ -1,5 +1,16 @@
 # @projectstorm/react-workspaces-dropzone-plugin-tabs
 
+## 2.2.15
+
+### Patch Changes
+
+- 2d5f884: Bump all dependencies
+- Updated dependencies [0908e8b]
+- Updated dependencies [2d5f884]
+  - @projectstorm/react-workspaces-core@4.2.3
+  - @projectstorm/react-workspaces-behavior-panel-dropzone@2.3.13
+  - @projectstorm/react-workspaces-model-tabs@2.3.11
+
 ## 2.2.14
 
 ### Patch Changes
