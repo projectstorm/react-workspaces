@@ -15,9 +15,9 @@ export interface WorkspaceCollectionModelListener extends WorkspaceModelListener
 }
 
 export class WorkspaceCollectionModel<
-    S extends SerializedCollectionModel = SerializedCollectionModel,
-    L extends WorkspaceCollectionModelListener = WorkspaceCollectionModelListener
-  >
+  S extends SerializedCollectionModel = SerializedCollectionModel,
+  L extends WorkspaceCollectionModelListener = WorkspaceCollectionModelListener
+>
   extends WorkspaceModel<S, L>
   implements WorkspaceCollectionInterface
 {

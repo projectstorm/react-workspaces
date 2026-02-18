@@ -7,8 +7,9 @@ import {
 } from '@projectstorm/react-workspaces-core';
 import { FloatingWindowModel } from './FloatingWindowModel';
 
-export interface FloatingWindowRendererEvent<T extends FloatingWindowModel = FloatingWindowModel>
-  extends WorkspaceModelFactoryEvent<T> {
+export interface FloatingWindowRendererEvent<
+  T extends FloatingWindowModel = FloatingWindowModel
+> extends WorkspaceModelFactoryEvent<T> {
   titlebar: React.JSX.Element;
   content: React.JSX.Element;
 }
