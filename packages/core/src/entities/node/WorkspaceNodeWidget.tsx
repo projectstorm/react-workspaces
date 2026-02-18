@@ -87,12 +87,12 @@ export const WorkspaceNodePanelWidget: React.FC<WorkspaceNodePanelWidgetProps> =
   return (
     <S.Container ref={ref}>
       {props.renderer ? (
-        <DraggableWidget model={props.model} engine={props.engine}>
+        <S.Title model={props.model} engine={props.engine}>
           {props.renderer.renderTitleBar({
             engine: props.engine,
             model: props.model
           })}
-        </DraggableWidget>
+        </S.Title>
       ) : null}
       <S.Content>
         {factory.generateContent({
@@ -106,6 +106,8 @@ export const WorkspaceNodePanelWidget: React.FC<WorkspaceNodePanelWidgetProps> =
 namespace S {
   export const DirectionalLayout = styled(DirectionalLayoutWidget)`
     height: 100%;
+    min-height: 0;
+    min-width: 0;
     width: 100%;
   `;
 
@@ -115,14 +117,24 @@ namespace S {
     position: relative;
     max-height: 100%;
     height: 100%;
+    min-height: 0;
+    min-width: 0;
     width: 100%;
     overflow: hidden;
+  `;
+
+  export const Title = styled(DraggableWidget)`
+    flex-shrink: 0;
+    min-height: 0;
+    min-width: 0;
   `;
 
   export const Content = styled.div`
     flex-grow: 1;
     display: flex;
     max-height: 100%;
+    min-height: 0;
+    min-width: 0;
     overflow: hidden;
     flex-direction: column;
   `;

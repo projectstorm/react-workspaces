@@ -10,6 +10,7 @@ namespace S {
     ${(p) => (p.height ? `min-height: ${p.height}px; height: ${p.height}px` : '')};
     flex-shrink: ${(p) => (p.expand ? 1 : 0)};
     flex-grow: ${(p) => (p.expand ? 1 : 0)};
+    ${(p) => (p.expand ? 'min-height: 0; min-width: 0;' : '')};
   `;
 }
 
