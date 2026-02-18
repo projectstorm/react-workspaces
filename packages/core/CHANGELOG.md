@@ -1,5 +1,12 @@
 # @projectstorm/react-workspaces-core
 
+## 4.2.3
+
+### Patch Changes
+
+- 0908e8b: Fixed a rendering issue that causes overflow problems in vertical node groups
+- 2d5f884: Bump all dependencies
+
 ## 4.2.2
 
 ### Patch Changes
