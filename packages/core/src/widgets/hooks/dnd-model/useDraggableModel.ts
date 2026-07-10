@@ -67,6 +67,8 @@ export const useDroppableModel = (props: UseDroppableModelOptions) => {
         draggingNode = found || draggingNode;
       }
 
+      draggingNode = draggingNode.getDropModel();
+
       log(`workspace model dropped`, draggingNode);
       props.onDrop(draggingNode);
     },

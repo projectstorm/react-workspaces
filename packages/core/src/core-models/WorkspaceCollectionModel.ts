@@ -130,6 +130,24 @@ export class WorkspaceCollectionModel<
         this.children.splice(position - 1, 0, model);
       }
     } else {
+      // A model can be rendered by an intermediary (for example a tray's floating
+      // window) while still being owned by a collection elsewhere in the tree.
+      // Detach that owner before re-parenting so it cannot continue to render the
+      // same model with stale layout dimensions.
+      if (
+        model.parent &&
+        (!(model.parent instanceof WorkspaceCollectionModel) || !model.parent.children.includes(model))
+      ) {
+        const owner = model
+          .getRootModel()
+          .flatten()
+          .find(
+            (candidate) =>
+              candidate instanceof WorkspaceCollectionModel && candidate !== this && candidate.children.includes(model)
+          ) as WorkspaceCollectionModel | undefined;
+        owner?.removeModel(model);
+      }
+
       if (model.parent) {
         model.delete();
       }

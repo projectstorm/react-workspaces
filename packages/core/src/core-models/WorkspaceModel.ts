@@ -167,6 +167,15 @@ export class WorkspaceModel<
     return [this.r_dimensions];
   }
 
+  /**
+   * Returns the model that should be inserted when this model is dropped into
+   * a workspace collection. Models that merely present another model can
+   * override this to move their content instead of their presentation shell.
+   */
+  getDropModel(): WorkspaceModel {
+    return this;
+  }
+
   invalidateDimensions() {
     this.iterateListeners((cb) => cb.dimensionsInvalidated?.());
   }
