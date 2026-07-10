@@ -1,5 +1,11 @@
 # @projectstorm/react-workspaces-core
 
+## 4.3.1
+
+### Patch Changes
+
+- 875ed9d: Prevent workspace root models from being collapsed during normalization after a root-level drop split.
+
 ## 4.3.0
 
 ### Minor Changes
