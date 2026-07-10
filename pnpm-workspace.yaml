@@ -2,3 +2,8 @@ packages:
   - 'packages/*'
   - 'demo'
   - 'example-*'
+allowBuilds:
+  '@swc/core': false
+  esbuild: false
+minimumReleaseAgeExclude:
+  - prettier@3.9.5

@@ -101,19 +101,26 @@ export const DropZoneLayerPanelWidget: React.FC<DropZoneLayerPanelWidgetProps> =
             })}
           </S.Layer>
           <S.Layer2 visible={show}>
-            <S.ButtonBar>
-              {props.directive.transformZones.map((zone) => {
-                return (
-                  <DropZoneTransformWidget
-                    theme={theme.transformButtonTheme}
-                    model={props.model}
-                    zone={zone}
-                    engine={props.engine}
-                    key={zone.key}
-                  />
-                );
-              })}
-            </S.ButtonBar>
+            <S.TransformActions>
+              <S.ButtonBar>
+                {props.directive.transformZones.map((zone) => {
+                  return (
+                    <DropZoneTransformWidget
+                      theme={theme.transformButtonTheme}
+                      model={props.model}
+                      zone={zone}
+                      engine={props.engine}
+                      key={zone.key}
+                    />
+                  );
+                })}
+              </S.ButtonBar>
+              {props.directive.transformZones.length > 0 ? (
+                <S.ActionsHint>
+                  {props.directive.transformZones.length === 1 ? 'Drag into the above' : 'Drag into one of these'}
+                </S.ActionsHint>
+              ) : null}
+            </S.TransformActions>
             {props.debug ? <S.Debug>{props.model.id.substring(0, 7)}</S.Debug> : null}
           </S.Layer2>
         </S.Inside>
@@ -147,6 +154,20 @@ namespace S {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
+  `;
+
+  export const TransformActions = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  `;
+
+  export const ActionsHint = styled.div`
+    color: white;
+    font-size: 12px;
+    margin-top: 8px;
+    text-align: center;
+    pointer-events: none;
   `;
 
   export const Layer = styled.div<{ visible: boolean }>`

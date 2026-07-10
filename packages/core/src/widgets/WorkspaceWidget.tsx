@@ -30,6 +30,8 @@ namespace S {
 export const WorkspaceWidget: React.FC<WorkspaceWidgetProps> = (props) => {
   const ref_container = useRef<HTMLDivElement>(null);
   const timerListener = useRef(null);
+  const rootModelKeys = useRef(new WeakMap<object, number>());
+  const nextRootModelKey = useRef(0);
 
   const forceUpdate = useForceUpdate();
 
@@ -78,18 +80,23 @@ export const WorkspaceWidget: React.FC<WorkspaceWidgetProps> = (props) => {
     }
   });
 
+  const rootModel = props.model.getRootModel();
+  let rootModelKey = rootModelKeys.current.get(rootModel);
+  if (rootModelKey == null) {
+    rootModelKey = nextRootModelKey.current++;
+    rootModelKeys.current.set(rootModel, rootModelKey);
+  }
+
   return (
     <UseMouseDragEventsRootWidget forwardRef={ref_container}>
       <S.Container ref={ref_container}>
-        {props.engine.getFactory(props.model.getRootModel()).generateContent({
-          engine: props.engine,
-          model: props.model.getRootModel()
-        })}
-        <S.LayerManager
-          engine={props.engine}
-          layerManager={props.engine.layerManager}
-          model={props.model.getRootModel()}
-        />
+        <React.Fragment key={rootModelKey}>
+          {props.engine.getFactory(rootModel).generateContent({
+            engine: props.engine,
+            model: rootModel
+          })}
+          <S.LayerManager engine={props.engine} layerManager={props.engine.layerManager} model={rootModel} />
+        </React.Fragment>
       </S.Container>
     </UseMouseDragEventsRootWidget>
   );

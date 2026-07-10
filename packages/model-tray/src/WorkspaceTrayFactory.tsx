@@ -60,7 +60,7 @@ export class WorkspaceTrayFactory<T extends WorkspaceTrayModel = WorkspaceTrayMo
     }) as T;
   }
 
-  generateTrayHeader(event: WorkspaceModelFactoryEvent<T>) {
+  generateTrayHeader(event: WorkspaceModelFactoryEvent<T>): React.JSX.Element | null {
     return null;
   }
 

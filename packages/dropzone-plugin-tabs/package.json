@@ -1,6 +1,7 @@
 {
   "name": "@projectstorm/react-workspaces-dropzone-plugin-tabs",
   "version": "2.2.15",
+  "repository": "https://github.com/projectstorm/react-workspaces.git",
   "main": "./dist/index.umd.js",
   "module": "./dist/index.jsx",
   "types": "./dist/@types/index.d.ts",
@@ -11,14 +12,14 @@
     "build": "../../node_modules/.bin/webpack"
   },
   "dependencies": {
-    "react": "^19.2.4",
+    "react": "^19.2.7",
     "@projectstorm/react-workspaces-core": "workspace:*",
     "@projectstorm/react-workspaces-model-tabs": "workspace:*",
     "@projectstorm/react-workspaces-behavior-panel-dropzone": "workspace:*",
-    "@fortawesome/free-solid-svg-icons": "^7.2.0",
-    "@fortawesome/fontawesome-svg-core": "^7.2.0"
+    "@fortawesome/free-solid-svg-icons": "^7.3.0",
+    "@fortawesome/fontawesome-svg-core": "^7.3.0"
   },
   "devDependencies": {
-    "@types/react": "^19.2.14"
+    "@types/react": "^19.2.17"
   }
 }

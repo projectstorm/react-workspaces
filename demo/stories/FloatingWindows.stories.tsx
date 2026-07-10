@@ -4,55 +4,56 @@ import 'typeface-open-sans';
 import { DefaultWindowModel, DefaultWorkspacePanelModel } from '@projectstorm/react-workspaces-defaults';
 import { WorkspaceTabModel } from '@projectstorm/react-workspaces-model-tabs';
 import { RootWorkspaceModel } from '@projectstorm/react-workspaces-model-floating-window';
-import { CompInternal, genVerticalNode, SharedArgs, useEngine, useRootModel } from './helpers/tools';
+import { CompInternal, genVerticalNode, SharedArgs, StoryArgs, useEngine, useRootModel } from './helpers/tools';
 
-export const FloatingWindows = function (args) {
-  const engine = useEngine(args);
-  const [model] = useState(() => {
-    let model = new RootWorkspaceModel(engine, false);
-    model.setHorizontal(true);
-    model
+export const FloatingWindows = Object.assign(
+  function FloatingWindows(args: StoryArgs) {
+    const engine = useEngine(args);
+    const [model] = useState(() => {
+      let model = new RootWorkspaceModel(engine, false);
+      model.setHorizontal(true);
+      model
 
-      //left panel
-      .addModel(genVerticalNode())
+        //left panel
+        .addModel(genVerticalNode())
 
-      //tab panel
-      .addModel(
-        new WorkspaceTabModel()
+        //tab panel
+        .addModel(
+          new WorkspaceTabModel()
 
-          .addModel(new DefaultWorkspacePanelModel('Tab 4'))
-          .addModel(new DefaultWorkspacePanelModel('Tab 5'))
-          .addModel(new DefaultWorkspacePanelModel('Tab 6'))
-      )
+            .addModel(new DefaultWorkspacePanelModel('Tab 4'))
+            .addModel(new DefaultWorkspacePanelModel('Tab 5'))
+            .addModel(new DefaultWorkspacePanelModel('Tab 6'))
+        )
 
-      .addModel(genVerticalNode());
+        .addModel(genVerticalNode());
 
-    const window1 = new DefaultWindowModel(new DefaultWorkspacePanelModel('Floating window 1'));
-    window1.position.update({
-      top: 100,
-      left: 100
+      const window1 = new DefaultWindowModel(new DefaultWorkspacePanelModel('Floating window 1'));
+      window1.position.update({
+        top: 100,
+        left: 100
+      });
+      window1.setWidth(400);
+      window1.setHeight(400);
+      model.addFloatingWindow(window1);
+
+      const window2 = new DefaultWindowModel(new DefaultWorkspacePanelModel('Floating window 2'));
+      window2.position.update({
+        top: 100,
+        left: 600
+      });
+      window2.setWidth(400);
+      window2.setHeight(400);
+      model.addFloatingWindow(window2);
+
+      return model;
     });
-    window1.setWidth(400);
-    window1.setHeight(400);
-    model.addFloatingWindow(window1);
+    useRootModel(model, args);
 
-    const window2 = new DefaultWindowModel(new DefaultWorkspacePanelModel('Floating window 2'));
-    window2.position.update({
-      top: 100,
-      left: 600
-    });
-    window2.setWidth(400);
-    window2.setHeight(400);
-    model.addFloatingWindow(window2);
-
-    return model;
-  });
-  useRootModel(model, args);
-
-  return <CompInternal model={model} engine={engine} />;
-}.bind({});
-
-FloatingWindows.args = SharedArgs;
+    return <CompInternal model={model} engine={engine} />;
+  },
+  { args: SharedArgs }
+);
 
 export default {
   title: 'Workspace',

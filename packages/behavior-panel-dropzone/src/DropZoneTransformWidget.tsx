@@ -28,6 +28,12 @@ export const DropZoneTransformWidget: React.FC<DropZoneTransformWidgetProps> = (
   useDroppableModel({
     forwardRef: ref,
     engine: props.engine,
+    // The drop-zone layer is mounted after the drag has already entered the
+    // panel. In that case this square may never receive dragenter, but it will
+    // receive dragover once it is beneath the cursor.
+    onDragover: () => {
+      setEntered(true);
+    },
     onDrop: (model) => {
       props.zone.transform({
         model,
@@ -39,5 +45,7 @@ export const DropZoneTransformWidget: React.FC<DropZoneTransformWidgetProps> = (
   return <S.Container ref={ref}>{props.zone.render({ entered, theme: props.theme })}</S.Container>;
 };
 namespace S {
-  export const Container = styled.div``;
+  export const Container = styled.div`
+    pointer-events: all;
+  `;
 }

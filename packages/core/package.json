@@ -1,6 +1,7 @@
 {
   "name": "@projectstorm/react-workspaces-core",
   "version": "4.2.3",
+  "repository": "https://github.com/projectstorm/react-workspaces.git",
   "main": "./dist/index.umd.js",
   "module": "./dist/index.jsx",
   "types": "./dist/@types/index.d.ts",
@@ -11,18 +12,18 @@
     "build": "../../node_modules/.bin/webpack"
   },
   "dependencies": {
-    "react": "^19.2.4",
-    "react-dom": "^19.2.4",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
     "@emotion/styled": "^11.14.1",
     "@emotion/react": "^11.14.0",
-    "lodash": "^4.17.23",
+    "lodash": "^4.18.1",
     "color": "^5.0.3",
-    "uuid": "^13.0.0"
+    "uuid": "^14.0.1"
   },
   "devDependencies": {
-    "@types/react": "^19.2.14",
+    "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
-    "@types/lodash": "^4.17.23",
-    "@types/uuid": "^10.0.0"
+    "@types/lodash": "^4.17.24",
+    "@types/uuid": "^11.0.0"
   }
 }

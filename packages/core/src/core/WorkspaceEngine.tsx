@@ -31,7 +31,7 @@ export class WorkspaceEngineError extends Error {
 
 export class WorkspaceEngine extends BaseObserver<WorkspaceEngineListener> implements WorkspaceEngineInterface {
   // factories
-  factories: { [type: string]: WorkspaceModelFactory };
+  factories: { [type: string]: WorkspaceModelFactory<any, any> };
   draggingID: string;
   layerManager: LayerManager;
   repainting: boolean;
@@ -124,12 +124,12 @@ export class WorkspaceEngine extends BaseObserver<WorkspaceEngineListener> imple
       .forEach((m: WorkspaceCollectionModel) => m.normalize());
   }
 
-  registerFactory(factory: WorkspaceModelFactory) {
+  registerFactory(factory: WorkspaceModelFactory<any, any>) {
     this.factories[factory.type] = factory;
     factory.setEngine(this);
   }
 
-  getFactory<T extends WorkspaceModelFactory>(model: WorkspaceModel | string): T {
+  getFactory<T extends WorkspaceModelFactory<any, any>>(model: WorkspaceModel | string): T {
     if (typeof model !== 'string') {
       model = model.type;
     }
@@ -140,11 +140,15 @@ export class WorkspaceEngine extends BaseObserver<WorkspaceEngineListener> imple
   }
 
   setDraggingNode(id: string) {
-    if (this.draggingID !== id) {
-      this.draggingID = id;
-      this.iterateListeners((cb) => cb.modelDragStart?.());
-    } else if (id === null) {
+    if (this.draggingID === id) {
+      return;
+    }
+
+    this.draggingID = id;
+    if (id === null) {
       this.iterateListeners((cb) => cb.modelDragEnd?.());
+    } else {
+      this.iterateListeners((cb) => cb.modelDragStart?.());
     }
   }
 }

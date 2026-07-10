@@ -59,43 +59,46 @@ export interface GetDirectiveForWorkspaceNodeOptions {
   node: WorkspaceModel;
   transformZones?: TransformZone[];
   generateParentNode?: () => WorkspaceNodeModel;
+  allowSplit?: boolean;
 }
 
 export const getDirectiveForWorkspaceNode = (
   options: GetDirectiveForWorkspaceNodeOptions
 ): DropZonePanelDirective | null => {
-  const { node, transformZones, generateParentNode } = options;
+  const { node, transformZones, generateParentNode, allowSplit = true } = options;
   if (!(node instanceof WorkspaceCollectionModel) && node.parent instanceof WorkspaceNodeModel) {
     return {
       transformZones: [ReplaceZone, ...(transformZones || [])],
-      splitZones: [
-        {
-          alignment: node.parent.vertical ? Alignment.LEFT : Alignment.TOP,
-          handleDrop: (model, engine) => {
-            const parent = node.parent as WorkspaceNodeModel;
-            const m = generateParentNode?.() || new WorkspaceNodeModel();
-            m.setVertical(!parent.vertical);
-            m.setExpand(model.expandHorizontal, model.expandHorizontal);
-            m.addModel(model);
-            parent.replaceModel(node, m);
-            m.addModel(node);
-            engine.normalize();
-          }
-        },
-        {
-          alignment: node.parent.vertical ? Alignment.RIGHT : Alignment.BOTTOM,
-          handleDrop: (model, engine) => {
-            const parent = node.parent as WorkspaceNodeModel;
-            const m = generateParentNode?.() || new WorkspaceNodeModel();
-            m.setVertical(!parent.vertical);
-            m.setExpand(model.expandHorizontal, model.expandHorizontal);
-            m.addModel(model);
-            parent.replaceModel(node, m);
-            m.addModel(node, 0);
-            engine.normalize();
-          }
-        }
-      ]
+      splitZones: allowSplit
+        ? [
+            {
+              alignment: node.parent.vertical ? Alignment.LEFT : Alignment.TOP,
+              handleDrop: (model, engine) => {
+                const parent = node.parent as WorkspaceNodeModel;
+                const m = generateParentNode?.() || new WorkspaceNodeModel();
+                m.setVertical(!parent.vertical);
+                m.setExpand(model.expandHorizontal, model.expandVertical);
+                m.addModel(model);
+                parent.replaceModel(node, m);
+                m.addModel(node);
+                engine.normalize();
+              }
+            },
+            {
+              alignment: node.parent.vertical ? Alignment.RIGHT : Alignment.BOTTOM,
+              handleDrop: (model, engine) => {
+                const parent = node.parent as WorkspaceNodeModel;
+                const m = generateParentNode?.() || new WorkspaceNodeModel();
+                m.setVertical(!parent.vertical);
+                m.setExpand(model.expandHorizontal, model.expandVertical);
+                m.addModel(model);
+                parent.replaceModel(node, m);
+                m.addModel(node, 0);
+                engine.normalize();
+              }
+            }
+          ]
+        : []
     };
   }
 };

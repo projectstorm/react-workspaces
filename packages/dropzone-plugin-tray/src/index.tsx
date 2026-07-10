@@ -1,9 +1,13 @@
 import * as React from 'react';
-import { WorkspaceCollectionModel, WorkspaceModel } from '@projectstorm/react-workspaces-core';
+import {
+  Alignment,
+  WorkspaceCollectionModel,
+  WorkspaceModel,
+  WorkspaceNodeModel
+} from '@projectstorm/react-workspaces-core';
 import {
   DropZoneLayerButtonWidget,
   DropZonePanelDirective,
-  ReplaceZone,
   TransformZone
 } from '@projectstorm/react-workspaces-behavior-panel-dropzone';
 import { WorkspaceTrayFactory, WorkspaceTrayModel } from '@projectstorm/react-workspaces-model-tray';
@@ -15,7 +19,7 @@ library.add(faPlus, faTableList);
 export const AppendToTrayZone: TransformZone = {
   key: 'ADD_ITEM',
   render: ({ entered, theme }) => {
-    return <DropZoneLayerButtonWidget theme={theme} entered={entered} text="Add item" icon="plus" />;
+    return <DropZoneLayerButtonWidget theme={theme} entered={entered} text="Add to tray" icon="plus" />;
   },
   transform: ({ model, zoneModel, engine }) => {
     (zoneModel.parent as WorkspaceTrayModel).addModel(model);
@@ -27,7 +31,7 @@ export const ConvertToTrayZone = (trayFactory: WorkspaceTrayFactory): TransformZ
   return {
     key: 'MAKE_TRAY',
     render: ({ entered, theme }) => {
-      return <DropZoneLayerButtonWidget theme={theme} entered={entered} text="Tray" icon="table-list" />;
+      return <DropZoneLayerButtonWidget theme={theme} entered={entered} text="Add to tray" icon="table-list" />;
     },
     transform: ({ model, zoneModel, engine }) => {
       const trayModel = trayFactory.generateModel();
@@ -41,12 +45,32 @@ export const ConvertToTrayZone = (trayFactory: WorkspaceTrayFactory): TransformZ
 
 export const getDirectiveForTrayModel = (
   node: WorkspaceModel,
-  transformZones: TransformZone[] = []
+  transformZones: TransformZone[] = [],
+  generateParentNode: () => WorkspaceNodeModel = () => new WorkspaceNodeModel(),
+  allowSplit: boolean = true
 ): DropZonePanelDirective | null => {
   if (!(node instanceof WorkspaceCollectionModel) && node.parent instanceof WorkspaceTrayModel) {
+    const tray = node.parent;
+    const parent = tray.parent;
+    const splitZones =
+      allowSplit && parent instanceof WorkspaceNodeModel && parent === tray.getRootModel()
+        ? [Alignment.TOP, Alignment.BOTTOM].map((alignment) => ({
+            alignment,
+            handleDrop: (model: WorkspaceModel, engine) => {
+              const split = generateParentNode()
+                .setVertical(true)
+                .setExpand(tray.expandHorizontal, tray.expandVertical);
+              parent.replaceModel(tray, split);
+              split.addModel(tray);
+              split.addModel(model, alignment === Alignment.TOP ? 0 : null);
+              engine.normalize();
+            }
+          }))
+        : [];
+
     return {
-      transformZones: [ReplaceZone, AppendToTrayZone, ...transformZones],
-      splitZones: []
+      transformZones: [AppendToTrayZone, ...transformZones],
+      splitZones
     };
   }
 };

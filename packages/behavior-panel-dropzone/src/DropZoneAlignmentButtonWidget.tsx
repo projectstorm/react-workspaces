@@ -50,6 +50,9 @@ export const DropZoneAlignmentButtonWidget: React.FC<DropZoneAlignmentButtonWidg
   useDroppableModel({
     forwardRef: ref,
     engine: props.engine,
+    onDragover: () => {
+      setEntered(true);
+    },
     onDrop: props.handleDrop
   });
 
