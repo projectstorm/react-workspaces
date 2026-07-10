@@ -1,5 +1,23 @@
 # @projectstorm/react-workspaces-model-floating-window
 
+## 2.2.16
+
+### Patch Changes
+
+- Updated dependencies [875ed9d]
+  - @projectstorm/react-workspaces-core@4.3.1
+
+## 2.2.15
+
+### Patch Changes
+
+- 6d89b0f: Upgrade the workspace to the latest TypeScript, React, Storybook, and build-tool dependencies.
+
+  Add improved panel drop targets, including reliable transform-zone activation, root-level tab and tray splitting, and gap-free directional layouts while preserving boundary drop zones.
+
+- Updated dependencies [6d89b0f]
+  - @projectstorm/react-workspaces-core@4.3.0
+
 ## 2.2.14
 
 ### Patch Changes

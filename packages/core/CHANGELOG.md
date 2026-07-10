@@ -1,5 +1,19 @@
 # @projectstorm/react-workspaces-core
 
+## 4.3.1
+
+### Patch Changes
+
+- 875ed9d: Prevent workspace root models from being collapsed during normalization after a root-level drop split.
+
+## 4.3.0
+
+### Minor Changes
+
+- 6d89b0f: Upgrade the workspace to the latest TypeScript, React, Storybook, and build-tool dependencies.
+
+  Add improved panel drop targets, including reliable transform-zone activation, root-level tab and tray splitting, and gap-free directional layouts while preserving boundary drop zones.
+
 ## 4.2.3
 
 ### Patch Changes
