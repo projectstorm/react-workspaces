@@ -121,6 +121,10 @@ export class WorkspaceEngine extends BaseObserver<WorkspaceEngineListener> imple
     this.rootModel
       .flatten()
       .filter((m) => m instanceof WorkspaceCollectionModel)
+      // The configured root may be re-parented while a drop creates a new
+      // outer layout. It remains the engine's stable workspace anchor and
+      // must never be removed or collapsed by collection normalization.
+      .filter((m) => m !== this.rootModel)
       .forEach((m: WorkspaceCollectionModel) => m.normalize());
   }
 
