@@ -23,15 +23,16 @@
     "typeface-open-sans": "^1.1.13"
   },
   "devDependencies": {
+    "@storybook/addon-webpack5-compiler-swc": "^4.0.3",
+    "@storybook/react-webpack5": "^10.4.6",
     "@types/lodash": "^4.17.24",
     "@types/node": "^26.1.1",
     "@types/react": "19.2.17",
     "@types/react-dom": "^19.2.3",
+    "gh-pages": "^6.3.0",
     "react-dom": "19.2.7",
     "source-map-loader": "^5.0.0",
     "storybook": "^10.4.6",
-    "@storybook/react-webpack5": "^10.4.6",
-    "@storybook/addon-webpack5-compiler-swc": "^4.0.3",
     "webpack": "^5.108.4"
   }
 }
