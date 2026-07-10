@@ -13,22 +13,34 @@ export interface TabButtonWidgetProps {
 export const TabButtonWidget: React.FC<TabButtonWidgetProps> = (props) => {
   const forceUpdate = useForceUpdate();
   useEffect(() => {
-    return (props.model.parent as WorkspaceTabModel).registerListener({
+    const parent = props.model.parent;
+    if (!(parent instanceof WorkspaceTabModel)) {
+      return;
+    }
+
+    return parent.registerListener({
       selectionChanged: () => {
         forceUpdate();
       }
     });
-  }, []);
-  const parent = props.model.parent as WorkspaceTabModel;
+  }, [forceUpdate, props.model]);
+
+  // A tab can be detached while its old tab group is still rendering. During
+  // that transition its parent is already the destination model, not a tab
+  // group, so it must no longer use tab-group selection APIs.
+  const parent = props.model.parent;
+  const tabGroup = parent instanceof WorkspaceTabModel ? parent : null;
+  const selected = tabGroup?.getSelected();
+
   return (
     <DraggableWidget
       onClick={() => {
-        (props.model.parent as WorkspaceTabModel).setSelected(props.model);
+        tabGroup?.setSelected(props.model);
       }}
       engine={props.engine}
       model={props.model}
     >
-      {props.factory.renderTabForModel(props.model, props.model.id === parent.getSelected().id, props.engine)}
+      {props.factory.renderTabForModel(props.model, props.model.id === selected?.id, props.engine)}
     </DraggableWidget>
   );
 };

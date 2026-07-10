@@ -25,6 +25,7 @@ import {
 } from '@projectstorm/react-workspaces-behavior-panel-dropzone';
 import { draggingItemDividerBehavior } from '@projectstorm/react-workspaces-behavior-divider-dropzone';
 import { WorkspaceTabFactory } from '@projectstorm/react-workspaces-model-tabs';
+import { WorkspaceTrayModel } from '@projectstorm/react-workspaces-model-tray';
 import { resizingBehavior } from '@projectstorm/react-workspaces-behavior-resize';
 import { RootWorkspaceModel } from '@projectstorm/react-workspaces-model-floating-window';
 import { ConvertToTabZone, getDirectiveForTabModel } from '@projectstorm/react-workspaces-dropzone-plugin-tabs';
@@ -60,14 +61,16 @@ export const SharedArgs = {
   [DebugOptions.DebugWindows]: false
 };
 
-export const useRootModel = (model: RootWorkspaceModel, args) => {
+export type StoryArgs = typeof SharedArgs;
+
+export const useRootModel = (model: RootWorkspaceModel, args: StoryArgs) => {
   useEffect(() => {
     model.setDebug(args[DebugOptions.DebugWindows]);
   }, [args[DebugOptions.DebugWindows]]);
   return model;
 };
 
-export const useEngine = (args: { DebugDividers?: boolean; DebugResizers?: boolean; DebugPanels?: boolean } = {}) => {
+export const useEngine = (args: StoryArgs = SharedArgs) => {
   const [debugLayer] = useState(() => {
     return new DebugLayer({
       dividers: args[DebugOptions.DebugDividers],
@@ -109,13 +112,21 @@ export const useEngine = (args: { DebugDividers?: boolean; DebugResizers?: boole
       engine: e,
       getDropZoneForModel: (model) => {
         return (
-          getDirectiveForTrayModel(model) ||
+          getDirectiveForTrayModel(
+            model,
+            [],
+            () => new ExpandNodeModel(),
+            !(e.rootModel.flatten().find((candidate) => candidate.id === e.draggingID) instanceof WorkspaceTrayModel)
+          ) ||
           getDirectiveForWorkspaceNode({
             node: model,
             transformZones: [ConvertToTabZone(tabFactory), ConvertToTrayZone(trayFactory)],
-            generateParentNode: () => new ExpandNodeModel()
+            generateParentNode: () => new ExpandNodeModel(),
+            // Nested expand groups provide their own ordered divider dropzones.
+            // The root is also an ExpandNodeModel, but its direct children retain panel split targets.
+            allowSplit: !(model.parent instanceof ExpandNodeModel) || model.parent.parent === null
           }) ||
-          getDirectiveForTabModel(model)
+          getDirectiveForTabModel(model, [], () => new ExpandNodeModel())
         );
       },
       debug: false

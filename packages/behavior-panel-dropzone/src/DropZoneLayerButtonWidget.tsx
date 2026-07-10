@@ -34,7 +34,7 @@ export const DefaultDropZoneLayerButtonTheme: DropZoneLayerButtonTheme = {
   },
   text: {
     color: 'white',
-    size: 11
+    size: 10
   }
 };
 
@@ -66,6 +66,9 @@ namespace S {
     font-size: ${(p) => p.theme.text.size}px;
     color: ${(p) => p.theme.text.color};
     padding-top: 5px;
+    width: 100%;
+    text-align: center;
+    line-height: 1.1;
     pointer-events: none;
   `;
 
@@ -77,8 +80,8 @@ namespace S {
       border 0.3s,
       background 0.3s;
     pointer-events: all;
-    width: 60px;
-    height: 60px;
+    width: 68px;
+    height: 68px;
     margin: 2px;
     display: flex;
     flex-direction: column;

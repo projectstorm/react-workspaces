@@ -53,7 +53,7 @@ export class WorkspaceModelSize extends Size {
     if (size.height != null) {
       if (size.height < this.min.height) {
         size.height = this.min.height;
-      } else if (this.max.height > 0 && size.width > this.max.height) {
+      } else if (this.max.height > 0 && size.height > this.max.height) {
         size.height = this.max.height;
       }
     }

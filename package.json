@@ -30,17 +30,18 @@
     "release:storybook": "tsc --build && cd demo && pnpm storybook:build && ./node_modules/.bin/storybook-to-ghpages --existing-output-dir .out"
   },
   "devDependencies": {
-    "babel-loader": "^10.0.0",
+    "babel-loader": "^10.1.1",
     "source-map-loader": "^5.0.0",
-    "@babel/core": "^7.29.0",
-    "@babel/preset-react": "^7.28.5",
-    "@babel/preset-env": "^7.29.0",
-    "prettier": "^3.8.1",
-    "typescript": "^5.9.3",
-    "terser-webpack-plugin": "^5.3.16",
-    "@changesets/cli": "^2.29.8",
-    "webpack": "^5.105.2",
-    "webpack-cli": "^6.0.1",
-    "webpack-node-externals": "^3.0.0"
+    "@babel/core": "^8.0.1",
+    "@babel/preset-react": "^8.0.1",
+    "@babel/preset-env": "^8.0.2",
+    "prettier": "^3.9.5",
+    "typescript": "^7.0.2",
+    "terser-webpack-plugin": "^5.6.1",
+    "@changesets/cli": "^2.31.0",
+    "webpack": "^5.108.4",
+    "webpack-cli": "^7.2.1",
+    "webpack-node-externals": "^3.0.0",
+    "npm-check-updates": "^22.2.9"
   }
 }

@@ -84,7 +84,10 @@ export class ExpandNodeModel<
     );
 
     const static_length = _.sum(
-      this.r_divisions.map((d) => (this.vertical ? d.size.height : d.size.width)).concat(static_lengths)
+      this.r_divisions
+        .slice(1, -1)
+        .map((d) => (this.vertical ? d.size.height : d.size.width))
+        .concat(static_lengths)
     );
 
     if (length > static_length) {

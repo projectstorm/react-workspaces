@@ -88,7 +88,7 @@ export const TrayContentExpanded: React.FC<TrayWidgetProps> = (props) => {
         forceUpdate();
       }
     });
-  }, []);
+  }, [props.node]);
   return <S.Content>{cont}</S.Content>;
 };
 
@@ -104,7 +104,7 @@ export const TrayWidget: React.FC<TrayWidgetProps> = (props) => {
         forceUpdate();
       }
     });
-  }, []);
+  }, [props.node]);
   return (
     <S.Container className={props.className}>
       {

@@ -3,6 +3,12 @@ import type { StorybookConfig } from '@storybook/react-webpack5';
 const config: StorybookConfig = {
   stories: ['../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
   addons: ['@storybook/addon-webpack5-compiler-swc'],
+  core: {
+    disableWhatsNewNotifications: true
+  },
+  features: {
+    sidebarOnboardingChecklist: false
+  },
   framework: {
     name: '@storybook/react-webpack5',
     options: {}
