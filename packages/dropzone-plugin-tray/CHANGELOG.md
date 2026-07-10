@@ -1,5 +1,18 @@
 # @projectstorm/react-workspaces-dropzone-plugin-tray
 
+## 2.3.2
+
+### Patch Changes
+
+- 37b9172: Disable vertical split drop targets for trays while retaining tray transform targets.
+
+  Fix moving a collapsed-tray panel into another collection so the tray releases its floating-window ownership first.
+
+- Updated dependencies [37b9172]
+  - @projectstorm/react-workspaces-core@4.3.2
+  - @projectstorm/react-workspaces-model-tray@2.5.15
+  - @projectstorm/react-workspaces-behavior-panel-dropzone@2.4.2
+
 ## 2.3.1
 
 ### Patch Changes

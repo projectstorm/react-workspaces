@@ -1,5 +1,14 @@
 # @projectstorm/react-workspaces-model-tray
 
+## 2.5.15
+
+### Patch Changes
+
+- 37b9172: Move the content of floating tray windows, rather than the window shell, when dropping them into another collection. Release tray ownership first to prevent stale layout state during tray-to-tab drops.
+- Updated dependencies [37b9172]
+  - @projectstorm/react-workspaces-core@4.3.2
+  - @projectstorm/react-workspaces-model-floating-window@2.2.17
+
 ## 2.5.14
 
 ### Patch Changes
