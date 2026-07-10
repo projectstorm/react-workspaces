@@ -183,6 +183,12 @@ export class WorkspaceTrayModel extends WorkspaceCollectionModel<
   }
 
   removeModel(model: WorkspaceModel): this {
+    // In collapsed mode the selected child is temporarily parented by the
+    // floating window. Remove that window before handing the child to another
+    // collection, otherwise the tray retains a second stale renderer for it.
+    if (this.floatingWindow.child === model) {
+      this.setFloatingModel(null);
+    }
     super.removeModel(model);
     if (this.selectedModel && this.selectedModel === model) {
       this.selectedModel = null;

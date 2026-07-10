@@ -25,7 +25,6 @@ import {
 } from '@projectstorm/react-workspaces-behavior-panel-dropzone';
 import { draggingItemDividerBehavior } from '@projectstorm/react-workspaces-behavior-divider-dropzone';
 import { WorkspaceTabFactory } from '@projectstorm/react-workspaces-model-tabs';
-import { WorkspaceTrayModel } from '@projectstorm/react-workspaces-model-tray';
 import { resizingBehavior } from '@projectstorm/react-workspaces-behavior-resize';
 import { RootWorkspaceModel } from '@projectstorm/react-workspaces-model-floating-window';
 import { ConvertToTabZone, getDirectiveForTabModel } from '@projectstorm/react-workspaces-dropzone-plugin-tabs';
@@ -112,12 +111,7 @@ export const useEngine = (args: StoryArgs = SharedArgs) => {
       engine: e,
       getDropZoneForModel: (model) => {
         return (
-          getDirectiveForTrayModel(
-            model,
-            [],
-            () => new ExpandNodeModel(),
-            !(e.rootModel.flatten().find((candidate) => candidate.id === e.draggingID) instanceof WorkspaceTrayModel)
-          ) ||
+          getDirectiveForTrayModel(model) ||
           getDirectiveForWorkspaceNode({
             node: model,
             transformZones: [ConvertToTabZone(tabFactory), ConvertToTrayZone(trayFactory)],

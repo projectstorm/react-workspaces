@@ -1,10 +1,5 @@
 import * as React from 'react';
-import {
-  Alignment,
-  WorkspaceCollectionModel,
-  WorkspaceModel,
-  WorkspaceNodeModel
-} from '@projectstorm/react-workspaces-core';
+import { WorkspaceCollectionModel, WorkspaceModel } from '@projectstorm/react-workspaces-core';
 import {
   DropZoneLayerButtonWidget,
   DropZonePanelDirective,
@@ -45,32 +40,12 @@ export const ConvertToTrayZone = (trayFactory: WorkspaceTrayFactory): TransformZ
 
 export const getDirectiveForTrayModel = (
   node: WorkspaceModel,
-  transformZones: TransformZone[] = [],
-  generateParentNode: () => WorkspaceNodeModel = () => new WorkspaceNodeModel(),
-  allowSplit: boolean = true
+  transformZones: TransformZone[] = []
 ): DropZonePanelDirective | null => {
   if (!(node instanceof WorkspaceCollectionModel) && node.parent instanceof WorkspaceTrayModel) {
-    const tray = node.parent;
-    const parent = tray.parent;
-    const splitZones =
-      allowSplit && parent instanceof WorkspaceNodeModel && parent === tray.getRootModel()
-        ? [Alignment.TOP, Alignment.BOTTOM].map((alignment) => ({
-            alignment,
-            handleDrop: (model: WorkspaceModel, engine) => {
-              const split = generateParentNode()
-                .setVertical(true)
-                .setExpand(tray.expandHorizontal, tray.expandVertical);
-              parent.replaceModel(tray, split);
-              split.addModel(tray);
-              split.addModel(model, alignment === Alignment.TOP ? 0 : null);
-              engine.normalize();
-            }
-          }))
-        : [];
-
     return {
       transformZones: [AppendToTrayZone, ...transformZones],
-      splitZones
+      splitZones: []
     };
   }
 };

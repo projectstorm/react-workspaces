@@ -2,7 +2,7 @@
 '@projectstorm/react-workspaces-core': minor
 '@projectstorm/react-workspaces-behavior-panel-dropzone': minor
 '@projectstorm/react-workspaces-dropzone-plugin-tabs': minor
-'@projectstorm/react-workspaces-dropzone-plugin-tray': minor
+'@projectstorm/react-workspaces-dropzone-plugin-tray': patch
 '@projectstorm/react-workspaces-behavior-divider-dropzone': patch
 '@projectstorm/react-workspaces-behavior-resize': patch
 '@projectstorm/react-workspaces-defaults': patch

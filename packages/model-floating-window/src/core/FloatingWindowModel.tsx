@@ -56,6 +56,10 @@ export class FloatingWindowModel extends WorkspaceModel<SerializedFloatingWindow
     this.iterateListeners((cb) => cb.draggableUpdated?.());
   }
 
+  getDropModel(): WorkspaceModel {
+    return this.child || this;
+  }
+
   fromArray(payload: SerializedFloatingWindowModel, engine: WorkspaceEngineInterface) {
     super.fromArray(payload, engine);
     this.dimension.update(payload.dimensions);
